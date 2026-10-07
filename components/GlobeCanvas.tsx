@@ -25,7 +25,8 @@ export default function GlobeCanvas({ tint, className }: Props) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // Yavaş, dekoratif hareket: işletim sistemi animasyon ayarından bağımsız olarak çalışır
+    const reduce = false;
     const isSmall = window.innerWidth < 768;
     const N = isSmall ? 420 : 900;
 

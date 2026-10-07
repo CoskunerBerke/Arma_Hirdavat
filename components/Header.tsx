@@ -32,8 +32,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full backdrop-blur-xl transition-colors duration-700 ${
-        scrolled ? "bg-ink-950/85 shadow-[0_1px_0_rgba(255,255,255,0.06)]" : "bg-ink-900/60"
+      className={`sticky top-0 z-50 w-full backdrop-blur-xl transition-all duration-500 ${
+        scrolled ? "bg-white/90 shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]" : "bg-white/70"
       }`}
     >
       <div className="container-x flex h-[72px] items-center justify-between gap-6">
@@ -50,23 +50,18 @@ export default function Header() {
 
         <nav aria-label="Ana menü" className="hidden items-center gap-7 lg:flex">
           {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="nav-link"
-              aria-current={isActive(item.href) ? "page" : undefined}
-            >
+            <Link key={item.href} href={item.href} className="nav-link" aria-current={isActive(item.href) ? "page" : undefined}>
               {item.label}
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-5 lg:flex">
-          <a href={COMPANY.phones[0].href} className="flex items-center gap-2 text-sm text-fg-soft transition-colors hover:text-white">
-            <Phone className="h-4 w-4 text-brand-soft" aria-hidden />
+          <a href={COMPANY.phones[0].href} className="flex items-center gap-2 text-sm font-medium text-ink-soft transition-colors hover:text-ink">
+            <Phone className="h-4 w-4 text-brand" aria-hidden />
             <span className="hidden xl:inline">{COMPANY.phones[0].label}</span>
           </a>
-          <Link href="/iletisim" className="btn-accent animate-pulse-glow py-2.5">
+          <Link href="/iletisim" className="btn-primary animate-pulse-glow py-2.5">
             Bize Ulaşın
           </Link>
         </div>
@@ -74,7 +69,7 @@ export default function Header() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/10 lg:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-canvas lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
@@ -84,26 +79,26 @@ export default function Header() {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 top-[72px] bottom-0 z-50 overflow-y-auto bg-ink-950/98 backdrop-blur-xl lg:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[72px] z-50 overflow-y-auto bg-white lg:hidden">
           <nav aria-label="Mobil menü" className="container-x flex flex-col py-6">
             {NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive(item.href) ? "page" : undefined}
-                className={`flex items-center justify-between border-b border-white/[0.06] py-4 text-lg font-medium ${
-                  isActive(item.href) ? "text-white" : "text-fg-soft"
+                className={`flex items-center justify-between border-b border-line py-4 text-lg font-medium ${
+                  isActive(item.href) ? "text-brand" : "text-ink"
                 }`}
               >
                 {item.label}
-                <ArrowRight className="h-4 w-4 opacity-50" aria-hidden />
+                <ArrowRight className="h-4 w-4 opacity-40" aria-hidden />
               </Link>
             ))}
             <div className="mt-8 grid gap-3">
               <a href={COMPANY.phones[0].href} className="btn-ghost w-full">
                 <Phone className="h-4 w-4" aria-hidden /> {COMPANY.phones[0].label}
               </a>
-              <Link href="/iletisim" className="btn-accent w-full">
+              <Link href="/iletisim" className="btn-primary w-full">
                 Bize Ulaşın
               </Link>
             </div>

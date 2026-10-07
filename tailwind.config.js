@@ -1,35 +1,26 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        // Düşük doygunluklu, marka mavisinin tonundan (≈220°) türetilmiş lacivert zemin.
-        // Valdez & Mehrabian (1994): düşük doygunluk = daha düşük uyarılma, daha sakin algı.
+        // Açık, tek tonlu zemin ailesi — bölümler arası sert renk geçişi yok
+        canvas: "#F5F7FA",
+        line: "#E2E7EE",
+        "line-strong": "#C9D2DE",
+        // Metin: saf siyah yerine lacivert-siyah (açık zeminde göz yorgunluğunu azaltır)
+        // canvas (#F5F7FA) üzerinde: DEFAULT ≈ 16:1, soft ≈ 7.6:1, muted ≈ 5:1 (WCAG AA)
         ink: {
-          950: "#070F1C",
-          900: "#0A1424",
-          850: "#0D192C",
-          800: "#112036",
-          700: "#182A45",
-          600: "#22375A",
-        },
-        // Metin tonları: saf beyaz yerine kırık beyaz (halation / parlama etkisini azaltır).
-        // Hepsi #0A1424 zemin üzerinde WCAG 2.1 AA (≥ 4.5:1) kontrastını sağlar.
-        fg: {
-          DEFAULT: "#E6ECF4", // ~15:1
-          soft: "#A9B8CB", // ~9:1
-          muted: "#8395AC", // ~6:1
+          DEFAULT: "#0F1B2D",
+          soft: "#44546A",
+          muted: "#5D6D82",
         },
         brand: {
-          blue: "#0059FF", // logodaki marka mavisi
-          soft: "#6E9CF2", // ışıma ve vurgu için yumuşatılmış mavi
-          // Tek vurgu rengi (Von Restorff / izolasyon etkisi): yalnızca birincil eylem çağrılarında.
-          accent: "#F0CF4A",
-          "accent-hover": "#F6DB6E",
+          DEFAULT: "#0050E6", // logodaki mavinin (#0059FF) beyaz metinle AA kontrast sağlayan tonu
+          hover: "#0042BF",
+          50: "#EEF4FF",
+          100: "#DCE8FF",
+          accent: "#F0CF4A", // logodaki sarıdan — yalnızca küçük vurgu/rozetlerde
         },
       },
       fontFamily: {
@@ -38,30 +29,26 @@ module.exports = {
       keyframes: {
         floatSlow: {
           "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "50%": { transform: "translateY(-12px) rotate(1.5deg)" },
+          "50%": { transform: "translateY(-12px) rotate(1deg)" },
         },
         floatFast: {
           "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
-          "50%": { transform: "translateY(-8px) rotate(-1.5deg)" },
+          "50%": { transform: "translateY(-8px) rotate(-1deg)" },
         },
         pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 18px 0 rgba(240, 207, 74, 0.18)" },
-          "50%": { boxShadow: "0 0 30px 4px rgba(240, 207, 74, 0.32)" },
-        },
-        progress: {
-          "0%": { transform: "scaleX(0)" },
-          "100%": { transform: "scaleX(1)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(0, 80, 230, 0.0), 0 6px 16px -6px rgba(0, 80, 230, 0.45)" },
+          "50%": { boxShadow: "0 0 0 6px rgba(0, 80, 230, 0.10), 0 6px 20px -6px rgba(0, 80, 230, 0.55)" },
         },
         river: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(-50%)" },
+          "0%": { transform: "translate3d(0,0,0)" },
+          "100%": { transform: "translate3d(-50%,0,0)" },
         },
       },
       animation: {
         "float-slow": "floatSlow 7s ease-in-out infinite",
         "float-fast": "floatFast 5s ease-in-out infinite",
-        "pulse-glow": "pulseGlow 3.2s ease-in-out infinite",
-        river: "river 70s linear infinite",
+        "pulse-glow": "pulseGlow 3s ease-in-out infinite",
+        river: "river 60s linear infinite",
       },
     },
   },

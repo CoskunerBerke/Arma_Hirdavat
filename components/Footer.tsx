@@ -8,27 +8,27 @@ const FOOTER_PRODUCTS = [1, 4, 10, 13, 15, 18, 30].map((id) => PRODUCT_GROUPS.fi
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] bg-ink-950">
+    <footer className="border-t border-line bg-white">
       <div className="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <Image src="/images/logo.png" alt="Arma Hırdavat" width={305} height={101} className="h-11 w-auto rounded-md" />
-          <p className="mt-5 max-w-sm text-sm leading-relaxed text-fg-muted">{COMPANY.legalName}</p>
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-ink-muted">{COMPANY.legalName}</p>
           <a
             href={COMPANY.paymentUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/10 px-3.5 py-2 text-sm text-fg-soft transition hover:border-white/25 hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg border border-line px-3.5 py-2 text-sm text-ink-soft transition hover:border-brand/30 hover:text-brand"
           >
             <CreditCard className="h-4 w-4" aria-hidden /> Online Tahsilat
           </a>
         </div>
 
         <nav aria-label="Alt menü" className="lg:col-span-2">
-          <h2 className="text-sm font-semibold text-white">Sayfalar</h2>
+          <h2 className="text-sm font-semibold text-ink">Sayfalar</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
             {NAV.map((n) => (
               <li key={n.href}>
-                <Link href={n.href} className="text-fg-muted transition-colors hover:text-white">
+                <Link href={n.href} className="text-ink-muted transition-colors hover:text-brand">
                   {n.label}
                 </Link>
               </li>
@@ -37,11 +37,11 @@ export default function Footer() {
         </nav>
 
         <div className="lg:col-span-3">
-          <h2 className="text-sm font-semibold text-white">Ürün grupları</h2>
+          <h2 className="text-sm font-semibold text-ink">Ürün grupları</h2>
           <ul className="mt-4 space-y-2.5 text-sm">
             {FOOTER_PRODUCTS.map((p) => (
               <li key={p.id}>
-                <Link href={`/urunler/${p.slug}`} className="text-fg-muted transition-colors hover:text-white">
+                <Link href={`/urunler/${p.slug}`} className="text-ink-muted transition-colors hover:text-brand">
                   {p.title}
                 </Link>
               </li>
@@ -50,29 +50,29 @@ export default function Footer() {
         </div>
 
         <address className="not-italic lg:col-span-3">
-          <h2 className="text-sm font-semibold text-white">İletişim</h2>
-          <ul className="mt-4 space-y-3 text-sm text-fg-muted">
+          <h2 className="text-sm font-semibold text-ink">İletişim</h2>
+          <ul className="mt-4 space-y-3 text-sm text-ink-muted">
             <li className="flex gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand-soft" aria-hidden />
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
               <span>{COMPANY.address.full}</span>
             </li>
             <li className="flex gap-2.5">
-              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand-soft" aria-hidden />
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
               <span className="flex flex-col">
                 {COMPANY.phones.map((p) => (
-                  <a key={p.href} href={p.href} className="hover:text-white">
+                  <a key={p.href} href={p.href} className="hover:text-brand">
                     {p.label}
                   </a>
                 ))}
               </span>
             </li>
             <li className="flex gap-2.5">
-              <Printer className="mt-0.5 h-4 w-4 shrink-0 text-brand-soft" aria-hidden />
+              <Printer className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
               <span>Faks: {COMPANY.fax}</span>
             </li>
             <li className="flex gap-2.5">
-              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand-soft" aria-hidden />
-              <a href={`mailto:${COMPANY.email}`} className="hover:text-white">
+              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-brand" aria-hidden />
+              <a href={`mailto:${COMPANY.email}`} className="hover:text-brand">
                 {COMPANY.email}
               </a>
             </li>
@@ -80,8 +80,8 @@ export default function Footer() {
         </address>
       </div>
 
-      <div className="border-t border-white/[0.06]">
-        <div className="container-x flex flex-col gap-2 py-6 text-xs text-fg-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-line">
+        <div className="container-x flex flex-col gap-2 py-6 text-xs text-ink-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} {COMPANY.legalName}</p>
           <p>Tekkeköy / Samsun</p>
         </div>

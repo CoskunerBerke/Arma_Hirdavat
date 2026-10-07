@@ -275,3 +275,7 @@ export function getRelated(product: ProductGroup, limit = 3) {
 
 /** Ana sayfa sahneleri için öne çıkan gruplar */
 export const FEATURED_IDS = [1, 4, 6, 12, 15, 30];
+
+/** En çok satanlar: Eldiven, Hortum, İzeltaş, Matkap ucu, Kesme ve taşlama taşları */
+export const BEST_SELLER_IDS = [11, 8, 10, 19, 21];
+export const isBestSeller = (id: number) => BEST_SELLER_IDS.includes(id);

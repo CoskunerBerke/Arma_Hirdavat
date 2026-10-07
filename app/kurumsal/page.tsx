@@ -33,11 +33,11 @@ export default function CorporatePage() {
       <section className="section">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-5">
-            <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">Hakkımızda</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">Hakkımızda</h2>
           </Reveal>
-          <Reveal className="space-y-5 text-[17px] leading-[1.75] text-fg-soft lg:col-span-7" delay={60}>
+          <Reveal className="space-y-5 text-[17px] leading-[1.75] text-ink-soft lg:col-span-7" delay={60}>
             <p>
-              <strong className="font-semibold text-white">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;de fabrika malzemeleri ve teknik hırdavat alanında hizmet vermektedir.
+              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;de fabrika malzemeleri ve teknik hırdavat alanında hizmet vermektedir.
             </p>
             <p>
               Bağlantı elemanlarından çelik halata, el ve elektrikli aletlerden kaynak makinelerine, iş güvenliği ekipmanlarından pompa ve pnömatik ürünlere kadar 30 ürün grubunda sanayi kuruluşlarının, atölyelerin ve şantiyelerin ihtiyaçlarını karşılıyoruz.
@@ -47,17 +47,17 @@ export default function CorporatePage() {
         </div>
       </section>
 
-      <section className="section border-y border-white/[0.06] bg-ink-950/40">
+      <section className="section border-y border-line bg-white">
         <div className="container-x grid gap-5 md:grid-cols-2">
           <Reveal className="surface p-8">
             <p className="eyebrow">Misyon</p>
-            <p className="mt-4 text-lg leading-relaxed text-fg">
+            <p className="mt-4 text-lg leading-relaxed text-ink">
               Sanayi tesislerinin, atölyelerin ve projelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğru ürün, doğru fiyat ve zamanında teslimatla sağlamak.
             </p>
           </Reveal>
           <Reveal className="surface p-8" delay={80}>
             <p className="eyebrow">Vizyon</p>
-            <p className="mt-4 text-lg leading-relaxed text-fg">
+            <p className="mt-4 text-lg leading-relaxed text-ink">
               Samsun ve Karadeniz bölgesinde sanayinin ilk akla gelen, güvenilir tedarik ortağı olmak.
             </p>
           </Reveal>
@@ -68,8 +68,8 @@ export default function CorporatePage() {
         <div className="container-x">
           <Reveal className="max-w-3xl">
             <p className="eyebrow">İnsan kaynakları</p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">Ekibimize katılın</h2>
-            <p className="mt-4 text-[17px] leading-[1.75] text-fg-soft">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">Ekibimize katılın</h2>
+            <p className="mt-4 text-[17px] leading-[1.75] text-ink-soft">
               İnsan kaynakları politikamız; misyon ve vizyonumuz doğrultusunda nitelikli insan gücü alımını gerçekleştirmek, çalışanlarımızın etkin ve verimli olabileceği uyumlu bir iş ortamı oluşturmaktır. Eğitime ve gelişime açık, motivasyonu ve kurum aidiyeti yüksek çalışanlara sahip olma ilkesini benimsiyoruz.
             </p>
           </Reveal>
@@ -77,9 +77,9 @@ export default function CorporatePage() {
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {HR.map((h, i) => (
               <Reveal key={h.title} delay={(i % 3) * 70} className="surface p-6">
-                <h.icon className="h-5 w-5 text-brand-soft" aria-hidden />
-                <h3 className="mt-4 text-base font-semibold text-white">{h.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-fg-soft">{h.text}</p>
+                <h.icon className="h-5 w-5 text-brand" aria-hidden />
+                <h3 className="mt-4 text-base font-semibold text-ink">{h.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{h.text}</p>
               </Reveal>
             ))}
           </div>

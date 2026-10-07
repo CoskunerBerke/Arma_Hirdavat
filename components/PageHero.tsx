@@ -14,7 +14,7 @@ interface Props {
   crumbs: Crumb[];
 }
 
-/** Alt sayfa başlığı: ana sayfa sahnesiyle aynı zemin ve ışıma — sayfalar arası renk sürekliliği */
+/** Alt sayfa başlığı: ana sayfa sahnesiyle aynı açık zemin ve ışıma */
 export default function PageHero({ eyebrow, title, description, crumbs }: Props) {
   const all = [{ label: "Ana Sayfa", href: "/" }, ...crumbs];
   const jsonLd = {
@@ -29,22 +29,22 @@ export default function PageHero({ eyebrow, title, description, crumbs }: Props)
   };
 
   return (
-    <section className="relative isolate overflow-hidden border-b border-white/[0.06]">
-      <div className="absolute inset-0 -z-20 bg-[linear-gradient(160deg,#0B1830_0%,#0A1424_70%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(50%_80%_at_85%_0%,rgba(110,156,242,0.16),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] [background-image:radial-gradient(rgba(255,255,255,0.9)_1px,transparent_1px)] [background-size:28px_28px] [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
+    <section className="relative isolate overflow-hidden border-b border-line">
+      <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,#FFFFFF_0%,#F5F7FA_100%)]" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_90%_at_88%_0%,rgba(0,80,230,0.09),transparent_70%)]" />
+      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 [background-image:radial-gradient(#C9D2DE_1px,transparent_1px)] [background-size:26px_26px] [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
 
       <div className="container-x py-12 sm:py-16">
         <nav aria-label="Sayfa konumu">
-          <ol className="flex flex-wrap items-center gap-1.5 text-xs text-fg-muted">
+          <ol className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
             {all.map((c, i) => (
               <li key={c.href} className="flex items-center gap-1.5">
                 {i < all.length - 1 ? (
-                  <Link href={c.href} className="transition-colors hover:text-fg">
+                  <Link href={c.href} className="transition-colors hover:text-brand">
                     {c.label}
                   </Link>
                 ) : (
-                  <span aria-current="page" className="text-fg-soft">
+                  <span aria-current="page" className="font-medium text-ink-soft">
                     {c.label}
                   </span>
                 )}
@@ -55,8 +55,8 @@ export default function PageHero({ eyebrow, title, description, crumbs }: Props)
         </nav>
 
         {eyebrow && <p className="eyebrow mt-8">{eyebrow}</p>}
-        <h1 className="mt-3 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl">{title}</h1>
-        {description && <p className="mt-4 max-w-2xl text-base leading-relaxed text-fg-soft sm:text-lg">{description}</p>}
+        <h1 className="mt-3 max-w-3xl text-3xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">{title}</h1>
+        {description && <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">{description}</p>}
       </div>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

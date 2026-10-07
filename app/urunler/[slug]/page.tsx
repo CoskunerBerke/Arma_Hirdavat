@@ -54,30 +54,30 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           </Reveal>
 
           <Reveal className="lg:col-span-5" delay={80}>
-            <h2 className="text-xl font-semibold text-white">Bu grupta neler var?</h2>
+            <h2 className="text-xl font-semibold text-ink">Bu grupta neler var?</h2>
             <ul className="mt-5 space-y-3">
               {p.items.map((it) => (
-                <li key={it} className="flex items-start gap-3 text-[15px] text-fg">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-soft" aria-hidden />
+                <li key={it} className="flex items-start gap-3 text-[15px] text-ink">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
                   {it}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-sm leading-relaxed text-fg-muted">
+            <p className="mt-6 text-sm leading-relaxed text-ink-muted">
               Ölçü, adet ve marka tercihlerinize göre stok durumu ve fiyat bilgisi için bize ulaşın.
             </p>
 
             <div className="surface mt-8 p-6">
-              <h3 className="text-base font-semibold text-white">Teklif ve stok bilgisi</h3>
+              <h3 className="text-base font-semibold text-ink">Teklif ve stok bilgisi</h3>
               <div className="mt-4 space-y-2.5 text-sm">
-                <a href={COMPANY.phones[0].href} className="flex items-center gap-2.5 text-fg-soft hover:text-white">
-                  <Phone className="h-4 w-4 text-brand-soft" aria-hidden /> {COMPANY.phones[0].label}
+                <a href={COMPANY.phones[0].href} className="flex items-center gap-2.5 text-ink-soft hover:text-brand">
+                  <Phone className="h-4 w-4 text-brand" aria-hidden /> {COMPANY.phones[0].label}
                 </a>
-                <a href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(`Teklif talebi – ${p.title}`)}`} className="flex items-center gap-2.5 text-fg-soft hover:text-white">
-                  <Mail className="h-4 w-4 text-brand-soft" aria-hidden /> {COMPANY.email}
+                <a href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(`Teklif talebi – ${p.title}`)}`} className="flex items-center gap-2.5 text-ink-soft hover:text-brand">
+                  <Mail className="h-4 w-4 text-brand" aria-hidden /> {COMPANY.email}
                 </a>
               </div>
-              <Link href={`/iletisim?urun=${p.slug}`} className="btn-accent mt-6 w-full">
+              <Link href={`/iletisim?urun=${p.slug}`} className="btn-primary mt-6 w-full">
                 Bu grup için teklif isteyin <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
@@ -86,9 +86,9 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
       </section>
 
       {related.length > 0 && (
-        <section className="section border-t border-white/[0.06] pt-16">
+        <section className="section border-t border-line pt-16">
           <div className="container-x">
-            <h2 className="text-2xl font-bold tracking-tight text-white">Aynı kategorideki diğer gruplar</h2>
+            <h2 className="text-2xl font-bold tracking-tight text-ink">Aynı kategorideki diğer gruplar</h2>
             <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
                 <li key={r.id}>

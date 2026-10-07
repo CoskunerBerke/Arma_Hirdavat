@@ -42,17 +42,17 @@ export default function ProductCatalog() {
             Ürün ara
           </label>
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-fg-muted" aria-hidden />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" aria-hidden />
             <input
               id="urun-ara"
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Ürün veya parça ara"
-              className="w-full rounded-xl border border-white/10 bg-ink-850 py-3 pl-10 pr-10 text-sm text-fg placeholder:text-fg-muted focus:border-brand-soft/60 focus:outline-none"
+              className="w-full rounded-xl border border-line bg-white py-3 pl-10 pr-10 text-sm text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none"
             />
             {query && (
-              <button type="button" onClick={() => setQuery("")} aria-label="Aramayı temizle" className="absolute right-3 top-1/2 -translate-y-1/2 text-fg-muted hover:text-white">
+              <button type="button" onClick={() => setQuery("")} aria-label="Aramayı temizle" className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted hover:text-brand">
                 <X className="h-4 w-4" />
               </button>
             )}
@@ -68,14 +68,14 @@ export default function ProductCatalog() {
                   onClick={() => setCategory(c)}
                   aria-pressed={active}
                   className={`flex shrink-0 items-center justify-between gap-3 whitespace-nowrap rounded-lg px-3.5 py-2.5 text-left text-sm transition-colors ${
-                    active ? "bg-white/[0.07] font-semibold text-white" : "text-fg-soft hover:bg-white/[0.04] hover:text-white"
+                    active ? "bg-brand-50 font-semibold text-ink" : "text-ink-soft hover:bg-canvas hover:text-brand"
                   }`}
                 >
                   <span className="flex items-center gap-2.5">
-                    <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-brand-accent" : "bg-white/20"}`} aria-hidden />
+                    <span className={`h-1.5 w-1.5 rounded-full ${active ? "bg-brand-accent" : "bg-line-strong"}`} aria-hidden />
                     {c}
                   </span>
-                  <span className="hidden text-xs text-fg-muted lg:inline">{c === "Tümü" ? PRODUCT_GROUPS.length : counts.get(c)}</span>
+                  <span className="hidden text-xs text-ink-muted lg:inline">{c === "Tümü" ? PRODUCT_GROUPS.length : counts.get(c)}</span>
                 </button>
               );
             })}
@@ -84,7 +84,7 @@ export default function ProductCatalog() {
       </aside>
 
       <div className="lg:col-span-9">
-        <p className="mb-5 text-sm text-fg-muted" aria-live="polite">
+        <p className="mb-5 text-sm text-ink-muted" aria-live="polite">
           {list.length} ürün grubu
         </p>
         {list.length ? (
@@ -97,7 +97,7 @@ export default function ProductCatalog() {
           </ul>
         ) : (
           <div className="surface p-10 text-center">
-            <p className="text-fg-soft">Aramanıza uygun ürün grubu bulunamadı.</p>
+            <p className="text-ink-soft">Aramanıza uygun ürün grubu bulunamadı.</p>
             <button
               type="button"
               onClick={() => {

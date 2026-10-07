@@ -34,3 +34,5 @@ next-env.d.ts
 
 # Scratch helper scripts
 download_assets.py
+
+/Drone_flying*.mp4

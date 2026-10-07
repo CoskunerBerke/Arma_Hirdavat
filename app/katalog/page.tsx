@@ -30,20 +30,20 @@ export default function CatalogPage() {
                   href={c.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="surface group flex flex-col gap-4 p-6 transition hover:border-white/20 sm:flex-row sm:items-center sm:justify-between"
+                  className="surface group flex flex-col gap-4 p-6 transition hover:border-brand/30 sm:flex-row sm:items-center sm:justify-between"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04]">
-                      <FileText className="h-5 w-5 text-brand-soft" aria-hidden />
+                    <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-line bg-brand-50">
+                      <FileText className="h-5 w-5 text-brand" aria-hidden />
                     </span>
                     <div>
-                      <h2 className="text-base font-semibold text-white">{c.title}</h2>
-                      <p className="mt-0.5 text-sm text-fg-muted">
+                      <h2 className="text-base font-semibold text-ink">{c.title}</h2>
+                      <p className="mt-0.5 text-sm text-ink-muted">
                         PDF · {c.size} · Güncelleme: {c.updated}
                       </p>
                     </div>
                   </div>
-                  <span className="btn-ghost self-start group-hover:border-white/30 sm:self-auto">
+                  <span className="btn-ghost self-start group-hover:border-brand/30 sm:self-auto">
                     İndir <Download className="h-4 w-4" aria-hidden />
                   </span>
                 </a>
