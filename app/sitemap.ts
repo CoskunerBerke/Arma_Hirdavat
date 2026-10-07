@@ -1,42 +1,20 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/data/company";
+import { PRODUCT_GROUPS } from "@/data/products";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: "https://armahirdavat.com.tr",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: "https://armahirdavat.com.tr/#urunler",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.9,
-    },
-    {
-      url: "https://armahirdavat.com.tr/#hakkimizda",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://armahirdavat.com.tr/#markalar",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: "https://armahirdavat.com.tr/#yorumlar",
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.7,
-    },
-    {
-      url: "https://armahirdavat.com.tr/#iletisim",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-  ];
+  const now = new Date();
+  const pages = ["", "/urunler", "/kurumsal", "/markalar", "/katalog", "/iletisim"].map((p) => ({
+    url: `${SITE_URL}${p}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: p === "" ? 1 : p === "/urunler" ? 0.9 : 0.7,
+  }));
+  const products = PRODUCT_GROUPS.map((p) => ({
+    url: `${SITE_URL}/urunler/${p.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+  return [...pages, ...products];
 }

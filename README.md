@@ -1,43 +1,39 @@
-# Arma Hırdavat - Yeni Nesil Endüstriyel Web Platformu
+# Arma Hırdavat – Kurumsal Web Sitesi (Demo)
 
-Bu proje, **Arma Fabrika Malzemeleri Teknik Hırdavat San. Tic. A.Ş.** için geliştirilmiş modern, yüksek performanslı, Google SEO uyumlu ve kurumsal vitrin web sitesidir.
+**Arma Fabrika Malzemeleri Teknik Hırdavat San. Tic. A.Ş.** için Next.js 14 ile hazırlanmış, çok sayfalı, SEO uyumlu kurumsal site.
 
-## 🚀 Öne Çıkan Özellikler
+## Sayfalar
 
-- **Modern & Sade Tasarım:** Endüstriyel standartlarda, göz yormayan, sade ve prestijli kurumsal kimlik.
-- **30 Ürün Grubu & 10.000+ Çeşit:** Cıvatadan kaldırma sapanlarına, 3M iş güvenliğinden kaynak makinelerine kadar tüm kategoriler, orijinal yüksek çözünürlüklü fotoğraflar, anlık dinamik arama ve kategori filtreleme.
-- **Kesintisiz Yorum Nehri (Google Maps Reviews Marquee):** 5.0 yıldızlı Google Haritalar müşteri deneyimlerini yansıtan, sağdan sola doğru kesintisiz ve sonsuz akan, fareyle üzerine gelindiğinde dahi akmaya devam eden modern yorum nehri.
-- **Hızlı Fiyat Teklifi & Bize Ulaşın Modülü:** Müşterilerin ihtiyaç duydukları ürün grubunu seçip tek tıkla doğrudan kurumsal WhatsApp hattına veya e-postaya formatlı teklif iletebileceği interaktif form.
-- **Yetkili Bayilikler & Markalar:** İzeltaş, 3M, Pakkens, Domak Pompa, Karbosan, Sufil, Doğan Makina ve Magmaweld.
-- **Google SEO & Zengin Şema (Schema.org):** Tek `<h1>`, `HardwareStore` / `LocalBusiness` JSON-LD zengin veri yapıları, OpenGraph / Twitter meta kartları, `sitemap.xml` ve `robots.txt`.
-- **E-Tahsilat Entegrasyonu:** Resmi online ödeme portalına doğrudan erişim.
-- **İletişim & Lokasyon:** Tekkeköy / Samsun lokasyonu için Google Haritalar entegrasyonu, resmi telefon, faks, e-posta ve mesai saatleri.
+| Yol | İçerik |
+| --- | --- |
+| `/` | Sahne (scene) hero, 6 ürün grubu önizlemesi, değer önerisi, yorum nehri |
+| `/urunler` | 30 ürün grubu, arama + kategori filtresi |
+| `/urunler/[slug]` | Her ürün grubu için ayrı, statik üretilen SEO sayfası (30 adet) |
+| `/kurumsal` | Hakkımızda, misyon & vizyon, insan kaynakları |
+| `/markalar` | Ürün gamındaki markalar |
+| `/katalog` | PDF kataloglar |
+| `/iletisim` | Bize Ulaşın: iletişim bilgileri, teklif formu, harita |
 
-## 🛠️ Teknoloji Yığını
+## Tasarım kararları
 
-- **Framework:** Next.js 14 (App Router)
-- **Dil:** TypeScript
-- **Stil:** Tailwind CSS
-- **İkonlar:** Lucide React
-- **Optimizasyon:** Statik Üretim (SSG) & SEO Meta Tags
+- **Tek tonlu lacivert tema**: Bölümler arasında beyaz/mavi zıplaması yok; tüm sayfalar aynı zemin ailesini kullanır.
+- **Mavi = güven/yetkinlik** (Labrecque & Milne, 2012), **düşük doygunluk = sakin algı** (Valdez & Mehrabian, 1994).
+- **Tek vurgu rengi** (logodaki sarıdan türetilmiş) yalnızca birincil eylem butonlarında — izolasyon (Von Restorff) etkisi.
+- **Düşük görsel karmaşıklık** ilk izlenimde güzellik algısını artırır (Tuch vd., 2012).
+- Metin renkleri WCAG 2.1 AA kontrastını sağlar; `prefers-reduced-motion` desteklenir.
 
-## 📦 Kurulum ve Çalıştırma
+## Demo notları
+
+- `data/reviews.ts` içindeki yorumlar **örnek** içeriktir; yayından önce gerçek Google yorumlarıyla değiştirilmelidir.
+- Teklif formu sunucusuzdur; kullanıcının e-posta uygulamasında hazır bir taslak açar.
+- Canonical adresler `NEXT_PUBLIC_SITE_URL` (varsayılan `https://armahirdavat.com.tr`) üzerinden üretilir.
+
+## Geliştirme
 
 ```bash
-# Bağımlılıkları yükleyin
 npm install
-
-# Geliştirme sunucusunu başlatın
-npm run dev
-
-# Üretim derlemesi (Production Build)
+npm run dev     # http://localhost:3000
 npm run build
-
-# Canlı sunucu başlatma
-npm start
 ```
 
-## 🌐 Vercel Entegrasyonu
-
-Proje doğrudan Vercel üzerinde sıfır yapılandırma ile yayına alınabilecek şekilde optimize edilmiştir.
-GitHub reposunu Vercel hesabınıza bağlamanız yeterlidir.
+Vercel'de GitHub reposunu içe aktarmak yeterlidir (Next.js otomatik algılanır).

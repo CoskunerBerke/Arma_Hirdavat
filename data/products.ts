@@ -1,295 +1,277 @@
+export type CategoryName =
+  | "Bağlantı & Sabitleme"
+  | "Halat & Kaldırma"
+  | "El Aletleri & Makineler"
+  | "Tesisat & Pnömatik"
+  | "İş Güvenliği"
+  | "Kaynak & Gaz"
+  | "Kesici & Aşındırıcı"
+  | "Kimyasal & Ambalaj"
+  | "Sanayi & Yapı";
+
 export interface ProductGroup {
   id: number;
+  slug: string;
   title: string;
-  category: string;
+  category: CategoryName;
   image: string;
   description: string;
   items: string[];
-  badge?: string;
 }
 
-export const CATEGORIES = [
-  "Tümü",
+export const CATEGORIES: CategoryName[] = [
   "Bağlantı & Sabitleme",
   "Halat & Kaldırma",
   "El Aletleri & Makineler",
   "Tesisat & Pnömatik",
-  "İş Güvenliği & 3M",
+  "İş Güvenliği",
   "Kaynak & Gaz",
   "Kesici & Aşındırıcı",
-  "Kimyasal & Sarf",
-  "Sanayi & Yapı"
-] as const;
+  "Kimyasal & Ambalaj",
+  "Sanayi & Yapı",
+];
 
-export const PRODUCT_GROUPS: ProductGroup[] = [
+export function slugify(input: string): string {
+  const map: Record<string, string> = {
+    ç: "c", Ç: "c", ğ: "g", Ğ: "g", ı: "i", I: "i", İ: "i", ö: "o", Ö: "o", ş: "s", Ş: "s", ü: "u", Ü: "u",
+  };
+  return input
+    .split("")
+    .map((ch) => map[ch] ?? ch)
+    .join("")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+type Raw = Omit<ProductGroup, "slug" | "image">;
+
+const RAW: Raw[] = [
   {
     id: 1,
     title: "Bağlantı Elemanları",
     category: "Bağlantı & Sabitleme",
-    image: "/images/products/product_1.jpg",
-    description: "Cıvata, somun, pul, rondela, gijon ve paslanmaz çelik DIN/ISO normlarında endüstriyel bağlantı elemanları.",
-    items: ["8.8, 10.9, 12.9 Çelik Cıvatalar", "İmbus & Havşa Başlı Vidalar", "A2/A4 Paslanmaz Bağlantı Ürünleri", "Ağır Yük Somun & Rondela Grupları"],
-    badge: "Geniş Stok"
+    description: "Cıvata, somun, pul, rondela, saplama ve vidalarda DIN/ISO ölçülerinde çelik ve paslanmaz bağlantı elemanları.",
+    items: ["Altıgen ve imbus başlı cıvatalar", "Somun, pul ve rondela çeşitleri", "Paslanmaz (A2 / A4) bağlantı ürünleri", "Saplama, gijon ve U cıvatalar"],
   },
   {
     id: 2,
     title: "Diğer Bağlantı Elemanları",
     category: "Bağlantı & Sabitleme",
-    image: "/images/products/product_2.jpg",
-    description: "Kör perçin, kelepçe, dübel, segman, pim ve özel ölçülü montaj bağlantı parçaları.",
-    items: ["Pop Perçin & Somunlu Perçinler", "Ağır Hizmet Hortum Kelepçeleri", "Çelik ve Kimyasal Dübeller", "Segman ve Yaylı Pim Grupları"],
-    badge: "DIN / ISO Standart"
+    description: "Perçin, kelepçe, dübel, segman ve pim gibi montaj ve sabitleme için tamamlayıcı bağlantı parçaları.",
+    items: ["Pop perçin ve somunlu perçinler", "Hortum kelepçeleri", "Çelik ve plastik dübeller", "Segman ve pim çeşitleri"],
   },
   {
     id: 3,
     title: "Çelik Halat ve Gemi Halatı",
     category: "Halat & Kaldırma",
-    image: "/images/products/product_3.jpg",
-    description: "Tersane, liman, inşaat ve vinç sistemleri için sertifikalı çelik ve gemi halatları, klemens ve mapa aksesuarları.",
-    items: ["Kendir & Çelik Özlü Halatlar", "Gemi Bağlama & Palamar Halatları", "Halat Klemensleri ve Radansalar", "Dövme Çelik Şakıllar & Mapalar"],
-    badge: "Sertifikalı"
+    description: "Liman, tersane, inşaat ve kaldırma sistemleri için çelik halatlar, gemi halatları ve halat aksesuarları.",
+    items: ["Çelik halatlar", "Gemi bağlama halatları", "Halat klemensleri ve radansalar", "Kilit (şakıl) ve mapalar"],
   },
   {
     id: 4,
     title: "Polyester Halat, Kaldırma İndirme Ekipmanları",
     category: "Halat & Kaldırma",
-    image: "/images/products/product_4.jpg",
-    description: "Bez sapanlar, sonsuz sapanlar, caraskallar, ceraskal zincirleri, şaryolar, transpalet ve istif makineleri.",
-    items: ["1 - 20 Ton Polyester Bez Sapanlar", "Manuel ve Elektrikli Caraskallar", "Hidrolik Manuel & Akülü Transpaletler", "Zincirli Çektirme & Tirforlar"],
-    badge: "CE & Test Belgeli"
+    description: "Polyester sapanlar, caraskallar, zincirler, transpaletler ve istif ekipmanları ile yük kaldırma ve taşıma çözümleri.",
+    items: ["Polyester bez ve sonsuz sapanlar", "Zincirli ve elektrikli caraskallar", "Transpalet ve istif makineleri", "Spanzet ve yük bağlama ekipmanları"],
   },
   {
     id: 5,
     title: "Havalı El Aletleri",
     category: "El Aletleri & Makineler",
-    image: "/images/products/product_5.jpg",
-    description: "Pnömatik somun sıkmalar, havalı zımparalar, havalı perçin tabancaları ve profesyonel boya tabancaları.",
-    items: ["1/2\" & 3/4\" & 1\" Havalı Somun Sıkmalar", "Orbital Havalı Zımpara Makineleri", "Havalı Gres Pompaları ve Tabancalar", "Pnömatik Çivi ve Tel Tabancaları"],
-    badge: "Yüksek Tork"
+    description: "Pnömatik somun sıkma, zımpara, taşlama, perçin ve çivi tabancaları ile boya tabancaları.",
+    items: ["Havalı somun sıkma makineleri", "Havalı zımpara ve taşlamalar", "Çivi ve zımba tabancaları", "Boya ve gres tabancaları"],
   },
   {
     id: 6,
     title: "Elektrikli El Aletleri",
     category: "El Aletleri & Makineler",
-    image: "/images/products/product_6.jpg",
-    description: "Ağır hizmet tipi kırıcı-deliciler, avuç taşlamalar, akülü vidalamalar, profil kesme ve lazer hizalama cihazları.",
-    items: ["Kırıcı & Delici Matkaplar", "Avuç & Büyük Gövde Taşlamalar", "Akülü Darbeli Vidalama Setleri", "Endüstriyel Karot ve Kesme Makineleri"],
-    badge: "Profesyonel Seri"
+    description: "Matkap, kırıcı-delici, taşlama, akülü vidalama ve kesme makineleri ile lazer hizalama cihazları.",
+    items: ["Matkap ve kırıcı-deliciler", "Avuç ve büyük taşlamalar", "Akülü vidalama setleri", "Jeneratör ve bahçe makineleri"],
   },
   {
     id: 7,
     title: "Vana, Flanş, Boru Ek Parçaları",
     category: "Tesisat & Pnömatik",
-    image: "/images/products/product_7.jpg",
-    description: "Küre vana, kelebek vana, çekvalf, flanş, patent dirsek, manşon ve paslanmaz boru bağlantı elemanları.",
-    items: ["Pirinç ve Döküm Küresel Vanalar", "PN16 / PN40 Düz ve Kaynak Boyunlu Flanşlar", "Dikişsiz Patent Dirsek & Te", "Buhar ve Gaz Kondenstopları"],
-    badge: "Endüstriyel Hat"
+    description: "Küresel ve kelebek vanalar, flanşlar, dirsek, te, manşon ve diğer boru bağlantı parçaları.",
+    items: ["Küresel ve kelebek vanalar", "Düz ve kaynak boyunlu flanşlar", "Dirsek, te, manşon, nipel", "Paslanmaz boru ek parçaları"],
   },
   {
     id: 8,
     title: "Hortum Çeşitleri",
     category: "Tesisat & Pnömatik",
-    image: "/images/products/product_8.jpg",
-    description: "Basınçlı hava hortumları, yangın hortumları, hidrolik hortumlar, su emici ve verici spiral takviyeli hortumlar.",
-    items: ["R2 Hidrolik Yüksek Basınç Hortumları", "Bezli & Telli Hava & Su Hortumları", "İtfaiye Tipi Dokuma Yangın Hortumları", "Poliüretan Spiral Pnömatik Hortumlar"],
-    badge: "Yüksek Basınç"
+    description: "Hidrolik, hava, su, yangın ve spiral hortumlar; sanayi ve tesisat için farklı basınç sınıflarında.",
+    items: ["Hidrolik hortumlar", "Hava ve su hortumları", "Yangın hortumları", "Spiral pnömatik hortumlar"],
   },
   {
     id: 9,
     title: "El Aletleri",
     category: "El Aletleri & Makineler",
-    image: "/images/products/product_9.jpg",
-    description: "Anahtar takımları, lokmalar, penseler, yan keskiler, çekiçler, boru anahtarları ve atölye el aletleri donanımları.",
-    items: ["Kombine & Yıldız Anahtar Takımları", "1/4\" & 1/2\" Lokma Takımları", "Ayarlı Pense & Ağır Tip Kerpetenler", "Krom Vanadyum Profesyonel El Aletleri"],
-    badge: "Atölye Standardı"
+    description: "Anahtar ve lokma takımları, pense, keski, çekiç, boru anahtarları ve atölye takım dolapları.",
+    items: ["Kombine ve yıldız anahtarlar", "Lokma takımları", "Pense, kargaburun, yan keski", "Takım dolapları ve çantaları"],
   },
   {
     id: 10,
     title: "İzeltaş El Aletleri",
     category: "El Aletleri & Makineler",
-    image: "/images/products/product_10.jpg",
-    description: "Türkiye'nin lider el aleti üreticisi İzeltaş'ın tüm takım çantaları, anahtarları, tork anahtarları ve servis ekipmanları.",
-    items: ["İzeltaş Dolu Takım Arabaları", "Tork Anahtarları & Açı Ölçerler", "İzeltaş Ağır Sanayi Boru Anahtarları", "Yalıtımlı 1000V Elektrikçi Aletleri"],
-    badge: "Yetkili Satıcı"
+    description: "Yerli üretici İzeltaş'ın anahtar, pense, tornavida, tork anahtarı ve takım setleri.",
+    items: ["İzeltaş anahtar takımları", "İzeltaş pense ve kesiciler", "Tork anahtarları", "İzolasyonlu elektrikçi aletleri"],
   },
   {
     id: 11,
     title: "Eldiven Çeşitleri",
-    category: "İş Güvenliği & 3M",
-    image: "/images/products/product_11.jpg",
-    description: "Nitril eldivenler, deri kaynakçı eldivenleri, kesilmeye dirençli eldivenler, kimyasal ve ısıya dayanıklı eldivenler.",
-    items: ["Nitril Kaplı Hassas Montaj Eldivenleri", "Ağır Hizmet Deri Kaynakçı Eldivenleri", "Seviye 5 Kesilmez Güvenlik Eldivenleri", "Asit & Kimyasal Koruma Eldivenleri"],
-    badge: "EN 388 Uyumlu"
+    category: "İş Güvenliği",
+    description: "Montaj, kaynak, kimyasal, kesilmeye ve ısıya dayanıklı iş eldivenleri.",
+    items: ["Nitril ve lateks kaplı eldivenler", "Deri kaynakçı eldivenleri", "Kesilmeye dayanıklı eldivenler", "Kimyasal ve elektrikçi eldivenleri"],
   },
   {
     id: 12,
     title: "İş Güvenliği Ekipmanları",
-    category: "İş Güvenliği & 3M",
-    image: "/images/products/product_12.jpg",
-    description: "Baretler, emniyet kemerleri, çelik burunlu iş ayakkabıları, fosforlu yelekler, trafik güvenlik konileri ve bariyerler.",
-    items: ["Paraşüt Tipi Emniyet Kemerleri & Halatlar", "S1P & S3 Çelik Burunlu İş Ayakkabıları", "Hava Kanallı Endüstriyel Baretler", "Trafik Yönlendirme ve Uyarı Levhaları"],
-    badge: "Tam İSG Uyumu"
+    category: "İş Güvenliği",
+    description: "Baret, emniyet kemeri, iş ayakkabısı, reflektörlü yelek, trafik konisi ve uyarı ekipmanları.",
+    items: ["Paraşüt tipi emniyet kemerleri", "İş ayakkabısı ve botları", "Baret ve reflektörlü yelekler", "Trafik konisi ve uyarı bariyerleri"],
   },
   {
     id: 13,
     title: "3M Ürünleri",
-    category: "İş Güvenliği & 3M",
-    image: "/images/products/product_13.jpg",
-    description: "Dünya devi 3M'in toz maskeleri, tam ve yarım yüz gaz maskeleri, kulaklıklar, koruyucu gözlükler ve tulumları.",
-    items: ["3M FFP2 / FFP3 Ventilli Toz Maskeleri", "3M 6000 & 7500 Serisi Gaz Maskeleri", "3M Peltor Gürültü Önleyici Kulaklıklar", "3M Çizilmez Buğu Yapmaz İş Gözlükleri"],
-    badge: "Orijinal 3M"
+    category: "İş Güvenliği",
+    description: "3M toz ve gaz maskeleri, koruyucu gözlükler, kulaklıklar, yüz siperleri ve koruyucu tulumlar.",
+    items: ["Toz maskeleri", "Yarım ve tam yüz gaz maskeleri", "Koruyucu gözlük ve kulaklıklar", "Koruyucu tulumlar"],
   },
   {
     id: 14,
     title: "Ölçü Aletleri",
     category: "El Aletleri & Makineler",
-    image: "/images/products/product_14.jpg",
-    description: "Dijital kumpaslar, mikrometreler, komparatörler, şerit metreler, nivo ve lazerli mesafe ölçüm aletleri.",
-    items: ["0.01mm Hassas Dijital Kumpaslar", "Dış Çap Mikrometre Takımları", "Mıknatıslı Komparatör Saatleri", "Optik Nivolar & Lazer Metreler"],
-    badge: "Mikron Hassasiyet"
+    description: "Kumpas, mikrometre, komparatör, şerit metre, nivo, lazer metre ve elektriksel ölçü cihazları.",
+    items: ["Dijital ve mekanik kumpaslar", "Mikrometre ve komparatörler", "Lazer metre ve nivolar", "Pens ampermetre ve multimetreler"],
   },
   {
     id: 15,
     title: "Kaynak Makinaları",
     category: "Kaynak & Gaz",
-    image: "/images/products/product_15.jpg",
-    description: "İnvertör elektrot kaynak makineleri, gazaltı (MIG/MAG) kaynak makineleri, TIG argon kaynakları ve plazma kesiciler.",
-    items: ["Kompakt Çanta Tipi İnvertör Kaynaklar", "Sinerjik Gazaltı Kaynak Makineleri", "AC/DC TIG Alüminyum Kaynak Makineleri", "CNC Uyumlu Plazma Kesme Üniteleri"],
-    badge: "Ağır Sanayi Tipi"
+    description: "Elektrot, gazaltı (MIG/MAG), TIG kaynak makineleri ve plazma kesme makineleri.",
+    items: ["İnvertör elektrot kaynak makineleri", "Gazaltı kaynak makineleri", "TIG kaynak makineleri", "Plazma kesme makineleri"],
   },
   {
     id: 16,
     title: "Elektrod, Gaz Altı Kaynak Teli Ekipmanları",
     category: "Kaynak & Gaz",
-    image: "/images/products/product_16.jpg",
-    description: "Rutil ve bazik elektrotlar, SG2 gazaltı telleri, paslanmaz teller, kaynak penseleri, torçlar ve nozullar.",
-    items: ["Magmaweld & Oerlikon Kaynak Telleri", "Bazik ve Paslanmaz Özel Elektrotlar", "MIG/TIG Kaynak Torçları ve Sarfları", "Otomatik Kararan Kaynak Başlıkları"],
-    badge: "Birinci Sınıf Sarf"
+    description: "Elektrotlar, gazaltı kaynak telleri, torçlar, kaynak maskeleri ve kaynak sarf malzemeleri.",
+    items: ["Rutil ve bazik elektrotlar", "Gazaltı kaynak telleri", "MIG / TIG torçları ve sarfları", "Kaynak maskeleri ve pensler"],
   },
   {
     id: 17,
     title: "Gaz ve Gaz Aletleri",
     category: "Kaynak & Gaz",
-    image: "/images/products/product_17.jpg",
-    description: "Oksijen-Asetilen kaynak ve kesme takımları, gaz regülatörleri (manometreler), alev geri tepme ventilleri ve şalümolar.",
-    items: ["Oksijen, Asetilen ve Argon Regülatörleri", "Ağır Tip Kesme ve Tavlama Şalümoları", "Hortum ve Regülatör Alev Tutucuları", "Propan & Doğalgaz Brülör Ekipmanları"],
-    badge: "Güvenlik Onaylı"
+    description: "Oksijen, asetilen ve argon regülatörleri, kesme ve kaynak şalümoları, hortumlar ve emniyet ventilleri.",
+    items: ["Gaz regülatörleri (manometreler)", "Kesme ve kaynak şalümoları", "Alev geri tepme ventilleri", "İkiz gaz hortumları"],
   },
   {
     id: 18,
     title: "Pinomatik Ürünler - Pakkens",
     category: "Tesisat & Pnömatik",
-    image: "/images/products/product_18.jpg",
-    description: "Pakkens manometreler, termometreler, şartlandırıcılar, pnömatik silindirler, valfler ve otomatik fittingsler.",
-    items: ["Pakkens Gliserinli Basınç Ölçerler", "Pnömatik Filtre-Regülatör-Yağlayıcı (FRY)", "5/2 - 3/2 Solenoid Yön Kontrol Valfleri", "Hızlı Geçmeli Otomatik Rekorlar"],
-    badge: "Pakkens Güvencesi"
+    description: "Pakkens manometre ve termometreler; pnömatik silindir, valf, şartlandırıcı ve rakorlar.",
+    items: ["Pakkens manometre ve termometreler", "Pnömatik silindirler", "Selenoid valfler", "Şartlandırıcı ve hızlı rakorlar"],
   },
   {
     id: 19,
     title: "Matkap Ucu, Klavuz, Pafta",
     category: "Kesici & Aşındırıcı",
-    image: "/images/products/product_19.jpg",
-    description: "HSS, kobalt ve karbür matkap uçları, makine kılavuzları, paftalar, kademeli uçlar ve rayba çeşitleri.",
-    items: ["DIN 338 HSS-Co %5 Kobalt Matkap Uçları", "Metrik / Whitworth Makine Kılavuzları", "Boru ve Cıvata Diş Açma Paftaları", "Manyetik Matkap Kovan ve Uçları"],
-    badge: "Talaşlı İmalat"
+    description: "HSS ve kobalt matkap uçları, kademeli uçlar, kılavuz ve paftalar, manyetik matkap ve uçları.",
+    items: ["HSS ve kobalt matkap uçları", "Makine ve el kılavuzları", "Pafta ve pafta kolları", "Manyetik matkap ve kesicileri"],
   },
   {
     id: 20,
     title: "Testere Profil Kesme, Karot ve Sarf Malzemeleri",
     category: "Kesici & Aşındırıcı",
-    image: "/images/products/product_20.jpg",
-    description: "Şerit testereler, daire testereler, bimetal pançlar, elmas karot uçları ve profil kesme tezgahları.",
-    items: ["Bimetal Şerit Testere Bıçakları", "Alüminyum ve Çelik Kesim Daire Testereler", "HSS & Elmas Uçlu Delik Testereleri (Panç)", "Beton & Asfalt Elmas Karot Uçları"],
-    badge: "Temiz ve Hızlı Kesim"
+    description: "Profil kesme makineleri, şerit ve daire testereler, delik testereleri, karot makineleri ve elmas uçlar.",
+    items: ["Profil kesme makineleri", "Şerit ve daire testereler", "Delik testereleri (panç)", "Karot makinesi ve elmas uçlar"],
   },
   {
     id: 21,
     title: "Kesme ve Taşlama Taşları",
     category: "Kesici & Aşındırıcı",
-    image: "/images/products/product_21.jpg",
-    description: "Karbosan ve yüksek performanslı metal kesme diskleri, çapak alma taşları ve sabit tezgah taşlama taşları.",
-    items: ["115, 180, 230 mm Metal Kesme Taşları", "Inox Paslanmaz Özel İnce Kesiciler", "Kalın Taşlama ve Çapak Alma Taşları", "Karbür & Korunt Tezgah Bileme Taşları"],
-    badge: "Yüksek Dayanım"
+    description: "Metal ve paslanmaz kesme diskleri, taşlama taşları ve tezgah taşları.",
+    items: ["Metal kesme diskleri", "İnox (paslanmaz) kesme diskleri", "Taşlama taşları", "Tezgah ve parmak taşlar"],
   },
   {
     id: 22,
     title: "Aşındırıcı Ürünler",
     category: "Kesici & Aşındırıcı",
-    image: "/images/products/product_22.jpg",
-    description: "Flap diskler, zımpara ruloları, cırtlı diskler, mop zımparalar, scotch keçeler ve tel fırçalar.",
-    items: ["Zirkonyum ve Seramik Flap Diskler", "Sonsuz Bant Zımpara Çeşitleri", "Saplı ve Flanşlı Mop Zımparalar", "Çanak ve Dairesel Tel Fırçalar"],
-    badge: "Pürüzsüz Yüzey"
+    description: "Flap diskler, zımpara kağıtları ve ruloları, fiber diskler, keçeler ve tel fırçalar.",
+    items: ["Flap diskler", "Zımpara kağıdı ve ruloları", "Fiber ve cırtlı diskler", "Tel fırçalar"],
   },
   {
     id: 23,
     title: "Yıkama ve Yağlama Ekipmanları",
     category: "Sanayi & Yapı",
-    image: "/images/products/product_23.jpg",
-    description: "Sıcak/soğuk basınçlı oto-fabrika yıkama makineleri, havalı gres pompaları, yağ boşaltma tankları ve köpük tankları.",
-    items: ["200 - 250 Bar Yüksek Basınçlı Yıkamalar", "Pnömatik Sabit ve Mobil Yağ Pompaları", "Karter Yağ Emme ve Boşaltma Üniteleri", "Sanayi Tipi Islak Kuru Süpürgeler"],
-    badge: "Endüstriyel Bakım"
+    description: "Basınçlı yıkama makineleri, endüstriyel süpürgeler, gres pompaları ve yağ boşaltma üniteleri.",
+    items: ["Basınçlı yıkama makineleri", "Islak / kuru endüstriyel süpürgeler", "Gres ve yağ pompaları", "Yağ boşaltma üniteleri"],
   },
   {
     id: 24,
     title: "Kompresör-Airles Boya Makinası",
     category: "Sanayi & Yapı",
-    image: "/images/products/product_24.jpg",
-    description: "Pistonlu ve vidalı hava kompresörleri, airless havasız yüksek basınçlı boya püskürtme makineleri ve kurutucular.",
-    items: ["50 - 500 Litre Pistonlu Kompresörler", "Vidalı Sessiz Endüstriyel Kompresörler", "Hidrolik & Elektrikli Airless Pompalar", "Basınçlı Hava Kurutucuları ve Tanklar"],
-    badge: "Kesintisiz Güç"
+    description: "Pistonlu ve vidalı hava kompresörleri, airless boya makineleri ve basınçlı hava ekipmanları.",
+    items: ["Pistonlu kompresörler", "Vidalı kompresörler", "Airless boya makineleri", "Seyyar kompresörler"],
   },
   {
     id: 25,
     title: "Endüstriyel Kimyasal ve Yapıştırıcılar",
-    category: "Kimyasal & Sarf",
-    image: "/images/products/product_25.jpg",
-    description: "Civata sabitleyiciler, rulman yapıştırıcılar, sıvı contalar, pas sökücüler, balata spreyleri ve silikon/mastikler.",
-    items: ["Loctite & 404 Cıvata Sabitleyiciler", "Yüksek Isı Sıvı Sıvı Contalar", "Endüstriyel Pas Sökücü & Yağlayıcı Spreyler", "Poliüretan Mastik ve Silikon Grupları"],
-    badge: "Kimyasal Güvence"
+    category: "Kimyasal & Ambalaj",
+    description: "Cıvata sabitleyiciler, sıvı contalar, yapıştırıcılar, silikon ve mastikler, bakım spreyleri.",
+    items: ["Cıvata sabitleyici ve sıvı contalar", "Endüstriyel yapıştırıcılar", "Silikon ve mastikler", "Pas sökücü ve bakım spreyleri"],
   },
   {
     id: 26,
     title: "Sanayi Bantları ve Ambalaj Ürünleri",
-    category: "Kimyasal & Sarf",
-    image: "/images/products/product_26.jpg",
-    description: "Koli bantları, maskeleme bantları, çift taraflı köpük bantlar, çemberleme makineleri ve streç filmler.",
-    items: ["Sıcak & Soğuk Tutkal Koli Bantları", "Oto Fırın Maskeleme Kağıt Bantları", "Ağır Yük Çift Taraflı Akrilik Bantlar", "Palet Streçleri ve Çember Tokaları"],
-    badge: "Ambalaj Çözümleri"
+    category: "Kimyasal & Ambalaj",
+    description: "Koli, maskeleme, izolasyon ve çift taraflı bantlar; streç film ve çemberleme ürünleri.",
+    items: ["Koli ve maskeleme bantları", "İzolasyon ve ikaz bantları", "Çift taraflı bantlar", "Streç film ve çemberleme"],
   },
   {
     id: 27,
     title: "Aspiratör Mengene İşkence ve Boya Sarf Malzemeleri",
     category: "Sanayi & Yapı",
-    image: "/images/products/product_27.jpg",
-    description: "Döküm demirci mengeneleri, fırdöndülü marangoz işkenceleri, salyangoz aspiratörler ve rulo boya gereçleri.",
-    items: ["Dövme Çelik Döner Tablalı Mengeneler", "F Tipi & C Tipi Ağır Hizmet İşkenceler", "Sanayi Tipi Salyangoz Havalandırma Fanları", "Epoksi ve Sentetik Boya Ruloları"],
-    badge: "Sağlam Donanım"
+    description: "Aspiratör ve fanlar, mengeneler, işkenceler, boya rulo ve fırçaları, mala ve spatulalar.",
+    items: ["Aspiratör ve fanlar", "Tezgah ve boru mengeneleri", "İşkence çeşitleri", "Boya rulo, fırça ve spatulalar"],
   },
   {
     id: 28,
     title: "Sanayi Tekerleri",
     category: "Sanayi & Yapı",
-    image: "/images/products/product_28.jpg",
-    description: "Ağır sanayi taşıma tekerleri, poliüretan, polyamid, döküm ve kauçuk tablalı/frenli döner tekerlekler.",
-    items: ["500 - 2000 kg Ağır Yük Tekerleri", "Aşınmaz Poliüretan Kaplamalı Tekerlekler", "Frenli & Sabit Çelik Maşalı Döner Tekerler", "Isıya Dayanıklı Fırın Tekerlekleri"],
-    badge: "Yüksek Taşıma Gücü"
+    description: "Poliüretan, kauçuk, poliamid ve döküm tekerlekler; sabit, döner ve frenli tablalı modeller.",
+    items: ["Poliüretan tekerlekler", "Kauçuk ve poliamid tekerlekler", "Döner ve frenli tablalı tekerler", "Ağır yük tekerlekleri"],
   },
   {
     id: 29,
     title: "Merdiven, İnş. Makinaları ve İnş. El Aletleri",
     category: "Sanayi & Yapı",
-    image: "/images/products/product_29.jpg",
-    description: "Alüminyum endüstriyel merdivenler, beton perdah (helikopter) makineleri, kompaktörler, demir kesme ve bükme aletleri.",
-    items: ["A Tipi & Sürgülü Güvenlikli Merdivenler", "Benzinli Beton Vibratörleri ve Helikopterler", "Manuel & Hidrolik İnşaat Demiri Makasları", "Şantiye Su Pompaları ve Harç Tekneleri"],
-    badge: "Şantiye Standardı"
+    description: "Alüminyum merdivenler, beton perdah ve kesme makineleri, demir kesme aletleri ve inşaat el aletleri.",
+    items: ["Alüminyum merdivenler", "Beton perdah ve kesme makineleri", "Demir kesme makasları", "Kazma, kürek ve inşaat aletleri"],
   },
   {
     id: 30,
     title: "Domak Pompa ve Sufil Ürünleri",
     category: "Tesisat & Pnömatik",
-    image: "/images/products/product_30.jpg",
-    description: "Domak hidroforlar, kademeli santrifüj su pompaları, derin kuyu dalgıç pompaları ve su arıtma filtre sistemleri.",
-    items: ["Domak Santrifüj & Kademeli Su Pompaları", "Otomatik Paket Hidrofor Sistemleri", "Foseptik ve Drenaj Dalgıç Pompaları", "Sufil Endüstriyel Su Arıtma ve Filtreleri"],
-    badge: "Yetkili Bölge Bayisi"
-  }
+    description: "Domak santrifüj, kademeli ve dalgıç pompalar, hidroforlar; Sufil su filtreleri ve arıtma ürünleri.",
+    items: ["Santrifüj ve kademeli pompalar", "Hidrofor sistemleri", "Dalgıç ve drenaj pompaları", "Sufil su filtreleri"],
+  },
 ];
+
+export const PRODUCT_GROUPS: ProductGroup[] = RAW.map((p) => ({
+  ...p,
+  slug: slugify(p.title),
+  image: `/images/products/product_${p.id}.jpg`,
+}));
+
+export function getProduct(slug: string) {
+  return PRODUCT_GROUPS.find((p) => p.slug === slug);
+}
+
+export function getRelated(product: ProductGroup, limit = 3) {
+  return PRODUCT_GROUPS.filter((p) => p.category === product.category && p.id !== product.id).slice(0, limit);
+}
+
+/** Ana sayfa sahneleri için öne çıkan gruplar */
+export const FEATURED_IDS = [1, 4, 6, 12, 15, 30];

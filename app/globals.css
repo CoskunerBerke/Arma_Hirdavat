@@ -2,59 +2,146 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 15, 23, 42;
-  --background-rgb: 248, 250, 252;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background-color: rgb(var(--background-rgb));
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  overflow-x: hidden;
-}
-
-/* Yorum Nehri - Sağdan Sola Kesintisiz Marquee (Hover esnasında asla durmaz!) */
-@keyframes marqueeRiver {
-  0% {
-    transform: translateX(0%);
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
-  100% {
-    transform: translateX(-50%);
+
+  body {
+    @apply bg-ink-900 text-fg antialiased;
+    font-feature-settings: "cv11", "ss01";
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(110, 156, 242, 0.35);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid #6e9cf2;
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
-.animate-marquee-river {
-  display: flex;
-  width: max-content;
-  animation: marqueeRiver 42s linear infinite !important;
+@layer components {
+  /* Ortak kapsayıcı */
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Cam kart (referans sitedeki glass card) */
+  .glass {
+    @apply rounded-3xl border border-white/10 bg-ink-850/70 backdrop-blur-2xl;
+    box-shadow: 0 25px 60px -20px rgba(0, 0, 0, 0.7), 0 0 30px -12px rgba(110, 156, 242, 0.18);
+  }
+
+  .surface {
+    @apply rounded-2xl border border-white/[0.08] bg-ink-850;
+  }
+
+  /* Butonlar */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200;
+  }
+
+  .btn-accent {
+    @apply btn bg-brand-accent text-ink-950 hover:bg-brand-accent-hover;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 bg-white/[0.04] text-fg hover:border-white/30 hover:bg-white/[0.08];
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand-soft;
+  }
+
+  .section {
+    @apply py-20 sm:py-24;
+  }
+
+  /* Ürün fotoğrafları beyaz zeminli kolajlar: koyu tema içinde "fotoğraf çerçevesi" gibi sunulur */
+  .photo-well {
+    @apply relative overflow-hidden rounded-xl bg-[#F3F5F8] ring-1 ring-black/5;
+  }
+
+  /* Menü linki ışıması (referans: header-planet-theme) */
+  .nav-link {
+    @apply relative pb-1 text-[15px] font-medium text-fg/85 transition-colors duration-200;
+  }
+  .nav-link:hover {
+    @apply text-white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+  }
+  .nav-link[aria-current="page"] {
+    @apply font-semibold text-white;
+    text-shadow: 0 0 12px rgba(110, 156, 242, 0.6);
+  }
+  .nav-link[aria-current="page"]::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full bg-brand-soft;
+    box-shadow: 0 0 10px rgba(110, 156, 242, 0.8);
+  }
 }
 
-/* Kullanıcı üzerine geldiğinde akışın kesintisiz devam etmesi kuralı */
-.animate-marquee-river:hover,
-.animate-marquee-river * {
-  animation-play-state: running !important;
+@keyframes progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }
 
-/* Özel ince kaydırma çubuğu */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* Kaydırınca beliren içerik */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
+/* Sahne kartı geçişi */
+.scene-out {
+  opacity: 0;
+  transform: translateY(8px) scale(0.985);
+  filter: blur(6px);
+}
+.scene-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+/* Koyu tema harita */
+.map-dark {
+  filter: invert(90%) hue-rotate(180deg) saturate(0.6) brightness(0.95);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* Hareket hassasiyeti olan kullanıcılar için tüm animasyonları kapat (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .river-track {
+    animation: none !important;
+  }
+  .river-viewport {
+    overflow-x: auto;
+  }
 }
