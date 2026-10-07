@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
-import GlobeCanvas from "./GlobeCanvas";
 import { FEATURED_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const SCENES = FEATURED_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -56,10 +55,24 @@ export default function SceneHero() {
         if (e.key === "ArrowLeft") go(index - 1);
       }}
     >
-      {/* Açık zemin + yumuşak mavi ışıma + nokta ızgara */}
-      <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,#FFFFFF_0%,#F5F7FA_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_55%_at_75%_45%,rgba(0,80,230,0.10),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 [background-image:radial-gradient(#C9D2DE_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(70%_60%_at_60%_40%,#000,transparent)]" />
+      {/* Tam arka plan: döngüde oynayan drone videosu */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 -z-30 h-full w-full object-cover object-[50%_55%]"
+        src="/videos/hero-drone.mp4"
+        poster="/videos/hero-drone-poster.jpg"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-hidden
+      />
+      {/* Açık örtü: solda yazılar okunsun diye beyaz, sağda video net görünsün */}
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-white/45 lg:bg-[linear-gradient(90deg,rgba(255,255,255,0.85)_0%,rgba(255,255,255,0.45)_42%,rgba(255,255,255,0)_68%)]" />
+      {/* Üst ve alt yumuşak geçiş — sonraki bölümün açık zeminine kaynaşır */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-white/50 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-canvas via-canvas/70 to-transparent" />
 
       <div className="container-x flex min-h-[calc(100svh-72px)] flex-col py-6 sm:py-8">
         {/* Üst satır */}
@@ -117,41 +130,20 @@ export default function SceneHero() {
             </div>
           </article>
 
-          {/* Video: döngüde oynayan drone çekimi + arkada dönen küre */}
-          <div className="relative order-1 lg:order-2 lg:col-span-6 xl:col-span-6">
-            <GlobeCanvas tint="0, 80, 230" className="pointer-events-none absolute left-1/2 top-1/2 hidden h-[135%] w-[135%] -translate-x-1/2 -translate-y-1/2 lg:block" />
-            <div className="pointer-events-none absolute left-1/2 top-1/2 h-3/4 w-3/4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/20 blur-3xl" />
-
-            <div className="relative mx-auto w-full max-w-[460px]">
-              <div className="overflow-hidden rounded-[28px] bg-ink shadow-[0_40px_80px_-30px_rgba(15,27,45,0.55)] ring-1 ring-black/5">
-                <video
-                  ref={videoRef}
-                  className="block aspect-[4/3] w-full object-cover object-[50%_58%] lg:aspect-[4/5]"
-                  src="/videos/hero-drone.mp4"
-                  poster="/videos/hero-drone-poster.jpg"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                  aria-label="Arma Hırdavat binasının drone ile çekilmiş görüntüsü"
-                />
+          {/* Sağ taraf: video arka planda net görünür, üzerinde yüzen bilgi kartları */}
+          <div className="relative hidden h-full min-h-[420px] lg:order-2 lg:col-span-6 lg:block" aria-hidden>
+            <div className="absolute right-0 top-[12%] animate-float-fast">
+              <div className="glass rounded-2xl px-4 py-3">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-ink-muted">Ürün grubu</p>
+                <p className="mt-0.5 text-sm font-semibold text-ink">30 kategori</p>
               </div>
-
-              {/* Yüzen bilgi kartları */}
-              <div className="absolute -left-6 bottom-10 hidden animate-float-slow sm:block">
-                <div className="glass rounded-2xl px-4 py-3">
-                  <p className="text-[11px] font-medium uppercase tracking-wider text-ink-muted">Merkez</p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-ink">
-                    <MapPin className="h-3.5 w-3.5 text-brand" aria-hidden /> Tekkeköy / Samsun
-                  </p>
-                </div>
-              </div>
-              <div className="absolute -right-5 top-10 hidden animate-float-fast sm:block">
-                <div className="glass rounded-2xl px-4 py-3">
-                  <p className="text-[11px] font-medium uppercase tracking-wider text-ink-muted">Ürün grubu</p>
-                  <p className="mt-0.5 text-sm font-semibold text-ink">30 kategori</p>
-                </div>
+            </div>
+            <div className="absolute bottom-[14%] right-[30%] animate-float-slow">
+              <div className="glass rounded-2xl px-4 py-3">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-ink-muted">Merkez</p>
+                <p className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-ink">
+                  <MapPin className="h-3.5 w-3.5 text-brand" aria-hidden /> Tekkeköy / Samsun
+                </p>
               </div>
             </div>
           </div>
