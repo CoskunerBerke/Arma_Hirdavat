@@ -84,9 +84,14 @@ export default function SceneHero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
             </span>
-            <h1 className="text-xs font-semibold text-white sm:text-[13px]">Samsun Teknik Hırdavat ve Fabrika Malzemeleri</h1>
+            <span className="rounded bg-brand/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-300">
+              B2B
+            </span>
+            <h1 className="text-xs font-semibold text-white sm:text-[13px]">
+              Yalnızca Toptan ve Endüstriyel Çözümler
+            </h1>
             <span className="hidden items-center gap-1 text-xs text-slate-300 sm:inline-flex">
-              <MapPin className="h-3 w-3 text-brand" aria-hidden /> Tekkeköy
+              <MapPin className="h-3 w-3 text-brand" aria-hidden /> Samsun / Tekkeköy
             </span>
           </div>
 
@@ -144,12 +149,10 @@ export default function SceneHero() {
                 <p className="mt-0.5 text-sm font-semibold text-white">30 kategori</p>
               </div>
             </div>
-            <div className="absolute bottom-[14%] right-[30%] animate-float-slow">
+            <div className="absolute bottom-[14%] right-[25%] animate-float-slow">
               <div className="rounded-2xl border border-white/15 bg-slate-950/75 px-4 py-3 text-white shadow-xl backdrop-blur-xl">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Merkez</p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-white">
-                  <MapPin className="h-3.5 w-3.5 text-blue-400" aria-hidden /> Tekkeköy / Samsun
-                </p>
+                <p className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Kurumsal Alım</p>
+                <p className="mt-0.5 text-sm font-semibold text-white">Hacimli İskonto Avantajı</p>
               </div>
             </div>
           </div>
