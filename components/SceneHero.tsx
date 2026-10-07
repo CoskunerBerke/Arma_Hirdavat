@@ -72,9 +72,9 @@ export default function SceneHero() {
       {/* Sinematik kontrast örtüsü: Solda kartın ve yazıların net okunması için koyu ton, sağda videonun canlı ve net görünmesi için transparan */}
       <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/40 lg:bg-[linear-gradient(90deg,rgba(11,21,40,0.88)_0%,rgba(11,21,40,0.65)_45%,rgba(11,21,40,0.20)_75%,rgba(11,21,40,0.35)_100%)]" />
 
-      {/* Üstte hafif koyuluk, altta sonraki açık renkli ürün bölümüne yumuşak geçiş */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-slate-950/60 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-canvas via-canvas/60 to-transparent" />
+      {/* Üstte ve altta hafif sinematik koyuluk — kontrollerin ve yazının net görünmesi için */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-slate-950/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-slate-950/80 to-transparent" />
 
       <div className="container-x flex min-h-[calc(100svh-72px)] flex-col py-6 sm:py-8">
         {/* Üst satır */}
