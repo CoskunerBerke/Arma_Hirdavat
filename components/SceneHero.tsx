@@ -34,12 +34,18 @@ export default function SceneHero() {
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  // Bazı tarayıcılarda autoplay için muted özelliğinin JS ile de set edilmesi gerekir
+  // Safari (iOS), Chrome ve mobil tarayıcılarda sorunsuz sessiz video oynatma
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = true;
-    v.play().catch(() => {});
+    v.defaultMuted = true;
+    v.setAttribute("playsinline", "true");
+    v.setAttribute("webkit-playsinline", "true");
+    const playPromise = v.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
   }, []);
 
   const p = SCENES[index];
@@ -76,7 +82,7 @@ export default function SceneHero() {
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-slate-950/70 to-transparent" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-slate-950/80 to-transparent" />
 
-      <div className="container-x flex min-h-[calc(100svh-72px)] flex-col py-6 sm:py-8">
+      <div className="container-x flex flex-col justify-between py-6 sm:py-8 lg:min-h-[calc(100svh-72px)]">
         {/* Üst satır */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-slate-950/70 px-3.5 py-1.5 shadow-lg backdrop-blur-md">
@@ -84,8 +90,8 @@ export default function SceneHero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
             </span>
-            <span className="rounded bg-brand/30 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-300">
-              B2B
+            <span className="rounded bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-300">
+              TOPTAN
             </span>
             <h1 className="text-xs font-semibold text-white sm:text-[13px]">
               Yalnızca Toptan ve Endüstriyel Çözümler
@@ -151,20 +157,20 @@ export default function SceneHero() {
             </div>
             <div className="absolute bottom-[14%] right-[25%] animate-float-slow">
               <div className="rounded-2xl border border-white/15 bg-slate-950/75 px-4 py-3 text-white shadow-xl backdrop-blur-xl">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-blue-400">Kurumsal Alım</p>
-                <p className="mt-0.5 text-sm font-semibold text-white">Hacimli İskonto Avantajı</p>
+                <p className="text-[11px] font-medium uppercase tracking-wider text-amber-300">Toptan Satış</p>
+                <p className="mt-0.5 text-sm font-semibold text-white">Toplu Alım İskontosu</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Sahne gezinmesi */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 pt-6 pb-2 sm:gap-4 sm:pb-4">
           <button
             type="button"
             onClick={() => go(index - 1)}
             aria-label="Önceki ürün grubu"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40 touch-manipulation"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -191,7 +197,7 @@ export default function SceneHero() {
             type="button"
             onClick={() => go(index + 1)}
             aria-label="Sonraki ürün grubu"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40 touch-manipulation"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
