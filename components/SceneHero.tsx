@@ -1,40 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
-import { FEATURED_IDS, PRODUCT_GROUPS } from "@/data/products";
-
-const SCENES = FEATURED_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
-const DURATION = 7000;
+import { ArrowRight, ClipboardList, MapPin } from "lucide-react";
+import RfqTriggerButton from "./RfqTriggerButton";
 
 export default function SceneHero() {
-  const [index, setIndex] = useState(0);
-  const [shown, setShown] = useState(true);
-  const [paused, setPaused] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout>>();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const go = useCallback((next: number) => {
-    const target = (next + SCENES.length) % SCENES.length;
-    setShown(false);
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      setIndex(target);
-      setShown(true);
-    }, 220);
-  }, []);
-
-  // Otomatik geçiş — fareyle üzerine gelince / klavyeyle odaklanınca durur
-  useEffect(() => {
-    if (paused) return;
-    const t = setTimeout(() => go(index + 1), DURATION);
-    return () => clearTimeout(t);
-  }, [index, paused, go]);
-
-  useEffect(() => () => clearTimeout(timer.current), []);
-
-  // Safari (iOS), Chrome ve mobil tarayıcılarda sorunsuz sessiz video oynatma
+  // Safari (iOS), Chrome ve tüm mobil tarayıcılarda sorunsuz sessiz video oynatma
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
@@ -48,23 +22,15 @@ export default function SceneHero() {
     }
   }, []);
 
-  const p = SCENES[index];
-  const num = (n: number) => String(n).padStart(2, "0");
-
   return (
     <section
-      aria-roledescription="carousel"
-      aria-label="Öne çıkan ürün grupları"
-      className="relative isolate overflow-hidden"
-      onKeyDown={(e) => {
-        if (e.key === "ArrowRight") go(index + 1);
-        if (e.key === "ArrowLeft") go(index - 1);
-      }}
+      aria-label="Arma Hırdavat Karşılama Ekranı"
+      className="relative isolate flex min-h-[calc(100svh-72px)] flex-col justify-end overflow-hidden pb-12 sm:pb-16 lg:pb-20"
     >
-      {/* Tam arka plan: döngüde oynayan drone videosu */}
+      {/* Tam ekran arka plan drone videosu */}
       <video
         ref={videoRef}
-        className="absolute inset-0 -z-30 h-full w-full object-cover object-[50%_55%]"
+        className="absolute inset-0 -z-30 h-full w-full object-cover object-center"
         src="/videos/hero-drone.mp4"
         poster="/videos/hero-drone-poster.jpg"
         autoPlay
@@ -75,143 +41,49 @@ export default function SceneHero() {
         aria-hidden
       />
 
-      {/* Sinematik kontrast örtüsü: Solda kartın ve yazıların net okunması için koyu ton, sağda videonun canlı ve net görünmesi için transparan */}
-      <div className="pointer-events-none absolute inset-0 -z-20 bg-slate-950/40 lg:bg-[linear-gradient(90deg,rgba(11,21,40,0.88)_0%,rgba(11,21,40,0.65)_45%,rgba(11,21,40,0.20)_75%,rgba(11,21,40,0.35)_100%)]" />
+      {/* Şık ve hafif sinematik karartma: Video canlı ve ferah görünür, yazılar kusursuz okunur */}
+      <div className="pointer-events-none absolute inset-0 -z-20 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-slate-950/40" />
 
-      {/* Üstte ve altta hafif sinematik koyuluk — kontrollerin ve yazının net görünmesi için */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-slate-950/70 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-slate-950/80 to-transparent" />
+      {/* Üstte hafif koyuluk (header geçişi için) */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-28 bg-gradient-to-b from-slate-950/70 to-transparent" />
 
-      <div className="container-x flex flex-col justify-between py-6 sm:py-8 lg:min-h-[calc(100svh-72px)]">
-        {/* Üst satır: B2B Portalı ve Perakende Uyarısı */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-slate-950/75 px-3.5 py-1.5 shadow-lg backdrop-blur-md">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
-            </span>
-            <span className="rounded bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-300">
-              B2B PORTAL
-            </span>
-            <h1 className="text-xs font-semibold text-white sm:text-[13px]">
-              Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı
-            </h1>
-            <span className="hidden items-center gap-1 text-xs text-slate-300 sm:inline-flex">
-              <MapPin className="h-3 w-3 text-brand" aria-hidden /> Samsun / Tekkeköy
-            </span>
-          </div>
-
-          <div className="hidden items-center gap-2 rounded-full border border-white/15 bg-slate-950/70 px-3.5 py-1.5 font-mono text-xs shadow-lg backdrop-blur-md sm:inline-flex" aria-live="polite">
-            <span className="font-bold text-blue-400">{num(index + 1)}</span>
-            <span className="text-slate-400">/ {num(SCENES.length)}</span>
-            <span className="ml-1 border-l border-white/20 pl-2 font-sans font-semibold text-slate-200">{p.category}</span>
-          </div>
+      {/* Ön plandaki sade, zarif içerik — Kapatıcı kutular ve karmaşık kartlar kaldırıldı */}
+      <div className="container-x relative z-10 max-w-4xl">
+        {/* Üst B2B Rozeti */}
+        <div className="inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-slate-950/60 px-4 py-1.5 shadow-xl backdrop-blur-md">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
+          </span>
+          <span className="text-xs font-semibold text-white sm:text-sm">
+            Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı
+          </span>
+          <span className="hidden items-center gap-1 text-xs text-slate-300 sm:inline-flex border-l border-white/20 pl-2.5">
+            <MapPin className="h-3 w-3 text-brand" /> Samsun / Tekkeköy
+          </span>
         </div>
 
-        {/* Ana sahne */}
-        <div className="grid flex-1 items-center gap-8 py-8 lg:grid-cols-12 lg:gap-10">
-          <article
-            aria-roledescription="slide"
-            aria-label={`${index + 1} / ${SCENES.length}: ${p.title}`}
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-            onFocusCapture={() => setPaused(true)}
-            onBlurCapture={() => setPaused(false)}
-            className={`rounded-3xl border border-white/15 bg-slate-950/80 p-6 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.65)] backdrop-blur-2xl transition-all duration-300 ease-out sm:p-8 lg:order-1 lg:col-span-7 xl:col-span-7 ${
-              shown ? "scene-in" : "scene-out"
-            }`}
-          >
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/20 px-3 py-1 text-xs font-semibold text-blue-300">
-                {p.category}
-              </span>
-              <span className="text-xs text-slate-400">
-                Tedarik: <strong className="text-slate-200">Koli • Palet • Tesis Ambalajı</strong>
-              </span>
-            </div>
+        {/* Ana Slogan */}
+        <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-5xl lg:text-6xl leading-[1.15]">
+          Yalnızca Toptan ve <br className="hidden sm:inline" />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-100 to-white">
+            Endüstriyel Çözümler
+          </span>
+        </h1>
 
-            <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">{p.title}</h2>
-            <p className="mt-3 text-base leading-relaxed text-slate-300">{p.description}</p>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg">
+          Üretim tesisleri, fabrikalar ve kurumsal işletmeler için koli ve palet bazında yüksek hacimli malzeme tedariği.
+        </p>
 
-            <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
-              {p.items.map((it) => (
-                <li key={it} className="flex items-start gap-2.5 rounded-xl border border-white/10 bg-white/5 p-3 text-sm text-slate-200 backdrop-blur-sm">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" aria-hidden />
-                  <span>{it}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href={`/urunler/${p.slug}`} className="btn-primary shadow-lg shadow-brand/30">
-                Ürün grubunu incele <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-              <Link href="/urunler" className="btn border border-white/20 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20">
-                30 ürün grubu
-              </Link>
-            </div>
-          </article>
-
-          {/* Sağ taraf: Marka & Ölçek Vurgusu (Image 1 Kurumsal Notu) ve Yüzen Kartlar */}
-          <div className="relative flex flex-col justify-center space-y-4 lg:order-2 lg:col-span-5" aria-hidden>
-            <div className="rounded-2xl border border-white/15 bg-slate-950/80 p-5 shadow-2xl backdrop-blur-xl">
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
-                <span className="h-2 w-2 rounded-full bg-amber-400" />
-                Kurumsal Satın Alma Prosedürü
-              </div>
-              <p className="mt-2.5 text-xs leading-relaxed text-slate-300 sm:text-[13px]">
-                &ldquo;Sistemimiz; Otomotiv yan sanayi, makine imalatı ve ağır sanayi kollarındaki (<strong>Sampa</strong>, <strong>Samsun Makina</strong>, <strong>Yeşilyurt</strong>, <strong>Rönesans</strong> vb.) tesislerin düzenli ve yüksek adetli satın alma prosedürlerine uygun olarak çalışmaktadır.&rdquo;
-              </p>
-              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-[11px] text-slate-400">
-                <span>Koli & Palet Bazlı Sevk</span>
-                <span className="font-semibold text-blue-400">İskonto Matrisi</span>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/15 bg-slate-950/70 p-4 shadow-xl backdrop-blur-xl">
-              <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Tedarik Kapsamı</p>
-              <p className="mt-1 text-sm font-semibold text-white">30 Sanayi Kategorisi • Özel Şartname Hazırlığı</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Sahne gezinmesi */}
-        <div className="flex items-center gap-3 pt-6 pb-2 sm:gap-4 sm:pb-4">
-          <button
-            type="button"
-            onClick={() => go(index - 1)}
-            aria-label="Önceki ürün grubu"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40 touch-manipulation"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          <div className="grid flex-1 grid-cols-6 gap-2">
-            {SCENES.map((s, i) => (
-              <button key={s.id} type="button" onClick={() => go(i)} aria-label={`${s.title} sahnesine geç`} aria-current={i === index} className="group text-left">
-                <span className="block h-[3px] overflow-hidden rounded-full bg-white/20">
-                  {i === index && (
-                    <span
-                      key={index}
-                      className="block h-full origin-left rounded-full bg-blue-500"
-                      style={{ animation: `progress ${DURATION}ms linear forwards`, animationPlayState: paused ? "paused" : "running" }}
-                    />
-                  )}
-                  {i < index && <span className="block h-full rounded-full bg-white/60" />}
-                </span>
-                <span className={`mt-2 hidden truncate text-xs transition-colors md:block ${i === index ? "font-semibold text-white" : "text-slate-400 group-hover:text-slate-200"}`}>
-                  {s.title}
-                </span>
-              </button>
-            ))}
-          </div>
-          <button
-            type="button"
-            onClick={() => go(index + 1)}
-            aria-label="Sonraki ürün grubu"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-slate-950/70 text-white shadow-md backdrop-blur-md transition hover:bg-slate-900 hover:border-white/40 touch-manipulation"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+        {/* Aksiyon Butonları */}
+        <div className="mt-8 flex flex-wrap items-center gap-4">
+          <Link href="/urunler" className="btn-primary py-3.5 px-7 shadow-xl shadow-brand/40 text-sm font-semibold">
+            30 Ürün Grubunu İncele <ArrowRight className="h-4 w-4" />
+          </Link>
+          <RfqTriggerButton className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50">
+            <ClipboardList className="h-4 w-4 text-blue-300" />
+            <span>Teklif Sepeti (RFQ)</span>
+          </RfqTriggerButton>
         </div>
       </div>
     </section>
