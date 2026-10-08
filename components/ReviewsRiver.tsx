@@ -17,7 +17,7 @@ export default function ReviewsRiver() {
         </h2>
       </div>
 
-      <div className="relative mt-12 overflow-hidden">
+      <div className="relative mt-12 overflow-hidden w-full max-w-full">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-canvas to-transparent sm:w-40" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-canvas to-transparent sm:w-40" />
 

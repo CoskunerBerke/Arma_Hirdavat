@@ -41,14 +41,14 @@ export default function ProductCatalog() {
   }, []);
 
   return (
-    <div className="grid gap-6 lg:gap-10 lg:grid-cols-12">
+    <div className="w-full max-w-full min-w-0 grid gap-6 lg:gap-10 lg:grid-cols-12">
       {/* Kenar filtre / Mobil Kategori Barı */}
-      <aside className="lg:col-span-3">
-        <div className="lg:sticky lg:top-24">
+      <aside className="w-full max-w-full min-w-0 lg:col-span-3">
+        <div className="w-full max-w-full min-w-0 lg:sticky lg:top-24">
           <label htmlFor="urun-ara" className="sr-only">
             Ürün veya kod ara
           </label>
-          <div className="relative">
+          <div className="relative w-full max-w-full">
             <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted" aria-hidden />
             <input
               id="urun-ara"
@@ -70,8 +70,30 @@ export default function ProductCatalog() {
             )}
           </div>
 
+          {/* Mobilde Hızlı Kategori Seçici Açılır Liste (Select) */}
+          <div className="mt-3 block lg:hidden">
+            <label htmlFor="mobile-category-select" className="block text-[11px] font-semibold text-ink-muted mb-1">
+              Kategori Filtrele:
+            </label>
+            <select
+              id="mobile-category-select"
+              value={category}
+              onChange={(e) => setCategory(e.target.value as CategoryName | "Tümü")}
+              className="w-full rounded-xl border border-line bg-white px-3 py-2.5 text-xs font-semibold text-ink focus:border-brand focus:outline-none shadow-2xs"
+            >
+              {(["Tümü", ...CATEGORIES] as const).map((c) => {
+                const count = c === "Tümü" ? PRODUCT_GROUPS.length : counts.get(c);
+                return (
+                  <option key={c} value={c}>
+                    {c} ({count} ürün)
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
           {/* Kategori Seçici: Mobilde kaydırılabilir hap butonlar, masaüstünde dikey liste */}
-          <div className="mt-4 flex gap-1.5 overflow-x-auto pb-2 scrollbar-thin lg:flex-col lg:gap-0.5 lg:overflow-visible">
+          <div className="mt-3 flex w-full max-w-full min-w-0 gap-1.5 overflow-x-auto pb-2 scrollbar-none touch-pan-x lg:mt-4 lg:flex-col lg:gap-0.5 lg:overflow-visible">
             {(["Tümü", ...CATEGORIES] as const).map((c) => {
               const active = category === c;
               const count = c === "Tümü" ? PRODUCT_GROUPS.length : counts.get(c);
@@ -110,7 +132,7 @@ export default function ProductCatalog() {
         </div>
       </aside>
 
-      <div className="lg:col-span-9 min-w-0">
+      <div className="w-full max-w-full min-w-0 lg:col-span-9">
         {/* B2B Toptan ve İskonto Matrisi Bilgilendirme Notu */}
         <div className="mb-4 sm:mb-6 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-3 sm:p-4 text-xs leading-relaxed text-slate-700">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">

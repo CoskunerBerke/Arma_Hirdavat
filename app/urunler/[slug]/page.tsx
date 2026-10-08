@@ -127,8 +127,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         ]}
       />
 
-      <section className="section py-8 sm:py-16">
-        <div className="container-x grid gap-8 lg:gap-12 lg:grid-cols-12">
+      <section className="section overflow-hidden w-full max-w-full py-8 sm:py-16">
+        <div className="container-x w-full max-w-full min-w-0 grid gap-8 lg:gap-12 lg:grid-cols-12">
           {/* Sol Kolon: Görsel + Teknik Detay Tablosu + Ürün Kalemleri */}
           <Reveal className="lg:col-span-7 min-w-0">
             {/* Ürün Görsel Kartı */}

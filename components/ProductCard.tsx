@@ -9,9 +9,9 @@ export default function ProductCard({ product, priority = false }: { product: Pr
   const primaryStandard = product.standards?.[0]?.split(":")?.[0] || product.standards?.[0];
 
   return (
-    <div className="surface group flex h-full flex-col p-2.5 sm:p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_40px_-20px_rgba(15,27,45,0.3)]">
-      <Link href={`/urunler/${product.slug}`} className="block">
-        <div className="photo-well relative aspect-square w-full rounded-xl bg-slate-50/50 p-2 sm:p-3">
+    <div className="surface group flex h-full flex-col p-2.5 sm:p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_20px_40px_-20px_rgba(15,27,45,0.3)] w-full max-w-full min-w-0 overflow-hidden">
+      <Link href={`/urunler/${product.slug}`} className="block w-full">
+        <div className="photo-well relative aspect-square w-full rounded-xl bg-slate-50/50 p-2 sm:p-3 overflow-hidden">
           <Image
             src={product.image}
             alt={product.title}

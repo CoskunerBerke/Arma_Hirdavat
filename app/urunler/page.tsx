@@ -35,8 +35,8 @@ export default function ProductsPage() {
         description="FABA Kastamonu OSB tesislerinde üretilen işçi eldivenleri, köpük nitril, kesilmez eldivenler, kaynak eldivenleri ve Tip 3B/4B kimyasal koruyucu tulumlar. Koli ve palet bazlı kurumsal sipariş oluşturabilirsiniz."
         crumbs={[{ label: "Ürünler", href: "/urunler" }]}
       />
-      <section className="section">
-        <div className="container-x">
+      <section className="section overflow-hidden w-full max-w-full">
+        <div className="container-x w-full max-w-full min-w-0">
           <ProductCatalog />
         </div>
       </section>
