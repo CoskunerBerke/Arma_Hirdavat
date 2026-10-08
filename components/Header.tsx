@@ -37,14 +37,21 @@ export default function Header() {
   const isDarkHero = pathname === "/" && !scrolled;
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full backdrop-blur-xl transition-all duration-300 ${
-        isDarkHero
-          ? "border-b border-white/10 bg-slate-950/70 text-white"
-          : "border-b border-line bg-white/95 text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
-      }`}
-    >
-      <div className="container-x flex h-[72px] items-center justify-between gap-4 sm:gap-6">
+    <header className="sticky top-0 z-50 w-full transition-colors duration-300">
+      {/* Arka plan katmanı — backdrop-blur buraya uygulanır, böylece header fixed menüyü 0px yapmaz */}
+      <div
+        className={`absolute inset-0 -z-10 transition-all duration-300 ${
+          open
+            ? "border-b border-white/10 bg-slate-950 text-white"
+            : isDarkHero
+            ? "border-b border-white/10 bg-slate-950/75 backdrop-blur-xl text-white"
+            : "border-b border-line bg-white/95 backdrop-blur-xl text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
+        }`}
+      />
+
+      <div className={`container-x flex h-[72px] items-center justify-between gap-4 sm:gap-6 ${
+        isDarkHero || open ? "text-white" : "text-ink"
+      }`}>
         <Link href="/" className="group flex shrink-0 items-center" aria-label="Arma Hırdavat ana sayfa">
           <Image
             src="/images/logo.png"
@@ -149,7 +156,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[72px] z-50 overflow-y-auto bg-white lg:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[72px] z-50 overflow-y-auto bg-white text-ink shadow-2xl lg:hidden">
           <nav aria-label="Mobil menü" className="container-x flex flex-col py-6">
             <button
               type="button"
