@@ -16,7 +16,8 @@ export interface QuoteItem {
 
 interface QuoteContextType {
   items: QuoteItem[];
-  addItem: (item: Omit<QuoteItem, "id">) => void;
+  addItem: (item: Omit<QuoteItem, "id">, openModal?: boolean) => void;
+  addMultipleItems: (items: Omit<QuoteItem, "id">[], openModal?: boolean) => void;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, qty: number) => void;
   updateUnit: (id: string, unit: SupplyUnit) => void;
@@ -24,6 +25,7 @@ interface QuoteContextType {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   totalCount: number;
+  lastAdded: { title: string; unit: string; qty: number } | null;
 }
 
 const QuoteContext = createContext<QuoteContextType | undefined>(undefined);
@@ -34,6 +36,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<QuoteItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [lastAdded, setLastAdded] = useState<{ title: string; unit: string; qty: number } | null>(null);
 
   useEffect(() => {
     try {
@@ -56,7 +59,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, loaded]);
 
-  const addItem = (item: Omit<QuoteItem, "id">) => {
+  const addItem = (item: Omit<QuoteItem, "id">, openModal = false) => {
     const id = `${item.productSlug || item.productTitle}_${item.unit}_${item.spec || "genel"}`;
     setItems((prev) => {
       const existing = prev.find((x) => x.id === id);
@@ -65,7 +68,42 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
       }
       return [...prev, { ...item, id, quantity: item.quantity || 1 }];
     });
-    setIsOpen(true);
+    setLastAdded({
+      title: item.spec ? `${item.productTitle} (${item.spec})` : item.productTitle,
+      unit: item.unit,
+      qty: item.quantity || 1,
+    });
+    if (openModal) {
+      setIsOpen(true);
+    }
+  };
+
+  const addMultipleItems = (newItems: Omit<QuoteItem, "id">[], openModal = false) => {
+    if (newItems.length === 0) return;
+    setItems((prev) => {
+      let current = [...prev];
+      for (const item of newItems) {
+        const id = `${item.productSlug || item.productTitle}_${item.unit}_${item.spec || "genel"}`;
+        const existingIndex = current.findIndex((x) => x.id === id);
+        if (existingIndex >= 0) {
+          current[existingIndex] = {
+            ...current[existingIndex],
+            quantity: current[existingIndex].quantity + (item.quantity || 1),
+          };
+        } else {
+          current.push({ ...item, id, quantity: item.quantity || 1 });
+        }
+      }
+      return current;
+    });
+    setLastAdded({
+      title: `${newItems.length} Kalem Malzeme`,
+      unit: "Toplu",
+      qty: newItems.reduce((acc, x) => acc + (x.quantity || 1), 0),
+    });
+    if (openModal) {
+      setIsOpen(true);
+    }
   };
 
   const removeItem = (id: string) => {
@@ -95,6 +133,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
       value={{
         items,
         addItem,
+        addMultipleItems,
         removeItem,
         updateQuantity,
         updateUnit,
@@ -102,6 +141,7 @@ export function QuoteProvider({ children }: { children: React.ReactNode }) {
         isOpen,
         setIsOpen,
         totalCount,
+        lastAdded,
       }}
     >
       {children}

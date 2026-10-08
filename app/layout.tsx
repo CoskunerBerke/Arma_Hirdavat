@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCall from "@/components/FloatingCall";
+import FloatingQuoteBar from "@/components/FloatingQuoteBar";
 import { QuoteProvider } from "@/components/QuoteContext";
 import RfqModal from "@/components/RfqModal";
 import { COMPANY, SITE_URL } from "@/data/company";
@@ -87,6 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <Footer />
           <FloatingCall />
+          <FloatingQuoteBar />
           <RfqModal />
         </QuoteProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />

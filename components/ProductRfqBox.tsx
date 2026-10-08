@@ -12,23 +12,26 @@ const UNITS: { label: SupplyUnit; desc: string }[] = [
 ];
 
 export default function ProductRfqBox({ product }: { product: ProductGroup }) {
-  const { addItem } = useQuote();
+  const { addItem, setIsOpen, items } = useQuote();
   const [selectedUnit, setSelectedUnit] = useState<SupplyUnit>("Koli");
   const [quantity, setQuantity] = useState<number>(50);
   const [spec, setSpec] = useState<string>("");
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
-    addItem({
-      productId: product.id,
-      productSlug: product.slug,
-      productTitle: product.title,
-      unit: selectedUnit,
-      quantity: Number(quantity) || 1,
-      spec: spec.trim() || undefined,
-    });
+    addItem(
+      {
+        productId: product.id,
+        productSlug: product.slug,
+        productTitle: product.title,
+        unit: selectedUnit,
+        quantity: Number(quantity) || 1,
+        spec: spec.trim() || undefined,
+      },
+      false // Do not force open modal!
+    );
     setAdded(true);
-    setTimeout(() => setAdded(false), 2500);
+    setTimeout(() => setAdded(false), 3000);
   };
 
   return (
@@ -94,6 +97,29 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
         </div>
       </div>
 
+      {/* Hızlı Çeşit Önerileri (Tıkla ve Seç) */}
+      {product.items && product.items.length > 0 && (
+        <div className="mt-3">
+          <p className="text-[11px] text-ink-muted mb-1.5">Hızlı Çeşit Seç:</p>
+          <div className="flex flex-wrap gap-1.5">
+            {product.items.slice(0, 4).map((it) => (
+              <button
+                key={it}
+                type="button"
+                onClick={() => setSpec(it)}
+                className={`rounded-lg border px-2 py-1 text-[11px] transition ${
+                  spec === it
+                    ? "border-brand bg-brand text-white font-semibold"
+                    : "border-line bg-slate-50 text-ink-soft hover:border-brand/40 hover:text-ink"
+                }`}
+              >
+                + {it}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Sepete Ekle Butonu */}
       <div className="mt-5">
         <button
@@ -104,7 +130,7 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
           {added ? (
             <>
               <Check className="h-4 w-4 text-emerald-300" />
-              <span>Teklif Sepetine Eklendi!</span>
+              <span>Sepete Eklendi! (Seçmeye Devam Edebilirsiniz)</span>
             </>
           ) : (
             <>
@@ -113,6 +139,19 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
             </>
           )}
         </button>
+
+        {items.length > 0 && (
+          <div className="mt-2.5 flex items-center justify-between text-xs">
+            <span className="text-ink-muted">Sepette {items.length} kalem ürün var</span>
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              className="font-semibold text-brand hover:underline"
+            >
+              Sepeti Görüntüle ve Teklif Gönder &rarr;
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Image 3 Sistem Notu */}

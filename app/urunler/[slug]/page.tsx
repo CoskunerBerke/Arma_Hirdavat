@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, CheckCircle2, Mail, Phone } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import ProductCard from "@/components/ProductCard";
+import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
 import Reveal from "@/components/Reveal";
 import { COMPANY } from "@/data/company";
@@ -53,19 +54,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               </div>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-line bg-white p-6">
-              <h2 className="text-xl font-semibold text-ink">Bu grupta neler var?</h2>
-              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                {p.items.map((it) => (
-                  <li key={it} className="flex items-start gap-3 text-[15px] text-ink">
-                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
-                    {it}
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 text-sm leading-relaxed text-ink-muted">
-                Ölçü, adet ve marka tercihlerinize göre stok durumu ve firmanıza özel iskonto matrisi için teklif listesine ekleyebilir veya bize doğrudan ulaşabilirsiniz.
-              </p>
+            <div className="mt-8">
+              <ProductItemsSelector productTitle={p.title} productSlug={p.slug} items={p.items} />
             </div>
           </Reveal>
 
