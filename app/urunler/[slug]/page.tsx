@@ -8,7 +8,7 @@ import ProductCard from "@/components/ProductCard";
 import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
 import Reveal from "@/components/Reveal";
-import { COMPANY } from "@/data/company";
+import { COMPANY, SITE_URL } from "@/data/company";
 import { PRODUCT_GROUPS, getProduct, getRelated } from "@/data/products";
 
 export const dynamicParams = false;
@@ -20,11 +20,28 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getProduct(params.slug);
   if (!p) return {};
+  const title = `${p.title} Toptan Satış & Fiyat Teklifi | 81 İl Teslimat`;
+  const description = `${p.title} koli ve palet alımlarında kurumsal iskonto avantajları. ${p.description} Türkiye geneli 81 il OSB, fabrika ve şantiyelere doğrudan ambar sevkiyatı.`;
+
   return {
-    title: `${p.title} – Samsun`,
-    description: `${p.description} Arma Hırdavat, Tekkeköy / Samsun.`,
+    title,
+    description,
+    keywords: [
+      `toptan ${p.title.toLowerCase()}`,
+      `${p.title.toLowerCase()} toptan fiyat teklifi`,
+      `${p.title.toLowerCase()} 81 il sevkiyat`,
+      `koli palet ${p.title.toLowerCase()}`,
+      `${p.category.toLowerCase()} toptan alım`,
+      "toptan teknik hırdavat türkiye",
+      "osb fabrika malzemeleri tedarikçisi",
+    ],
     alternates: { canonical: `/urunler/${p.slug}` },
-    openGraph: { title: `${p.title} | Arma Hırdavat`, description: p.description, images: [{ url: p.image }] },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/urunler/${p.slug}`,
+      images: [{ url: p.image, alt: `${p.title} Toptan Endüstriyel Malzeme` }],
+    },
   };
 }
 
@@ -33,8 +50,67 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   if (!p) notFound();
   const related = getRelated(p);
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "name": `${p.title} (Toptan & Endüstriyel Tedarik)`,
+        "description": p.description,
+        "image": `${SITE_URL}${p.image}`,
+        "category": p.category,
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "TRY",
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@type": "Organization",
+            "name": COMPANY.name,
+            "url": SITE_URL,
+          },
+          "areaServed": {
+            "@type": "Country",
+            "name": "Türkiye",
+            "identifier": "TR",
+          },
+          "eligibleQuantity": {
+            "@type": "QuantitativeValue",
+            "unitText": "Koli / Palet / Tesis Ambalajı",
+          },
+        },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Ana Sayfa",
+            "item": SITE_URL,
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Ürünler",
+            "item": `${SITE_URL}/urunler`,
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": p.title,
+            "item": `${SITE_URL}/urunler/${p.slug}`,
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+      />
       <PageHero
         eyebrow={p.category}
         title={p.title}

@@ -3,9 +3,9 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://armahirdava
 export const COMPANY = {
   legalName: "Arma Fabrika Malzemeleri Teknik Hırdavat San. Tic. A.Ş.",
   name: "Arma Hırdavat",
-  tagline: "Fabrika Malzemeleri & Teknik Hırdavat",
+  tagline: "Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
   description:
-    "Arma Hırdavat; Samsun Tekkeköy'de fabrikalara, sanayi tesislerine, atölyelere ve şantiyelere bağlantı elemanlarından kaynak makinelerine, iş güvenliğinden pompalara kadar 30 ürün grubunda teknik hırdavat tedariği sağlar.",
+    "Arma Hırdavat; Türkiye genelinde 81 ildeki organize sanayi bölgelerine (OSB), fabrikalara, şantiyelere ve imalat tesislerine koli ve palet bazında toptan teknik hırdavat, bağlantı elemanları, kaynak, iş güvenliği ve endüstriyel tesis malzemeleri tedariği sağlar.",
   phones: [
     { label: "+90 (362) 266 60 95", href: "tel:+903622666095" },
     { label: "+90 (362) 266 67 50", href: "tel:+903622666750" },
@@ -16,6 +16,8 @@ export const COMPANY = {
     street: "Şabanoğlu Mah. 512. Sok. No: 3 Adnan Kahveci Bulv.",
     district: "Tekkeköy",
     city: "Samsun",
+    postalCode: "55300",
+    country: "TR",
     full: "Şabanoğlu Mah. 512. Sok. No: 3 Adnan Kahveci Bulv. Tekkeköy / SAMSUN",
   },
   mapEmbed:
@@ -26,7 +28,39 @@ export const COMPANY = {
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("Arma Hırdavat Şabanoğlu Mah. 512. Sok. No:3 Tekkeköy Samsun"),
   paymentUrl: "https://odeme.armahirdavat.com.tr/",
+  coverage: "Türkiye Geneli 81 İl ve Tüm Organize Sanayi Bölgeleri (OSB)",
+  minOrderType: "Koli, Palet ve Tesis Ambalajı (Yalnızca Toptan)",
 };
+
+/** Türkiye 81 İl Listesi — SEO & Ambar / Kargo Sevkiyat Ağı */
+export const TURKEY_PROVINCES = [
+  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin", "Aydın", "Balıkesir",
+  "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli",
+  "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari",
+  "Hatay", "Isparta", "Mersin", "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir",
+  "Kocaeli", "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş", "Nevşehir",
+  "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas", "Tekirdağ", "Tokat",
+  "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+  "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+] as const;
+
+/** Anahtar Kelimeler (Türkiye Geneli B2B Toptan Hırdavat) */
+export const SEO_KEYWORDS = [
+  "toptan teknik hırdavat türkiye",
+  "toptan fabrika malzemeleri",
+  "endüstriyel hırdavat toptan satış",
+  "81 il şantiye hırdavat tedariği",
+  "organize sanayi bölgesi hırdavat tedarikçisi",
+  "toptan civata somun bağlantı elemanları",
+  "toptan çelik halat gijon saplama",
+  "toptan iş güvenliği ekipmanları koli palet",
+  "toptan kaynak makineleri elektrot kaynak teli",
+  "toptan kesici taşlama taşları el aletleri",
+  "b2b kurumsal hırdavat portalı",
+  "toptan hırdavat fiyat teklifi al",
+  "palet bazlı hırdavat sevkiyatı türkiye",
+  "samsun merkezli 81 il hırdavat ambar sevkiyatı"
+];
 
 export const NAV = [
   { href: "/", label: "Ana Sayfa" },

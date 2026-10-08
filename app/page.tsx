@@ -6,6 +6,8 @@ import ReviewsRiver from "@/components/ReviewsRiver";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
+import NationwideDeliveryBand from "@/components/NationwideDeliveryBand";
+import FaqSection from "@/components/FaqSection";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -18,8 +20,8 @@ const VALUES = [
   },
   {
     icon: Building2,
-    title: "Sanayinin içinde, Tekkeköy'de",
-    text: "Adnan Kahveci Bulvarı üzerindeki konumumuzla Samsun ve çevresindeki fabrika, atölye ve şantiyelere yakınız.",
+    title: "Sanayinin içinde, Tekkeköy lojistik üssü",
+    text: "Adnan Kahveci Bulvarı üzerindeki merkezimizle Türkiye'nin 81 ilindeki fabrika ve şantiyelere doğrudan sevkiyat sağlıyoruz.",
   },
   {
     icon: Receipt,
@@ -81,6 +83,9 @@ export default function HomePage() {
         </Reveal>
       </section>
 
+      {/* Türkiye Geneli 81 İl Lojistik ve Sevkiyat Ağı */}
+      <NationwideDeliveryBand />
+
       {/* En çok satanlar — 5 grup, tamamı kendi sayfasında */}
       <section className="section" aria-labelledby="best-sellers">
         <div className="container-x">
@@ -134,6 +139,10 @@ export default function HomePage() {
       </section>
 
       <ReviewsRiver />
+
+      {/* Sıkça Sorulan Sorular & FAQPage Schema */}
+      <FaqSection />
+
       <CtaBand />
     </>
   );

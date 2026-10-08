@@ -6,29 +6,29 @@ import ContactForm from "@/components/ContactForm";
 import { COMPANY } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "İletişim – Bize Ulaşın",
-  description: `Arma Hırdavat iletişim: ${COMPANY.phones[0].label}, ${COMPANY.email}. ${COMPANY.address.full}`,
+  title: "İletişim & 81 İl Toptan Teklif Hattı | Arma Hırdavat",
+  description: `Arma Hırdavat toptan teknik hırdavat sipariş ve kurumsal teklif hattı. Türkiye'nin 81 ilindeki fabrikalar, atölyeler ve şantiyeler için koli/palet ambar sevkiyatı ve toptan iskonto desteği. İletişim: ${COMPANY.phones[0].label}, ${COMPANY.email}.`,
   alternates: { canonical: "/iletisim" },
 };
 
 const CARDS = [
   {
     icon: Phone,
-    label: "Telefon",
+    label: "Telefon & Toptan Sipariş Hattı",
     lines: COMPANY.phones.map((p) => ({ text: p.label, href: p.href })),
   },
   { icon: Printer, label: "Faks", lines: [{ text: COMPANY.fax }] },
-  { icon: Mail, label: "E-posta", lines: [{ text: COMPANY.email, href: `mailto:${COMPANY.email}` }] },
-  { icon: MapPin, label: "Adres", lines: [{ text: COMPANY.address.full, href: COMPANY.mapLink }] },
+  { icon: Mail, label: "Kurumsal E-posta", lines: [{ text: COMPANY.email, href: `mailto:${COMPANY.email}` }] },
+  { icon: MapPin, label: "Merkez Depo & Sevkiyat Adresi", lines: [{ text: COMPANY.address.full, href: COMPANY.mapLink }] },
 ];
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="İletişim"
-        title="Bize ulaşın"
-        description="Teklif, stok ve ürün bilgisi için arayın, e-posta gönderin ya da aşağıdaki formu doldurun."
+        eyebrow="İletişim & Toptan Tedarik"
+        title="81 İl Toptan Teklif ve Sipariş Hattı"
+        description="Türkiye'nin her noktasına koli ve palet bazında toptan teknik hırdavat sevkiyatı yapıyoruz. Fiyat teklifi, toptan iskonto ve ambar teslimat süreleri için bize dilediğiniz kanaldan ulaşabilirsiniz."
         crumbs={[{ label: "İletişim", href: "/iletisim" }]}
       />
 

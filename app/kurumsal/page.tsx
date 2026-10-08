@@ -6,8 +6,8 @@ import CtaBand from "@/components/CtaBand";
 import { COMPANY } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Kurumsal – Hakkımızda, Misyon, Vizyon ve İnsan Kaynakları",
-  description: "Arma Fabrika Malzemeleri Teknik Hırdavat San. Tic. A.Ş. hakkında: Samsun Tekkeköy'de sanayiye teknik hırdavat tedariği, misyonumuz, vizyonumuz ve insan kaynakları politikamız.",
+  title: "Kurumsal – Türkiye 81 İl Sanayi ve Fabrika Malzemeleri Tedarikçisi",
+  description: "Arma Fabrika Malzemeleri Teknik Hırdavat: Samsun merkez lojistik depomuzdan Türkiye'nin 81 ilindeki organize sanayi bölgelerine, fabrikalara ve şantiyelere toptan teknik hırdavat ve endüstriyel sarf malzemesi tedariği.",
   alternates: { canonical: "/kurumsal" },
 };
 
@@ -25,8 +25,8 @@ export default function CorporatePage() {
     <>
       <PageHero
         eyebrow="Kurumsal"
-        title="Sanayinin güvenilir tedarik ortağı"
-        description={COMPANY.description}
+        title="Türkiye Sanayisinin Güvenilir Tedarik Ortağı"
+        description="Samsun lojistik depomuzdan Türkiye'nin 81 ilindeki organize sanayi bölgelerine, fabrikalara ve şantiyelere koli ve palet bazında toptan teknik hırdavat tedariği sağlıyoruz."
         crumbs={[{ label: "Kurumsal", href: "/kurumsal" }]}
       />
 
@@ -37,12 +37,14 @@ export default function CorporatePage() {
           </Reveal>
           <Reveal className="space-y-5 text-[17px] leading-[1.75] text-ink-soft lg:col-span-7" delay={60}>
             <p>
-              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;de fabrika malzemeleri ve teknik hırdavat alanında hizmet vermektedir.
+              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki ana merkez ve lojistik tesislerinden Türkiye&apos;nin 81 ilindeki organize sanayi bölgelerine, fabrikalara, imalat atölyelerine ve büyük inşaat projelerine toptan teknik hırdavat ve fabrika malzemeleri tedarik etmektedir.
             </p>
             <p>
-              Bağlantı elemanlarından çelik halata, el ve elektrikli aletlerden kaynak makinelerine, iş güvenliği ekipmanlarından pompa ve pnömatik ürünlere kadar 30 ürün grubunda sanayi kuruluşlarının, atölyelerin ve şantiyelerin ihtiyaçlarını karşılıyoruz.
+              Civata, somun, vida ve bağlantı elemanlarından çelik halata, el ve elektrikli aletlerden kaynak makinelerine, iş güvenliği donanımlarından endüstriyel pompa ve pnömatik sistemlere kadar 30 ana ürün grubunda; koli ve palet bazlı toptan alımlarda doğrudan ambar ve lojistik sevkiyatı yapıyoruz.
             </p>
-            <p>Her geçen gün ürün gruplarımıza yeni markalar ve ürünler ekliyoruz.</p>
+            <p>
+              Güçlü stok yapımız, rekabetçi toptan fiyatlandırmamız ve anlaşmalı sanayi ambarı ağımız ile Marmara&apos;dan İç Anadolu&apos;ya, Ege&apos;den Güneydoğu&apos;ya Türkiye genelindeki tüm sanayi tesislerine kesintisiz tedarik desteği sunuyoruz.
+            </p>
           </Reveal>
         </div>
       </section>
@@ -52,13 +54,13 @@ export default function CorporatePage() {
           <Reveal className="surface p-8">
             <p className="eyebrow">Misyon</p>
             <p className="mt-4 text-lg leading-relaxed text-ink">
-              Sanayi tesislerinin, atölyelerin ve projelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğru ürün, doğru fiyat ve zamanında teslimatla sağlamak.
+              Türkiye genelindeki tüm sanayi tesislerinin, organize sanayi bölgelerindeki fabrikaların ve şantiyelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğrudan koli/palet bazında, rekabetçi toptan fiyatlar ve 81 ile güvenilir ambar teslimatıyla eksiksiz sağlamak.
             </p>
           </Reveal>
           <Reveal className="surface p-8" delay={80}>
             <p className="eyebrow">Vizyon</p>
             <p className="mt-4 text-lg leading-relaxed text-ink">
-              Samsun ve Karadeniz bölgesinde sanayinin ilk akla gelen, güvenilir tedarik ortağı olmak.
+              Türkiye&apos;nin 81 ilinde sanayi, imalat ve inşaat sektörünün koli ve palet bazlı toptan teknik hırdavat alımlarında güvenle tercih ettiği, süratli ve öncü kurumsal tedarik ortağı olmak.
             </p>
           </Reveal>
         </div>

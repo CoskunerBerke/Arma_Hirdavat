@@ -2,12 +2,25 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import ProductCatalog from "@/components/ProductCatalog";
 import CtaBand from "@/components/CtaBand";
+import { SITE_URL } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Ürün Grupları – Teknik Hırdavat ve Fabrika Malzemeleri",
+  title: "Toptan Teknik Hırdavat ve Fabrika Malzemeleri | 81 İl Sevkiyat - Arma Hırdavat",
   description:
-    "Bağlantı elemanları, çelik halat, kaldırma ekipmanları, el aletleri, kaynak makineleri, iş güvenliği, pnömatik ve pompa dahil 30 ürün grubu. Samsun Tekkeköy.",
+    "30 ürün grubunda koli ve palet bazlı toptan teknik hırdavat satışı. Bağlantı elemanları, çelik halat, el aletleri, kaynak, iş güvenliği ve pompa ürünlerinde Türkiye geneli 81 ile ambar teslimatı. Özel iskonto teklifi alın.",
+  keywords: [
+    "toptan teknik hırdavat ürünleri",
+    "toptan fabrika malzemeleri kataloğu",
+    "81 il hırdavat toptan satışı",
+    "koli palet teknik hırdavat",
+    "toptan sanayi malzemeleri"
+  ],
   alternates: { canonical: "/urunler" },
+  openGraph: {
+    title: "Toptan Teknik Hırdavat ve Fabrika Malzemeleri | 81 İl Sevkiyat - Arma Hırdavat",
+    description: "30 ürün grubunda koli ve palet bazında toptan teknik hırdavat. Türkiye geneli fabrika ve şantiye sevkiyatı.",
+    url: `${SITE_URL}/urunler`,
+  },
 };
 
 export default function ProductsPage() {
