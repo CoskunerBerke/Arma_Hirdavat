@@ -13,7 +13,14 @@ export default function Footer() {
     <footer className="border-t border-slate-800 bg-[#0B1328] text-slate-300">
       <div className="container-x grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-12">
         <div className="lg:col-span-4">
-          <Image src="/images/logo.png" alt="Arma Hırdavat" width={305} height={101} className="h-11 w-auto rounded-md" />
+          <Image
+            src="/images/logo.png"
+            alt="Arma Hırdavat"
+            width={305}
+            height={101}
+            style={{ width: "auto", height: "auto" }}
+            className="h-11 w-auto rounded-md"
+          />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">{COMPANY.legalName}</p>
           <a
             href={COMPANY.paymentUrl}

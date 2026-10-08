@@ -39,12 +39,14 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
       {added ? (
         <>
           <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span>Eklendi</span>
+          <span className="hidden sm:inline">Eklendi</span>
+          <span className="sm:hidden text-[10px]">✓</span>
         </>
       ) : (
         <>
           <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span>+ Sepete Ekle</span>
+          <span className="hidden sm:inline">+ Sepete Ekle</span>
+          <span className="sm:hidden text-[10px]">+ Sepet</span>
         </>
       )}
     </button>

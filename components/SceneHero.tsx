@@ -89,9 +89,9 @@ export default function SceneHero() {
           <span className="font-semibold text-white">CNR Otomasyon</span>
         </div>
 
-        {/* Yüksek Dönüşümlü Aksiyon Butonları (Yeşil Eylem + Şeffaf İkincil) */}
-        <div className="mt-7 flex flex-wrap items-center gap-4">
-          <RfqTriggerButton className="btn-action py-3.5 px-7 text-sm font-bold shadow-xl shadow-action/40">
+        {/* Yüksek Dönüşümlü Aksiyon Butonları — Mobilde tam genişlik, masaüstünde yan yana */}
+        <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+          <RfqTriggerButton className="btn-action py-3.5 px-6 sm:px-7 text-sm font-bold shadow-xl shadow-action/40 justify-center w-full sm:w-auto">
             <ClipboardList className="h-4 w-4" />
             <span>Teklif Sepeti (RFQ) İlet</span>
             <ArrowRight className="h-4 w-4" />
@@ -99,14 +99,14 @@ export default function SceneHero() {
 
           <Link
             href="/urunler"
-            className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
           >
             <span>39 Gerçek Ürünü İncele</span>
           </Link>
 
           <a
             href="#canli-test"
-            className="inline-flex items-center gap-2 rounded-xl border border-emerald-400/40 bg-slate-950/60 px-5 py-3.5 text-sm font-semibold text-emerald-200 backdrop-blur-md transition hover:bg-slate-900 hover:text-white hover:border-emerald-400/70"
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-400/40 bg-slate-950/60 px-5 py-3.5 text-sm font-semibold text-emerald-200 backdrop-blur-md transition hover:bg-slate-900 hover:text-white hover:border-emerald-400/70 w-full sm:w-auto"
           >
             <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>Saha Test Videosu (10 sn)</span>
@@ -114,22 +114,22 @@ export default function SceneHero() {
         </div>
 
         {/* 4 Güven Unsuru (Risk Azaltıcı Mikro Sinyaller) */}
-        <div className="mt-10 grid grid-cols-2 gap-3 border-t border-white/15 pt-6 sm:grid-cols-4 sm:gap-4">
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">✓</span>
-            <span>%100 Orijinal & CE Onaylı</span>
+        <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:gap-4 border-t border-white/15 pt-5 sm:pt-6 sm:grid-cols-4">
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 text-xs">✓</span>
+            <span className="truncate">100% Orijinal & CE</span>
           </div>
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-300">⚡</span>
-            <span>2 Saatte Resmi Teklif</span>
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-300 text-xs">⚡</span>
+            <span className="truncate">2 Saatte Hızlı Teklif</span>
           </div>
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-300">📦</span>
-            <span>Koli & Palet Sevkiyatı</span>
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-300 text-xs">📦</span>
+            <span className="truncate">Koli & Palet Sevk</span>
           </div>
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-200">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300">🚚</span>
-            <span>81 İle Anlaşmalı Ambar</span>
+          <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300 text-xs">🚚</span>
+            <span className="truncate">81 İle Hızlı Ambar</span>
           </div>
         </div>
       </div>

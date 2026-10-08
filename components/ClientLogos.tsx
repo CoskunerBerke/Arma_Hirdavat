@@ -31,32 +31,37 @@ export default function ClientLogos() {
           </div>
         </Reveal>
 
-        {/* 5 Sanayi Devi Logo Kartları */}
+        {/* 5 Sanayi Devi Logo Kartları — Mobilde dengeli 2+2+1 grid */}
         <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
           {CLIENT_REFERENCES.map((client, i) => (
-            <Reveal key={client.name} delay={i * 60} className="flex h-full">
+            <Reveal
+              key={client.name}
+              delay={i * 60}
+              className={`flex h-full ${i === 4 ? "col-span-2 sm:col-span-1" : ""}`}
+            >
               <a
                 href={client.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative flex w-full flex-col justify-between rounded-2xl border border-line bg-canvas/30 p-4 sm:p-5 transition-all duration-300 hover:border-brand/40 hover:bg-white hover:shadow-lg hover:-translate-y-1"
+                className="group relative flex w-full flex-col justify-between rounded-2xl border border-line bg-canvas/30 p-3.5 sm:p-5 transition-all duration-300 hover:border-brand/40 hover:bg-white hover:shadow-lg hover:-translate-y-1"
               >
                 {/* Üst Rozet */}
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-brand bg-brand-50/80 px-2 py-0.5 rounded">
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-brand bg-brand-50/80 px-2 py-0.5 rounded truncate max-w-[85%]">
                     {client.badge}
                   </span>
-                  <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 transition-colors group-hover:text-brand" />
+                  <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 transition-colors group-hover:text-brand shrink-0" />
                 </div>
 
                 {/* Logo Alanı */}
-                <div className="relative flex h-14 w-full items-center justify-center py-1">
+                <div className="relative flex h-12 sm:h-14 w-full items-center justify-center py-1">
                   <Image
                     src={client.logo}
                     alt={`${client.name} logosu`}
                     width={220}
                     height={56}
-                    className="max-h-12 w-auto max-w-full object-contain filter grayscale contrast-125 transition-all duration-300 group-hover:grayscale-0 group-hover:scale-105"
+                    style={{ width: "auto", height: "auto" }}
+                    className="max-h-10 sm:max-h-12 w-auto max-w-[90%] object-contain filter grayscale contrast-125 transition-all duration-300 group-hover:grayscale-0 group-hover:scale-105"
                   />
                 </div>
 
