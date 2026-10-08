@@ -14,19 +14,19 @@ const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id
 
 const VALUES = [
   {
-    icon: Boxes,
-    title: "30 ürün grubu, tek tedarikçi",
-    text: "Bağlantı elemanından pompaya, kaynaktan iş güvenliğine kadar ihtiyaçlarınızı farklı firmalarla uğraşmadan tek noktadan karşılayın.",
+    icon: ShieldCheck,
+    title: "39 Profesyonel KKD & CE/EN Normları",
+    text: "FABA resmi üretim kataloğundaki tüm iş eldivenleri ve kimyasal tulumlar; EN 388 mekanik, EN ISO 374 kimyasal ve Tip 3B/4B normlarına tam uygundur.",
   },
   {
     icon: Building2,
-    title: "Sanayinin içinde, Tekkeköy lojistik üssü",
-    text: "Adnan Kahveci Bulvarı üzerindeki merkezimizle Türkiye'nin 81 ilindeki fabrika ve şantiyelere doğrudan sevkiyat sağlıyoruz.",
+    title: "Samsun Tekkeköy Lojistik Üssü",
+    text: "Adnan Kahveci Bulvarı lojistik depomuzdan Türkiye'nin 81 ilindeki organize sanayi bölgelerine ve şantiyelere doğrudan ambar sevkiyatı sağlıyoruz.",
   },
   {
     icon: Receipt,
-    title: "Kurumsal alım kolaylığı",
-    text: "İhtiyaç listenize göre teklif hazırlıyor, kurumsal faturalandırma ve online tahsilat ile süreci sadeleştiriyoruz.",
+    title: "2 Saatte Kurumsal İskonto ve RFQ",
+    text: "Malzeme listenize göre fabrika iskonto matrisiyle aynı gün resmi proforma teklif hazırlıyor, kurumsal e-fatura ile süreci hızlandırıyoruz.",
   },
 ];
 
@@ -35,48 +35,48 @@ export default function HomePage() {
     <>
       <SceneHero />
 
-      {/* Endüstriyel B2B Tedarik ve Perakende Ayrımı Bilgilendirme Bandı */}
+      {/* Kurumsal B2B Tedarik ve Hacimli Alım Avantajları Bandı */}
       <section className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
         <Reveal className="rounded-3xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-4">
-              <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-brand sm:flex">
+              <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-action sm:flex">
                 <Boxes className="h-7 w-7" aria-hidden />
               </div>
               <div>
-                <div className="inline-flex items-center gap-2 rounded-md bg-amber-500/10 px-2.5 py-0.5 text-xs font-bold text-amber-800">
-                  <ShieldCheck className="h-3.5 w-3.5 text-amber-700" />
-                  PERAKENDE VE KURUMSAL AYRIMI
+                <div className="inline-flex items-center gap-2 rounded-md bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
+                  <ShieldCheck className="h-3.5 w-3.5 text-action" />
+                  KURUMSAL B2B AYRICALIKLARI
                 </div>
                 <h2 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                  Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı
+                  Sanayi ve Tesisler İçin Doğrudan Fabrika İskontosu
                 </h2>
                 <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-soft sm:text-[15px]">
-                  Sitemiz; üretim tesisleri, fabrikalar ve kurumsal işletmelerin yüksek hacimli malzeme ihtiyaçlarını karşılamak üzere kurgulanmıştır.
+                  Bu portal; fabrikalar, üretim tesisleri ve kurumsal şantiyelerin <strong>koli ve palet ölçeğindeki</strong> yüksek hacimli malzeme ihtiyaçlarını en rekabetçi toptan fiyatlarla karşılamak üzere kurgulanmıştır.
                 </p>
-                <div className="mt-3.5 rounded-xl border border-amber-200/80 bg-amber-50/70 p-3.5 text-xs leading-relaxed text-amber-900 sm:text-sm">
-                  &ldquo;Bu portal üzerinden yalnızca kurumsal firmaların <strong>koli ve palet bazındaki yüksek hacimli teklif talepleri</strong> işleme alınır. Bireysel ve parça bazlı satışlarımız fiziki mağazamızda devam etmektedir.&rdquo;
+                <div className="mt-3.5 rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-3.5 text-xs leading-relaxed text-slate-800 sm:text-sm">
+                  &ldquo;Teklif listenize eklediğiniz her ürün grubu için alım hacminize göre <strong>fabrika iskonto matrisi</strong> uygulanır ve resmi proforma teklif belgesi hazırlanarak tarafınıza iletilir.&rdquo;
                 </div>
                 <div className="mt-4 flex flex-wrap gap-4 text-xs font-medium text-ink-muted">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Koli / Palet / Tesis Ambalajı
+                  <span className="inline-flex items-center gap-1.5 text-slate-700">
+                    <span className="h-2 w-2 rounded-full bg-action" /> Koli & Palet Fabrika Ambalajı
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1.5 text-slate-700">
                     <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Matrisi
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-amber-500" /> Fatura & Online E-Tahsilat
+                  <span className="inline-flex items-center gap-1.5 text-slate-700">
+                    <span className="h-2 w-2 rounded-full bg-action" /> Resmi E-Fatura & Hızlı Sevkiyat
                   </span>
                 </div>
               </div>
             </div>
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <RfqTriggerButton className="btn-primary shadow-md">
+              <RfqTriggerButton className="btn-action shadow-md">
                 <ClipboardList className="h-4 w-4" />
                 Teklif Sepeti (RFQ) İlet
               </RfqTriggerButton>
-              <Link href="/iletisim" className="btn-ghost">
-                İletişim & Konum
+              <Link href="/urunler" className="btn-ghost">
+                39 Ürünü İncele
               </Link>
             </div>
           </div>
@@ -118,10 +118,15 @@ export default function HomePage() {
       <section className="section border-y border-line bg-gradient-to-b from-white to-canvas">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <Reveal className="lg:col-span-4">
-            <p className="eyebrow">Neden Arma?</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">Tedariği sadeleştiriyoruz.</h2>
-            <Link href="/kurumsal" className="btn-ghost mt-8">
-              Kurumsal <ArrowRight className="h-4 w-4" aria-hidden />
+            <p className="eyebrow">Neden Arma Hırdavat?</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+              Endüstriyel Tedariği Güvenceye Alıyoruz.
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+              Fabrika ve tesislerin iş güvenliği ekipmanı ihtiyaçlarını doğrudan yetkili kaynaktan, koli ve palet bazında en avantajlı kurumsal maliyetle çözüyoruz.
+            </p>
+            <Link href="/kurumsal" className="btn-ghost mt-6">
+              Kurumsal Profilimiz <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
           <div className="grid gap-5 sm:grid-cols-3 lg:col-span-8">

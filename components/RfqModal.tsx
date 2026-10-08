@@ -171,11 +171,11 @@ export default function RfqModal() {
                 </p>
               </div>
 
-              {/* Babanıza / Şirkete giden mesaj özeti */}
+              {/* Kurumsal Sipariş ve Teklif Metni */}
               <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-900 p-5 text-left text-white shadow-md">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <span className="flex items-center gap-2 text-xs font-bold text-blue-400">
-                    <MessageSquare className="h-4 w-4" /> Babanıza Düşecek Doğrudan Sipariş / Teklif Mesajı:
+                  <span className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                    <MessageSquare className="h-4 w-4" /> Kurumsal Teklif ve Sipariş Özeti:
                   </span>
                   <button
                     type="button"
@@ -521,7 +521,7 @@ export default function RfqModal() {
                 <p className="text-xs text-ink-muted">
                   Talebiniz doğrulandıktan sonra resmi teklif mektubu ve proforma e-postanıza iletilecektir.
                 </p>
-                <button type="submit" className="btn-primary w-full sm:w-auto px-8 py-3 text-sm font-semibold shadow-lg shadow-brand/30">
+                <button type="submit" className="btn-action w-full sm:w-auto px-8 py-3.5 text-sm font-bold shadow-xl shadow-action/30">
                   <Send className="h-4 w-4" /> Resmi Teklif Talebini Gönder
                 </button>
               </div>

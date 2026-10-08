@@ -37,24 +37,30 @@
   }
 
   .surface {
-    @apply rounded-2xl border border-line bg-white;
-    box-shadow: 0 1px 2px rgba(15, 27, 45, 0.04);
+    @apply rounded-2xl border border-line bg-white transition-all duration-200;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 active:scale-[0.99];
   }
 
+  /* Otorite ve marka butonu (B2B Kurumsal Mavi) */
   .btn-primary {
-    @apply btn bg-brand text-white hover:bg-brand-hover;
+    @apply btn bg-brand text-white hover:bg-brand-hover shadow-sm shadow-brand/20;
+  }
+
+  /* Doğrudan Satın Alma ve Teklif Verme Dönüşüm Butonu (Conversion Emerald Green) */
+  .btn-action {
+    @apply btn bg-action text-white hover:bg-action-hover shadow-md shadow-action/25 font-bold;
   }
 
   .btn-ghost {
-    @apply btn border border-line-strong bg-white text-ink hover:border-ink/30 hover:bg-canvas;
+    @apply btn border border-line-strong bg-white text-ink hover:border-brand/40 hover:bg-slate-50;
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-brand;
+    @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.14em] text-brand;
   }
 
   .section {

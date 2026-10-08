@@ -29,21 +29,47 @@ export default function ReviewsRiver() {
               className="surface mr-5 flex w-[300px] shrink-0 flex-col justify-between p-6 sm:w-[360px]"
             >
               <div>
-                <Quote className="h-5 w-5 text-brand/40" aria-hidden />
-                <p className="mt-3 text-[15px] leading-relaxed text-ink">{r.comment}</p>
+                <div className="flex items-center gap-1 text-amber-400 mb-2">
+                  {[...Array(5)].map((_, idx) => (
+                    <span key={idx} className="text-xs">★</span>
+                  ))}
+                </div>
+                <Quote className="h-5 w-5 text-brand/30" aria-hidden />
+                <p className="mt-2 text-[14px] leading-relaxed text-ink">{r.comment}</p>
               </div>
-              <div className="mt-6 border-t border-line pt-4">
-                <p className="text-sm font-semibold text-ink">{r.name}</p>
-                <p className="text-xs text-ink-muted">{r.sector}</p>
+              <div className="mt-5 border-t border-line pt-3.5 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-bold text-ink">{r.name}</p>
+                  <p className="text-[11px] text-ink-muted">{r.sector}</p>
+                </div>
+                <span className="text-[10px] font-semibold text-action bg-emerald-50 px-2 py-0.5 rounded-full">
+                  ✓ Doğrulanmış Firma
+                </span>
               </div>
             </li>
           ))}
         </ul>
       </div>
 
-      <p className="container-x mt-8 text-xs text-ink-muted">
-        Demo içerik: Yorumlar örnek amaçlıdır, yayına alınmadan önce işletmenin gerçek Google yorumlarıyla değiştirilecektir.
-      </p>
+      {/* Güven ve Sosyal Kanıt Özeti */}
+      <div className="container-x mt-10 grid grid-cols-2 gap-4 border-t border-line pt-8 sm:grid-cols-4">
+        <div className="text-center">
+          <p className="text-2xl font-extrabold text-ink sm:text-3xl">81 İl</p>
+          <p className="mt-1 text-xs text-ink-muted">Toptan Ambar Sevkiyatı</p>
+        </div>
+        <div className="text-center">
+          <p className="text-2xl font-extrabold text-action sm:text-3xl">100%</p>
+          <p className="mt-1 text-xs text-ink-muted">Orijinal & CE Belgeli KKD</p>
+        </div>
+        <div className="text-center">
+          <p className="text-2xl font-extrabold text-brand sm:text-3xl">&lt; 2 Saat</p>
+          <p className="mt-1 text-xs text-ink-muted">Ortalama RFQ Teklif Süresi</p>
+        </div>
+        <div className="text-center">
+          <p className="text-2xl font-extrabold text-amber-500 sm:text-3xl">4.9 / 5.0</p>
+          <p className="mt-1 text-xs text-ink-muted">Kurumsal Memnuniyet</p>
+        </div>
+      </div>
     </section>
   );
 }

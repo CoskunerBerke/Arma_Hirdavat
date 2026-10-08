@@ -4,23 +4,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Açık, tek tonlu zemin ailesi — bölümler arası sert renk geçişi yok
-        canvas: "#F5F7FA",
-        line: "#E2E7EE",
-        "line-strong": "#C9D2DE",
-        // Metin: saf siyah yerine lacivert-siyah (açık zeminde göz yorgunluğunu azaltır)
-        // canvas (#F5F7FA) üzerinde: DEFAULT ≈ 16:1, soft ≈ 7.6:1, muted ≈ 5:1 (WCAG AA)
+        // Bilimsel & psikolojik B2B renk paleti:
+        // 1. Zemin: Göz yormayan, ferah ve ultra-temiz nötr tuval (Slate-50)
+        canvas: "#F8FAFC",
+        line: "#E2E8F0",
+        "line-strong": "#CBD5E1",
+
+        // 2. Tipografi: Yüksek kontrastlı, net ve okunabilir kurumsal antrasit/lacivert (Slate-900)
         ink: {
-          DEFAULT: "#0F1B2D",
-          soft: "#44546A",
-          muted: "#5D6D82",
+          DEFAULT: "#0F172A",
+          soft: "#334155",
+          muted: "#64748B",
         },
+
+        // 3. Otorite & Güven Rengi (B2B Kurumsal Mavi - Blue-700/800)
         brand: {
-          DEFAULT: "#0050E6", // logodaki mavinin (#0059FF) beyaz metinle AA kontrast sağlayan tonu
-          hover: "#0042BF",
-          50: "#EEF4FF",
-          100: "#DCE8FF",
-          accent: "#F0CF4A", // logodaki sarıdan — yalnızca küçük vurgu/rozetlerde
+          DEFAULT: "#1E40AF",
+          hover: "#1D4ED8",
+          light: "#2563EB",
+          50: "#EFF6FF",
+          100: "#DBEAFE",
+          accent: "#D97706",
+        },
+
+        // 4. Dönüşüm & Satın Alma Niyeti Rengi (Conversion Emerald - Green-600/700)
+        // Psikolojik olarak "Onaylandı", "Güvenli İşlem", "Fırsat" ve "İlerle" hissi uyandırarak satın alma/RFQ dönüşümünü maksimize eder.
+        action: {
+          DEFAULT: "#16A34A",
+          hover: "#15803D",
+          active: "#166534",
+          light: "#ECFDF5",
+          border: "#A7F3D0",
         },
       },
       fontFamily: {

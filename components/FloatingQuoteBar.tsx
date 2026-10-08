@@ -47,9 +47,9 @@ export default function FloatingQuoteBar() {
       {/* Main floating bar */}
       <div className="flex flex-col gap-3 rounded-2xl border border-white/20 bg-slate-950/90 p-3.5 text-white shadow-2xl backdrop-blur-xl transition-all sm:flex-row sm:items-center sm:justify-between sm:p-4">
         <div className="flex items-center gap-3">
-          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand text-white shadow-md">
+          <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-action text-white shadow-md">
             <ClipboardList className="h-5 w-5" />
-            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-[10px] font-black text-slate-950 ring-2 ring-slate-950">
+            <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white text-[10px] font-black text-slate-900 ring-2 ring-slate-950 shadow-sm">
               {items.length}
             </span>
           </div>
@@ -57,7 +57,7 @@ export default function FloatingQuoteBar() {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <p className="text-sm font-bold text-white sm:text-base">
-                Teklif Sepeti: <span className="text-blue-300">{items.length} Kalem</span>
+                Teklif Sepeti: <span className="text-emerald-300">{items.length} Kalem</span>
               </p>
               <span className="rounded bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-slate-300">
                 Toplam {totalQuantity} Birim
@@ -73,7 +73,7 @@ export default function FloatingQuoteBar() {
           <button
             type="button"
             onClick={clearQuote}
-            className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:bg-white/10 hover:text-white shrink-0"
+            className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:bg-white/10 hover:text-white shrink-0 transition"
             title="Sepeti Temizle"
             aria-label="Sepeti Temizle"
           >
@@ -83,7 +83,7 @@ export default function FloatingQuoteBar() {
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="btn-primary flex-1 sm:flex-initial py-2 sm:py-2.5 px-3.5 sm:px-5 text-xs sm:text-sm font-semibold shadow-lg shadow-brand/40 justify-center"
+            className="btn-action flex-1 sm:flex-initial py-2.5 sm:py-3 px-4 sm:px-6 text-xs sm:text-sm font-bold shadow-xl shadow-action/40 justify-center"
           >
             <span className="hidden sm:inline">Sepeti İncele & Teklif İste (RFQ)</span>
             <span className="sm:hidden">Teklif İste ({items.length} Kalem)</span>

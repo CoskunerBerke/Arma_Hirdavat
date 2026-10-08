@@ -91,15 +91,17 @@ export default function Header() {
             type="button"
             onClick={() => openRfq(true)}
             className={`relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
-              isDarkHero
+              itemCount > 0
+                ? "border border-action/40 bg-emerald-50 text-slate-900 shadow-xs ring-1 ring-action/20"
+                : isDarkHero
                 ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
                 : "border border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white"
             }`}
           >
-            <ClipboardList className="h-4 w-4 text-brand" aria-hidden />
+            <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} aria-hidden />
             <span>Teklif Sepeti (RFQ)</span>
             {itemCount > 0 && (
-              <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-brand px-1.5 text-[11px] font-bold text-white shadow-sm">
+              <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-action px-1.5 text-[11px] font-bold text-white shadow-sm">
                 {itemCount}
               </span>
             )}
@@ -125,16 +127,18 @@ export default function Header() {
             type="button"
             onClick={() => openRfq(true)}
             className={`relative inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold transition ${
-              isDarkHero
+              itemCount > 0
+                ? "border border-action/40 bg-emerald-50 text-slate-900 shadow-xs"
+                : isDarkHero
                 ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
                 : "border border-line bg-canvas text-ink hover:bg-white"
             }`}
             aria-label="Teklif Sepetini Aç"
           >
-            <ClipboardList className="h-4 w-4 text-brand" />
+            <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} />
             <span className="hidden sm:inline">Teklif Listesi</span>
             {itemCount > 0 && (
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-action text-[11px] font-bold text-white">
                 {itemCount}
               </span>
             )}

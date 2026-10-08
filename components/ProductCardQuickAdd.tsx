@@ -28,12 +28,12 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
     <button
       type="button"
       onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold transition shrink-0 sm:px-2.5 sm:text-xs ${
+      className={`inline-flex items-center justify-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition-all duration-200 shrink-0 sm:px-3 sm:py-1.5 sm:text-xs active:scale-95 ${
         added
-          ? "bg-emerald-600 text-white shadow-sm"
-          : "border border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white hover:text-brand"
+          ? "bg-action text-white shadow-xs ring-2 ring-action/20"
+          : "bg-emerald-50 text-action hover:bg-action hover:text-white border border-emerald-200/90 shadow-2xs"
       }`}
-      title="Koli olarak teklif sepetine ekle"
+      title="Teklif sepetine ekle"
       aria-label={`${title} ürününü teklif sepetine ekle`}
     >
       {added ? (
@@ -44,7 +44,7 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
       ) : (
         <>
           <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span>+ Sepet</span>
+          <span>+ Sepete Ekle</span>
         </>
       )}
     </button>

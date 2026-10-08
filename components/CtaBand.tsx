@@ -22,9 +22,22 @@ export default function CtaBand({ title = "İhtiyaç listenizi gönderin, size d
               </a>
             </div>
           </div>
-          <Link href="/iletisim" className="btn bg-brand text-white hover:bg-brand-hover shadow-lg shadow-brand/40 self-start px-6 py-3.5 lg:self-auto">
-            Teklif isteyin <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <Link
+              href="/iletisim"
+              className="btn-action shadow-xl shadow-action/30 px-6 py-3.5 text-center text-sm font-bold"
+            >
+              Hemen Teklif İsteyin (RFQ) <ArrowRight className="h-4 w-4 inline ml-1" aria-hidden />
+            </Link>
+            <a
+              href="https://wa.me/903622666095"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-5 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 text-center"
+            >
+              WhatsApp ile Sor
+            </a>
+          </div>
         </div>
       </Reveal>
     </section>

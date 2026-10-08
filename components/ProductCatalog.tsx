@@ -112,11 +112,11 @@ export default function ProductCatalog() {
 
       <div className="lg:col-span-9 min-w-0">
         {/* B2B Toptan ve İskonto Matrisi Bilgilendirme Notu */}
-        <div className="mb-4 sm:mb-6 rounded-2xl border border-blue-100 bg-blue-50/70 p-3 sm:p-4 text-xs leading-relaxed text-ink-soft">
+        <div className="mb-4 sm:mb-6 rounded-2xl border border-emerald-100 bg-emerald-50/60 p-3 sm:p-4 text-xs leading-relaxed text-slate-700">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p>
-              <strong className="font-semibold text-ink">B2B Portal Notu: </strong>
-              Tüm ürünler FABA resmi üretim kataloğundan çekilmiştir. Koli ve palet bazlı siparişlerinizde firmanıza özel <strong>iskonto matrisi</strong> uygulanarak resmi teklif sunulur.
+              <strong className="font-bold text-slate-900">Doğrudan Fabrika Tedariği: </strong>
+              Tüm ürünler FABA resmi üretim kataloğundan temin edilir. Koli ve palet bazlı taleplerinizde firmanıza özel <strong>fabrika iskonto matrisi</strong> uygulanarak resmi teklif mektubu sunulur.
             </p>
           </div>
         </div>

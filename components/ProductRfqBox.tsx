@@ -125,12 +125,12 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
         <button
           type="button"
           onClick={handleAdd}
-          className="btn-primary w-full shadow-md"
+          className="btn-action w-full py-3.5 text-sm font-bold shadow-md shadow-action/30"
         >
           {added ? (
             <>
-              <Check className="h-4 w-4 text-emerald-300" />
-              <span>Sepete Eklendi! (Seçmeye Devam Edebilirsiniz)</span>
+              <Check className="h-4 w-4 text-white" />
+              <span>✓ Sepete Eklendi! (Teklif Listenizde)</span>
             </>
           ) : (
             <>
@@ -146,7 +146,7 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="font-semibold text-brand hover:underline"
+              className="font-bold text-action hover:underline"
             >
               Sepeti Görüntüle ve Teklif Gönder &rarr;
             </button>
@@ -154,13 +154,13 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
         )}
       </div>
 
-      {/* Image 3 Sistem Notu */}
-      <div className="mt-5 rounded-xl border border-blue-100 bg-blue-50/60 p-3.5">
+      {/* Kurumsal İskonto Bilgisi */}
+      <div className="mt-5 rounded-xl border border-emerald-100 bg-emerald-50/60 p-3.5">
         <div className="flex items-start gap-2.5">
-          <Info className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-          <div className="text-xs leading-relaxed text-ink-soft">
-            <strong className="font-semibold text-ink">Sistem Notu: </strong>
-            Birim fiyat listelenmemektedir. Liste oluşturulup gönderildikten sonra, talep edilen miktar ve teslimat lokasyonuna göre firmanıza özel iskonto matrisi uygulanarak tarafınıza teklif geçilecektir.
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-action" />
+          <div className="text-xs leading-relaxed text-slate-700">
+            <strong className="font-semibold text-slate-900">Kurumsal İskonto Garantisi: </strong>
+            Koli ve palet hacimli siparişlerinizde doğrudan fabrika iskonto matrisi uygulanarak en rekabetçi toptan birim maliyet resmi proforma teklif olarak iletilir.
           </div>
         </div>
       </div>

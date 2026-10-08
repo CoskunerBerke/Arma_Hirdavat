@@ -66,7 +66,7 @@ export default function NationwideDeliveryBand() {
               Tesisiniz veya şantiyeniz için <strong>toplu malzeme listenizi</strong> iletin, aynı gün koli/palet bazlı teklifinizi hazırlayalım.
             </div>
             <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
-              <RfqTriggerButton className="btn-primary py-3 px-6 text-xs sm:text-sm font-semibold shadow-md w-full sm:w-auto justify-center">
+              <RfqTriggerButton className="btn-action py-3 px-6 text-xs sm:text-sm font-bold shadow-md w-full sm:w-auto justify-center">
                 81 İl İçin Teklif İste (RFQ) <ArrowRight className="h-4 w-4" />
               </RfqTriggerButton>
             </div>
