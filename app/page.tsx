@@ -9,6 +9,7 @@ import RfqTriggerButton from "@/components/RfqTriggerButton";
 import NationwideDeliveryBand from "@/components/NationwideDeliveryBand";
 import FaqSection from "@/components/FaqSection";
 import ProductActionVideo from "@/components/ProductActionVideo";
+import ClientLogos from "@/components/ClientLogos";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -35,6 +36,9 @@ export default function HomePage() {
   return (
     <>
       <SceneHero />
+
+      {/* Çalıştığımız ve Tedarik Sağladığımız Öncü Sanayi Kuruluşları */}
+      <ClientLogos />
 
       {/* Kurumsal B2B Tedarik, Hacimli Alım Avantajları ve Sahada Canlı Test Bandı */}
       <section id="canli-test" className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6 scroll-mt-24" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">

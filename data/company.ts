@@ -91,3 +91,53 @@ export const CATALOGS = [
     url: "/catalogs/FABA-Catalog-TR.pdf",
   },
 ];
+
+export interface ClientReference {
+  name: string;
+  sector: string;
+  logo: string;
+  url: string;
+  badge: string;
+  width?: number;
+  height?: number;
+}
+
+/** Çalıştığımız ve Düzenli Malzeme Tedariği Sağladığımız Öncü Sanayi Kuruluşları */
+export const CLIENT_REFERENCES: ClientReference[] = [
+  {
+    name: "Rönesans Holding",
+    sector: "Uluslararası İnşaat & Global Müteahhitlik (ENR Top 250)",
+    logo: "/images/clients/ronesans.svg",
+    url: "https://ronesans.com/enr-top-250",
+    badge: "Global Müteahhitlik",
+  },
+  {
+    name: "Sampa Otomotiv",
+    sector: "Ağır Vasıta & Ticari Araç Yedek Parça Üretimi",
+    logo: "/images/clients/sampa.png",
+    url: "https://www.sampa.com/tr",
+    badge: "Global İhracat Lideri",
+  },
+  {
+    name: "Yeşilyurt Demir Çelik",
+    sector: "Ağır Sanayi, Haddehane & Çelik İmalat Tesisleri",
+    logo: "/images/clients/yesilyurt.svg",
+    url: "https://www.yesilyurtdc.com.tr/",
+    badge: "Ağır Sanayi Devi",
+  },
+  {
+    name: "Samsun Makina Sanayi",
+    sector: "Duktil Boru, Döküm & Endüstriyel Makine İmalatı",
+    logo: "/images/clients/samsunmakina.png",
+    url: "https://www.samsunmakina.com.tr/",
+    badge: "Altyapı & Döküm",
+  },
+  {
+    name: "CNR Otomasyon",
+    sector: "Endüstriyel Otomasyon & Robotik Fabrika Çözümleri",
+    logo: "/images/clients/cnr.png",
+    url: "https://www.cnrotomasyon.com.tr/index.php?route=common/home",
+    badge: "Robotik & Otomasyon",
+  },
+];
+

@@ -3,6 +3,7 @@ import { Compass, GraduationCap, LineChart, Target, UserCheck, Users } from "luc
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
+import ClientLogos from "@/components/ClientLogos";
 import { COMPANY } from "@/data/company";
 
 export const metadata: Metadata = {
@@ -48,6 +49,9 @@ export default function CorporatePage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Referanslarımız & Çalıştığımız Sanayi Devleri */}
+      <ClientLogos />
 
       <section className="section border-y border-line bg-white">
         <div className="container-x grid gap-5 md:grid-cols-2">

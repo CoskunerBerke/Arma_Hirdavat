@@ -75,8 +75,22 @@ export default function SceneHero() {
           FABA iş eldivenleri ve kimyasal koruyucu tulumlarda toptan fabrika fiyatları. Koli ve palet bazında özel kurumsal iskonto, aynı gün resmi teklif mektubu ve 81 ile ambar teslimatı.
         </p>
 
+        {/* Güven Veren Sanayi Referansları Mikro Çubuğu */}
+        <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-300">
+          <span className="font-bold text-emerald-300">Güvenilir Tedarikçi:</span>
+          <span className="font-semibold text-white">Rönesans Holding</span>
+          <span className="text-slate-500">•</span>
+          <span className="font-semibold text-white">Sampa Otomotiv</span>
+          <span className="text-slate-500">•</span>
+          <span className="font-semibold text-white">Yeşilyurt D.Ç.</span>
+          <span className="text-slate-500">•</span>
+          <span className="font-semibold text-white">Samsun Makina</span>
+          <span className="text-slate-500">•</span>
+          <span className="font-semibold text-white">CNR Otomasyon</span>
+        </div>
+
         {/* Yüksek Dönüşümlü Aksiyon Butonları (Yeşil Eylem + Şeffaf İkincil) */}
-        <div className="mt-8 flex flex-wrap items-center gap-4">
+        <div className="mt-7 flex flex-wrap items-center gap-4">
           <RfqTriggerButton className="btn-action py-3.5 px-7 text-sm font-bold shadow-xl shadow-action/40">
             <ClipboardList className="h-4 w-4" />
             <span>Teklif Sepeti (RFQ) İlet</span>
