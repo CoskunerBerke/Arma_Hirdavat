@@ -4,13 +4,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Phone, X, ArrowRight } from "lucide-react";
+import { Menu, Phone, X, ArrowRight, ClipboardList } from "lucide-react";
 import { COMPANY, NAV } from "@/data/company";
+import { useQuote } from "@/components/QuoteContext";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { setIsOpen: openRfq, items } = useQuote();
+
+  const itemCount = items.length;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,7 +44,7 @@ export default function Header() {
           : "border-b border-line bg-white/95 text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
       }`}
     >
-      <div className="container-x flex h-[72px] items-center justify-between gap-6">
+      <div className="container-x flex h-[72px] items-center justify-between gap-4 sm:gap-6">
         <Link href="/" className="group flex shrink-0 items-center" aria-label="Arma Hırdavat ana sayfa">
           <Image
             src="/images/logo.png"
@@ -75,7 +79,25 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
+          <button
+            type="button"
+            onClick={() => openRfq(true)}
+            className={`relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
+              isDarkHero
+                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                : "border border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white"
+            }`}
+          >
+            <ClipboardList className="h-4 w-4 text-brand" aria-hidden />
+            <span>Teklif Sepeti (RFQ)</span>
+            {itemCount > 0 && (
+              <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-brand px-1.5 text-[11px] font-bold text-white shadow-sm">
+                {itemCount}
+              </span>
+            )}
+          </button>
+
           <a
             href={COMPANY.phones[0].href}
             className={`flex items-center gap-2 text-sm font-medium transition-colors ${
@@ -85,28 +107,67 @@ export default function Header() {
             <Phone className="h-4 w-4 text-brand" aria-hidden />
             <span className="hidden xl:inline">{COMPANY.phones[0].label}</span>
           </a>
-          <Link href="/iletisim" className="btn-primary animate-pulse-glow py-2.5">
+          <Link href="/iletisim" className="btn-primary py-2.5">
             Bize Ulaşın
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className={`inline-flex h-11 w-11 items-center justify-center rounded-lg transition ${
-            isDarkHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-canvas"
-          } lg:hidden`}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-          aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
-        >
-          {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        {/* Mobil Aksiyonlar */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <button
+            type="button"
+            onClick={() => openRfq(true)}
+            className={`relative inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold transition ${
+              isDarkHero
+                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                : "border border-line bg-canvas text-ink hover:bg-white"
+            }`}
+            aria-label="Teklif Sepetini Aç"
+          >
+            <ClipboardList className="h-4 w-4 text-brand" />
+            <span className="hidden sm:inline">Teklif Listesi</span>
+            {itemCount > 0 && (
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand text-[11px] font-bold text-white">
+                {itemCount}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className={`inline-flex h-11 w-11 items-center justify-center rounded-lg transition ${
+              isDarkHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-canvas"
+            }`}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
         <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[72px] z-50 overflow-y-auto bg-white lg:hidden">
           <nav aria-label="Mobil menü" className="container-x flex flex-col py-6">
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openRfq(true);
+              }}
+              className="mb-4 flex w-full items-center justify-between rounded-xl border border-brand/20 bg-blue-50/60 p-4 text-left font-semibold text-brand"
+            >
+              <span className="flex items-center gap-2">
+                <ClipboardList className="h-5 w-5" />
+                Teklif Talebi Sepetim (RFQ)
+              </span>
+              <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs text-white">
+                {itemCount} ürün
+              </span>
+            </button>
+
             {NAV.map((item) => (
               <Link
                 key={item.href}

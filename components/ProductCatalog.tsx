@@ -84,9 +84,20 @@ export default function ProductCatalog() {
       </aside>
 
       <div className="lg:col-span-9">
-        <p className="mb-5 text-sm text-ink-muted" aria-live="polite">
-          {list.length} ürün grubu
-        </p>
+        {/* B2B Toptan ve İskonto Matrisi Bilgilendirme Notu (Image 3) */}
+        <div className="mb-6 rounded-2xl border border-blue-100 bg-blue-50/70 p-4 text-xs leading-relaxed text-ink-soft sm:text-[13px]">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              <strong className="font-semibold text-ink">B2B Portal Notu: </strong>
+              Birim fiyat listelenmemektedir. Koli ve palet bazlı talepleriniz doğrultusunda, firmanıza özel <strong>iskonto matrisi</strong> uygulanarak resmi teklif belgesi hazırlanır.
+            </p>
+          </div>
+        </div>
+
+        <div className="mb-5 flex items-center justify-between text-sm text-ink-muted" aria-live="polite">
+          <span>{list.length} ürün grubu</span>
+          <span className="text-xs font-semibold text-brand">Tedarik: Koli • Palet • Tesis Ambalajı</span>
+        </div>
         {list.length ? (
           <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {list.map((p, i) => (

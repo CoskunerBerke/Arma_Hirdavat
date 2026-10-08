@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Boxes, Building2, Receipt } from "lucide-react";
+import { ArrowRight, Boxes, Building2, ClipboardList, Receipt, ShieldCheck } from "lucide-react";
 import SceneHero from "@/components/SceneHero";
 import ProductCard from "@/components/ProductCard";
 import ReviewsRiver from "@/components/ReviewsRiver";
 import CtaBand from "@/components/CtaBand";
 import Reveal from "@/components/Reveal";
+import RfqTriggerButton from "@/components/RfqTriggerButton";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -32,40 +33,48 @@ export default function HomePage() {
     <>
       <SceneHero />
 
-      {/* Toptan Satış ve Endüstriyel Tedarik Bilgilendirme Bandı */}
-      <section className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6" aria-label="Toptan Satış ve Kurumsal Tedarik">
-        <Reveal className="rounded-2xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8">
+      {/* Endüstriyel B2B Tedarik ve Perakende Ayrımı Bilgilendirme Bandı */}
+      <section className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
+        <Reveal className="rounded-3xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-start gap-4">
-              <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-700 sm:flex">
-                <Boxes className="h-6 w-6" aria-hidden />
+              <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-brand sm:flex">
+                <Boxes className="h-7 w-7" aria-hidden />
               </div>
               <div>
-                <div className="inline-flex items-center gap-2 rounded-md bg-amber-50 px-2.5 py-0.5 text-xs font-bold text-amber-800">
-                  ÖNEMLİ: PERAKENDE SATIŞIMIZ YOKTUR
+                <div className="inline-flex items-center gap-2 rounded-md bg-amber-500/10 px-2.5 py-0.5 text-xs font-bold text-amber-800">
+                  <ShieldCheck className="h-3.5 w-3.5 text-amber-700" />
+                  PERAKENDE VE KURUMSAL AYRIMI
                 </div>
                 <h2 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                  Yalnızca Toptan ve Endüstriyel Çözümler
+                  Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı
                 </h2>
-                <p className="mt-1.5 max-w-3xl text-sm leading-relaxed text-ink-soft sm:text-base">
-                  Fabrika, atölye ve şantiyelere toptan malzeme tedariği yapıyoruz. İhtiyaç ve malzeme listenizi bize iletin; toplu alımlarınız için firmanıza özel toptan fiyat ve iskonto avantajlarımızla teklifinizi hazırlayalım.
+                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-soft sm:text-[15px]">
+                  Sitemiz; üretim tesisleri, fabrikalar ve kurumsal işletmelerin yüksek hacimli malzeme ihtiyaçlarını karşılamak üzere kurgulanmıştır.
                 </p>
-                <div className="mt-3 flex flex-wrap gap-4 text-xs font-medium text-ink-muted">
+                <div className="mt-3.5 rounded-xl border border-amber-200/80 bg-amber-50/70 p-3.5 text-xs leading-relaxed text-amber-900 sm:text-sm">
+                  &ldquo;Bu portal üzerinden yalnızca kurumsal firmaların <strong>koli ve palet bazındaki yüksek hacimli teklif talepleri</strong> işleme alınır. Bireysel ve parça bazlı satışlarımız fiziki mağazamızda devam etmektedir.&rdquo;
+                </div>
+                <div className="mt-4 flex flex-wrap gap-4 text-xs font-medium text-ink-muted">
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Şantiye & Fabrika Teslimatı
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Koli / Palet / Tesis Ambalajı
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand" /> Toplu Alıma Özel İskonto
+                    <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Matrisi
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Kurumsal Faturalandırma
+                    <span className="h-2 w-2 rounded-full bg-amber-500" /> Fatura & Online E-Tahsilat
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex shrink-0 items-center gap-3">
-              <Link href="/iletisim" className="btn-primary whitespace-nowrap shadow-md">
-                Toplu Fiyat / Teklif İste <ArrowRight className="h-4 w-4" aria-hidden />
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <RfqTriggerButton className="btn-primary shadow-md">
+                <ClipboardList className="h-4 w-4" />
+                Teklif Sepeti (RFQ) İlet
+              </RfqTriggerButton>
+              <Link href="/iletisim" className="btn-ghost">
+                İletişim & Konum
               </Link>
             </div>
           </div>

@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingCall from "@/components/FloatingCall";
+import { QuoteProvider } from "@/components/QuoteContext";
+import RfqModal from "@/components/RfqModal";
 import { COMPANY, SITE_URL } from "@/data/company";
 
 // Türkçe karakterler (ğ, ş, ı, İ) için latin-ext alt kümesi gerekli
@@ -78,12 +80,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#icerik" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-white">
           İçeriğe atla
         </a>
-        <Header />
-        <main id="icerik" className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <FloatingCall />
+        <QuoteProvider>
+          <Header />
+          <main id="icerik" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <FloatingCall />
+          <RfqModal />
+        </QuoteProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </body>
     </html>

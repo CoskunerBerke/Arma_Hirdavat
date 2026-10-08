@@ -83,18 +83,18 @@ export default function SceneHero() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-slate-950/80 to-transparent" />
 
       <div className="container-x flex flex-col justify-between py-6 sm:py-8 lg:min-h-[calc(100svh-72px)]">
-        {/* Üst satır */}
+        {/* Üst satır: B2B Portalı ve Perakende Uyarısı */}
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-slate-950/70 px-3.5 py-1.5 shadow-lg backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-slate-950/75 px-3.5 py-1.5 shadow-lg backdrop-blur-md">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand" />
             </span>
-            <span className="rounded bg-amber-400/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-300">
-              TOPTAN
+            <span className="rounded bg-blue-500/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-blue-300">
+              B2B PORTAL
             </span>
             <h1 className="text-xs font-semibold text-white sm:text-[13px]">
-              Yalnızca Toptan ve Endüstriyel Çözümler
+              Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı
             </h1>
             <span className="hidden items-center gap-1 text-xs text-slate-300 sm:inline-flex">
               <MapPin className="h-3 w-3 text-brand" aria-hidden /> Samsun / Tekkeköy
@@ -117,13 +117,18 @@ export default function SceneHero() {
             onMouseLeave={() => setPaused(false)}
             onFocusCapture={() => setPaused(true)}
             onBlurCapture={() => setPaused(false)}
-            className={`rounded-3xl border border-white/15 bg-slate-950/80 p-6 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.65)] backdrop-blur-2xl transition-all duration-300 ease-out sm:p-8 lg:order-1 lg:col-span-6 xl:col-span-6 ${
+            className={`rounded-3xl border border-white/15 bg-slate-950/80 p-6 shadow-[0_30px_70px_-20px_rgba(0,0,0,0.65)] backdrop-blur-2xl transition-all duration-300 ease-out sm:p-8 lg:order-1 lg:col-span-7 xl:col-span-7 ${
               shown ? "scene-in" : "scene-out"
             }`}
           >
-            <span className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/20 px-3 py-1 text-xs font-semibold text-blue-300">
-              {p.category}
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-lg border border-brand/40 bg-brand/20 px-3 py-1 text-xs font-semibold text-blue-300">
+                {p.category}
+              </span>
+              <span className="text-xs text-slate-400">
+                Tedarik: <strong className="text-slate-200">Koli • Palet • Tesis Ambalajı</strong>
+              </span>
+            </div>
 
             <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl">{p.title}</h2>
             <p className="mt-3 text-base leading-relaxed text-slate-300">{p.description}</p>
@@ -147,19 +152,25 @@ export default function SceneHero() {
             </div>
           </article>
 
-          {/* Sağ taraf: video arka planda net görünür, üzerinde yüzen bilgi kartları */}
-          <div className="relative hidden h-full min-h-[420px] lg:order-2 lg:col-span-6 lg:block" aria-hidden>
-            <div className="absolute right-0 top-[12%] animate-float-fast">
-              <div className="rounded-2xl border border-white/15 bg-slate-950/75 px-4 py-3 text-white shadow-xl backdrop-blur-xl">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Ürün grubu</p>
-                <p className="mt-0.5 text-sm font-semibold text-white">30 kategori</p>
+          {/* Sağ taraf: Marka & Ölçek Vurgusu (Image 1 Kurumsal Notu) ve Yüzen Kartlar */}
+          <div className="relative flex flex-col justify-center space-y-4 lg:order-2 lg:col-span-5" aria-hidden>
+            <div className="rounded-2xl border border-white/15 bg-slate-950/80 p-5 shadow-2xl backdrop-blur-xl">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-300">
+                <span className="h-2 w-2 rounded-full bg-amber-400" />
+                Kurumsal Satın Alma Prosedürü
+              </div>
+              <p className="mt-2.5 text-xs leading-relaxed text-slate-300 sm:text-[13px]">
+                &ldquo;Sistemimiz; Otomotiv yan sanayi, makine imalatı ve ağır sanayi kollarındaki (<strong>Sampa</strong>, <strong>Samsun Makina</strong>, <strong>Yeşilyurt</strong>, <strong>Rönesans</strong> vb.) tesislerin düzenli ve yüksek adetli satın alma prosedürlerine uygun olarak çalışmaktadır.&rdquo;
+              </p>
+              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 text-[11px] text-slate-400">
+                <span>Koli & Palet Bazlı Sevk</span>
+                <span className="font-semibold text-blue-400">İskonto Matrisi</span>
               </div>
             </div>
-            <div className="absolute bottom-[14%] right-[25%] animate-float-slow">
-              <div className="rounded-2xl border border-white/15 bg-slate-950/75 px-4 py-3 text-white shadow-xl backdrop-blur-xl">
-                <p className="text-[11px] font-medium uppercase tracking-wider text-amber-300">Toptan Satış</p>
-                <p className="mt-0.5 text-sm font-semibold text-white">Toplu Alım İskontosu</p>
-              </div>
+
+            <div className="rounded-2xl border border-white/15 bg-slate-950/70 p-4 shadow-xl backdrop-blur-xl">
+              <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">Tedarik Kapsamı</p>
+              <p className="mt-1 text-sm font-semibold text-white">30 Sanayi Kategorisi • Özel Şartname Hazırlığı</p>
             </div>
           </div>
         </div>

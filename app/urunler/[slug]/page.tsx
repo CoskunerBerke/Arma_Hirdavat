@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowRight, CheckCircle2, Mail, Phone } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import ProductCard from "@/components/ProductCard";
+import ProductRfqBox from "@/components/ProductRfqBox";
 import Reveal from "@/components/Reveal";
 import { COMPANY } from "@/data/company";
 import { PRODUCT_GROUPS, getProduct, getRelated } from "@/data/products";
@@ -51,25 +52,30 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 <Image src={p.image} alt={`${p.title} ürün görselleri`} fill priority sizes="(min-width:1024px) 680px, 92vw" className="object-contain p-4" />
               </div>
             </div>
+
+            <div className="mt-8 rounded-2xl border border-line bg-white p-6">
+              <h2 className="text-xl font-semibold text-ink">Bu grupta neler var?</h2>
+              <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                {p.items.map((it) => (
+                  <li key={it} className="flex items-start gap-3 text-[15px] text-ink">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 text-sm leading-relaxed text-ink-muted">
+                Ölçü, adet ve marka tercihlerinize göre stok durumu ve firmanıza özel iskonto matrisi için teklif listesine ekleyebilir veya bize doğrudan ulaşabilirsiniz.
+              </p>
+            </div>
           </Reveal>
 
           <Reveal className="lg:col-span-5" delay={80}>
-            <h2 className="text-xl font-semibold text-ink">Bu grupta neler var?</h2>
-            <ul className="mt-5 space-y-3">
-              {p.items.map((it) => (
-                <li key={it} className="flex items-start gap-3 text-[15px] text-ink">
-                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand" aria-hidden />
-                  {it}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 text-sm leading-relaxed text-ink-muted">
-              Ölçü, adet ve marka tercihlerinize göre stok durumu ve fiyat bilgisi için bize ulaşın.
-            </p>
+            {/* Hacimli Teklif Kutusu (RFQ) - Koli / Palet / Tesis Ambalajı */}
+            <ProductRfqBox product={p} />
 
-            <div className="surface mt-8 p-6">
-              <h3 className="text-base font-semibold text-ink">Teklif ve stok bilgisi</h3>
-              <div className="mt-4 space-y-2.5 text-sm">
+            <div className="surface mt-6 p-5">
+              <h3 className="text-sm font-semibold text-ink">Doğrudan İletişim & Danışma</h3>
+              <div className="mt-3 space-y-2 text-sm">
                 <a href={COMPANY.phones[0].href} className="flex items-center gap-2.5 text-ink-soft hover:text-brand">
                   <Phone className="h-4 w-4 text-brand" aria-hidden /> {COMPANY.phones[0].label}
                 </a>
@@ -77,9 +83,6 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                   <Mail className="h-4 w-4 text-brand" aria-hidden /> {COMPANY.email}
                 </a>
               </div>
-              <Link href={`/iletisim?urun=${p.slug}`} className="btn-primary mt-6 w-full">
-                Bu grup için teklif isteyin <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
             </div>
           </Reveal>
         </div>
