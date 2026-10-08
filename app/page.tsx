@@ -8,6 +8,7 @@ import Reveal from "@/components/Reveal";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
 import NationwideDeliveryBand from "@/components/NationwideDeliveryBand";
 import FaqSection from "@/components/FaqSection";
+import ProductActionVideo from "@/components/ProductActionVideo";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -35,49 +36,52 @@ export default function HomePage() {
     <>
       <SceneHero />
 
-      {/* Kurumsal B2B Tedarik ve Hacimli Alım Avantajları Bandı */}
-      <section className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
-        <Reveal className="rounded-3xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-start gap-4">
-              <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-emerald-50 text-action sm:flex">
-                <Boxes className="h-7 w-7" aria-hidden />
+      {/* Kurumsal B2B Tedarik, Hacimli Alım Avantajları ve Sahada Canlı Test Bandı */}
+      <section id="canli-test" className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6 scroll-mt-24" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
+        <Reveal className="rounded-3xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8 lg:p-10">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+            {/* Sol Taraf: B2B Avantajları ve İskonto Açıklaması */}
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-md bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
+                <ShieldCheck className="h-3.5 w-3.5 text-action" />
+                KURUMSAL B2B AYRICALIKLARI
               </div>
-              <div>
-                <div className="inline-flex items-center gap-2 rounded-md bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
-                  <ShieldCheck className="h-3.5 w-3.5 text-action" />
-                  KURUMSAL B2B AYRICALIKLARI
-                </div>
-                <h2 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl">
-                  Sanayi ve Tesisler İçin Doğrudan Fabrika İskontosu
-                </h2>
-                <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink-soft sm:text-[15px]">
-                  Bu portal; fabrikalar, üretim tesisleri ve kurumsal şantiyelerin <strong>koli ve palet ölçeğindeki</strong> yüksek hacimli malzeme ihtiyaçlarını en rekabetçi toptan fiyatlarla karşılamak üzere kurgulanmıştır.
-                </p>
-                <div className="mt-3.5 rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-3.5 text-xs leading-relaxed text-slate-800 sm:text-sm">
-                  &ldquo;Teklif listenize eklediğiniz her ürün grubu için alım hacminize göre <strong>fabrika iskonto matrisi</strong> uygulanır ve resmi proforma teklif belgesi hazırlanarak tarafınıza iletilir.&rdquo;
-                </div>
-                <div className="mt-4 flex flex-wrap gap-4 text-xs font-medium text-ink-muted">
-                  <span className="inline-flex items-center gap-1.5 text-slate-700">
-                    <span className="h-2 w-2 rounded-full bg-action" /> Koli & Palet Fabrika Ambalajı
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-slate-700">
-                    <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Matrisi
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-slate-700">
-                    <span className="h-2 w-2 rounded-full bg-action" /> Resmi E-Fatura & Hızlı Sevkiyat
-                  </span>
-                </div>
+              <h2 className="mt-2 text-xl font-bold tracking-tight text-ink sm:text-2xl lg:text-3xl">
+                Sanayi ve Tesisler İçin Doğrudan Fabrika İskontosu
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-[15px]">
+                Bu portal; fabrikalar, üretim tesisleri ve kurumsal şantiyelerin <strong>koli ve palet ölçeğindeki</strong> yüksek hacimli malzeme ihtiyaçlarını en rekabetçi toptan fiyatlarla karşılamak üzere kurgulanmıştır.
+              </p>
+              <div className="mt-4 rounded-xl border border-emerald-200/80 bg-emerald-50/50 p-4 text-xs leading-relaxed text-slate-800 sm:text-sm">
+                &ldquo;Teklif listenize eklediğiniz her ürün grubu için alım hacminize göre <strong>fabrika iskonto matrisi</strong> uygulanır ve resmi proforma teklif belgesi hazırlanarak tarafınıza iletilir.&rdquo;
+              </div>
+              <div className="mt-5 flex flex-wrap gap-4 text-xs font-medium text-ink-muted">
+                <span className="inline-flex items-center gap-1.5 text-slate-700">
+                  <span className="h-2 w-2 rounded-full bg-action" /> Koli & Palet Fabrika Ambalajı
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-slate-700">
+                  <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Matrisi
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-slate-700">
+                  <span className="h-2 w-2 rounded-full bg-action" /> Resmi E-Fatura & Hızlı Sevkiyat
+                </span>
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-3">
+                <RfqTriggerButton className="btn-action shadow-md">
+                  <ClipboardList className="h-4 w-4" />
+                  Teklif Sepeti (RFQ) İlet
+                </RfqTriggerButton>
+                <Link href="/urunler" className="btn-ghost">
+                  39 Ürünü İncele
+                </Link>
               </div>
             </div>
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
-              <RfqTriggerButton className="btn-action shadow-md">
-                <ClipboardList className="h-4 w-4" />
-                Teklif Sepeti (RFQ) İlet
-              </RfqTriggerButton>
-              <Link href="/urunler" className="btn-ghost">
-                39 Ürünü İncele
-              </Link>
+
+            {/* Sağ Taraf: Google Flow ile Üretilen Canlı Ürün Performans Videosu */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="w-full max-w-[340px]">
+                <ProductActionVideo />
+              </div>
             </div>
           </div>
         </Reveal>

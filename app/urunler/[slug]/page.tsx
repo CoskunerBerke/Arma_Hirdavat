@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, CheckCircle2, Mail, Phone, Shield, Package, Ruler, Factory, FileCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Mail, Phone, Shield, Package, Ruler, Factory, FileCheck, Sparkles } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import ProductCard from "@/components/ProductCard";
 import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
+import ProductActionVideo from "@/components/ProductActionVideo";
 import Reveal from "@/components/Reveal";
 import { COMPANY, SITE_URL } from "@/data/company";
 import { PRODUCT_GROUPS, getProduct, getRelated } from "@/data/products";
@@ -215,6 +216,27 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                 </div>
               )}
             </div>
+
+            {/* Canlı Saha Performans & Tutuş Testi Videosu (Google Flow AI) */}
+            {p.category.includes("Eldiven") && (
+              <div className="mt-6 rounded-2xl border border-line bg-white p-4 sm:p-5 shadow-xs">
+                <div className="flex items-center justify-between mb-3.5">
+                  <div>
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
+                      <Sparkles className="h-3.5 w-3.5" /> Canlı Saha Performansı
+                    </span>
+                    <h3 className="mt-1 text-sm sm:text-base font-bold text-ink">Hassas Parça & Yağlı Yüzey Tutuş Testi</h3>
+                  </div>
+                  <span className="text-[11px] text-ink-muted hidden sm:inline">10 sn Döngü</span>
+                </div>
+                <div className="max-w-[300px] sm:max-w-[340px] mx-auto">
+                  <ProductActionVideo
+                    title={`${p.code} - ${p.title}`}
+                    subtitle="Kaymaz Mikro Köpük Nitril Hassas Parça Tutuşu"
+                  />
+                </div>
+              </div>
+            )}
 
             {/* Ürün Maddeleri & Hızlı Çoklu Seçici */}
             <div className="mt-6">

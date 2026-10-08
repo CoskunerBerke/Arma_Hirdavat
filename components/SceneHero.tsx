@@ -89,6 +89,14 @@ export default function SceneHero() {
           >
             <span>39 Gerçek Ürünü İncele</span>
           </Link>
+
+          <a
+            href="#canli-test"
+            className="inline-flex items-center gap-2 rounded-xl border border-emerald-400/40 bg-slate-950/60 px-5 py-3.5 text-sm font-semibold text-emerald-200 backdrop-blur-md transition hover:bg-slate-900 hover:text-white hover:border-emerald-400/70"
+          >
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Saha Test Videosu (10 sn)</span>
+          </a>
         </div>
 
         {/* 4 Güven Unsuru (Risk Azaltıcı Mikro Sinyaller) */}
