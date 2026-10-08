@@ -69,11 +69,11 @@ export default function FloatingQuoteBar() {
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-2 shrink-0">
+        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 w-full sm:w-auto pt-1 sm:pt-0 border-t border-white/10 sm:border-t-0">
           <button
             type="button"
             onClick={clearQuote}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:bg-white/10 hover:text-white"
+            className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:bg-white/10 hover:text-white shrink-0"
             title="Sepeti Temizle"
             aria-label="Sepeti Temizle"
           >
@@ -83,9 +83,11 @@ export default function FloatingQuoteBar() {
           <button
             type="button"
             onClick={() => setIsOpen(true)}
-            className="btn-primary py-2.5 px-5 text-sm font-semibold shadow-lg shadow-brand/40"
+            className="btn-primary flex-1 sm:flex-initial py-2 sm:py-2.5 px-3.5 sm:px-5 text-xs sm:text-sm font-semibold shadow-lg shadow-brand/40 justify-center"
           >
-            Sepeti İncele & Teklifi Gönder (RFQ) <ArrowRight className="h-4 w-4" />
+            <span className="hidden sm:inline">Sepeti İncele & Teklif İste (RFQ)</span>
+            <span className="sm:hidden">Teklif İste ({items.length} Kalem)</span>
+            <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </button>
         </div>
       </div>

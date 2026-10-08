@@ -34,5 +34,7 @@ next-env.d.ts
 
 # Scratch helper scripts
 download_assets.py
+/scripts/
+/FABA-Catalog-TR.pdf
 
 /Drone_flying*.mp4

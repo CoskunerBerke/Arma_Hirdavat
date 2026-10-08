@@ -4,7 +4,9 @@ import { CreditCard, Mail, MapPin, Phone, Printer } from "lucide-react";
 import { COMPANY, NAV } from "@/data/company";
 import { PRODUCT_GROUPS } from "@/data/products";
 
-const FOOTER_PRODUCTS = [1, 4, 10, 13, 15, 18, 30].map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
+const FOOTER_PRODUCTS = [1, 7, 12, 15, 22, 26, 30]
+  .map((id) => PRODUCT_GROUPS.find((p) => p.id === id))
+  .filter((p): p is (typeof PRODUCT_GROUPS)[0] => Boolean(p));
 
 export default function Footer() {
   return (

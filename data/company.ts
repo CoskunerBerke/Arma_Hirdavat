@@ -72,6 +72,7 @@ export const NAV = [
 ] as const;
 
 export const BRANDS = [
+  { name: "FABA Safety", desc: "İş eldivenleri, kimyasal ve lamineli tulumlar, KKD ekipmanları üreticisi (Kastamonu OSB)", logo: "/images/brands/faba.png", url: "https://www.fabasafety.com" },
   { name: "Domak", desc: "Santrifüj, kademeli ve dalgıç pompalar, hidrofor sistemleri", logo: "/images/brands/domak.jpg", url: "http://www.domak.com.tr" },
   { name: "Doğan Makina", desc: "İnşaat makineleri ve şantiye ekipmanları", logo: "/images/brands/doganmakina.jpg", url: "http://doganmakina.com.tr/" },
   { name: "Sufil", desc: "Su filtreleri ve arıtma ürünleri", logo: "/images/brands/sufil.jpg", url: "http://www.sufil.com.tr/" },
@@ -82,15 +83,11 @@ export const BRANDS = [
 
 export const CATALOGS = [
   {
-    title: "Arma Hırdavat Ürün Kataloğu",
-    updated: "08.07.2014",
-    size: "16 MB",
-    url: "https://armahirdavat.com.tr/icerik/teknik/MU1D66BL.pdf",
-  },
-  {
-    title: "Domak Pompa 2013 Kataloğu",
-    updated: "07.06.2013",
-    size: "38 MB",
-    url: "https://armahirdavat.com.tr/icerik/teknik/LX4V53CJ.pdf",
+    title: "FABA İş Güvenliği & KKD Resmi Ürün Kataloğu",
+    description: "İşçi eldivenleri, köpük nitril, kesilmeye dirençli eldivenler, Zevahir kaynak eldivenleri ve Tip 3B/4B/5B/6B kimyasal koruyucu tulumlar.",
+    updated: "2026 Güncel Baskı",
+    size: "40.7 MB",
+    pages: "48 Sayfa",
+    url: "/catalogs/FABA-Catalog-TR.pdf",
   },
 ];

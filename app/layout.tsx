@@ -15,6 +15,9 @@ const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", variable
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
   colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {

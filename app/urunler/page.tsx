@@ -5,20 +5,23 @@ import CtaBand from "@/components/CtaBand";
 import { SITE_URL } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Toptan Teknik Hırdavat ve Fabrika Malzemeleri | 81 İl Sevkiyat - Arma Hırdavat",
+  title: "FABA İş Güvenliği ve KKD Ürünleri | 81 İl Toptan Sevkiyat - Arma Hırdavat",
   description:
-    "30 ürün grubunda koli ve palet bazlı toptan teknik hırdavat satışı. Bağlantı elemanları, çelik halat, el aletleri, kaynak, iş güvenliği ve pompa ürünlerinde Türkiye geneli 81 ile ambar teslimatı. Özel iskonto teklifi alın.",
+    "39 profesyonel FABA KKD ürünü: Nitril ve köpük nitril eldivenler, Seviye D kesilmez eldivenler, Zevahir kaynak eldivenleri, Tip 3B/4B kimyasal tulumlar ve lamineli koruyucular. Koli ve palet bazlı kurumsal toptan satış.",
   keywords: [
-    "toptan teknik hırdavat ürünleri",
-    "toptan fabrika malzemeleri kataloğu",
-    "81 il hırdavat toptan satışı",
-    "koli palet teknik hırdavat",
-    "toptan sanayi malzemeleri"
+    "faba eldiven toptan",
+    "faba kimyasal tulum",
+    "faba zevahir kaynak eldiveni",
+    "truflex en-1501",
+    "trucut ek-5000",
+    "truchem t-800",
+    "toptan kkd ürünleri türkiye",
+    "81 il iş güvenliği toptan satışı"
   ],
   alternates: { canonical: "/urunler" },
   openGraph: {
-    title: "Toptan Teknik Hırdavat ve Fabrika Malzemeleri | 81 İl Sevkiyat - Arma Hırdavat",
-    description: "30 ürün grubunda koli ve palet bazında toptan teknik hırdavat. Türkiye geneli fabrika ve şantiye sevkiyatı.",
+    title: "FABA İş Güvenliği ve KKD Ürünleri | 81 İl Toptan Sevkiyat - Arma Hırdavat",
+    description: "39 profesyonel FABA iş eldiveni ve koruyucu tulum. Koli ve palet bazında toptan B2B tedarik.",
     url: `${SITE_URL}/urunler`,
   },
 };
@@ -27,9 +30,9 @@ export default function ProductsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Ürün grupları"
-        title="30 ürün grubunda teknik hırdavat"
-        description="Aradığınız ürünü arayın veya kategoriye göre filtreleyin. Listede göremediğiniz ürünler için bize ulaşabilirsiniz."
+        eyebrow="FABA KKD Kataloğu"
+        title="39 Profesyonel İş Güvenliği Ürünü"
+        description="FABA Kastamonu OSB tesislerinde üretilen işçi eldivenleri, köpük nitril, kesilmez eldivenler, kaynak eldivenleri ve Tip 3B/4B kimyasal koruyucu tulumlar. Koli ve palet bazlı kurumsal sipariş oluşturabilirsiniz."
         crumbs={[{ label: "Ürünler", href: "/urunler" }]}
       />
       <section className="section">

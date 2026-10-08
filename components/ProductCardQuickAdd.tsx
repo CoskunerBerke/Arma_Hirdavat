@@ -28,23 +28,23 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
     <button
       type="button"
       onClick={handleClick}
-      className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
+      className={`inline-flex items-center justify-center gap-1 rounded-lg px-2 py-1 text-[11px] font-semibold transition shrink-0 sm:px-2.5 sm:text-xs ${
         added
           ? "bg-emerald-600 text-white shadow-sm"
           : "border border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white hover:text-brand"
       }`}
-      title="50 Koli olarak teklif sepetine ekle"
-      aria-label={`${title} ürününü 50 koli olarak sepete ekle`}
+      title="Koli olarak teklif sepetine ekle"
+      aria-label={`${title} ürününü teklif sepetine ekle`}
     >
       {added ? (
         <>
-          <Check className="h-3.5 w-3.5" />
+          <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
           <span>Eklendi</span>
         </>
       ) : (
         <>
-          <Plus className="h-3.5 w-3.5" />
-          <span>+ Sepete Ekle</span>
+          <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          <span>+ Sepet</span>
         </>
       )}
     </button>

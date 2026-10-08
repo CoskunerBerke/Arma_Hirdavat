@@ -92,21 +92,21 @@ export default function HomePage() {
           <Reveal className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <p className="eyebrow">En çok satanlar</p>
-              <h2 id="best-sellers" className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-                En çok tercih edilen ürün gruplarımız
+              <h2 id="best-sellers" className="mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-ink lg:text-4xl">
+                En çok tercih edilen profesyonel ürünlerimiz
               </h2>
-              <p className="mt-3 max-w-xl text-ink-soft">
-                Eldivenden hortuma, İzeltaş el aletlerinden matkap uçlarına ve kesme-taşlama taşlarına; sahada en sık ihtiyaç duyulan ürünler.
+              <p className="mt-2 sm:mt-3 max-w-xl text-xs sm:text-sm text-ink-soft">
+                FABA iş eldivenleri, mikro köpük nitril, Seviye D kesilmeye dirençli eldivenler, Zevahir kaynak eldivenleri ve Tip 3B/4B kimyasal tulumlar; sanayide en sık talep edilen KKD ürünleri.
               </p>
             </div>
-            <Link href="/urunler" className="inline-flex items-center gap-2 text-sm font-semibold text-brand hover:text-brand-hover">
-              Tüm 30 grubu görün <ArrowRight className="h-4 w-4" aria-hidden />
+            <Link href="/urunler" className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand hover:text-brand-hover">
+              Tüm 39 ürünü inceleyin <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </Reveal>
 
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+          <ul className="mt-6 sm:mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-6">
             {BEST_SELLERS.map((p, i) => (
-              <Reveal as="li" key={p.id} delay={i * 60}>
+              <Reveal as="li" key={p.id} delay={i * 50} className="min-w-0">
                 <ProductCard product={p} />
               </Reveal>
             ))}

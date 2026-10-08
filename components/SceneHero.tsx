@@ -78,7 +78,7 @@ export default function SceneHero() {
         {/* Aksiyon Butonları */}
         <div className="mt-8 flex flex-wrap items-center gap-4">
           <Link href="/urunler" className="btn-primary py-3.5 px-7 shadow-xl shadow-brand/40 text-sm font-semibold">
-            30 Ürün Grubunu İncele <ArrowRight className="h-4 w-4" />
+            Ürün Kataloğunu İncele <ArrowRight className="h-4 w-4" />
           </Link>
           <RfqTriggerButton className="inline-flex items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50">
             <ClipboardList className="h-4 w-4 text-blue-300" />

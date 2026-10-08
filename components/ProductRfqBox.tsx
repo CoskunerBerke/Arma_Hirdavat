@@ -51,7 +51,7 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
         <label className="text-xs font-semibold uppercase tracking-wider text-ink-soft">
           Tedarik Şekli Seçin
         </label>
-        <div className="mt-2 grid grid-cols-3 gap-2">
+        <div className="mt-2 grid grid-cols-3 gap-1.5 sm:gap-2">
           {UNITS.map((u) => {
             const active = selectedUnit === u.label;
             return (
@@ -59,14 +59,14 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
                 key={u.label}
                 type="button"
                 onClick={() => setSelectedUnit(u.label)}
-                className={`flex flex-col items-center justify-center rounded-xl border p-2.5 text-center transition ${
+                className={`flex flex-col items-center justify-center rounded-xl border p-2 text-center transition ${
                   active
                     ? "border-brand bg-brand/5 text-brand ring-2 ring-brand/20 font-semibold"
                     : "border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white"
                 }`}
               >
-                <span className="text-sm">{u.label}</span>
-                <span className="mt-0.5 text-[10px] text-ink-muted">{u.desc}</span>
+                <span className="text-xs sm:text-sm font-semibold">{u.label}</span>
+                <span className="mt-0.5 text-[9px] sm:text-[10px] text-ink-muted truncate max-w-full">{u.desc}</span>
               </button>
             );
           })}
@@ -74,8 +74,8 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
       </div>
 
       {/* Miktar ve Ölçü/Şartname */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="col-span-1">
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div className="sm:col-span-1">
           <label className="text-xs font-semibold text-ink-soft">Miktar ({selectedUnit})</label>
           <input
             type="number"
@@ -85,11 +85,11 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
             className="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2 text-sm font-semibold text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15"
           />
         </div>
-        <div className="col-span-2">
-          <label className="text-xs font-semibold text-ink-soft">Ölçü / Tip / Şartname (Opsiyonel)</label>
+        <div className="sm:col-span-2">
+          <label className="text-xs font-semibold text-ink-soft">Beden / Çeşit / Not (Opsiyonel)</label>
           <input
             type="text"
-            placeholder="Örn: Metrik 4, 180x1.6 mm, 3/4 inç"
+            placeholder="Örn: Beden 9 (L), Beden XL, Mavi..."
             value={spec}
             onChange={(e) => setSpec(e.target.value)}
             className="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/15"
