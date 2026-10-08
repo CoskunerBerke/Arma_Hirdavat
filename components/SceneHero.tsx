@@ -58,8 +58,8 @@ export default function SceneHero() {
           <span className="text-xs font-semibold text-white sm:text-sm">
             Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı
           </span>
-          <span className="hidden items-center gap-1 text-xs text-slate-300 sm:inline-flex border-l border-white/20 pl-2.5">
-            <MapPin className="h-3 w-3 text-brand" /> Samsun / Tekkeköy
+          <span className="hidden items-center gap-1.5 text-xs text-slate-300 sm:inline-flex border-l border-white/20 pl-2.5">
+            <MapPin className="h-3.5 w-3.5 text-blue-400" /> Samsun Merkez Depo • 81 İl Sevkiyat
           </span>
         </div>
 
