@@ -24,7 +24,8 @@ interface Dimensions {
   ry: number;
   cardWidth: number;
   cardHeight: number;
-  globeSize: number;
+  logoWidth: number;
+  logoHeight: number;
 }
 
 export default function ClientLogos() {
@@ -33,12 +34,13 @@ export default function ClientLogos() {
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [dimensions, setDimensions] = useState<Dimensions>({
-    rx: 340,
-    rz: 110,
-    ry: 24,
+    rx: 370,
+    rz: 105,
+    ry: 20,
     cardWidth: 230,
     cardHeight: 145,
-    globeSize: 170,
+    logoWidth: 240,
+    logoHeight: 105,
   });
 
   const requestRef = useRef<number | null>(null);
@@ -47,45 +49,49 @@ export default function ClientLogos() {
   const resumeTimerRef = useRef<NodeJS.Timeout | null>(null);
   const targetAngleRef = useRef<number | null>(null);
 
-  // Responsive radii calculation
+  // Responsive radii and logo sizing calculation
   useEffect(() => {
     const updateDimensions = () => {
       const w = window.innerWidth;
       if (w < 480) {
         setDimensions({
-          rx: 115,
-          rz: 42,
-          ry: 10,
-          cardWidth: 155,
-          cardHeight: 130,
-          globeSize: 105,
+          rx: 125,
+          rz: 40,
+          ry: 8,
+          cardWidth: 145,
+          cardHeight: 120,
+          logoWidth: 135,
+          logoHeight: 65,
         });
       } else if (w < 640) {
         setDimensions({
           rx: 140,
-          rz: 50,
-          ry: 12,
-          cardWidth: 175,
-          cardHeight: 135,
-          globeSize: 120,
+          rz: 48,
+          ry: 10,
+          cardWidth: 160,
+          cardHeight: 128,
+          logoWidth: 155,
+          logoHeight: 74,
         });
       } else if (w < 1024) {
         setDimensions({
-          rx: 240,
-          rz: 80,
-          ry: 18,
-          cardWidth: 200,
-          cardHeight: 140,
-          globeSize: 140,
+          rx: 260,
+          rz: 75,
+          ry: 15,
+          cardWidth: 195,
+          cardHeight: 135,
+          logoWidth: 190,
+          logoHeight: 88,
         });
       } else {
         setDimensions({
-          rx: 340,
-          rz: 110,
-          ry: 24,
-          cardWidth: 235,
+          rx: 370,
+          rz: 105,
+          ry: 20,
+          cardWidth: 230,
           cardHeight: 145,
-          globeSize: 170,
+          logoWidth: 245,
+          logoHeight: 105,
         });
       }
     };
@@ -101,7 +107,7 @@ export default function ClientLogos() {
       if (lastTimeRef.current !== null) {
         const delta = time - lastTimeRef.current;
 
-        // Smooth transition to target angle if set
+        // Smooth transition to target angle if user clicked a card or button
         if (targetAngleRef.current !== null) {
           setAngle((prev) => {
             const diff = targetAngleRef.current! - prev;
@@ -146,7 +152,6 @@ export default function ClientLogos() {
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
     const deltaX = e.clientX - dragStartRef.current.x;
-    // Drag sensitivity
     const sensitivity = 0.006;
     setAngle(dragStartRef.current.angle + deltaX * sensitivity);
   };
@@ -171,10 +176,9 @@ export default function ClientLogos() {
     const N = CLIENT_REFERENCES.length;
     const step = (2 * Math.PI) / N;
 
-    // We want (angle + targetIndex * step) % (2 * Math.PI) to equal Math.PI / 2 (front center)
+    // Front center position is Math.PI / 2
     const targetTheta = Math.PI / 2 - targetIndex * step;
 
-    // Find the closest equivalent angle to avoid wrapping 360 spins
     const currentNorm = angle % (2 * Math.PI);
     let diff = (targetTheta - currentNorm) % (2 * Math.PI);
     if (diff > Math.PI) diff -= 2 * Math.PI;
@@ -252,10 +256,10 @@ export default function ClientLogos() {
                     ? "bg-brand text-white shadow-xs"
                     : "text-ink-soft hover:text-ink hover:bg-slate-50"
                 }`}
-                title="Dünya Yörüngesi 3D Dönüş Modu"
+                title="Arma Merkezi Tedarik 3D Yörünge Modu"
               >
                 <Globe className="h-3.5 w-3.5" />
-                <span>3D Dünya Yörüngesi</span>
+                <span>3D Tedarik Yörüngesi</span>
               </button>
               <button
                 type="button"
@@ -275,7 +279,7 @@ export default function ClientLogos() {
         </Reveal>
 
         {/* ========================================================================= */}
-        {/* 1. MOD: 3D DÜNYA VE DÖNEN YÖRÜNGE ARENASI (DÜNYANIN KENDİ ETRAFINDA DÖNMESİ) */}
+        {/* 1. MOD: 3D DÖNEN YÖRÜNGE ARENASI (MERKEZDE ARMA LOGOSU, ETRAFINDA SANAYİ DEVLERİ) */}
         {/* ========================================================================= */}
         {mode === "orbit" && (
           <div className="relative mt-6 sm:mt-10">
@@ -284,16 +288,16 @@ export default function ClientLogos() {
               <div className="flex items-center gap-2">
                 <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
                 <span className="font-semibold text-slate-800">
-                  Canlı Sanayi Yörüngesi:
+                  Arma Tedarik Ekosistemi:
                 </span>
                 <span className="text-slate-500 hidden sm:inline">
-                  Logolar dünyanın ekseni etrafında döner gibi 3D yörüngede hareket eder.
+                  Sanayi devleri, merkezdeki Arma Hırdavat etrafında 3D yörüngede dönmektedir.
                 </span>
               </div>
 
               <div className="flex items-center gap-2 text-[11px] text-brand bg-blue-50/70 border border-blue-100 rounded-full px-3 py-1">
                 <RotateCw className="h-3 w-3 animate-spin [animation-duration:8s]" />
-                <span>Yörüngeyi çevirmek için kaydırın veya firmalara tıklayın</span>
+                <span>Yörüngeyi çevirmek için kaydırın veya logolara tıklayın</span>
               </div>
             </div>
 
@@ -305,7 +309,7 @@ export default function ClientLogos() {
               onPointerCancel={handlePointerUp}
               className="relative mx-auto h-[380px] sm:h-[430px] md:h-[460px] w-full max-w-5xl rounded-3xl border border-line/80 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 shadow-2xl overflow-hidden cursor-grab active:cursor-grabbing select-none"
             >
-              {/* Arka Plan Uzay & Derinlik Parıltısı */}
+              {/* Arka Plan Derinlik Parıltısı & Grid Aurası */}
               <div className="pointer-events-none absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_50%_50%,rgba(0,102,255,0.25),transparent_70%)]" />
               <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,0.1)_1px,transparent_1px)] [background-size:24px_24px] opacity-25" />
 
@@ -320,62 +324,46 @@ export default function ClientLogos() {
               />
 
               {/* ======================================================== */}
-              {/* MERKEZ: KENDİ ETRAFINDA DÖNEN 3D DÜNYA KÜRESİ (EARTH GLOBE) */}
+              {/* MERKEZ: ARMA RESMİ LOGOSU (MERKEZİ TEDARİK ÜSSÜ) */}
               {/* ======================================================== */}
               <div
                 style={{
-                  width: `${dimensions.globeSize}px`,
-                  height: `${dimensions.globeSize}px`,
+                  width: `${dimensions.logoWidth}px`,
+                  height: `${dimensions.logoHeight}px`,
                   transform: "translate(-50%, -50%)",
                   zIndex: 15,
                 }}
-                className="pointer-events-none absolute left-1/2 top-1/2 flex items-center justify-center rounded-full"
+                className="pointer-events-none absolute left-1/2 top-1/2 flex items-center justify-center"
               >
-                {/* Dış Atmosferik Parıltı / Aura */}
-                <div className="absolute inset-0 rounded-full bg-sky-500/20 blur-xl animate-pulse" />
+                {/* Dış Parıltı / Atmosferik Halo */}
+                <div className="absolute inset-0 rounded-3xl bg-blue-500/25 blur-2xl animate-pulse" />
 
-                {/* 3D Küre Gövdesi */}
-                <div
-                  className="relative h-full w-full rounded-full border border-sky-400/40 overflow-hidden shadow-[0_0_50px_rgba(56,189,248,0.35),inset_-14px_-14px_30px_rgba(2,6,23,0.9),inset_10px_10px_25px_rgba(255,255,255,0.45)]"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 35% 30%, #38bdf8 0%, #1d4ed8 45%, #0f172a 85%, #020617 100%)",
-                  }}
-                >
-                  {/* Dönen Enlem & Boylam Çizgileri (Earth Grid) */}
-                  <svg
-                    className="absolute inset-0 h-full w-full animate-[spin_24s_linear_infinite] opacity-60"
-                    viewBox="0 0 100 100"
-                    fill="none"
-                    stroke="#93c5fd"
-                    strokeWidth="0.8"
-                  >
-                    <ellipse cx="50" cy="50" rx="46" ry="46" />
-                    <ellipse cx="50" cy="50" rx="35" ry="46" />
-                    <ellipse cx="50" cy="50" rx="20" ry="46" />
-                    <line x1="4" y1="50" x2="96" y2="50" />
-                    <line x1="12" y1="28" x2="88" y2="28" strokeDasharray="2 2" />
-                    <line x1="12" y1="72" x2="88" y2="72" strokeDasharray="2 2" />
-                    <line x1="50" y1="4" x2="50" y2="96" />
-                  </svg>
+                {/* Dönen Yörünge Halka Efekti (Merkezdeki logoyu çevreleyen ışıltılı dönen daire) */}
+                <div className="absolute -inset-4 sm:-inset-6 rounded-full border border-sky-400/30 border-dashed animate-[spin_30s_linear_infinite]" />
+                <div className="absolute -inset-8 sm:-inset-10 rounded-full border border-emerald-400/20 border-dotted animate-[spin_45s_linear_infinite_reverse]" />
 
-                  {/* Merkezdeki Işıltılı Kıta Vurgusu */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-2 text-center text-white">
-                    <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-sky-200 drop-shadow">
-                      ARMA B2B
-                    </span>
-                    <span className="text-[11px] sm:text-xs font-extrabold text-white leading-tight drop-shadow-md">
-                      81 İL & GLOBAL
-                    </span>
-                    <span className="mt-0.5 inline-flex items-center gap-0.5 rounded-full bg-emerald-500/80 px-1.5 py-0.2 text-[8px] sm:text-[9px] font-bold text-white shadow-xs">
-                      <Sparkles className="h-2 w-2" /> TEDARİK
+                {/* Arma Logo Kartı (Cam Şıklığı & Temiz Zemin) */}
+                <div className="relative flex h-full w-full flex-col items-center justify-center rounded-2xl sm:rounded-3xl border-2 border-white/90 bg-white/95 p-2 sm:p-3.5 shadow-[0_0_50px_rgba(0,102,255,0.35),0_20px_50px_-10px_rgba(2,6,23,0.7)] backdrop-blur-xl">
+                  <Image
+                    src="/images/logo.png"
+                    alt="Arma Hırdavat Logo"
+                    width={305}
+                    height={101}
+                    priority
+                    style={{ width: "auto", height: "auto" }}
+                    className="max-h-8 sm:max-h-11 w-auto max-w-[92%] object-contain"
+                  />
+                  <div className="mt-1 sm:mt-1.5 flex items-center gap-1 rounded-full bg-emerald-50 px-2 sm:px-2.5 py-0.5 border border-emerald-200/80">
+                    <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="text-[8px] sm:text-[10px] font-black uppercase tracking-wider text-emerald-700">
+                      Merkezi Tedarik Üssü
                     </span>
                   </div>
                 </div>
               </div>
 
               {/* ======================================================== */}
-              {/* DÜNYANIN ETRAFINDA DÖNEN 5 ÖNCÜ FİRMA LOGO KARTLARI */}
+              {/* ARMA'NIN ETRAFINDA 3D DÖNEN 5 ÖNCÜ FİRMA LOGO KARTLARI */}
               {/* ======================================================== */}
               {CLIENT_REFERENCES.map((client, i) => {
                 const phi = angle + i * step;
@@ -392,11 +380,11 @@ export default function ClientLogos() {
                 const scale = 0.7 + depth * 0.35; // 0.70x in back to 1.05x in front
                 const opacity = Math.max(0.35, Math.min(1.0, 0.4 + depth * 0.6));
 
-                // Z-index: passes behind the Earth (zIndex < 15) and in front (zIndex > 15)
+                // Z-index: passes behind Arma (zIndex < 15) and in front (zIndex > 15)
                 const zIndex = z >= 0 ? Math.round(18 + depth * 15) : Math.round(4 + depth * 10);
 
-                const isFrontFocus = depth > 0.82;
-                const isSelected = activeIndex === i;
+                // SADECE en öndeki TEK firmaya ön odak verilir (kalabalık görüntüyü önler)
+                const isFrontFocus = i === activeIndex && depth > 0.75;
 
                 return (
                   <div
@@ -482,7 +470,7 @@ export default function ClientLogos() {
 
                     {/* Ön Odak Parıltı Rozeti */}
                     {isFrontFocus && (
-                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-2 py-0.2 text-[9px] font-bold text-white shadow-md flex items-center gap-1">
+                      <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-2.5 py-0.5 text-[9px] font-bold text-white shadow-md flex items-center gap-1">
                         <CheckCircle2 className="h-2.5 w-2.5" /> Doğrudan Sevkiyat
                       </span>
                     )}
