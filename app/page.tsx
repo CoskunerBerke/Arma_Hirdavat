@@ -10,6 +10,7 @@ import ClientLogos from "@/components/ClientLogos";
 import DiscountPackagingBand from "@/components/DiscountPackagingBand";
 import IndustrialLogisticsMap from "@/components/IndustrialLogisticsMap";
 import RetailStoreSection from "@/components/RetailStoreSection";
+import ProductActionVideo from "@/components/ProductActionVideo";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
 
 const BEST_SELLERS = BEST_SELLER_IDS.map((id) => PRODUCT_GROUPS.find((p) => p.id === id)!);
@@ -46,6 +47,48 @@ export default function HomePage() {
 
       {/* 5. SANAYİ BÖLGELERİ & LOJİSTİK HARİTASI (RADAR / AĞ ŞEMASI) */}
       <IndustrialLogisticsMap />
+
+      {/* AI Üretimi Eldiven Sahada Performans & Dayanım Testi Videosu */}
+      <section className="container-x py-8 sm:py-12" aria-label="FABA KKD Saha Performans Testi">
+        <Reveal className="rounded-3xl border border-line bg-gradient-to-br from-white via-slate-50/70 to-white p-6 sm:p-10 shadow-sm ring-1 ring-black/[0.04]">
+          <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
+            {/* Sol Taraf: Test Bilgileri ve Dayanım Standartları */}
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-50 px-3 py-1 text-xs font-bold text-action">
+                <ShieldCheck className="h-3.5 w-3.5 text-action" />
+                <span>SAHA VE ENDÜSTRİYEL KULLANIM TESTİ</span>
+              </div>
+              <h2 className="mt-3 text-2xl font-black tracking-tight text-ink sm:text-3xl">
+                Zorlu Fabrika Şartlarında Maksimum Tutuş ve Aşınma Dayanımı
+              </h2>
+              <p className="mt-3 text-sm text-ink-soft leading-relaxed sm:text-[15px]">
+                FABA mikro köpük nitril ve Seviye D kesilmez eldiven grupları, ağır sanayi parçalarının ve yağlı metal yüzeylerin taşınmasında elleri tam kavrar, kaymayı sıfıra indirir.
+              </p>
+              <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="rounded-xl border border-line bg-white p-3 shadow-2xs">
+                  <span className="text-xs font-bold text-ink block">EN 388: 4131X</span>
+                  <span className="text-[11px] text-ink-muted">Mekanik Aşınma</span>
+                </div>
+                <div className="rounded-xl border border-line bg-white p-3 shadow-2xs">
+                  <span className="text-xs font-bold text-ink block">Mikro Köpük</span>
+                  <span className="text-[11px] text-ink-muted">Yağ İtici Tutuş</span>
+                </div>
+                <div className="rounded-xl border border-line bg-white p-3 shadow-2xs col-span-2 sm:col-span-1">
+                  <span className="text-xs font-bold text-ink block">Koli & Palet</span>
+                  <span className="text-[11px] text-ink-muted">Doğrudan Sevk</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sağ Taraf: AI Eldiven Test Videosu Oynatıcı */}
+            <div className="lg:col-span-5 flex justify-center">
+              <div className="w-full max-w-[340px]">
+                <ProductActionVideo />
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </section>
 
       {/* En çok satanlar — 5 grup, tamamı kendi sayfasında */}
       <section className="section" aria-labelledby="best-sellers">
