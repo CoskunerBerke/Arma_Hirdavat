@@ -40,8 +40,8 @@ export default function HomePage() {
       {/* Çalıştığımız ve Tedarik Sağladığımız Öncü Sanayi Kuruluşları */}
       <ClientLogos />
 
-      {/* Kurumsal B2B Tedarik, Hacimli Alım Avantajları ve Sahada Canlı Test Bandı */}
-      <section id="canli-test" className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6 scroll-mt-24" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
+      {/* Kurumsal B2B Tedarik ve Hacimli Alım Avantajları */}
+      <section id="kurumsal-avantajlar" className="container-x pt-10 pb-4 sm:pt-14 sm:pb-6 scroll-mt-24" aria-label="Endüstriyel Tedarik ve Tesis Malzemeleri B2B Portalı">
         <Reveal className="rounded-3xl border border-line bg-white p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8 lg:p-10">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
             {/* Sol Taraf: B2B Avantajları ve İskonto Açıklaması */}
