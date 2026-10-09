@@ -98,6 +98,9 @@ export interface ClientReference {
   logo: string;
   url: string;
   badge: string;
+  description: string;
+  supplyScope: string;
+  tags: string[];
   width?: number;
   height?: number;
 }
@@ -109,14 +112,24 @@ export const CLIENT_REFERENCES: ClientReference[] = [
     sector: "Uluslararası İnşaat & Global Müteahhitlik (ENR Top 250)",
     logo: "/images/clients/ronesans.svg",
     url: "https://ronesans.com/enr-top-250",
-    badge: "Global Müteahhitlik",
+    badge: "Global Müteahhitlik & Altyapı",
+    description:
+      "Avrupa, Orta Asya ve Orta Doğu genelinde mega altyapı projeleri, sağlık kampüsleri, enerji santralleri ve endüstriyel tesisler inşa eden ENR Top 250 listesindeki dünyanın en büyük 38. uluslararası müteahhitlik şirketidir.",
+    supplyScope:
+      "Uluslararası mega şantiye sahalarına koli ve palet ölçeğinde CE belgeli FABA iş güvenliği eldivenleri, baret & yüksekte çalışma ekipmanları, civata bağlantı elemanları ve teknik sarf malzemeleri tedariği.",
+    tags: ["ENR Top 250 (38. Sıra)", "30+ Ülke Operasyonu", "Ağır Şantiye Standartları"],
   },
   {
     name: "Sampa Otomotiv",
-    sector: "Ağır Vasıta & Ticari Araç Yedek Parça Üretimi",
+    sector: "Ağır Vasıta & Ticari Araç Yedek Parça İmalatı",
     logo: "/images/clients/sampa.png",
     url: "https://www.sampa.com/tr",
     badge: "Global İhracat Lideri",
+    description:
+      "160'tan fazla ülkeye ihracat gerçekleştiren, ağır vasıta, çekici ve ticari araç yedek parçası imalatında dünyanın en büyük entegre kampüslerinden birine sahip sanayi devidir. Samsun OSB'de 150.000 m² kapalı alanda üretim yapmaktadır.",
+    supplyScope:
+      "Yüksek otomasyonlu fabrika üretim hatları ve talaşlı işleme atölyeleri için hassas montaj eldivenleri, kesici-aşındırıcı taşlar, pnömatik bağlantılar ve endüstriyel sarf tedariği.",
+    tags: ["160+ Ülkeye İhracat", "150.000 m² Entegre Tesis", "Otomotiv OEM Kalitesi"],
   },
   {
     name: "Yeşilyurt Demir Çelik",
@@ -124,20 +137,35 @@ export const CLIENT_REFERENCES: ClientReference[] = [
     logo: "/images/clients/yesilyurt.svg",
     url: "https://www.yesilyurtdc.com.tr/",
     badge: "Ağır Sanayi Devi",
+    description:
+      "Türkiye'nin en köklü entegre çelik üreticilerinden biridir. Yıllık milyonlarca ton kütük demir, nervürlü inşaat demiri ve filmaşin üretimi gerçekleştirmekte; kendi liman işletmesi ve deniz lojistik filosu ile küresel pazarlara sevkiyat yapmaktadır.",
+    supplyScope:
+      "Yüksek sıcaklıklı ergitme ocakları ve haddehane sahaları için ısıya dayanıklı Zevahir kaynak eldivenleri, ağır mekanik koruyucular, çelik halat sapanlar ve endüstriyel hırdavat ürünleri.",
+    tags: ["Milyon Ton Üretim Kapasitesi", "Entegre Liman Tesisleri", "Yüksek Isı & Haddehane Normları"],
   },
   {
     name: "Samsun Makina Sanayi",
     sector: "Duktil Boru, Döküm & Endüstriyel Makine İmalatı",
     logo: "/images/clients/samsunmakina.png",
     url: "https://www.samsunmakina.com.tr/",
-    badge: "Altyapı & Döküm",
+    badge: "Altyapı Boru & Ağır Döküm",
+    description:
+      "Türkiye'nin ve yakın coğrafyanın en büyük duktil döküm boru, vana, armatür ve endüstriyel pompa üreticisidir. DSİ, İller Bankası ve uluslararası içme suyu/hidroelektrik projelerinin anahtar teslim borulama altyapısını üretmektedir.",
+    supplyScope:
+      "Ağır dökümhane ve talaşlı işleme fabrikaları için Seviye D kesilmez eldivenler, taşlama taşları, yüksek mukavemetli çelik civata-somun grupları ve kimyasal sızdırmazlık ürünleri.",
+    tags: ["Duktil Döküm Boru Öncüsü", "DSİ & Ulusal Altyapı", "Ağır Dökümhane Standartları"],
   },
   {
     name: "CNR Otomasyon",
     sector: "Endüstriyel Otomasyon & Robotik Fabrika Çözümleri",
     logo: "/images/clients/cnr.png",
     url: "https://www.cnrotomasyon.com.tr/index.php?route=common/home",
-    badge: "Robotik & Otomasyon",
+    badge: "Robotik & Endüstri 4.0",
+    description:
+      "Endüstri 4.0 uyumlu akıllı fabrika otomasyonu, robotik kaynak ve paletleme hücreleri, montaj hatları ve PLC kontrollü endüstriyel makineler tasarlayıp anahtar teslim kuran öncü mühendislik kuruluşudur.",
+    supplyScope:
+      "Robotik entegrasyon sahaları, hassas otomasyon panoları ve montaj hatları için elektrostatik koruyucu & mikro köpük nitril eldivenler, el aletleri ve teknik sarf malzemeleri.",
+    tags: ["Robotik Kaynak & Paletleme", "Endüstri 4.0 Entegrasyonu", "Hassas Montaj & Güvenlik"],
   },
 ];
 
