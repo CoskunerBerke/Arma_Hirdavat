@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import FloatingCall from "@/components/FloatingCall";
 import FloatingQuoteBar from "@/components/FloatingQuoteBar";
 import { QuoteProvider } from "@/components/QuoteContext";
+import { RetailModalProvider } from "@/components/RetailStoreModal";
 import RfqModal from "@/components/RfqModal";
 import { COMPANY, SEO_KEYWORDS, SITE_URL, TURKEY_PROVINCES } from "@/data/company";
 
@@ -24,11 +25,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Arma Hırdavat | Türkiye Geneli Toptan Endüstriyel Malzeme & Teknik Hırdavat",
-    template: "%s | Arma Hırdavat - Türkiye 81 İl Toptan Tedarik",
+    default: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
+    template: "%s | Arma Hırdavat - Endüstriyel Tesis Tedariği",
   },
   description:
-    "Türkiye geneli 81 ildeki fabrikalara, OSB tesislerine ve şantiyelere koli ve palet bazında toptan teknik hırdavat, civata, bağlantı elemanları, kaynak, iş güvenliği ve fabrika malzemeleri tedariği.",
+    "Organize sanayi bölgeleri, üretim tesisleri ve ağır sanayi şantiyelerine koli ve palet bazında toptan teknik hırdavat, bağlantı elemanları, kaynak ve iş güvenliği tedariği.",
   applicationName: COMPANY.name,
   keywords: SEO_KEYWORDS,
   category: "Industrial Supplies & Hardware Wholesale",
@@ -38,15 +39,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     siteName: COMPANY.name,
-    title: "Arma Hırdavat | Türkiye Geneli Toptan Endüstriyel Malzeme & Teknik Hırdavat",
+    title: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
     description:
-      "Türkiye geneli 81 il OSB tesisleri, fabrikalar ve şantiyeler için koli ve palet bazında toptan teknik hırdavat ve endüstriyel malzeme tedariği. Firmanıza özel iskonto matrisi.",
-    images: [{ url: "/images/logo.png", width: 305, height: 101, alt: "Arma Hırdavat - Türkiye Geneli Toptan Tedarik" }],
+      "Organize sanayi bölgeleri, fabrikalar ve şantiyeler için koli ve palet bazında toptan teknik hırdavat ve endüstriyel malzeme tedariği. Kurumsal iskonto matrisi.",
+    images: [{ url: "/images/logo.png", width: 305, height: 101, alt: "Arma Hırdavat - Endüstriyel Tesis Tedariği" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arma Hırdavat | Türkiye Geneli Toptan Endüstriyel Tedarik",
-    description: "81 il fabrika, şantiye ve tesis malzemeleri toptan satışı ve iskonto avantajları.",
+    title: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri",
+    description: "Fabrika, şantiye ve tesis malzemeleri toptan satışı ve kurumsal iskonto avantajları.",
     images: ["/images/logo.png"],
   },
   robots: {
@@ -105,7 +106,7 @@ const orgJsonLd = {
         },
         {
           "@type": "AdministrativeArea",
-          name: "Türkiye Geneli 81 İl ve Tüm Organize Sanayi Bölgeleri (OSB)",
+          name: "Türkiye Organize Sanayi Bölgeleri ve Ağır Sanayi Havzaları",
         },
       ],
       hasOfferCatalog: {
@@ -161,14 +162,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           İçeriğe atla
         </a>
         <QuoteProvider>
-          <Header />
-          <main id="icerik" className="flex-1">
-            {children}
-          </main>
-          <Footer />
-          <FloatingCall />
-          <FloatingQuoteBar />
-          <RfqModal />
+          <RetailModalProvider>
+            <Header />
+            <main id="icerik" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+            <FloatingCall />
+            <FloatingQuoteBar />
+            <RfqModal />
+          </RetailModalProvider>
         </QuoteProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
       </body>

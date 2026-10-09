@@ -56,44 +56,27 @@ export default function SceneHero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-action" />
           </span>
           <span className="text-xs font-semibold text-white sm:text-sm">
-            FABA Yetkili B2B Toptan Tedarik Portalı
-          </span>
-          <span className="hidden items-center gap-1.5 text-xs text-slate-300 sm:inline-flex border-l border-white/20 pl-2.5">
-            <MapPin className="h-3.5 w-3.5 text-blue-400" /> Samsun Merkez Depo • 81 İl Sevkiyat
+            Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı
           </span>
         </div>
 
-        {/* Ana Slogan - Sade, Güçlü ve Anlaşılır */}
+        {/* Ana Başlık (H1) */}
         <h1 className="mt-5 text-3xl font-extrabold tracking-tight text-white drop-shadow-md sm:text-5xl lg:text-6xl leading-[1.15]">
-          Fabrikanız İçin Doğrudan <br className="hidden sm:inline" />
+          Endüstriyel Tesisler İçin <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-emerald-200 to-white">
-            Toptan KKD Tedariği
+            Yüksek Hacimli Teknik Tedarik
           </span>
         </h1>
 
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg">
-          FABA iş eldivenleri ve kimyasal koruyucu tulumlarda toptan fabrika fiyatları. Koli ve palet bazında özel kurumsal iskonto, aynı gün resmi teklif mektubu ve 81 ile ambar teslimatı.
+          Üretimin sürekliliği için gereken tüm teknik sarf ve donanım gruplarını, endüstriyel ambalaj standartlarında fabrikalara teslim ediyoruz.
         </p>
 
-        {/* Güven Veren Sanayi Referansları Mikro Çubuğu */}
-        <div className="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-300">
-          <span className="font-bold text-emerald-300">Güvenilir Tedarikçi:</span>
-          <span className="font-semibold text-white">Rönesans Holding</span>
-          <span className="text-slate-500">•</span>
-          <span className="font-semibold text-white">Sampa Otomotiv</span>
-          <span className="text-slate-500">•</span>
-          <span className="font-semibold text-white">Yeşilyurt D.Ç.</span>
-          <span className="text-slate-500">•</span>
-          <span className="font-semibold text-white">Samsun Makina</span>
-          <span className="text-slate-500">•</span>
-          <span className="font-semibold text-white">CNR Otomasyon</span>
-        </div>
-
-        {/* Yüksek Dönüşümlü Aksiyon Butonları — Mobilde tam genişlik, masaüstünde yan yana */}
+        {/* Yüksek Dönüşümlü Aksiyon Butonları */}
         <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <RfqTriggerButton className="btn-action py-3.5 px-6 sm:px-7 text-sm font-bold shadow-xl shadow-action/40 justify-center w-full sm:w-auto">
             <ClipboardList className="h-4 w-4" />
-            <span>Fiyat Teklifi Al</span>
+            <span>Tesisiniz İçin Teklif İsteyin (RFQ)</span>
             <ArrowRight className="h-4 w-4" />
           </RfqTriggerButton>
 
@@ -101,27 +84,27 @@ export default function SceneHero() {
             href="/urunler"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
           >
-            <span>Toptan Ürünleri İncele</span>
+            <span>Ürün Gruplarını İnceleyin</span>
           </Link>
         </div>
 
-        {/* 4 Güven Unsuru (Risk Azaltıcı Mikro Sinyaller) */}
+        {/* 4 Güven Unsuru (Ağır Sanayi Standartları) */}
         <div className="mt-8 sm:mt-10 grid grid-cols-2 gap-2.5 sm:gap-4 border-t border-white/15 pt-5 sm:pt-6 sm:grid-cols-4">
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
             <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 text-xs">✓</span>
-            <span className="truncate">100% Orijinal & CE</span>
+            <span className="truncate">100% Orijinal & CE Standart</span>
           </div>
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
             <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-blue-500/20 text-blue-300 text-xs">⚡</span>
-            <span className="truncate">2 Saatte Hızlı Teklif</span>
+            <span className="truncate">2 Saatte Proforma Teklif</span>
           </div>
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
             <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-amber-500/20 text-amber-300 text-xs">📦</span>
-            <span className="truncate">Koli & Palet Sevk</span>
+            <span className="truncate">Çemberli Palet Sevkiyatı</span>
           </div>
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
-            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300 text-xs">🚚</span>
-            <span className="truncate">81 İle Hızlı Ambar</span>
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300 text-xs">🏭</span>
+            <span className="truncate">Sanayi OSB Ambar Ağı</span>
           </div>
         </div>
       </div>

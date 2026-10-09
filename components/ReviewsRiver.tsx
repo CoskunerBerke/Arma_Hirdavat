@@ -54,8 +54,8 @@ export default function ReviewsRiver() {
       {/* Güven ve Sosyal Kanıt Özeti */}
       <div className="container-x mt-10 grid grid-cols-2 gap-4 border-t border-line pt-8 sm:grid-cols-4">
         <div className="text-center">
-          <p className="text-2xl font-extrabold text-ink sm:text-3xl">81 İl</p>
-          <p className="mt-1 text-xs text-ink-muted">Toptan Ambar Sevkiyatı</p>
+          <p className="text-2xl font-extrabold text-ink sm:text-3xl">Tüm OSB&apos;ler</p>
+          <p className="mt-1 text-xs text-ink-muted">Doğrudan Ambar & Tır Sevk</p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-extrabold text-action sm:text-3xl">100%</p>

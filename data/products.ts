@@ -488,7 +488,7 @@ const RAW: Raw[] = [
       "EN ISO 21420: 2020",
       "CE 2016/425"
     ],
-    "applications": "Forklift ve tır şoförlüğü, sevkiyat yükleme, hassas ahşap ve metal montajı, tarım ve şantiye yöneticiliği.",
+    "applications": "Forklift ve tır şoförlüğü, sevkiyat yükleme, hassas ahşap ve metal montajı, endüstriyel lojistik ve şantiye yöneticiliği.",
     "badge": "Cilt Keçi Derisi",
     "items": [
       "Ekstra esnek ve yumuşak A kalite cilt keçi derisi",
@@ -618,7 +618,7 @@ const RAW: Raw[] = [
       "EN 14126",
       "EN 1149-5"
     ],
-    "applications": "İlaç sanayi, virüs/salgın kontrolü, kimyasal boya atölyeleri, tarımsal ilaçlama ve asbest temizliği.",
+    "applications": "İlaç sanayi, kimyasal proses hatları, endüstriyel boya atölyeleri, asit-baz sahaları ve asbest temizliği.",
     "badge": "Tip 4B/5B/6B",
     "items": [
       "Tip 4B sprey geçirimsiz dikiş bantlı koruma",
@@ -866,7 +866,7 @@ const RAW: Raw[] = [
       "EN 14126",
       "EN 1149-5"
     ],
-    "applications": "Kimyasal laboratuvarlar, asit-baz aktarımı, petrokimya tesisleri ve galvaniz kaplama hatları.",
+    "applications": "Kimyasal laboratuvarlar, asit-baz transferi, petrokimya tesisleri ve galvaniz kaplama hatları.",
     "badge": "Tip PB3-B Kimyasal",
     "items": [
       "Tamamen sıvı geçirmez sarı TruChem bariyeri",
@@ -935,7 +935,7 @@ const RAW: Raw[] = [
       "EN 13034 Type PB 6",
       "EN ISO 13688"
     ],
-    "applications": "Boya kabinleri, gıda fabrikaları, tarım ve hayvancılık tesisleri, epoksi zemin uygulamaları.",
+    "applications": "Boya kabinleri, gıda üretim fabrikaları, kimya ve üretim tesisleri, epoksi zemin uygulamaları.",
     "badge": "Lamineli",
     "items": [
       "55 gr/m² sıvı itici beyaz lamine kumaş",

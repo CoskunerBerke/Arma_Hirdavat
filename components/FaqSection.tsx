@@ -4,8 +4,8 @@ import { SITE_URL } from "@/data/company";
 
 export const FAQS = [
   {
-    q: "Türkiye'nin hangi illerine toptan teknik hırdavat sevkiyatı yapıyorsunuz?",
-    a: "Arma Hırdavat olarak Türkiye'nin 81 ilindeki tüm organize sanayi bölgelerine (OSB), fabrikalara, tersanelere ve şantiyelere koli ve palet bazında anlaşmalı ambar ve kargo ağımızla düzenli sevkiyat gerçekleştirmekteyiz. İstanbul, Ankara, İzmir, Bursa, Kocaeli, Gaziantep, Konya, Kayseri, Adana ve Samsun başta olmak üzere tüm illere doğrudan teslimat sağlanır.",
+    q: "Hangi sanayi bölgelerine ve organize sanayi tesislerine toptan sevkiyat yapıyorsunuz?",
+    a: "Arma Hırdavat olarak Türkiye'nin önde gelen organize sanayi bölgelerine (OSB), fabrikalara, tersanelere ve şantiyelere koli ve palet bazında anlaşmalı sanayi ambar ağımızla doğrudan sevkiyat gerçekleştirmekteyiz. Marmara, İç Anadolu, Ege, Akdeniz ve Karadeniz sanayi havzaları başta olmak üzere tüm OSB'lere doğrudan teslimat sağlanır.",
   },
   {
     q: "Minimum sipariş miktarı (MOQ) ve koli/palet zorunluluğu var mı?",
@@ -51,7 +51,7 @@ export default function FaqSection() {
             Kurumsal Satın Alma ve Sevkiyat Hakkında Merak Edilenler
           </h2>
           <p className="mt-2 text-sm text-ink-soft">
-            Türkiye geneli 81 il toptan malzeme tedarik süreçlerimiz ve kurumsal prosedürler.
+            Organize sanayi bölgeleri ve üretim tesislerine toptan malzeme tedarik süreçlerimiz ve kurumsal prosedürler.
           </p>
         </div>
 

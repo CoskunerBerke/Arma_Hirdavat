@@ -6,8 +6,8 @@ import ContactForm from "@/components/ContactForm";
 import { COMPANY } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "İletişim & 81 İl Toptan Teklif Hattı | Arma Hırdavat",
-  description: `Arma Hırdavat toptan teknik hırdavat sipariş ve kurumsal teklif hattı. Türkiye'nin 81 ilindeki fabrikalar, atölyeler ve şantiyeler için koli/palet ambar sevkiyatı ve toptan iskonto desteği. İletişim: ${COMPANY.phones[0].label}, ${COMPANY.email}.`,
+  title: "İletişim & Kurumsal Toptan Teklif Hattı | Arma Hırdavat",
+  description: `Arma Hırdavat toptan teknik hırdavat sipariş ve kurumsal teklif hattı. Organize sanayi bölgeleri, fabrikalar ve şantiyeler için koli/palet ambar sevkiyatı ve toptan iskonto desteği. İletişim: ${COMPANY.phones[0].label}, ${COMPANY.email}.`,
   alternates: { canonical: "/iletisim" },
 };
 
@@ -27,8 +27,8 @@ export default function ContactPage() {
     <>
       <PageHero
         eyebrow="İletişim & Toptan Tedarik"
-        title="81 İl Toptan Teklif ve Sipariş Hattı"
-        description="Türkiye'nin her noktasına koli ve palet bazında toptan teknik hırdavat sevkiyatı yapıyoruz. Fiyat teklifi, toptan iskonto ve ambar teslimat süreleri için bize dilediğiniz kanaldan ulaşabilirsiniz."
+        title="Kurumsal Toptan Teklif ve Sipariş Hattı"
+        description="Organize sanayi bölgeleri ve ağır sanayi tesislerine koli ve palet bazında toptan teknik hırdavat sevkiyatı yapıyoruz. Fiyat teklifi, toptan iskonto ve ambar teslimat süreleri için bize dilediğiniz kanaldan ulaşabilirsiniz."
         crumbs={[{ label: "İletişim", href: "/iletisim" }]}
       />
 

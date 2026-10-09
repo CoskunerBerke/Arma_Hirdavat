@@ -5,7 +5,7 @@ import CtaBand from "@/components/CtaBand";
 import { SITE_URL } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "FABA İş Güvenliği ve KKD Ürünleri | 81 İl Toptan Sevkiyat - Arma Hırdavat",
+  title: "FABA İş Güvenliği ve KKD Ürünleri | Endüstriyel Tesis Sevkiyatı - Arma Hırdavat",
   description:
     "39 profesyonel FABA KKD ürünü: Nitril ve köpük nitril eldivenler, Seviye D kesilmez eldivenler, Zevahir kaynak eldivenleri, Tip 3B/4B kimyasal tulumlar ve lamineli koruyucular. Koli ve palet bazlı kurumsal toptan satış.",
   keywords: [
@@ -16,11 +16,11 @@ export const metadata: Metadata = {
     "trucut ek-5000",
     "truchem t-800",
     "toptan kkd ürünleri türkiye",
-    "81 il iş güvenliği toptan satışı"
+    "osb iş güvenliği toptan satışı"
   ],
   alternates: { canonical: "/urunler" },
   openGraph: {
-    title: "FABA İş Güvenliği ve KKD Ürünleri | 81 İl Toptan Sevkiyat - Arma Hırdavat",
+    title: "FABA İş Güvenliği ve KKD Ürünleri | Endüstriyel Tesis Sevkiyatı - Arma Hırdavat",
     description: "39 profesyonel FABA iş eldiveni ve koruyucu tulum. Koli ve palet bazında toptan B2B tedarik.",
     url: `${SITE_URL}/urunler`,
   },

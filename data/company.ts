@@ -5,7 +5,7 @@ export const COMPANY = {
   name: "Arma Hırdavat",
   tagline: "Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
   description:
-    "Arma Hırdavat; Türkiye genelinde 81 ildeki organize sanayi bölgelerine (OSB), fabrikalara, şantiyelere ve imalat tesislerine koli ve palet bazında toptan teknik hırdavat, bağlantı elemanları, kaynak, iş güvenliği ve endüstriyel tesis malzemeleri tedariği sağlar.",
+    "Arma Hırdavat; Türkiye'nin önde gelen organize sanayi bölgelerine (OSB), ağır sanayi tesislerine, şantiyelerine ve imalat fabrikalarına koli ve çemberli palet bazında toptan teknik sarf, bağlantı elemanları, kaynak, iş güvenliği ve endüstriyel tesis malzemeleri tedariği sağlar.",
   phones: [
     { label: "+90 (362) 266 60 95", href: "tel:+903622666095" },
     { label: "+90 (362) 266 67 50", href: "tel:+903622666750" },
@@ -28,7 +28,7 @@ export const COMPANY = {
     "https://www.google.com/maps/search/?api=1&query=" +
     encodeURIComponent("Arma Hırdavat Şabanoğlu Mah. 512. Sok. No:3 Tekkeköy Samsun"),
   paymentUrl: "https://odeme.armahirdavat.com.tr/",
-  coverage: "Türkiye Geneli 81 İl ve Tüm Organize Sanayi Bölgeleri (OSB)",
+  coverage: "Organize Sanayi Bölgeleri (OSB), Ağır Sanayi Havzaları ve Üretim Tesisleri Doğrudan Teslimatı",
   minOrderType: "Koli, Palet ve Tesis Ambalajı (Yalnızca Toptan)",
 };
 
@@ -49,7 +49,6 @@ export const SEO_KEYWORDS = [
   "toptan teknik hırdavat türkiye",
   "toptan fabrika malzemeleri",
   "endüstriyel hırdavat toptan satış",
-  "81 il şantiye hırdavat tedariği",
   "organize sanayi bölgesi hırdavat tedarikçisi",
   "toptan civata somun bağlantı elemanları",
   "toptan çelik halat gijon saplama",
@@ -59,15 +58,13 @@ export const SEO_KEYWORDS = [
   "b2b kurumsal hırdavat portalı",
   "toptan hırdavat fiyat teklifi al",
   "palet bazlı hırdavat sevkiyatı türkiye",
-  "samsun merkezli 81 il hırdavat ambar sevkiyatı"
+  "samsun merkezli osb ambar sevkiyatı"
 ];
 
 export const NAV = [
-  { href: "/", label: "Ana Sayfa" },
-  { href: "/urunler", label: "Ürünler" },
-  { href: "/kurumsal", label: "Kurumsal" },
-  { href: "/markalar", label: "Markalar" },
-  { href: "/katalog", label: "Katalog" },
+  { href: "/urunler", label: "Ürün Grupları" },
+  { href: "/kurumsal", label: "Kurumsal & Referanslar" },
+  { href: "/#lojistik", label: "Sevkiyat & Lojistik" },
   { href: "/iletisim", label: "İletişim" },
 ] as const;
 

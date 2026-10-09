@@ -21,7 +21,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getProduct(params.slug);
   if (!p) return {};
-  const title = `${p.code} ${p.title} | Toptan Fiyat Teklifi & 81 İl Sevkiyat`;
+  const title = `${p.code} ${p.title} | Toptan Fiyat Teklifi & OSB Ambar Sevkiyatı`;
   const description = `${p.title} (${p.code}) koli ve palet alımlarında kurumsal iskonto. ${p.description} Koli içi: ${p.koli}. Beden: ${p.sizes}. FABA Kastamonu OSB üretimi toptan tedarik.`;
 
   return {
@@ -254,7 +254,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               <div className="surface p-4 sm:p-5">
                 <h3 className="text-sm font-semibold text-ink">B2B Kurumsal Satış & Sevkiyat Hattı</h3>
                 <p className="mt-1 text-xs text-ink-muted">
-                  81 il OSB ve fabrikalara doğrudan ambar ve tır sevkiyatı yapılmaktadır.
+                  Organize sanayi bölgeleri ve fabrikalara doğrudan ambar ve tır sevkiyatı yapılmaktadır.
                 </p>
                 <div className="mt-3.5 space-y-2.5 text-xs sm:text-sm">
                   <a href={COMPANY.phones[0].href} className="flex items-center gap-2.5 text-ink-soft hover:text-brand font-medium">

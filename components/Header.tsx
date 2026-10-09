@@ -4,15 +4,17 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Phone, X, ArrowRight, ClipboardList } from "lucide-react";
+import { Menu, Phone, X, ArrowRight, ClipboardList, Store } from "lucide-react";
 import { COMPANY, NAV } from "@/data/company";
 import { useQuote } from "@/components/QuoteContext";
+import { useRetailModal } from "@/components/RetailStoreModal";
 
 export default function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { setIsOpen: openRfq, items } = useQuote();
+  const { openModal: openRetailModal } = useRetailModal();
 
   const itemCount = items.length;
 
@@ -38,21 +40,22 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full transition-colors duration-300">
-      {/* Arka plan katmanı — backdrop-blur buraya uygulanır, böylece header fixed menüyü 0px yapmaz */}
+      {/* Arka plan katmanı */}
       <div
         className={`absolute inset-0 -z-10 transition-all duration-300 ${
           open
             ? "border-b border-white/10 bg-slate-950 text-white"
             : isDarkHero
-            ? "border-b border-white/10 bg-slate-950/75 backdrop-blur-xl text-white"
+            ? "border-b border-white/10 bg-slate-950/80 backdrop-blur-xl text-white"
             : "border-b border-line bg-white/95 backdrop-blur-xl text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
         }`}
       />
 
-      <div className={`container-x flex h-[72px] items-center justify-between gap-4 sm:gap-6 ${
+      <div className={`container-x flex h-[76px] items-center justify-between gap-3 sm:gap-6 ${
         isDarkHero || open ? "text-white" : "text-ink"
       }`}>
-        <Link href="/" className="group flex shrink-0 items-center" aria-label="Arma Hırdavat ana sayfa">
+        {/* Logo & Alt Etiket */}
+        <Link href="/" className="group flex shrink-0 flex-col justify-center" aria-label="Arma Hırdavat ana sayfa">
           <Image
             src="/images/logo.png"
             alt="Arma Hırdavat logosu"
@@ -60,21 +63,27 @@ export default function Header() {
             height={101}
             priority
             style={{ width: "auto", height: "auto" }}
-            className="h-10 w-auto rounded-md transition-transform duration-300 group-hover:scale-[1.03] sm:h-11"
+            className="h-8 sm:h-9 w-auto rounded-md transition-transform duration-300 group-hover:scale-[1.02]"
           />
+          <span className={`text-[10px] font-semibold tracking-tight transition-colors ${
+            isDarkHero || open ? "text-slate-300" : "text-slate-600"
+          }`}>
+            Endüstriyel Tedarik & Tesis Malzemeleri
+          </span>
         </Link>
 
-        <nav aria-label="Ana menü" className="hidden items-center gap-7 lg:flex">
+        {/* Masaüstü Menü */}
+        <nav aria-label="Ana menü" className="hidden items-center gap-6 xl:gap-8 lg:flex">
           {NAV.map((item) => {
             const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`relative pb-1 text-[15px] font-medium transition-colors duration-200 ${
+                className={`relative pb-1 text-sm font-semibold transition-colors duration-200 ${
                   isDarkHero
-                    ? active ? "font-semibold text-white" : "text-slate-200 hover:text-white"
-                    : active ? "font-semibold text-ink" : "text-ink-soft hover:text-ink"
+                    ? active ? "font-bold text-white" : "text-slate-200 hover:text-white"
+                    : active ? "font-bold text-brand" : "text-ink-soft hover:text-ink"
                 }`}
                 aria-current={active ? "page" : undefined}
               >
@@ -87,39 +96,36 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        {/* Sağ Butonlar (Civtec Modeli: Fiziki Mağaza & RFQ) */}
+        <div className="hidden items-center gap-2.5 sm:gap-3 lg:flex">
+          {/* Sağ Buton 1 (Gri Çerçeveli): Fiziki Mağazamız & Perakende */}
+          <button
+            type="button"
+            onClick={openRetailModal}
+            className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition shadow-2xs ${
+              isDarkHero
+                ? "border-slate-500/60 bg-slate-900/60 text-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-300"
+                : "border-slate-300 bg-slate-50 text-slate-700 hover:bg-white hover:border-slate-400 hover:text-ink"
+            }`}
+          >
+            <Store className="h-3.5 w-3.5 text-slate-400" />
+            <span>Fiziki Mağazamız & Perakende</span>
+          </button>
+
+          {/* Sağ Buton 2 (Kurumsal Vurgulu): Teklif Sepeti (RFQ) */}
           <button
             type="button"
             onClick={() => openRfq(true)}
-            className={`relative flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-semibold transition ${
-              itemCount > 0
-                ? "border border-action/40 bg-emerald-50 text-slate-900 shadow-xs ring-1 ring-action/20"
-                : isDarkHero
-                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
-                : "border border-line bg-canvas text-ink hover:border-brand/40 hover:bg-white"
-            }`}
+            className="btn-action flex items-center gap-2 py-2 px-3.5 text-xs sm:text-sm font-bold shadow-md shadow-action/30"
           >
-            <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} aria-hidden />
-            <span>{itemCount > 0 ? "Teklif Listem" : "Fiyat Teklifi Al"}</span>
+            <ClipboardList className="h-4 w-4" aria-hidden />
+            <span>Teklif Sepeti (RFQ)</span>
             {itemCount > 0 && (
-              <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-action px-1.5 text-[11px] font-bold text-white shadow-sm">
+              <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white text-slate-950 px-1.5 text-[11px] font-black shadow-sm">
                 {itemCount}
               </span>
             )}
           </button>
-
-          <a
-            href={COMPANY.phones[0].href}
-            className={`flex items-center gap-2 text-sm font-medium transition-colors ${
-              isDarkHero ? "text-slate-200 hover:text-white" : "text-ink-soft hover:text-ink"
-            }`}
-          >
-            <Phone className="h-4 w-4 text-brand" aria-hidden />
-            <span className="hidden xl:inline">{COMPANY.phones[0].label}</span>
-          </a>
-          <Link href="/iletisim" className="btn-primary py-2.5">
-            Bize Ulaşın
-          </Link>
         </div>
 
         {/* Mobil Aksiyonlar */}
@@ -127,19 +133,13 @@ export default function Header() {
           <button
             type="button"
             onClick={() => openRfq(true)}
-            className={`relative inline-flex h-11 items-center gap-1.5 rounded-lg px-3 text-xs font-semibold transition ${
-              itemCount > 0
-                ? "border border-action/40 bg-emerald-50 text-slate-900 shadow-xs"
-                : isDarkHero
-                ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
-                : "border border-line bg-canvas text-ink hover:bg-white"
-            }`}
-            aria-label="Teklif Listesini Aç"
+            className="btn-action flex h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-bold shadow-xs"
+            aria-label="Teklif Sepetini Aç"
           >
-            <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} />
-            <span className="hidden sm:inline">Teklif Listesi</span>
+            <ClipboardList className="h-4 w-4" />
+            <span className="hidden sm:inline">RFQ</span>
             {itemCount > 0 && (
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-action text-[11px] font-bold text-white">
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-slate-950 text-[11px] font-black">
                 {itemCount}
               </span>
             )}
@@ -148,7 +148,7 @@ export default function Header() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className={`inline-flex h-11 w-11 items-center justify-center rounded-lg transition ${
+            className={`inline-flex h-10 w-10 items-center justify-center rounded-lg transition ${
               isDarkHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-canvas"
             }`}
             aria-expanded={open}
@@ -169,15 +169,30 @@ export default function Header() {
                 setOpen(false);
                 openRfq(true);
               }}
-              className="mb-4 flex w-full items-center justify-between rounded-xl border border-brand/20 bg-blue-50/60 p-4 text-left font-semibold text-brand"
+              className="mb-3 flex w-full items-center justify-between rounded-xl btn-action p-3.5 text-left font-bold shadow-md"
             >
               <span className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5" />
-                Teklif Listem
+                Teklif Sepeti (RFQ)
               </span>
-              <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs text-white">
+              <span className="rounded-full bg-white text-slate-950 px-2 py-0.5 text-xs font-black">
                 {itemCount} ürün
               </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openRetailModal();
+              }}
+              className="mb-4 flex w-full items-center justify-between rounded-xl border border-slate-300 bg-slate-50 p-3.5 text-left text-xs font-semibold text-slate-800"
+            >
+              <span className="flex items-center gap-2">
+                <Store className="h-4 w-4 text-slate-500" />
+                Fiziki Mağazamız & Perakende (Tekkeköy)
+              </span>
+              <ArrowRight className="h-4 w-4 text-slate-400" />
             </button>
 
             {NAV.map((item) => (

@@ -7,8 +7,8 @@ import ClientLogos from "@/components/ClientLogos";
 import { COMPANY } from "@/data/company";
 
 export const metadata: Metadata = {
-  title: "Kurumsal – Türkiye 81 İl Sanayi ve Fabrika Malzemeleri Tedarikçisi",
-  description: "Arma Fabrika Malzemeleri Teknik Hırdavat: Samsun merkez lojistik depomuzdan Türkiye'nin 81 ilindeki organize sanayi bölgelerine, fabrikalara ve şantiyelere toptan teknik hırdavat ve endüstriyel sarf malzemesi tedariği.",
+  title: "Kurumsal – Sanayi ve Fabrika Malzemeleri B2B Tedarikçisi | Arma Hırdavat",
+  description: "Arma Fabrika Malzemeleri Teknik Hırdavat: Samsun merkez lojistik depomuzdan Türkiye'nin önde gelen organize sanayi bölgelerine, fabrikalara ve şantiyelere toptan teknik hırdavat ve endüstriyel sarf malzemesi tedariği.",
   alternates: { canonical: "/kurumsal" },
 };
 
@@ -27,7 +27,7 @@ export default function CorporatePage() {
       <PageHero
         eyebrow="Kurumsal"
         title="Türkiye Sanayisinin Güvenilir Tedarik Ortağı"
-        description="Samsun lojistik depomuzdan Türkiye'nin 81 ilindeki organize sanayi bölgelerine, fabrikalara ve şantiyelere koli ve palet bazında toptan teknik hırdavat tedariği sağlıyoruz."
+        description="Samsun lojistik depomuzdan organize sanayi bölgelerine, fabrikalara ve ağır sanayi şantiyelerine koli ve palet bazında toptan teknik hırdavat tedariği sağlıyoruz."
         crumbs={[{ label: "Kurumsal", href: "/kurumsal" }]}
       />
 
@@ -38,13 +38,13 @@ export default function CorporatePage() {
           </Reveal>
           <Reveal className="space-y-5 text-[17px] leading-[1.75] text-ink-soft lg:col-span-7" delay={60}>
             <p>
-              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki ana merkez ve lojistik tesislerinden Türkiye&apos;nin 81 ilindeki organize sanayi bölgelerine, fabrikalara, imalat atölyelerine ve büyük inşaat projelerine toptan teknik hırdavat ve fabrika malzemeleri tedarik etmektedir.
+              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki ana merkez ve lojistik tesislerinden organize sanayi bölgelerine, üretim fabrikalarına, imalat atölyelerine ve büyük altyapı projelerine toptan teknik hırdavat ve tesis donanımları tedarik etmektedir.
             </p>
             <p>
               Civata, somun, vida ve bağlantı elemanlarından çelik halata, el ve elektrikli aletlerden kaynak makinelerine, iş güvenliği donanımlarından endüstriyel pompa ve pnömatik sistemlere kadar 30 ana ürün grubunda; koli ve palet bazlı toptan alımlarda doğrudan ambar ve lojistik sevkiyatı yapıyoruz.
             </p>
             <p>
-              Güçlü stok yapımız, rekabetçi toptan fiyatlandırmamız ve anlaşmalı sanayi ambarı ağımız ile Marmara&apos;dan İç Anadolu&apos;ya, Ege&apos;den Güneydoğu&apos;ya Türkiye genelindeki tüm sanayi tesislerine kesintisiz tedarik desteği sunuyoruz.
+              Güçlü stok yapımız, rekabetçi toptan fiyatlandırmamız ve anlaşmalı sanayi ambarı ağımız ile Marmara&apos;dan İç Anadolu&apos;ya, Ege&apos;den Güneydoğu&apos;ya Türkiye genelindeki tüm sanayi havzalarına kesintisiz tedarik desteği sunuyoruz.
             </p>
           </Reveal>
         </div>
@@ -58,13 +58,13 @@ export default function CorporatePage() {
           <Reveal className="surface p-8">
             <p className="eyebrow">Misyon</p>
             <p className="mt-4 text-lg leading-relaxed text-ink">
-              Türkiye genelindeki tüm sanayi tesislerinin, organize sanayi bölgelerindeki fabrikaların ve şantiyelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğrudan koli/palet bazında, rekabetçi toptan fiyatlar ve 81 ile güvenilir ambar teslimatıyla eksiksiz sağlamak.
+              Türkiye genelindeki tüm sanayi tesislerinin, organize sanayi bölgelerindeki fabrikaların ve şantiyelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğrudan koli/palet bazında, rekabetçi toptan fiyatlar ve güvenilir ambar teslimatıyla eksiksiz sağlamak.
             </p>
           </Reveal>
           <Reveal className="surface p-8" delay={80}>
             <p className="eyebrow">Vizyon</p>
             <p className="mt-4 text-lg leading-relaxed text-ink">
-              Türkiye&apos;nin 81 ilinde sanayi, imalat ve inşaat sektörünün koli ve palet bazlı toptan teknik hırdavat alımlarında güvenle tercih ettiği, süratli ve öncü kurumsal tedarik ortağı olmak.
+              Türkiye genelinde sanayi, imalat ve inşaat sektörünün koli ve palet bazlı toptan teknik donanım alımlarında güvenle tercih ettiği, süratli ve öncü kurumsal tedarik ortağı olmak.
             </p>
           </Reveal>
         </div>
