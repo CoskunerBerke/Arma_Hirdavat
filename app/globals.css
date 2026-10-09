@@ -153,9 +153,9 @@
   filter: blur(0);
 }
 
-/* Yorum nehri: işletim sistemi ayarından bağımsız olarak her zaman akar */
+/* Nehir akışı: işletim sistemi ayarından bağımsız olarak her zaman kesintisiz ve akıcı akar */
 .river-track {
-  animation: river 60s linear infinite !important;
+  animation: river 32s linear infinite !important;
   will-change: transform;
 }
 

@@ -1,5 +1,16 @@
 import type { Metadata } from "next";
-import { Compass, GraduationCap, LineChart, Target, UserCheck, Users } from "lucide-react";
+import {
+  Building2,
+  Compass,
+  ExternalLink,
+  GraduationCap,
+  LineChart,
+  MapPin,
+  Navigation,
+  Target,
+  UserCheck,
+  Users,
+} from "lucide-react";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CtaBand from "@/components/CtaBand";
@@ -32,10 +43,71 @@ export default function CorporatePage() {
       />
 
       <section className="section">
-        <div className="container-x grid gap-12 lg:grid-cols-12">
-          <Reveal className="lg:col-span-5">
-            <h2 className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">Hakkımızda</h2>
+        <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-start">
+          <Reveal className="lg:col-span-5 space-y-6">
+            <div>
+              <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-bold text-brand">
+                <Building2 className="h-3.5 w-3.5" /> Tekkeköy Ana Lojistik Deposu
+              </span>
+              <h2 className="mt-2.5 text-2xl font-black tracking-tight text-ink sm:text-3xl">Hakkımızda</h2>
+              <p className="mt-2 text-xs sm:text-sm text-ink-soft leading-relaxed">
+                Ağır sanayi tesislerinin, organize sanayi bölgelerinin ve üretim hatlarının kesintisiz teknik hırdavat ve tesis malzemesi tedarikçisi.
+              </p>
+            </div>
+
+            {/* Operasyonel B2B Metrikleri */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
+                <span className="text-xl font-black text-ink">10.000+</span>
+                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Raf Hazır Stok Kalemi</span>
+              </div>
+              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
+                <span className="text-xl font-black text-ink">30+</span>
+                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Teknik Malzeme Grubu</span>
+              </div>
+              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
+                <span className="text-xl font-black text-brand">Tüm OSB</span>
+                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Doğrudan Ambar Ağı</span>
+              </div>
+              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
+                <span className="text-xl font-black text-action">Palet & Koli</span>
+                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Endüstriyel Sevk</span>
+              </div>
+            </div>
+
+            {/* Google Haritalar & Tekkeköy Merkez Depo Konum Kartı */}
+            <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+              <div className="relative h-44 w-full bg-slate-100">
+                <iframe
+                  src={COMPANY.mapEmbed}
+                  title="Arma Hırdavat Tekkeköy Merkez Depo Konumu"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="h-full w-full border-0"
+                />
+              </div>
+              <div className="p-3.5 bg-slate-50/70 border-t border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-brand shrink-0 mt-0.5" />
+                  <div className="text-[11px] leading-tight">
+                    <strong className="font-bold text-ink block">Tekkeköy Merkez Depo</strong>
+                    <span className="text-ink-muted">{COMPANY.address.district} / {COMPANY.address.city}</span>
+                  </div>
+                </div>
+                <a
+                  href={COMPANY.mapLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-white border border-line px-3 py-1.5 text-xs font-bold text-brand hover:border-brand shadow-2xs transition-colors shrink-0"
+                >
+                  <Navigation className="h-3.5 w-3.5" />
+                  <span>Yol Tarifi Al</span>
+                  <ExternalLink className="h-3 w-3 opacity-60" />
+                </a>
+              </div>
+            </div>
           </Reveal>
+
           <Reveal className="space-y-5 text-[17px] leading-[1.75] text-ink-soft lg:col-span-7" delay={60}>
             <p>
               <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki ana merkez ve lojistik tesislerinden organize sanayi bölgelerine, üretim fabrikalarına, imalat atölyelerine ve büyük altyapı projelerine toptan teknik hırdavat ve tesis donanımları tedarik etmektedir.
