@@ -131,7 +131,7 @@ export default function RfqModal() {
             </span>
             <div>
               <h2 id="rfq-modal-title" className="text-lg font-bold text-ink sm:text-xl">
-                {submitted ? "Teklif Talebiniz Alındı" : "Kurumsal Teklif ve İskonto Sepeti (RFQ)"}
+                {submitted ? "Teklif Talebiniz Alındı" : "Kurumsal Fiyat Teklifi Al"}
               </h2>
               <p className="text-xs text-ink-muted">
                 {submitted ? "Arma Fabrika Malzemeleri B2B Portalı" : "Koli, palet ve tesis ambalajlı toptan alım talebi"}
@@ -243,10 +243,10 @@ export default function RfqModal() {
           ) : (
             /* Teklif Listesi & Talep Formu */
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Sistem Notu (Image 3 Metni) */}
-              <div className="rounded-2xl border border-amber-200/80 bg-amber-50/70 p-4 text-xs leading-relaxed text-amber-900">
-                <span className="font-bold">Sistem Notu: </span>
-                &ldquo;Birim fiyat listelenmemektedir. Liste oluşturulup gönderildikten sonra, talep edilen miktar ve teslimat lokasyonuna göre firmanıza özel iskonto matrisi uygulanarak tarafınıza teklif geçilecektir.&rdquo;
+              {/* Sistem Notu — Pozitif ve Kurumsal Avantaj Odaklı */}
+              <div className="rounded-2xl border border-emerald-200/80 bg-emerald-50/70 p-4 text-xs leading-relaxed text-slate-800">
+                <span className="font-bold text-emerald-800">Kurumsal Toptan Avantajı: </span>
+                &ldquo;Talebinizdeki miktar ve teslimat iline göre doğrudan fabrika toptan iskonto oranları uygulanarak, firmanıza özel resmi proforma teklif belgesi hazırlanır ve en kısa sürede iletilir.&rdquo;
               </div>
 
               {/* Seçilen Ürünler Listesi */}

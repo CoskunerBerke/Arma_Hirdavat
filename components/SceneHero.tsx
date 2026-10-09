@@ -93,7 +93,7 @@ export default function SceneHero() {
         <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <RfqTriggerButton className="btn-action py-3.5 px-6 sm:px-7 text-sm font-bold shadow-xl shadow-action/40 justify-center w-full sm:w-auto">
             <ClipboardList className="h-4 w-4" />
-            <span>Teklif Sepeti (RFQ) İlet</span>
+            <span>Fiyat Teklifi Al</span>
             <ArrowRight className="h-4 w-4" />
           </RfqTriggerButton>
 
@@ -101,7 +101,7 @@ export default function SceneHero() {
             href="/urunler"
             className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-md transition hover:bg-white/20 hover:border-white/50 w-full sm:w-auto"
           >
-            <span>39 Gerçek Ürünü İncele</span>
+            <span>Toptan Ürünleri İncele</span>
           </Link>
 
           <a

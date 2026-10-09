@@ -33,8 +33,8 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
           ? "bg-action text-white shadow-xs ring-2 ring-action/20"
           : "bg-emerald-50 text-action hover:bg-action hover:text-white border border-emerald-200/90 shadow-2xs"
       }`}
-      title="Teklif sepetine ekle"
-      aria-label={`${title} ürününü teklif sepetine ekle`}
+      title="Teklif listesine ekle"
+      aria-label={`${title} ürününü teklif listesine ekle`}
     >
       {added ? (
         <>
@@ -45,8 +45,8 @@ export default function ProductCardQuickAdd({ title, slug }: { title: string; sl
       ) : (
         <>
           <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span className="hidden sm:inline">+ Sepete Ekle</span>
-          <span className="sm:hidden text-[10px]">+ Sepet</span>
+          <span className="hidden sm:inline">+ Teklife Ekle</span>
+          <span className="sm:hidden text-[10px]">+ Teklif</span>
         </>
       )}
     </button>

@@ -69,7 +69,7 @@ export default function ProductItemsSelector({ productTitle, productSlug, items 
         <div>
           <h2 className="text-sm sm:text-base font-bold text-ink">Öne Çıkan Ürün Özellikleri & Varyantlar</h2>
           <p className="mt-0.5 text-[11px] sm:text-xs text-ink-muted">
-            İstediğiniz maddeleri işaretleyip tek tıkla teklif sepetine ekleyebilirsiniz.
+            İstediğiniz özellikleri işaretleyip doğrudan teklif listenize ekleyebilirsiniz.
           </p>
         </div>
 
@@ -174,7 +174,7 @@ export default function ProductItemsSelector({ productTitle, productSlug, items 
                   ) : (
                     <>
                       <Plus className="h-3.5 w-3.5" />
-                      <span>+ Sepet</span>
+                      <span>+ Teklif</span>
                     </>
                   )}
                 </button>
@@ -198,12 +198,12 @@ export default function ProductItemsSelector({ productTitle, productSlug, items 
             {batchAdded ? (
               <>
                 <Check className="h-4 w-4" />
-                <span>Hepsi Sepete Eklendi!</span>
+                <span>Teklif Listenize Eklendi!</span>
               </>
             ) : (
               <>
                 <Plus className="h-4 w-4" />
-                <span>Seçilenleri Sepete Ekle ({selectedIndices.length})</span>
+                <span>Seçilenleri Teklife Ekle ({selectedIndices.length})</span>
               </>
             )}
           </button>

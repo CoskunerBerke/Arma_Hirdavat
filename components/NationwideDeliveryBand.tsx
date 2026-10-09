@@ -67,7 +67,7 @@ export default function NationwideDeliveryBand() {
             </div>
             <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
               <RfqTriggerButton className="btn-action py-3 px-6 text-xs sm:text-sm font-bold shadow-md w-full sm:w-auto justify-center">
-                81 İl İçin Teklif İste (RFQ) <ArrowRight className="h-4 w-4" />
+                81 İl İçin Fiyat Teklifi Al <ArrowRight className="h-4 w-4" />
               </RfqTriggerButton>
             </div>
           </div>

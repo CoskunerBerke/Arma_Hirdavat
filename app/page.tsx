@@ -27,8 +27,8 @@ const VALUES = [
   },
   {
     icon: Receipt,
-    title: "2 Saatte Kurumsal İskonto ve RFQ",
-    text: "Malzeme listenize göre fabrika iskonto matrisiyle aynı gün resmi proforma teklif hazırlıyor, kurumsal e-fatura ile süreci hızlandırıyoruz.",
+    title: "2 Saatte Kurumsal Fiyat Teklifi",
+    text: "Malzeme listenize göre en avantajlı fabrika iskonto oranlarıyla aynı gün resmi proforma teklif hazırlıyor, kurumsal e-fatura ile süreci hızlandırıyoruz.",
   },
 ];
 
@@ -64,7 +64,7 @@ export default function HomePage() {
                   <span className="h-2 w-2 rounded-full bg-action" /> Koli & Palet Fabrika Ambalajı
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-slate-700">
-                  <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Matrisi
+                  <span className="h-2 w-2 rounded-full bg-brand" /> Kurumsal İskonto Avantajı
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-slate-700">
                   <span className="h-2 w-2 rounded-full bg-action" /> Resmi E-Fatura & Hızlı Sevkiyat
@@ -73,10 +73,10 @@ export default function HomePage() {
               <div className="mt-6 flex flex-wrap items-center gap-3">
                 <RfqTriggerButton className="btn-action shadow-md">
                   <ClipboardList className="h-4 w-4" />
-                  Teklif Sepeti (RFQ) İlet
+                  Hızlı Fiyat Teklifi Al
                 </RfqTriggerButton>
                 <Link href="/urunler" className="btn-ghost">
-                  39 Ürünü İncele
+                  Toptan Ürünleri İncele
                 </Link>
               </div>
             </div>

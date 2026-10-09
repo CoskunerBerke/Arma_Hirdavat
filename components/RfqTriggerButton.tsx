@@ -48,7 +48,7 @@ export default function RfqTriggerButton({
       ) : (
         <>
           <ClipboardList className="h-4 w-4" aria-hidden />
-          <span>Teklif Talebi Sepetine Ekle</span>
+          <span>Fiyat Teklifi Al</span>
         </>
       )}
     </button>

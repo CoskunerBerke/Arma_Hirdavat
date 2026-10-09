@@ -21,7 +21,7 @@ export default function FloatingQuoteBar() {
   const totalQuantity = items.reduce((acc, it) => acc + (it.quantity || 1), 0);
 
   return (
-    <aside aria-label="Teklif Sepeti Özeti" className="fixed bottom-4 inset-x-3 z-40 mx-auto max-w-3xl sm:bottom-6 sm:inset-x-6">
+    <aside aria-label="Teklif Listesi Özeti" className="fixed bottom-4 inset-x-3 z-40 mx-auto max-w-3xl sm:bottom-6 sm:inset-x-6">
       {/* Mini notification popup right above the bar when item is added */}
       {showToast && lastAdded && (
         <div className="mb-2 flex items-center justify-between rounded-xl border border-emerald-500/30 bg-emerald-950/90 px-4 py-2.5 text-xs font-medium text-emerald-200 shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-300">
@@ -30,7 +30,7 @@ export default function FloatingQuoteBar() {
               <Check className="h-3.5 w-3.5" />
             </span>
             <span>
-              Sepete Eklendi: <strong>{lastAdded.qty} {lastAdded.unit} {lastAdded.title}</strong>
+              Teklife Eklendi: <strong>{lastAdded.qty} {lastAdded.unit} {lastAdded.title}</strong>
             </span>
           </div>
           <button
@@ -57,7 +57,7 @@ export default function FloatingQuoteBar() {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
               <p className="text-sm font-bold text-white sm:text-base">
-                Teklif Sepeti: <span className="text-emerald-300">{items.length} Kalem</span>
+                Teklif Listesi: <span className="text-emerald-300">{items.length} Kalem</span>
               </p>
               <span className="rounded bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-slate-300">
                 Toplam {totalQuantity} Birim
@@ -74,8 +74,8 @@ export default function FloatingQuoteBar() {
             type="button"
             onClick={clearQuote}
             className="inline-flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-white/10 text-slate-400 hover:bg-white/10 hover:text-white shrink-0 transition"
-            title="Sepeti Temizle"
-            aria-label="Sepeti Temizle"
+            title="Listeyi Temizle"
+            aria-label="Listeyi Temizle"
           >
             <Trash2 className="h-4 w-4" />
           </button>
@@ -85,8 +85,8 @@ export default function FloatingQuoteBar() {
             onClick={() => setIsOpen(true)}
             className="btn-action flex-1 sm:flex-initial py-2.5 sm:py-3 px-4 sm:px-6 text-xs sm:text-sm font-bold shadow-xl shadow-action/40 justify-center"
           >
-            <span className="hidden sm:inline">Sepeti İncele & Teklif İste (RFQ)</span>
-            <span className="sm:hidden">Teklif İste ({items.length} Kalem)</span>
+            <span className="hidden sm:inline">Listeyi İncele & Fiyat Teklifi Al</span>
+            <span className="sm:hidden">Teklif Al ({items.length} Kalem)</span>
             <ArrowRight className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
           </button>
         </div>

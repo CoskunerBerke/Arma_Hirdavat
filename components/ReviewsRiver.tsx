@@ -63,7 +63,7 @@ export default function ReviewsRiver() {
         </div>
         <div className="text-center">
           <p className="text-2xl font-extrabold text-brand sm:text-3xl">&lt; 2 Saat</p>
-          <p className="mt-1 text-xs text-ink-muted">Ortalama RFQ Teklif Süresi</p>
+          <p className="mt-1 text-xs text-ink-muted">Ortalama Teklif Süresi</p>
         </div>
         <div className="text-center">
           <p className="text-2xl font-extrabold text-amber-500 sm:text-3xl">4.9 / 5.0</p>

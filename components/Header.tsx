@@ -100,7 +100,7 @@ export default function Header() {
             }`}
           >
             <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} aria-hidden />
-            <span>Teklif Sepeti (RFQ)</span>
+            <span>{itemCount > 0 ? "Teklif Listem" : "Fiyat Teklifi Al"}</span>
             {itemCount > 0 && (
               <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-action px-1.5 text-[11px] font-bold text-white shadow-sm">
                 {itemCount}
@@ -134,7 +134,7 @@ export default function Header() {
                 ? "border border-white/20 bg-white/10 text-white hover:bg-white/20"
                 : "border border-line bg-canvas text-ink hover:bg-white"
             }`}
-            aria-label="Teklif Sepetini Aç"
+            aria-label="Teklif Listesini Aç"
           >
             <ClipboardList className={`h-4 w-4 ${itemCount > 0 ? "text-action" : "text-brand"}`} />
             <span className="hidden sm:inline">Teklif Listesi</span>
@@ -173,7 +173,7 @@ export default function Header() {
             >
               <span className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5" />
-                Teklif Talebi Sepetim (RFQ)
+                Teklif Listem
               </span>
               <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs text-white">
                 {itemCount} ürün

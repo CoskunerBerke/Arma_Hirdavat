@@ -27,7 +27,7 @@ export default function CtaBand({ title = "İhtiyaç listenizi gönderin, size d
               href="/iletisim"
               className="btn-action shadow-xl shadow-action/30 px-6 py-3.5 text-center text-sm font-bold"
             >
-              Hemen Teklif İsteyin (RFQ) <ArrowRight className="h-4 w-4 inline ml-1" aria-hidden />
+              Hemen Fiyat Teklifi Alın <ArrowRight className="h-4 w-4 inline ml-1" aria-hidden />
             </Link>
             <a
               href="https://wa.me/903622666095"

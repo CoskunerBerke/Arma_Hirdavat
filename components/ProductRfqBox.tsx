@@ -41,9 +41,9 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-bold text-brand">
             <Package className="h-3.5 w-3.5" /> B2B Toptan Sipariş
           </span>
-          <h3 className="mt-1 text-base font-bold text-ink">Hacimli Teklif Sepetine Ekle</h3>
+          <h3 className="mt-1 text-base font-bold text-ink">Fiyat Teklifi Listesine Ekle</h3>
         </div>
-        <span className="text-xs text-ink-muted">Toptan İskonto</span>
+        <span className="text-xs text-ink-muted">Fabrika İskontosu</span>
       </div>
 
       {/* Tedarik Şekli Seçimi */}
@@ -130,25 +130,25 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
           {added ? (
             <>
               <Check className="h-4 w-4 text-white" />
-              <span>✓ Sepete Eklendi! (Teklif Listenizde)</span>
+              <span>✓ Teklif Listenize Eklendi!</span>
             </>
           ) : (
             <>
               <ClipboardList className="h-4 w-4" />
-              <span>{quantity} {selectedUnit} Teklif Sepetine Ekle</span>
+              <span>{quantity} {selectedUnit} Teklife Ekle</span>
             </>
           )}
         </button>
 
         {items.length > 0 && (
           <div className="mt-2.5 flex items-center justify-between text-xs">
-            <span className="text-ink-muted">Sepette {items.length} kalem ürün var</span>
+            <span className="text-ink-muted">Listenizde {items.length} kalem ürün var</span>
             <button
               type="button"
               onClick={() => setIsOpen(true)}
               className="font-bold text-action hover:underline"
             >
-              Sepeti Görüntüle ve Teklif Gönder &rarr;
+              Listeyi Gör & Teklif Al &rarr;
             </button>
           </div>
         )}
