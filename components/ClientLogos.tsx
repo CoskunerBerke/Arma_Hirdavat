@@ -3,24 +3,21 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import {
-  ArrowUpRight,
   Award,
   CheckCircle2,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
-  Layers,
   MousePointer2,
   Sparkles,
 } from "lucide-react";
 import { CLIENT_REFERENCES, type ClientReference } from "@/data/company";
 import Reveal from "./Reveal";
 
-const AUTO_SLIDE_DURATION = 5000; // 5 saniye otomatik geçiş
+const AUTO_SLIDE_DURATION = 5000; // 5 saniye otomatik kesintisiz geçiş
 
 export default function ClientLogos() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const lastWheelTimeRef = useRef<number>(0);
   const touchStartXRef = useRef<number | null>(null);
 
@@ -35,20 +32,19 @@ export default function ClientLogos() {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Otomatik 5 saniyede bir geçiş (Hover yapıldığında veya dokunulduğunda duraklar)
+  // Otomatik 5 saniyede bir kesintisiz geçiş (Kullanıcıdan tamamen bağımsız, duraksamadan akar)
   useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      next();
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % total);
     }, AUTO_SLIDE_DURATION);
-    return () => clearInterval(interval);
-  }, [isPaused, next, activeIndex]);
+    return () => clearInterval(timer);
+  }, [activeIndex, total]);
 
-  // Mouse Wheel (Tekerlek) ile kaydırınca geçiş
+  // Mouse Wheel (Tekerlek) ile kaydırınca anında geçiş
   const handleWheel = (e: React.WheelEvent) => {
     if (Math.abs(e.deltaY) > 20 || Math.abs(e.deltaX) > 20) {
       const now = Date.now();
-      if (now - lastWheelTimeRef.current > 420) {
+      if (now - lastWheelTimeRef.current > 380) {
         lastWheelTimeRef.current = now;
         if (e.deltaY > 0 || e.deltaX > 0) {
           next();
@@ -105,7 +101,7 @@ export default function ClientLogos() {
         </Reveal>
 
         {/* ========================================================================= */}
-        {/* 1. SADELEŞTİRİLMİŞ 5 FİRMA SEKMESİ (5 SANİYE İLERLEME ÇUBUĞUYLA BİRLİKTE) */}
+        {/* 1. ÜST ŞERİT: 5 FİRMA SEKMESİ VE 5 SANİYEDE SÜREKLİ DOLAN İLERLEME ÇUBUĞU */}
         {/* ========================================================================= */}
         <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-2.5 w-full">
           {CLIENT_REFERENCES.map((client, idx) => {
@@ -136,21 +132,24 @@ export default function ClientLogos() {
                 </div>
 
                 {/* Kısa İsim */}
-                <span className={`mt-2 text-xs font-bold truncate max-w-full ${
-                  isActive ? "text-brand" : "text-ink-muted"
-                }`}>
+                <span
+                  className={`mt-2 text-xs font-bold truncate max-w-full ${
+                    isActive ? "text-brand" : "text-ink-muted"
+                  }`}
+                >
                   {client.name}
                 </span>
 
-                {/* Aktif İlerleme Çubuğu (5 Saniyede Dolar) */}
+                {/* 5 Saniyede Kesintisiz Dolan İlerleme Çubuğu */}
                 {isActive && (
                   <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-100 overflow-hidden">
                     <div
-                      key={`progress-${activeIndex}`}
-                      style={{ animationDuration: `${AUTO_SLIDE_DURATION}ms` }}
-                      className={`h-full bg-brand origin-left animate-[progress_5s_linear_forwards] ${
-                        isPaused ? "[animation-play-state:paused]" : ""
-                      }`}
+                      key={`progress-line-${activeIndex}`}
+                      style={{
+                        animation: `progress ${AUTO_SLIDE_DURATION}ms linear forwards`,
+                        transformOrigin: "left",
+                      }}
+                      className="h-full w-full bg-brand"
                     />
                   </div>
                 )}
@@ -160,21 +159,19 @@ export default function ClientLogos() {
         </div>
 
         {/* ========================================================================= */}
-        {/* 2. SADE, AKICI VE EFEKTLİ GEÇİŞ KARTI (SCROLL / SWIPE / ZAMANLI) */}
+        {/* 2. ETKİLEŞİMLİ VE SADE VİTRİN KARTI (KULLANICIDAN BAĞIMSIZ SÜREKLİ AKAR) */}
         {/* ========================================================================= */}
         <div
           onWheel={handleWheel}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
           className="mt-6 rounded-3xl border border-line bg-white shadow-xl shadow-slate-200/40 p-6 sm:p-8 lg:p-10 relative overflow-hidden transition-all"
         >
           {/* Arka Plan Yumuşak Işıma */}
           <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-50/50 blur-3xl" />
           <div className="pointer-events-none absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-emerald-50/50 blur-3xl" />
 
-          {/* İçerik Kutusu (key={current.name} sayesinde her değişimde akıcı fade/slide efekti devreye girer) */}
+          {/* İçerik Kutusu (key={current.name} ile akıcı geçiş animasyonu) */}
           <div
             key={current.name}
             className="grid gap-8 lg:grid-cols-12 lg:items-center animate-in fade-in slide-in-from-right-4 duration-400 ease-out"
@@ -268,11 +265,9 @@ export default function ClientLogos() {
           {/* Alt Kontrol Barı: Süre ve Ok Tuşları */}
           <div className="mt-8 pt-5 border-t border-line/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-muted">
             <div className="flex items-center gap-2">
-              <MousePointer2 className="h-3.5 w-3.5 text-brand" />
+              <Sparkles className="h-3.5 w-3.5 text-action" />
               <span>
-                {isPaused
-                  ? "İnceleme modundasınız (Duraklatıldı)"
-                  : "Her 5 saniyede bir otomatik geçer • Scroll ederek veya tıklayarak değiştirebilirsiniz"}
+                5 saniyede bir otomatik geçer • Dilediğinizde kaydırarak veya sekmelere tıklayarak değiştirebilirsiniz
               </span>
             </div>
 
