@@ -1,85 +1,30 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
-import {
-  Award,
-  CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-  ExternalLink,
-  MousePointer2,
-  Sparkles,
-} from "lucide-react";
-import { CLIENT_REFERENCES, type ClientReference } from "@/data/company";
+import { ArrowUpRight, Award, CheckCircle2 } from "lucide-react";
+import { CLIENT_REFERENCES } from "@/data/company";
 import Reveal from "./Reveal";
 
-const AUTO_SLIDE_DURATION = 5000; // 5 saniye otomatik kesintisiz geçiş
-
+/**
+ * Müşteri Referansları — Kesintisiz Sağdan Sola Nehir Akışı (Logo River / Marquee)
+ * Sade, ferah, gereksiz yazılardan arındırılmış, sadece logo ve isim odaklı elit vitrin.
+ */
 export default function ClientLogos() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const lastWheelTimeRef = useRef<number>(0);
-  const touchStartXRef = useRef<number | null>(null);
-
-  const total = CLIENT_REFERENCES.length;
-  const current: ClientReference = CLIENT_REFERENCES[activeIndex];
-
-  const next = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % total);
-  }, [total]);
-
-  const prev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + total) % total);
-  }, [total]);
-
-  // Otomatik 5 saniyede bir kesintisiz geçiş (Kullanıcıdan tamamen bağımsız, duraksamadan akar)
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % total);
-    }, AUTO_SLIDE_DURATION);
-    return () => clearInterval(timer);
-  }, [activeIndex, total]);
-
-  // Mouse Wheel (Tekerlek) ile kaydırınca anında geçiş
-  const handleWheel = (e: React.WheelEvent) => {
-    if (Math.abs(e.deltaY) > 20 || Math.abs(e.deltaX) > 20) {
-      const now = Date.now();
-      if (now - lastWheelTimeRef.current > 380) {
-        lastWheelTimeRef.current = now;
-        if (e.deltaY > 0 || e.deltaX > 0) {
-          next();
-        } else {
-          prev();
-        }
-      }
-    }
-  };
-
-  // Mobil Dokunmatik (Swipe) ile kaydırma
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartXRef.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartXRef.current === null) return;
-    const diff = touchStartXRef.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 35) {
-      if (diff > 0) {
-        next();
-      } else {
-        prev();
-      }
-    }
-    touchStartXRef.current = null;
-  };
+  // Kesintisiz döngü için listeyi 4 kez tekrarlıyoruz
+  const riverItems = [
+    ...CLIENT_REFERENCES,
+    ...CLIENT_REFERENCES,
+    ...CLIENT_REFERENCES,
+    ...CLIENT_REFERENCES,
+  ];
 
   return (
     <section
       aria-label="Çalıştığımız ve Tedarik Sağladığımız Sanayi Kuruluşları"
-      className="border-b border-line bg-gradient-to-b from-white via-slate-50/40 to-white py-12 sm:py-16 relative overflow-hidden w-full max-w-full"
+      className="border-b border-line bg-gradient-to-b from-white via-slate-50/50 to-white py-12 sm:py-16 relative overflow-hidden w-full max-w-full"
     >
       <div className="container-x w-full max-w-full min-w-0">
-        {/* Üst Başlık & B2B Güven Mesajı */}
+        {/* Üst Başlık & B2B Güven Mesajı (Sade & Kurumsal) */}
         <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 pb-6 sm:pb-8 border-b border-line/60">
           <div>
             <div className="inline-flex items-center gap-2 rounded-md bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
@@ -90,7 +35,7 @@ export default function ClientLogos() {
               Türkiye&apos;nin Öncü Sanayi Kuruluşlarının Malzeme Tedarikçisiyiz
             </h2>
             <p className="mt-2 max-w-3xl text-xs sm:text-sm leading-relaxed text-ink-soft">
-              Üretim tesisleri, ağır sanayi fabrikaları ve global şantiyelerin yüksek hacimli teknik hırdavat, KKD ve tesis ihtiyaçlarını düzenli koli ve palet sevkiyatlarıyla karşılıyoruz.
+              Üretim tesisleri, ağır sanayi fabrikaları ve global şantiyelerin yüksek hacimli teknik hırdavat ve KKD malzeme ihtiyaçlarını düzenli koli ve palet sevkiyatlarıyla karşılıyoruz.
             </p>
           </div>
 
@@ -99,197 +44,78 @@ export default function ClientLogos() {
             <span>Doğrudan Toptan & Kurumsal İskonto</span>
           </div>
         </Reveal>
+      </div>
 
-        {/* ========================================================================= */}
-        {/* 1. ÜST ŞERİT: 5 FİRMA SEKMESİ VE 5 SANİYEDE SÜREKLİ DOLAN İLERLEME ÇUBUĞU */}
-        {/* ========================================================================= */}
-        <div className="mt-8 grid grid-cols-2 sm:grid-cols-5 gap-2.5 w-full">
-          {CLIENT_REFERENCES.map((client, idx) => {
-            const isActive = idx === activeIndex;
-            return (
-              <button
-                key={client.name}
-                type="button"
-                onClick={() => setActiveIndex(idx)}
-                className={`relative flex flex-col items-center justify-center p-3 rounded-2xl transition-all duration-300 border text-center overflow-hidden ${
-                  isActive
-                    ? "bg-white border-brand shadow-sm shadow-brand/10 ring-2 ring-brand/15"
-                    : "bg-white/70 border-line text-ink-soft hover:bg-white hover:border-slate-300"
-                }`}
+      {/* ========================================================================= */}
+      {/* KESİNTİSİZ SAĞDAN SOLA NEHİR AKIŞI (LOGO & İSİM MARQUEE STREAM) */}
+      {/* ========================================================================= */}
+      <div className="relative mt-8 sm:mt-10 overflow-hidden w-full max-w-full group">
+        {/* Sol ve Sağ Kenar Yumuşak Saydamlık Gradyanı (Görsel Akış Efekti) */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-36 bg-gradient-to-r from-white via-white/80 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-36 bg-gradient-to-l from-white via-white/80 to-transparent" />
+
+        {/* Kayan Nehir Şeridi (Hover edildiğinde yavaşlar / duraklar) */}
+        <ul className="river-track flex w-max py-4 group-hover:[animation-play-state:paused]">
+          {riverItems.map((client, idx) => (
+            <li
+              key={`${client.name}-${idx}`}
+              aria-hidden={idx >= CLIENT_REFERENCES.length ? true : undefined}
+              className="mr-4 sm:mr-5 shrink-0"
+            >
+              <a
+                href={client.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`${client.name} resmi web sitesi`}
+                className="group/card flex items-center gap-4 rounded-2xl border border-line bg-white/95 px-4 sm:px-6 py-3.5 sm:py-4 shadow-sm backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:bg-white hover:shadow-lg hover:shadow-slate-200/60 min-w-[240px] sm:min-w-[280px]"
               >
-                {/* Logo */}
-                <div className="relative flex h-8 sm:h-9 w-full items-center justify-center">
+                {/* Logo Alanı */}
+                <div className="relative flex h-11 w-24 sm:h-12 sm:w-28 shrink-0 items-center justify-center p-1 border-r border-line/60 pr-3 sm:pr-4">
                   <Image
                     src={client.logo}
                     alt={`${client.name} logosu`}
-                    width={110}
-                    height={36}
+                    width={140}
+                    height={48}
                     style={{ width: "auto", height: "auto" }}
-                    className={`max-h-7 sm:max-h-8 w-auto max-w-[85%] object-contain transition-all duration-300 ${
-                      isActive ? "grayscale-0 scale-105" : "grayscale opacity-60 hover:opacity-100"
-                    }`}
+                    className="max-h-8 sm:max-h-9 w-auto max-w-full object-contain filter grayscale contrast-125 transition-all duration-300 group-hover/card:grayscale-0 group-hover/card:scale-105"
                   />
                 </div>
 
-                {/* Kısa İsim */}
-                <span
-                  className={`mt-2 text-xs font-bold truncate max-w-full ${
-                    isActive ? "text-brand" : "text-ink-muted"
-                  }`}
-                >
-                  {client.name}
-                </span>
-
-                {/* 5 Saniyede Kesintisiz Dolan İlerleme Çubuğu */}
-                {isActive && (
-                  <div className="absolute bottom-0 inset-x-0 h-1 bg-slate-100 overflow-hidden">
-                    <div
-                      key={`progress-line-${activeIndex}`}
-                      style={{
-                        animation: `progress ${AUTO_SLIDE_DURATION}ms linear forwards`,
-                        transformOrigin: "left",
-                      }}
-                      className="h-full w-full bg-brand"
-                    />
+                {/* Firma İsmi ve Sektör */}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <h3 className="text-xs sm:text-sm font-extrabold text-ink transition-colors group-hover/card:text-brand truncate">
+                      {client.name}
+                    </h3>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 transition-all duration-200 group-hover/card:text-brand group-hover/card:-translate-y-0.5 group-hover/card:translate-x-0.5 shrink-0" />
                   </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* ========================================================================= */}
-        {/* 2. ETKİLEŞİMLİ VE SADE VİTRİN KARTI (KULLANICIDAN BAĞIMSIZ SÜREKLİ AKAR) */}
-        {/* ========================================================================= */}
-        <div
-          onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          className="mt-6 rounded-3xl border border-line bg-white shadow-xl shadow-slate-200/40 p-6 sm:p-8 lg:p-10 relative overflow-hidden transition-all"
-        >
-          {/* Arka Plan Yumuşak Işıma */}
-          <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-blue-50/50 blur-3xl" />
-          <div className="pointer-events-none absolute -left-24 -bottom-24 h-72 w-72 rounded-full bg-emerald-50/50 blur-3xl" />
-
-          {/* İçerik Kutusu (key={current.name} ile akıcı geçiş animasyonu) */}
-          <div
-            key={current.name}
-            className="grid gap-8 lg:grid-cols-12 lg:items-center animate-in fade-in slide-in-from-right-4 duration-400 ease-out"
-          >
-            {/* Sol Kolon: Sade Firma Bilgisi & Ne Yapar & Tedarik */}
-            <div className="lg:col-span-7 space-y-4">
-              {/* Üst Rozet & Firma Sırası */}
-              <div className="flex items-center gap-2.5">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200/80 px-3 py-1 text-xs font-bold text-brand">
-                  <Sparkles className="h-3.5 w-3.5" /> {current.badge}
-                </span>
-                <span className="text-xs font-semibold text-ink-muted">
-                  Referans {activeIndex + 1} / {total}
-                </span>
-              </div>
-
-              {/* Firma Başlığı */}
-              <div>
-                <h3 className="text-2xl sm:text-3xl font-black text-ink tracking-tight">
-                  {current.name}
-                </h3>
-                <p className="mt-0.5 text-xs sm:text-sm font-semibold text-slate-500">
-                  {current.sector}
-                </p>
-              </div>
-
-              {/* Ne İş Yapar? (Sade, Akıcı Anlatım) */}
-              <p className="text-sm sm:text-base leading-relaxed text-ink-soft">
-                {current.description}
-              </p>
-
-              {/* Arma Tedarik Kapsamı (Zarif Vurgulu Çizgi) */}
-              <div className="border-l-2 border-emerald-500 pl-4 py-1 bg-emerald-50/40 rounded-r-xl pr-3">
-                <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-0.5">
-                  Arma Hırdavat Malzeme Tedarik Kapsamı:
-                </p>
-                <p className="text-xs sm:text-sm leading-relaxed text-emerald-950 font-medium">
-                  {current.supplyScope}
-                </p>
-              </div>
-
-              {/* Öne Çıkan Standartlar / Etiketler */}
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                {current.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center rounded-lg bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-700"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              {/* Sade Tek Buton */}
-              <div className="pt-2">
-                <a
-                  href={current.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary py-2.5 px-5 text-xs sm:text-sm inline-flex items-center gap-2 shadow-sm"
-                >
-                  <span>Resmi Web Sitesini İncele</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-
-            {/* Sağ Kolon: Sade & Büyük Logo Alanı */}
-            <div className="lg:col-span-5 flex flex-col items-center">
-              <div className="relative w-full rounded-2xl border border-line bg-gradient-to-b from-white to-slate-50/60 p-8 flex flex-col items-center justify-center text-center shadow-sm">
-                <div className="relative flex h-24 sm:h-28 w-full items-center justify-center p-2">
-                  <Image
-                    src={current.logo}
-                    alt={`${current.name} logosu`}
-                    width={260}
-                    height={80}
-                    priority
-                    style={{ width: "auto", height: "auto" }}
-                    className="max-h-16 sm:max-h-20 w-auto max-w-[88%] object-contain"
-                  />
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] font-semibold text-slate-500 truncate">
+                    {client.badge}
+                  </p>
                 </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-                <div className="mt-5 w-full border-t border-line/60 pt-3 flex items-center justify-center gap-2 text-xs font-medium text-slate-600">
-                  <CheckCircle2 className="h-4 w-4 text-action shrink-0" />
-                  <span>Doğrudan Koli ve Palet Bazında Tedarik</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Alt Kontrol Barı: Süre ve Ok Tuşları */}
-          <div className="mt-8 pt-5 border-t border-line/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-muted">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 text-action" />
-              <span>
-                5 saniyede bir otomatik geçer • Dilediğinizde kaydırarak veya sekmelere tıklayarak değiştirebilirsiniz
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={prev}
-                className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-bold text-ink hover:bg-slate-50 transition shadow-2xs active:scale-95"
-                aria-label="Önceki Firma"
-              >
-                <ChevronLeft className="h-3.5 w-3.5" /> Önceki
-              </button>
-              <button
-                type="button"
-                onClick={next}
-                className="inline-flex items-center gap-1 rounded-lg border border-line bg-white px-3 py-1.5 text-xs font-bold text-ink hover:bg-slate-50 transition shadow-2xs active:scale-95"
-                aria-label="Sonraki Firma"
-              >
-                Sonraki <ChevronRight className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </div>
+      {/* Alt Güven & Kurumsal Sevkiyat İmzası */}
+      <div className="container-x mt-8 pt-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-xs font-semibold text-slate-500">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            81 İle Doğrudan Toptan Sevkiyat
+          </span>
+          <span className="hidden sm:inline text-slate-300">•</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+            %100 Orijinal & CE Belgeli Malzemeler
+          </span>
+          <span className="hidden sm:inline text-slate-300">•</span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+            Kurumsal Fabrika İskonto Avantajı
+          </span>
         </div>
       </div>
     </section>
