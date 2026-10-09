@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Phone, X, ArrowRight, ClipboardList, Store } from "lucide-react";
+import { Menu, Phone, X, ArrowRight, ClipboardList, Store, Search } from "lucide-react";
 import { COMPANY, NAV } from "@/data/company";
 import { useQuote } from "@/components/QuoteContext";
 import { useRetailModal } from "@/components/RetailStoreModal";
+import { useProductSearch } from "@/components/ProductSearchModal";
 
 export default function Header() {
   const pathname = usePathname();
@@ -15,6 +16,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const { setIsOpen: openRfq, items } = useQuote();
   const { openModal: openRetailModal } = useRetailModal();
+  const { openSearch } = useProductSearch();
 
   const itemCount = items.length;
 
@@ -96,8 +98,27 @@ export default function Header() {
           })}
         </nav>
 
-        {/* Sağ Butonlar (Civtec Modeli: Fiziki Mağaza & RFQ) */}
-        <div className="hidden items-center gap-2.5 sm:gap-3 lg:flex">
+        {/* Sağ Butonlar (Civtec Modeli: Fiziki Mağaza & RFQ & Arama) */}
+        <div className="hidden items-center gap-2 sm:gap-2.5 lg:flex">
+          {/* Ürün Arama Butonu (Toleranslı / Benzer Ürün Arama) */}
+          <button
+            type="button"
+            onClick={() => openSearch()}
+            className={`flex items-center gap-1.5 rounded-xl border px-3 py-2 text-xs font-semibold transition shadow-2xs ${
+              isDarkHero
+                ? "border-slate-500/60 bg-slate-900/60 text-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-300"
+                : "border-slate-300 bg-slate-50 text-slate-700 hover:bg-white hover:border-slate-400 hover:text-ink"
+            }`}
+            aria-label="Ürün veya kod ara"
+            title="Ürün veya Kod Ara (Ctrl+K)"
+          >
+            <Search className="h-3.5 w-3.5 text-brand" />
+            <span>Ürün Ara</span>
+            <kbd className="hidden xl:inline-flex rounded border border-slate-300/60 bg-white/40 px-1.5 py-0.5 text-[9px] font-bold text-slate-400">
+              Ctrl+K
+            </kbd>
+          </button>
+
           {/* Sağ Buton 1 (Gri Çerçeveli): Fiziki Mağazamız & Perakende */}
           <button
             type="button"
@@ -130,6 +151,20 @@ export default function Header() {
 
         {/* Mobil Aksiyonlar */}
         <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobil Arama Butonu */}
+          <button
+            type="button"
+            onClick={() => openSearch()}
+            className={`flex h-10 w-10 items-center justify-center rounded-lg border transition ${
+              isDarkHero
+                ? "border-white/20 bg-white/10 text-white hover:bg-white/20"
+                : "border-slate-300 bg-slate-50 text-slate-700 hover:bg-white"
+            }`}
+            aria-label="Ürün Ara"
+          >
+            <Search className="h-4 w-4" />
+          </button>
+
           <button
             type="button"
             onClick={() => openRfq(true)}
@@ -161,8 +196,20 @@ export default function Header() {
       </div>
 
       {open && (
-        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[72px] z-50 overflow-y-auto bg-white text-ink shadow-2xl lg:hidden">
+        <div id="mobile-menu" className="fixed inset-x-0 bottom-0 top-[76px] z-50 overflow-y-auto bg-white text-ink shadow-2xl lg:hidden">
           <nav aria-label="Mobil menü" className="container-x flex flex-col py-6">
+            {/* Mobilde Hızlı Arama Barı */}
+            <button
+              type="button"
+              onClick={() => {
+                setOpen(false);
+                openSearch();
+              }}
+              className="mb-3 flex w-full items-center gap-2.5 rounded-xl border border-slate-300 bg-slate-50 p-3 text-left text-xs font-semibold text-slate-700 shadow-2xs hover:bg-white"
+            >
+              <Search className="h-4 w-4 text-brand" />
+              <span>Ürün veya kod ara (örn: nitril, 1301, tulum)...</span>
+            </button>
             <button
               type="button"
               onClick={() => {

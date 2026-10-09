@@ -7,6 +7,7 @@ import FloatingCall from "@/components/FloatingCall";
 import FloatingQuoteBar from "@/components/FloatingQuoteBar";
 import { QuoteProvider } from "@/components/QuoteContext";
 import { RetailModalProvider } from "@/components/RetailStoreModal";
+import { SearchProvider } from "@/components/ProductSearchModal";
 import RfqModal from "@/components/RfqModal";
 import { COMPANY, SEO_KEYWORDS, SITE_URL, TURKEY_PROVINCES } from "@/data/company";
 
@@ -163,14 +164,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <QuoteProvider>
           <RetailModalProvider>
-            <Header />
-            <main id="icerik" className="flex-1">
-              {children}
-            </main>
-            <Footer />
-            <FloatingCall />
-            <FloatingQuoteBar />
-            <RfqModal />
+            <SearchProvider>
+              <Header />
+              <main id="icerik" className="flex-1">
+                {children}
+              </main>
+              <Footer />
+              <FloatingCall />
+              <FloatingQuoteBar />
+              <RfqModal />
+            </SearchProvider>
           </RetailModalProvider>
         </QuoteProvider>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />

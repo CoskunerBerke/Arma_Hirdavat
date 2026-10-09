@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { ArrowRight, ClipboardList, MapPin } from "lucide-react";
+import { ArrowRight, ClipboardList, MapPin, Search } from "lucide-react";
 import RfqTriggerButton from "./RfqTriggerButton";
+import { useProductSearch } from "./ProductSearchModal";
 
 export default function SceneHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { openSearch } = useProductSearch();
 
   // Safari (iOS), Chrome ve tüm mobil tarayıcılarda sorunsuz sessiz video oynatma
   useEffect(() => {
@@ -86,6 +88,15 @@ export default function SceneHero() {
           >
             <span>Ürün Gruplarını İnceleyin</span>
           </Link>
+
+          <button
+            type="button"
+            onClick={() => openSearch()}
+            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-slate-900/60 px-5 py-3.5 text-sm font-semibold text-slate-200 backdrop-blur-md transition hover:bg-slate-800 hover:text-white hover:border-white/40 w-full sm:w-auto"
+          >
+            <Search className="h-4 w-4 text-emerald-400" />
+            <span>Hızlı Ürün & Kod Ara</span>
+          </button>
         </div>
 
         {/* 4 Güven Unsuru (Ağır Sanayi Standartları) */}

@@ -3,35 +3,33 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, X, SlidersHorizontal, Package } from "lucide-react";
 import { CATEGORIES, PRODUCT_GROUPS, type CategoryName } from "@/data/products";
+import { searchProducts } from "@/lib/search";
 import ProductCard from "./ProductCard";
-
-const normalize = (s: string) => s.toLocaleLowerCase("tr-TR");
 
 export default function ProductCatalog() {
   const [category, setCategory] = useState<CategoryName | "Tümü">("Tümü");
   const [query, setQuery] = useState("");
 
-  // ?kategori=... ile gelinirse filtreyi uygula
+  // ?kategori=... veya ?q=... ile gelinirse filtreyi uygula
   useEffect(() => {
-    const k = new URLSearchParams(window.location.search).get("kategori");
+    const params = new URLSearchParams(window.location.search);
+    const k = params.get("kategori");
+    const qParam = params.get("q");
     const match = CATEGORIES.find((c) => c === k);
     if (match) setCategory(match);
+    if (qParam) setQuery(qParam);
   }, []);
 
   const list = useMemo(() => {
-    const q = normalize(query.trim());
-    return PRODUCT_GROUPS.filter((p) => {
-      if (category !== "Tümü" && p.category !== category) return false;
-      if (!q) return true;
-      return [
-        p.code,
-        p.title,
-        p.description,
-        p.category,
-        ...(p.standards || []),
-        ...p.items,
-      ].some((t) => normalize(t).includes(q));
-    });
+    const q = query.trim();
+    if (!q) {
+      if (category === "Tümü") return PRODUCT_GROUPS;
+      return PRODUCT_GROUPS.filter((p) => p.category === category);
+    }
+    const matches = searchProducts(q);
+    const matchedProducts = matches.map((m) => m.product);
+    if (category === "Tümü") return matchedProducts;
+    return matchedProducts.filter((p) => p.category === category);
   }, [category, query]);
 
   const counts = useMemo(() => {
