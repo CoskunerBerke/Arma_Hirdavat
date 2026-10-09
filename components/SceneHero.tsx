@@ -74,11 +74,11 @@ export default function SceneHero() {
           Üretimin sürekliliği için gereken tüm teknik sarf ve donanım gruplarını, endüstriyel ambalaj standartlarında fabrikalara teslim ediyoruz.
         </p>
 
-        {/* Yüksek Dönüşümlü Aksiyon Butonları */}
+        {/* Yüksek Dönüşümlü Aksiyon Butonları (Sade & Dengeli) */}
         <div className="mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
           <RfqTriggerButton className="btn-action py-3.5 px-6 sm:px-7 text-sm font-bold shadow-xl shadow-action/40 justify-center w-full sm:w-auto">
             <ClipboardList className="h-4 w-4" />
-            <span>Tesisiniz İçin Teklif İsteyin (RFQ)</span>
+            <span>Tesisiniz İçin Fiyat Teklifi Alın</span>
             <ArrowRight className="h-4 w-4" />
           </RfqTriggerButton>
 
@@ -88,15 +88,24 @@ export default function SceneHero() {
           >
             <span>Ürün Gruplarını İnceleyin</span>
           </Link>
+        </div>
 
-          <button
-            type="button"
+        {/* Akıllı & Toleranslı Ürün Arama Çubuğu (Sade & Efektli) */}
+        <div className="mt-5 w-full max-w-xl">
+          <div
             onClick={() => openSearch()}
-            className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-slate-900/60 px-5 py-3.5 text-sm font-semibold text-slate-200 backdrop-blur-md transition hover:bg-slate-800 hover:text-white hover:border-white/40 w-full sm:w-auto"
+            className="group relative flex cursor-pointer items-center justify-between rounded-2xl border border-white/20 bg-slate-950/75 py-2.5 pl-4 pr-3 text-xs sm:text-sm text-slate-300 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-emerald-400/60 hover:bg-slate-900/90 hover:shadow-lg hover:shadow-emerald-950/40"
           >
-            <Search className="h-4 w-4 text-emerald-400" />
-            <span>Hızlı Ürün & Kod Ara</span>
-          </button>
+            <div className="flex items-center gap-3 min-w-0">
+              <Search className="h-4 w-4 text-emerald-400 shrink-0 transition-transform group-hover:scale-110" />
+              <span className="truncate text-slate-400 group-hover:text-slate-200">
+                Aradığınız ürün veya kodu yazın (örn: nitril, kesilmez, 1301)...
+              </span>
+            </div>
+            <span className="shrink-0 rounded-xl bg-white/10 px-2.5 py-1 text-[11px] font-bold text-emerald-300 border border-emerald-400/30">
+              Ara ↵
+            </span>
+          </div>
         </div>
 
         {/* 4 Güven Unsuru (Ağır Sanayi Standartları) */}

@@ -69,7 +69,7 @@ export default function DiscountPackagingBand() {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <RfqTriggerButton className="btn-action shadow-md">
                 <ClipboardList className="h-4 w-4" />
-                <span>Tesisiniz İçin Teklif İsteyin (RFQ)</span>
+                <span>Tesisiniz İçin Fiyat Teklifi Alın</span>
                 <ArrowRight className="h-4 w-4" />
               </RfqTriggerButton>
             </div>

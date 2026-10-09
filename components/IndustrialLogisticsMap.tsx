@@ -157,70 +157,170 @@ export default function IndustrialLogisticsMap() {
               })}
             </div>
 
-            {/* Sağ Taraf: Görsel Radar & Ağ Şeması */}
-            <div className="lg:col-span-6 relative flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-slate-950 p-6 min-h-[340px] sm:min-h-[400px] overflow-hidden">
-              {/* Radar Konsantrik Daireleri */}
-              <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                <div className="h-64 w-64 rounded-full border border-blue-400 animate-ping duration-1000" />
-                <div className="absolute h-96 w-96 rounded-full border border-slate-700" />
-                <div className="absolute h-48 w-48 rounded-full border border-slate-700" />
+            {/* Sağ Taraf: Görsel Ağ & Lojistik Şeması */}
+            <div className="lg:col-span-6 relative flex flex-col items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-b from-slate-950 to-slate-900/90 p-5 sm:p-7 min-h-[360px] sm:min-h-[420px] overflow-hidden shadow-inner">
+              {/* Arka Plan Koordinat Izgarası & Menzil Halkaları */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25">
+                <div className="h-80 w-80 rounded-full border border-dashed border-emerald-500/30" />
+                <div className="absolute h-56 w-56 rounded-full border border-slate-700/60" />
+                <div className="absolute h-32 w-32 rounded-full border border-slate-700/40" />
+                <div className="absolute inset-x-0 h-px bg-slate-800/60" />
+                <div className="absolute inset-y-0 w-px bg-slate-800/60" />
               </div>
 
-              {/* Türkiye Ağ Şeması SVG Harita Hatları */}
-              <div className="relative w-full aspect-[16/10] max-w-lg">
-                <svg viewBox="0 0 500 300" className="w-full h-full filter drop-shadow">
-                  {/* Bağlantı Yolları (Samsun Merkez Depo -> Havzalar) */}
-                  {/* Samsun -> Marmara (Gebze/Kocaeli) */}
-                  <line x1="310" y1="90" x2="130" y2="105" stroke="#10b981" strokeWidth="2" strokeDasharray="4 4" className="animate-pulse" />
-                  {/* Samsun -> İç Anadolu (OSTİM/Ankara) */}
-                  <line x1="310" y1="90" x2="225" y2="150" stroke="#38bdf8" strokeWidth="2" strokeDasharray="4 4" />
-                  {/* Samsun -> Çukurova (Adana/Mersin) */}
-                  <line x1="310" y1="90" x2="290" y2="230" stroke="#38bdf8" strokeWidth="2" strokeDasharray="4 4" />
-                  {/* Samsun -> Trabzon */}
-                  <line x1="310" y1="90" x2="420" y2="95" stroke="#10b981" strokeWidth="2" strokeDasharray="4 4" />
+              {/* Lojistik Sevkiyat Ağı SVG Şeması */}
+              <div className="relative w-full aspect-[16/10] max-w-lg z-10">
+                <svg viewBox="0 0 500 300" className="w-full h-full filter drop-shadow-xl select-none">
+                  <defs>
+                    <linearGradient id="grad-marmara" x1="100%" y1="0%" x2="0%" y2="50%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#38bdf8" />
+                    </linearGradient>
+                    <linearGradient id="grad-ic" x1="80%" y1="0%" x2="20%" y2="100%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#38bdf8" />
+                    </linearGradient>
+                    <linearGradient id="grad-guney" x1="60%" y1="0%" x2="40%" y2="100%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="100%" stopColor="#38bdf8" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Kavisli Sevkiyat Koridorları (Samsun HQ -> Havzalar) */}
+                  {/* Samsun -> Marmara */}
+                  <path
+                    d="M 315,90 Q 220,65 130,105"
+                    fill="none"
+                    stroke={activeZone === 1 ? "#38bdf8" : "#334155"}
+                    strokeWidth={activeZone === 1 ? "2.5" : "1.75"}
+                    strokeDasharray={activeZone === 1 ? "6 3" : "4 4"}
+                    className={activeZone === 1 ? "animate-pulse" : "opacity-60"}
+                  />
+
+                  {/* Samsun -> İç Anadolu (OSTİM) */}
+                  <path
+                    d="M 315,90 Q 275,115 225,150"
+                    fill="none"
+                    stroke={activeZone === 2 ? "#38bdf8" : "#334155"}
+                    strokeWidth={activeZone === 2 ? "2.5" : "1.75"}
+                    strokeDasharray={activeZone === 2 ? "6 3" : "4 4"}
+                    className={activeZone === 2 ? "animate-pulse" : "opacity-60"}
+                  />
+
+                  {/* Samsun -> Çukurova / Ege */}
+                  <path
+                    d="M 315,90 Q 320,165 285,230"
+                    fill="none"
+                    stroke={activeZone === 3 ? "#38bdf8" : "#334155"}
+                    strokeWidth={activeZone === 3 ? "2.5" : "1.75"}
+                    strokeDasharray={activeZone === 3 ? "6 3" : "4 4"}
+                    className={activeZone === 3 ? "animate-pulse" : "opacity-60"}
+                  />
+
+                  {/* Samsun -> Trabzon Sahil Hattı */}
+                  <path
+                    d="M 315,90 Q 370,85 425,95"
+                    fill="none"
+                    stroke="#10b981"
+                    strokeWidth="1.75"
+                    strokeDasharray="4 4"
+                    className="opacity-70"
+                  />
 
                   {/* SAMSUN MERKEZ DEPO (HQ BEACON) */}
-                  <g>
-                    <circle cx="310" cy="90" r="16" fill="#10b981" opacity="0.25" className="animate-ping" />
-                    <circle cx="310" cy="90" r="9" fill="#10b981" />
-                    <circle cx="310" cy="90" r="4" fill="#ffffff" />
-                    <text x="310" y="70" textAnchor="middle" fill="#34d399" fontSize="11" fontWeight="bold" fontFamily="sans-serif">
+                  <g className="cursor-pointer" onClick={() => setActiveZone(0)}>
+                    <circle cx="315" cy="90" r="14" fill="#10b981" opacity="0.2" className="animate-ping" />
+                    <circle cx="315" cy="90" r="8" fill="#10b981" className="shadow-lg" />
+                    <circle cx="315" cy="90" r="3.5" fill="#ffffff" />
+                    <rect x="235" y="52" width="160" height="24" rx="6" fill="#064e3b" stroke="#10b981" strokeWidth="1" opacity="0.95" />
+                    <text x="315" y="68" textAnchor="middle" fill="#a7f3d0" fontSize="10.5" fontWeight="bold" fontFamily="sans-serif">
                       Samsun Merkez Depo (HQ)
                     </text>
                   </g>
 
                   {/* MARMARA (Kocaeli, Gebze, Bursa) */}
-                  <g>
-                    <circle cx="130" cy="105" r="7" fill={activeZone === 1 ? "#38bdf8" : "#64748b"} />
-                    <circle cx="130" cy="105" r="3" fill="#ffffff" />
-                    <text x="130" y="130" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontWeight="600" fontFamily="sans-serif">
+                  <g className="cursor-pointer" onClick={() => setActiveZone(1)}>
+                    <circle
+                      cx="130"
+                      cy="105"
+                      r={activeZone === 1 ? "9" : "6"}
+                      fill={activeZone === 1 ? "#38bdf8" : "#64748b"}
+                      className="transition-all duration-300"
+                    />
+                    <circle cx="130" cy="105" r="2.5" fill="#ffffff" />
+                    <text
+                      x="130"
+                      y="130"
+                      textAnchor="middle"
+                      fill={activeZone === 1 ? "#38bdf8" : "#94a3b8"}
+                      fontSize={activeZone === 1 ? "10.5" : "9.5"}
+                      fontWeight="600"
+                      fontFamily="sans-serif"
+                    >
                       Marmara OSB Havzası
                     </text>
                   </g>
 
                   {/* İÇ ANADOLU (OSTİM, İvedik, Konya) */}
-                  <g>
-                    <circle cx="225" cy="150" r="7" fill={activeZone === 2 ? "#38bdf8" : "#64748b"} />
-                    <circle cx="225" cy="150" r="3" fill="#ffffff" />
-                    <text x="225" y="175" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontWeight="600" fontFamily="sans-serif">
+                  <g className="cursor-pointer" onClick={() => setActiveZone(2)}>
+                    <circle
+                      cx="225"
+                      cy="150"
+                      r={activeZone === 2 ? "9" : "6"}
+                      fill={activeZone === 2 ? "#38bdf8" : "#64748b"}
+                      className="transition-all duration-300"
+                    />
+                    <circle cx="225" cy="150" r="2.5" fill="#ffffff" />
+                    <text
+                      x="225"
+                      y="174"
+                      textAnchor="middle"
+                      fill={activeZone === 2 ? "#38bdf8" : "#94a3b8"}
+                      fontSize={activeZone === 2 ? "10.5" : "9.5"}
+                      fontWeight="600"
+                      fontFamily="sans-serif"
+                    >
                       Ankara OSTİM & Konya
                     </text>
                   </g>
 
                   {/* ÇUKUROVA & EGE (İzmir, Adana, Mersin) */}
-                  <g>
-                    <circle cx="290" cy="230" r="7" fill={activeZone === 3 ? "#38bdf8" : "#64748b"} />
-                    <circle cx="290" cy="230" r="3" fill="#ffffff" />
-                    <text x="290" y="255" textAnchor="middle" fill="#cbd5e1" fontSize="10" fontWeight="600" fontFamily="sans-serif">
+                  <g className="cursor-pointer" onClick={() => setActiveZone(3)}>
+                    <circle
+                      cx="285"
+                      cy="230"
+                      r={activeZone === 3 ? "9" : "6"}
+                      fill={activeZone === 3 ? "#38bdf8" : "#64748b"}
+                      className="transition-all duration-300"
+                    />
+                    <circle cx="285" cy="230" r="2.5" fill="#ffffff" />
+                    <text
+                      x="285"
+                      y="254"
+                      textAnchor="middle"
+                      fill={activeZone === 3 ? "#38bdf8" : "#94a3b8"}
+                      fontSize={activeZone === 3 ? "10.5" : "9.5"}
+                      fontWeight="600"
+                      fontFamily="sans-serif"
+                    >
                       Çukurova & Ege Sanayi
+                    </text>
+                  </g>
+
+                  {/* DOĞU KARADENİZ (Trabzon) */}
+                  <g className="cursor-pointer" onClick={() => setActiveZone(0)}>
+                    <circle cx="425" cy="95" r="5" fill="#10b981" opacity="0.8" />
+                    <circle cx="425" cy="95" r="2" fill="#ffffff" />
+                    <text x="425" y="118" textAnchor="middle" fill="#6ee7b7" fontSize="9" fontWeight="500" fontFamily="sans-serif">
+                      Trabzon & Doğu Karadeniz
                     </text>
                   </g>
                 </svg>
               </div>
 
               {/* Alt Bilgi Rozeti */}
-              <div className="mt-3 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/90 px-4 py-2 text-xs text-slate-300">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-400" />
+              <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-900/90 px-4 py-2 text-xs text-slate-300 shadow-sm">
+                <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span>Ağır Sanayi Standardı: <strong>Tüm OSB&apos;lere Doğrudan Ambar & Tır Sevkiyatı</strong></span>
               </div>
             </div>
@@ -255,7 +355,7 @@ export default function IndustrialLogisticsMap() {
         {/* Alt Aksiyon Butonu */}
         <div className="mt-8 flex justify-center">
           <RfqTriggerButton className="btn-action py-3 px-8 text-sm font-bold shadow-xl shadow-action/30">
-            <span>Tesisiniz İçin Sevkiyat & Teklif İsteyin (RFQ)</span>
+            <span>Tesisiniz İçin Fiyat Teklifi Alın</span>
             <ArrowRight className="h-4 w-4" />
           </RfqTriggerButton>
         </div>

@@ -6,12 +6,13 @@ import { CLIENT_REFERENCES } from "@/data/company";
 import Reveal from "./Reveal";
 
 /**
- * 5 Dev Sanayi Referansı — Kurumsal Tek Renk Monokrom Gri Vitrin
+ * 5 Dev Sanayi Referansı — Kesintisiz Nehir Akışı (Continuous River Marquee)
  * 1. Samsun Makina Sanayi
  * 2. Yeşilyurt Demir Çelik
  * 3. Sampa Otomotiv
  * 4. Rönesans Holding
  * 5. CNR (CRRC)
+ * Masaüstü ve mobilde kesintisiz, akıcı, kurumsal tek renk monokrom nehir akışı.
  */
 const ORDERED_CLIENTS = [
   CLIENT_REFERENCES.find((c) => c.name.includes("Samsun Makina")) || CLIENT_REFERENCES[3],
@@ -22,7 +23,11 @@ const ORDERED_CLIENTS = [
 ];
 
 export default function ClientLogos() {
+  // Kesintisiz kusursuz döngü için listeyi 6 kez tekrarlıyoruz
   const riverItems = [
+    ...ORDERED_CLIENTS,
+    ...ORDERED_CLIENTS,
+    ...ORDERED_CLIENTS,
     ...ORDERED_CLIENTS,
     ...ORDERED_CLIENTS,
     ...ORDERED_CLIENTS,
@@ -54,85 +59,52 @@ export default function ClientLogos() {
             <span>Doğrudan Toptan Sevkiyat</span>
           </div>
         </Reveal>
-
-        {/* ========================================================================= */}
-        {/* MASAÜSTÜ: 5 DEV MONOKROM LOGO KARTI (YAN YANA SABİT VE OTURAKLI) */}
-        {/* ========================================================================= */}
-        <div className="hidden lg:grid lg:grid-cols-5 gap-3.5 pt-8">
-          {ORDERED_CLIENTS.map((client) => (
-            <a
-              key={client.name}
-              href={client.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={`${client.name} resmi web sitesi`}
-              className="group/card flex flex-col items-center justify-center rounded-2xl border border-line/80 bg-white p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-slate-400 hover:shadow-md hover:shadow-slate-200/50"
-            >
-              {/* Tek Renk Monokrom Gri Logo */}
-              <div className="relative flex h-14 w-full items-center justify-center p-1">
-                <Image
-                  src={client.logo}
-                  alt={`${client.name} logosu`}
-                  width={160}
-                  height={56}
-                  style={{ width: "auto", height: "auto" }}
-                  className="max-h-9 w-auto max-w-[140px] object-contain filter grayscale contrast-125 opacity-70 transition-all duration-300 group-hover/card:opacity-100 group-hover/card:scale-105"
-                />
-              </div>
-
-              {/* Kurumsal Başlık & Badge */}
-              <div className="mt-3 w-full border-t border-line/50 pt-2.5">
-                <div className="flex items-center justify-center gap-1">
-                  <h3 className="text-xs font-bold text-slate-800 transition-colors group-hover/card:text-ink truncate">
-                    {client.name}
-                  </h3>
-                  <ArrowUpRight className="h-3 w-3 text-slate-400 transition-transform group-hover/card:text-brand group-hover/card:-translate-y-0.5" />
-                </div>
-                <p className="mt-0.5 text-[10px] font-medium text-slate-500 truncate">
-                  {client.badge}
-                </p>
-              </div>
-            </a>
-          ))}
-        </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* MOBİL & TABLET: KESİNTİSİZ SAĞDAN SOLA NEHİR AKIŞI (MONOKROM MARQUEE) */}
+      {/* KESİNTİSİZ NEHİR AKIŞI (TÜM CİHAZLARDA KESİNTİSİZ AKAR) */}
       {/* ========================================================================= */}
-      <div className="lg:hidden relative mt-6 overflow-hidden w-full max-w-full group">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white via-white/80 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white via-white/80 to-transparent" />
+      <div className="relative mt-8 sm:mt-10 overflow-hidden w-full max-w-full group">
+        {/* Sol ve Sağ Yumuşak Saydamlık Gradyanı */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 sm:w-32 bg-gradient-to-r from-white via-white/80 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 sm:w-32 bg-gradient-to-l from-white via-white/80 to-transparent" />
 
-        <ul className="river-track flex w-max py-2">
+        {/* Kayan Nehir Şeridi */}
+        <ul className="river-track flex w-max py-3 group-hover:[animation-play-state:paused]">
           {riverItems.map((client, idx) => (
             <li
               key={`${client.name}-${idx}`}
               aria-hidden={idx >= ORDERED_CLIENTS.length ? true : undefined}
-              className="mr-3 shrink-0"
+              className="mr-4 sm:mr-5 shrink-0"
             >
               <a
                 href={client.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 title={`${client.name} resmi web sitesi`}
-                className="flex items-center gap-3 rounded-xl border border-line bg-white px-4 py-3 shadow-2xs transition hover:border-slate-400 min-w-[210px]"
+                className="group/card flex items-center gap-4 rounded-2xl border border-line bg-white px-5 sm:px-6 py-3.5 sm:py-4 shadow-2xs transition-all duration-300 hover:-translate-y-1 hover:border-slate-400 hover:shadow-md hover:bg-slate-50/50 min-w-[250px] sm:min-w-[280px]"
               >
-                <div className="relative flex h-9 w-20 shrink-0 items-center justify-center border-r border-line pr-2.5">
+                {/* Tek Renk Monokrom Gri Logo */}
+                <div className="relative flex h-11 w-24 sm:h-12 sm:w-28 shrink-0 items-center justify-center border-r border-line/70 pr-3 sm:pr-4">
                   <Image
                     src={client.logo}
                     alt={`${client.name} logosu`}
-                    width={120}
-                    height={40}
+                    width={130}
+                    height={44}
                     style={{ width: "auto", height: "auto" }}
-                    className="max-h-7 w-auto max-w-full object-contain filter grayscale contrast-125 opacity-70"
+                    className="max-h-8 sm:max-h-9 w-auto max-w-full object-contain filter grayscale contrast-125 opacity-70 transition-all duration-300 group-hover/card:opacity-100 group-hover/card:scale-105"
                   />
                 </div>
+
+                {/* Firma İsmi & Kurumsal Rozet */}
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-xs font-bold text-slate-900 truncate">
-                    {client.name}
-                  </h3>
-                  <p className="text-[10px] font-medium text-slate-500 truncate">
+                  <div className="flex items-center justify-between gap-1">
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-800 transition-colors group-hover/card:text-ink truncate">
+                      {client.name}
+                    </h3>
+                    <ArrowUpRight className="h-3.5 w-3.5 text-slate-300 transition-transform group-hover/card:text-brand group-hover/card:-translate-y-0.5 shrink-0" />
+                  </div>
+                  <p className="mt-0.5 text-[10px] sm:text-[11px] font-semibold text-slate-500 truncate">
                     {client.badge}
                   </p>
                 </div>

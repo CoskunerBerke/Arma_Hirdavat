@@ -133,14 +133,14 @@ export default function Header() {
             <span>Fiziki Mağazamız & Perakende</span>
           </button>
 
-          {/* Sağ Buton 2 (Kurumsal Vurgulu): Teklif Sepeti (RFQ) */}
+          {/* Sağ Buton 2 (Kurumsal Vurgulu): Fiyat Teklifi Al / Teklif Listesi */}
           <button
             type="button"
             onClick={() => openRfq(true)}
             className="btn-action flex items-center gap-2 py-2 px-3.5 text-xs sm:text-sm font-bold shadow-md shadow-action/30"
           >
             <ClipboardList className="h-4 w-4" aria-hidden />
-            <span>Teklif Sepeti (RFQ)</span>
+            <span>{itemCount > 0 ? "Teklif Listesi" : "Fiyat Teklifi Al"}</span>
             {itemCount > 0 && (
               <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white text-slate-950 px-1.5 text-[11px] font-black shadow-sm">
                 {itemCount}
@@ -169,10 +169,10 @@ export default function Header() {
             type="button"
             onClick={() => openRfq(true)}
             className="btn-action flex h-10 items-center gap-1.5 rounded-lg px-2.5 text-xs font-bold shadow-xs"
-            aria-label="Teklif Sepetini Aç"
+            aria-label="Teklif Listesini Aç"
           >
             <ClipboardList className="h-4 w-4" />
-            <span className="hidden sm:inline">RFQ</span>
+            <span className="hidden sm:inline">Teklif</span>
             {itemCount > 0 && (
               <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-slate-950 text-[11px] font-black">
                 {itemCount}
@@ -220,7 +220,7 @@ export default function Header() {
             >
               <span className="flex items-center gap-2">
                 <ClipboardList className="h-5 w-5" />
-                Teklif Sepeti (RFQ)
+                <span>Teklif Listesi</span>
               </span>
               <span className="rounded-full bg-white text-slate-950 px-2 py-0.5 text-xs font-black">
                 {itemCount} ürün
