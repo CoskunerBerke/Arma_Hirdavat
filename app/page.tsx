@@ -8,7 +8,6 @@ import Reveal from "@/components/Reveal";
 import FaqSection from "@/components/FaqSection";
 import ClientLogos from "@/components/ClientLogos";
 import DiscountPackagingBand from "@/components/DiscountPackagingBand";
-import IndustrialLogisticsMap from "@/components/IndustrialLogisticsMap";
 import RetailStoreSection from "@/components/RetailStoreSection";
 import ProductActionVideo from "@/components/ProductActionVideo";
 import { BEST_SELLER_IDS, PRODUCT_GROUPS } from "@/data/products";
@@ -23,8 +22,8 @@ const VALUES = [
   },
   {
     icon: Building2,
-    title: "Samsun Tekkeköy Lojistik Üssü",
-    text: "Adnan Kahveci Bulvarı lojistik depomuzdan Türkiye'nin önde gelen organize sanayi bölgelerine, ağır sanayi havzalarına ve şantiyelere doğrudan ambar sevkiyatı sağlıyoruz.",
+    title: "Türkiye Geneli 81 İle Ambar Teslimatı",
+    text: "Samsun Tekkeköy merkez lojistik depomuzdan Türkiye'nin 81 ilindeki tüm organize sanayi bölgelerine, fabrikalara ve şantiyelere günlük doğrudan ambar tırlarımızla tesis teslimatı sağlıyoruz.",
   },
   {
     icon: Receipt,
@@ -44,9 +43,6 @@ export default function HomePage() {
 
       {/* 4. İSKONTO & AMBALAJ BİLGİ KUTUSU */}
       <DiscountPackagingBand />
-
-      {/* 5. SANAYİ BÖLGELERİ & LOJİSTİK HARİTASI (RADAR / AĞ ŞEMASI) */}
-      <IndustrialLogisticsMap />
 
       {/* AI Üretimi Eldiven Sahada Performans & Dayanım Testi Videosu */}
       <section className="container-x py-8 sm:py-12" aria-label="FABA KKD Saha Performans Testi">

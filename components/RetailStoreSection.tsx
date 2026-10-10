@@ -28,7 +28,7 @@ export default function RetailStoreSection() {
 
             {/* Civtec Modeli Açıklama */}
             <p className="mt-4 text-xs sm:text-sm leading-relaxed text-slate-300">
-              Tekil parça, atölye ve bireysel teknik hırdavat ihtiyaçlarınız için Tekkeköy&apos;deki fiziki mağazamızda hizmetinizdeyiz. Web portalımız fabrikaların ve sanayi tesislerinin yüksek hacimli koli ve palet sevkiyatlarına tahsis edilmiştir.
+              Tekil parça, atölye ve yerel teknik hırdavat ihtiyaçlarınız için Tekkeköy&apos;deki fiziki mağazamızda hizmetinizdeyiz. Web portalımız ise Türkiye&apos;nin 81 ilindeki fabrikaların, organize sanayi bölgelerinin ve şantiyelerin yüksek hacimli koli ve palet sevkiyatlarına tahsis edilmiştir.
             </p>
 
             {/* Önemli Ayrım Notu */}
@@ -36,7 +36,7 @@ export default function RetailStoreSection() {
               <div className="flex items-start gap-2.5">
                 <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
                 <span>
-                  Portalımız üzerinden yalnızca <strong>koli ve palet bazlı kurumsal toptan alımlar</strong> kabul edilmektedir. Tekli perakende alımlarınız için mağazamızı ziyaret edebilirsiniz.
+                  Portalımız üzerinden <strong>81 il geneline doğrudan tesis teslimatlı koli ve palet alımları</strong> kabul edilmektedir. Tekli perakende alımlarınız için mağazamızı ziyaret edebilirsiniz.
                 </span>
               </div>
             </div>

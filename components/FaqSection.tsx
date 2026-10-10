@@ -5,7 +5,7 @@ import { SITE_URL } from "@/data/company";
 export const FAQS = [
   {
     q: "Hangi sanayi bölgelerine ve organize sanayi tesislerine toptan sevkiyat yapıyorsunuz?",
-    a: "Arma Hırdavat olarak Türkiye'nin önde gelen organize sanayi bölgelerine (OSB), fabrikalara, tersanelere ve şantiyelere koli ve palet bazında anlaşmalı sanayi ambar ağımızla doğrudan sevkiyat gerçekleştirmekteyiz. Marmara, İç Anadolu, Ege, Akdeniz ve Karadeniz sanayi havzaları başta olmak üzere tüm OSB'lere doğrudan teslimat sağlanır.",
+    a: "Arma Hırdavat olarak Türkiye'nin 81 ilindeki tüm organize sanayi bölgelerine (OSB), fabrikalara, tersanelere ve şantiyelere koli ve palet bazında anlaşmalı sanayi ambar ağımızla doğrudan sevkiyat gerçekleştirmekteyiz. Samsun Tekkeköy merkez lojistik depomuzdan günlük olarak çıkan ambar tırları ile Türkiye'nin her noktasına 24-48 saat içinde güvenli ve hasarsız tesis teslimatı sağlanır.",
   },
   {
     q: "Minimum sipariş miktarı (MOQ) ve koli/palet zorunluluğu var mı?",

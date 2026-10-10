@@ -42,6 +42,32 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full transition-colors duration-300">
+      {/* Üst B2B Lojistik & Güvenlik Duyuru Şeridi */}
+      <div className={`border-b text-[11px] py-1.5 transition-colors ${
+        isDarkHero || open
+          ? "border-white/10 bg-slate-950/90 text-slate-300"
+          : "border-slate-200/80 bg-slate-900 text-slate-200"
+      }`}>
+        <div className="container-x flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2 truncate">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="font-bold text-white tracking-wide">
+              Türkiye Geneli 81 İle Anlaşmalı Ambar Teslimatı
+            </span>
+            <span className="hidden md:inline text-slate-400">
+              — Samsun Tekkeköy Lojistik Üssümüzden Günlük Doğrudan Çıkış
+            </span>
+          </div>
+          <div className="hidden sm:flex items-center gap-3 shrink-0 text-slate-300 text-[11px]">
+            <span className="hidden lg:inline text-slate-400">Kurumsal Proforma: 2 Saat</span>
+            <span className="hidden lg:inline text-slate-600">•</span>
+            <a href="tel:+903622666095" className="font-semibold text-white hover:text-emerald-300 transition-colors">
+              +90 (362) 266 60 95
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Arka plan katmanı */}
       <div
         className={`absolute inset-0 -z-10 transition-all duration-300 ${

@@ -26,8 +26,8 @@ export default function DiscountPackagingBand() {
       tone: "text-amber-600 bg-amber-50 border-amber-200",
     },
     {
-      title: "Çemberli Palet Sevkiyatı",
-      desc: "Forklift yüklemesine hazır, dağılmayan çemberli streçli paletler.",
+      title: "81 İle Çemberli Palet Sevkiyatı",
+      desc: "Forklift yüklemesine hazır, dağılmayan çemberli streçli paletler tüm OSB ambarlarına kapı teslim sevk edilir.",
       icon: Layers,
       tone: "text-emerald-600 bg-emerald-50 border-emerald-200",
     },
@@ -63,7 +63,7 @@ export default function DiscountPackagingBand() {
             </div>
 
             <p className="mt-3.5 text-xs sm:text-sm text-ink-soft leading-relaxed">
-              Satın alma listenizi portalımız üzerinden ilettiğinizde, sipariş hacminiz analiz edilerek firmanıza özel resmi proforma teklif mektubu 2 saat içinde hazırlanır.
+              Satın alma listenizi portalımız üzerinden ilettiğinizde, sipariş hacminiz analiz edilerek firmanıza özel resmi proforma teklif mektubu 2 saat içinde hazırlanır. Onaylanan siparişler, Türkiye&apos;nin 81 ilindeki tesislerinize anlaşmalı ambar tırlarımızla doğrudan sevk edilir.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-3">

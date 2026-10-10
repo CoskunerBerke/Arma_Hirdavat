@@ -71,7 +71,7 @@ export default function SceneHero() {
         </h1>
 
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-200 drop-shadow sm:text-lg">
-          Üretimin sürekliliği için gereken tüm teknik sarf ve donanım gruplarını, endüstriyel ambalaj standartlarında fabrikalara teslim ediyoruz.
+          Üretimin sürekliliği için gereken tüm teknik sarf ve donanım gruplarını; Samsun merkez depomuzdan Türkiye&apos;nin 81 ilindeki fabrikalara doğrudan teslim ediyoruz.
         </p>
 
         {/* Yüksek Dönüşümlü Aksiyon Butonları (Sade & Dengeli) */}
@@ -123,8 +123,8 @@ export default function SceneHero() {
             <span className="truncate">Çemberli Palet Sevkiyatı</span>
           </div>
           <div className="flex items-center gap-2 text-[11px] sm:text-xs font-medium text-slate-200">
-            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-purple-500/20 text-purple-300 text-xs">🏭</span>
-            <span className="truncate">Sanayi OSB Ambar Ağı</span>
+            <span className="flex h-5 w-5 sm:h-6 sm:w-6 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300 text-xs">🚛</span>
+            <span className="truncate">81 İle Ambar Teslimatı</span>
           </div>
         </div>
       </div>

@@ -91,8 +91,8 @@ export default function Footer() {
 
       <div className="border-t border-slate-800/80">
         <div className="container-x flex flex-col gap-2 py-6 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} {COMPANY.legalName}</p>
-          <p>Tekkeköy / Samsun</p>
+          <p>© {new Date().getFullYear()} {COMPANY.legalName} • Türkiye Geneli 81 İle Anlaşmalı Ambar Sevkiyatı</p>
+          <p>Tekkeköy Merkez Depo / Samsun</p>
         </div>
       </div>
     </footer>
