@@ -39,3 +39,5 @@ download_assets.py
 
 /Drone_flying*.mp4
 /Industrial_worker*.mp4
+.vercel
+.env*
