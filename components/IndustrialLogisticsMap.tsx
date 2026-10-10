@@ -7,7 +7,7 @@ import RfqTriggerButton from "./RfqTriggerButton";
 
 /**
  * 5. SANAYİ BÖLGELERİ & LOJİSTİK HARİTASI
- * 3D animasyonlu gri Türkiye haritası lojistik sevkiyat videosu.
+ * 3D Türkiye haritası ve ambar/koli lojistik dağıtım animasyonu videosu.
  * Karartma, yan maskeler veya kapamalar olmadan direkt dümdüz ve kesintisiz loop oynar.
  */
 export default function IndustrialLogisticsMap() {
@@ -54,7 +54,7 @@ export default function IndustrialLogisticsMap() {
         </Reveal>
 
         {/* ========================================================================= */}
-        {/* DÜMDÜZ AÇIK KESİNTİSİZ LOOP TÜRKİYE HARİTASI VİDEOSU */}
+        {/* DÜMDÜZ AÇIK KESİNTİSİZ LOOP TÜRKİYE LOJİSTİK DAĞITIM VİDEOSU */}
         {/* ========================================================================= */}
         <div className="mt-10 sm:mt-12 w-full rounded-2xl sm:rounded-3xl border border-white/10 bg-black overflow-hidden shadow-2xl">
           <video
@@ -63,10 +63,10 @@ export default function IndustrialLogisticsMap() {
             muted
             playsInline
             preload="auto"
-            poster="/videos/turkey-map-poster.jpg"
+            poster="/videos/corporate-logistics-poster.jpg"
             className="w-full h-auto aspect-video block object-cover select-none"
           >
-            <source src="/videos/turkey-map-loop.mp4" type="video/mp4" />
+            <source src="/videos/corporate-logistics-loop.mp4" type="video/mp4" />
           </video>
         </div>
 
