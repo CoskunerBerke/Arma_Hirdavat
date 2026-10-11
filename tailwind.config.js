@@ -9,6 +9,8 @@ module.exports = {
         canvas: "#F8FAFC",
         line: "#E2E8F0",
         "line-strong": "#CBD5E1",
+        // Form alanı kenarlığı: beyaz zeminde 3.6:1 (WCAG 1.4.11 için ≥ 3:1)
+        "line-input": "#7C8798",
 
         // 2. Tipografi: Yüksek kontrastlı, net ve okunabilir kurumsal antrasit/lacivert (Slate-900)
         ink: {
@@ -27,15 +29,19 @@ module.exports = {
           accent: "#D97706",
         },
 
-        // 4. Dönüşüm & Satın Alma Niyeti Rengi (Conversion Emerald - Green-600/700)
-        // Psikolojik olarak "Onaylandı", "Güvenli İşlem", "Fırsat" ve "İlerle" hissi uyandırarak satın alma/RFQ dönüşümünü maksimize eder.
+        // 4. Birincil eylem rengi (teklif / listeye ekle). Yeşil "ilerle" işaretidir.
+        // Beyaz metinle kontrast: DEFAULT 5.0:1, hover 7.1:1, active 9.1:1 (WCAG AA).
         action: {
-          DEFAULT: "#16A34A",
-          hover: "#15803D",
-          active: "#166534",
+          DEFAULT: "#15803D",
+          hover: "#166534",
+          active: "#14532D",
           light: "#ECFDF5",
           border: "#A7F3D0",
         },
+      },
+      boxShadow: {
+        "2xs": "0 1px 1px rgba(15, 23, 42, 0.04)",
+        xs: "0 1px 2px rgba(15, 23, 42, 0.05)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
@@ -66,5 +72,7 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  // tailwindcss-animate: animate-in, fade-in, zoom-in-95, slide-in-from-bottom-2 … sınıfları
+  // (hareket azaltma tercihi app/globals.css içinde ele alınır)
+  plugins: [require("tailwindcss-animate")],
 };

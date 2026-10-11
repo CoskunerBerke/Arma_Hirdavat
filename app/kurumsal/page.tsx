@@ -1,176 +1,313 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import {
-  Building2,
-  Compass,
-  ExternalLink,
-  GraduationCap,
-  LineChart,
-  MapPin,
+  ArrowRight,
+  ClipboardList,
+  FileCheck2,
+  Mail,
+  MessageSquareText,
   Navigation,
-  Target,
-  UserCheck,
-  Users,
+  Truck,
 } from "lucide-react";
 import PageHero from "@/components/PageHero";
-import Reveal from "@/components/Reveal";
-import CtaBand from "@/components/CtaBand";
-import ClientLogos from "@/components/ClientLogos";
-import { COMPANY } from "@/data/company";
+import RfqTriggerButton from "@/components/RfqTriggerButton";
+import MapEmbed from "@/app/iletisim/MapEmbed";
+import {
+  CLIENT_REFERENCES,
+  COMPANY,
+  HARDWARE_GROUPS,
+  HOURS_TEXT,
+  PROMISES,
+  SITE_URL,
+  mailtoHref,
+} from "@/data/company";
+import { PRODUCT_GROUPS } from "@/data/products";
+
+const PATH = "/kurumsal";
+const TITLE = "Hakkımızda – Teknik Hırdavat ve KKD, Samsun";
+const DESCRIPTION = `${COMPANY.name}: Samsun Tekkeköy'deki mağaza ve depodan fabrika, şantiye ve atölyelere iş güvenliği ve teknik hırdavat tedariki. Kimiz, nasıl çalışırız?`;
+
+const { street, district, city } = COMPANY.address;
+const DIRECTIONS_HREF =
+  "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(`${COMPANY.name}, ${street}, ${district}, ${city}`);
 
 export const metadata: Metadata = {
-  title: "Kurumsal – Sanayi ve Fabrika Malzemeleri B2B Tedarikçisi | Arma Hırdavat",
-  description: "Arma Fabrika Malzemeleri Teknik Hırdavat: Samsun merkez lojistik depomuzdan Türkiye'nin önde gelen organize sanayi bölgelerine, fabrikalara ve şantiyelere toptan teknik hırdavat ve endüstriyel sarf malzemesi tedariği.",
-  alternates: { canonical: "/kurumsal" },
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: PATH },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    siteName: COMPANY.name,
+    url: PATH,
+    title: `${TITLE} | ${COMPANY.name}`,
+    description: DESCRIPTION,
+    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name} – hakkımızda` }],
+  },
 };
 
-const HR = [
-  { icon: GraduationCap, title: "Eğitim yönetimi", text: "İşin gerektirdiği mesleki yetkinlikler, kurum kültürü ve kişisel eğitim ihtiyaçları planlanarak kısa ve uzun vadeli hedeflerimize ulaşmamızı sağlayan yetkin çalışanlara sahip oluruz." },
-  { icon: Target, title: "Hedeflerle yönetim", text: "Kurum hedefleri tüm çalışanlarla paylaşılır; buna uygun departman ve bireysel hedefler belirlenerek yıllık iş planları doğrultusunda çalışılır." },
-  { icon: LineChart, title: "Performans yönetimi", text: "Yılda bir kez çalışanların performansları değerlendirilerek iyileştirme ve geliştirme planları yapılır." },
-  { icon: UserCheck, title: "İşe alım yönetimi", text: "Kadro ve personel planlaması iş hedeflerimizden yola çıkılarak yapılır. Yeni çalışanlarımız için yerleştirme programları uygulanır; gizlilik ve tüm başvurulara yanıt vermek temel prensibimizdir." },
-  { icon: Users, title: "Çalışan memnuniyeti", text: "Yılda bir kez düzenlenen anketle çalışanlarımızın görüşleri alınır; geliştirilmesi gereken yönler için aksiyon planı hazırlanır." },
-  { icon: Compass, title: "Ücret yönetimi", text: "Yılda 12 maaş ödenir. Satış ekibi için satış primi, yöneticiler için şirket performansına bağlı prim sistemi uygulanabilir; ücret ayarlaması yılda bir kez ocak ayında yapılır." },
+/** Beyaz (koyu zemin için hazırlanmış) logolar: açık kartta görünsün diye renkleri ters çevrilir. */
+const LIGHT_LOGOS: ReadonlySet<string> = new Set(["/images/clients/sampa.png"]);
+
+const FACTS: { term: string; value: string }[] = [
+  { term: "Unvan", value: COMPANY.legalName },
+  { term: "Mağaza ve depo", value: COMPANY.address.full },
+  { term: "Çalışma saatleri", value: HOURS_TEXT },
+  { term: "Web sitemiz", value: `${COMPANY.onlineSince} yılından beri yayında` },
+  {
+    term: "Ürün kapsamı",
+    value: `${HARDWARE_GROUPS.length} teknik hırdavat ürün grubu; online katalogda ${PRODUCT_GROUPS.length} FABA iş güvenliği ürünü`,
+  },
+  { term: "Satış", value: `${COMPANY.minOrderType}; mağazada perakende` },
+  { term: "Sevkiyat", value: PROMISES.deliveryShort },
+];
+
+const STEPS = [
+  {
+    icon: MessageSquareText,
+    title: "Talebinizi iletin",
+    text: `Ürünleri teklif listesine ekleyin, formu doldurun ya da ${COMPANY.email} adresine yazın. Üyelik gerekmez.`,
+  },
+  {
+    icon: ClipboardList,
+    title: "Teklifinizi alın",
+    text: `${PROMISES.quoteTurnaround} Teklifiniz e-postanıza gelir; fiyat, ambalaj ve sevkiyat koşulları teklifte yazılıdır.`,
+  },
+  {
+    icon: Truck,
+    title: "Sevkiyat veya mağazadan teslim",
+    text: `${PROMISES.delivery} Dilerseniz siparişinizi Tekkeköy mağazamızdan teslim alabilirsiniz.`,
+  },
+  {
+    icon: FileCheck2,
+    title: "Belgeler",
+    text: `${PROMISES.documentation} FABA ürün kataloğunu PDF olarak da indirebilirsiniz.`,
+  },
 ];
 
 export default function CorporatePage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${SITE_URL}${PATH}#webpage`,
+    url: `${SITE_URL}${PATH}`,
+    name: TITLE,
+    description: DESCRIPTION,
+    inLanguage: "tr-TR",
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${SITE_URL}/#store` },
+    mainEntity: { "@id": `${SITE_URL}/#store` },
+  };
+
   return (
     <>
       <PageHero
         eyebrow="Kurumsal"
-        title="Türkiye Sanayisinin Güvenilir Tedarik Ortağı"
-        description="Samsun lojistik depomuzdan organize sanayi bölgelerine, fabrikalara ve ağır sanayi şantiyelerine koli ve palet bazında toptan teknik hırdavat tedariği sağlıyoruz."
-        crumbs={[{ label: "Kurumsal", href: "/kurumsal" }]}
+        title={`${COMPANY.name}: Tekkeköy'den fabrikalara ve şantiyelere tedarik`}
+        description="Samsun Tekkeköy'deki mağaza ve depomuzdan fabrikalara, şantiyelere ve atölyelere teknik hırdavat ve iş güvenliği malzemesi tedarik ediyoruz."
+        crumbs={[{ label: "Kurumsal", href: PATH }]}
       />
 
-      <section className="section">
-        <div className="container-x grid gap-12 lg:grid-cols-12 lg:items-start">
-          <Reveal className="lg:col-span-5 space-y-6">
-            <div>
-              <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-bold text-brand">
-                <Building2 className="h-3.5 w-3.5" /> Tekkeköy Ana Lojistik Deposu
-              </span>
-              <h2 className="mt-2.5 text-2xl font-black tracking-tight text-ink sm:text-3xl">Hakkımızda</h2>
-              <p className="mt-2 text-xs sm:text-sm text-ink-soft leading-relaxed">
-                Ağır sanayi tesislerinin, organize sanayi bölgelerinin ve üretim hatlarının kesintisiz teknik hırdavat ve tesis malzemesi tedarikçisi.
-              </p>
-            </div>
-
-            {/* Operasyonel B2B Metrikleri */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
-                <span className="text-xl font-black text-ink">10.000+</span>
-                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Raf Hazır Stok Kalemi</span>
-              </div>
-              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
-                <span className="text-xl font-black text-ink">30+</span>
-                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Teknik Malzeme Grubu</span>
-              </div>
-              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
-                <span className="text-xl font-black text-brand">Tüm OSB</span>
-                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Doğrudan Ambar Ağı</span>
-              </div>
-              <div className="rounded-2xl border border-line bg-slate-50/70 p-3.5">
-                <span className="text-xl font-black text-action">Palet & Koli</span>
-                <span className="block text-[11px] font-medium text-ink-muted mt-0.5">Endüstriyel Sevk</span>
-              </div>
-            </div>
-
-            {/* Google Haritalar & Tekkeköy Merkez Depo Konum Kartı */}
-            <div className="overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
-              <div className="relative h-44 w-full bg-slate-100">
-                <iframe
-                  src={COMPANY.mapEmbed}
-                  title="Arma Hırdavat Tekkeköy Merkez Depo Konumu"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="h-full w-full border-0"
-                />
-              </div>
-              <div className="p-3.5 bg-slate-50/70 border-t border-line flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5">
-                <div className="flex items-start gap-2">
-                  <MapPin className="h-4 w-4 text-brand shrink-0 mt-0.5" />
-                  <div className="text-[11px] leading-tight">
-                    <strong className="font-bold text-ink block">Tekkeköy Merkez Depo</strong>
-                    <span className="text-ink-muted">{COMPANY.address.district} / {COMPANY.address.city}</span>
-                  </div>
-                </div>
-                <a
-                  href={COMPANY.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-white border border-line px-3 py-1.5 text-xs font-bold text-brand hover:border-brand shadow-2xs transition-colors shrink-0"
-                >
-                  <Navigation className="h-3.5 w-3.5" />
-                  <span>Yol Tarifi Al</span>
-                  <ExternalLink className="h-3 w-3 opacity-60" />
-                </a>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal className="space-y-5 text-[17px] leading-[1.75] text-ink-soft lg:col-span-7" delay={60}>
+      {/* Biz kimiz (ekranın üst kısmı: Reveal yok) */}
+      <section className="section pt-12 sm:pt-16" aria-labelledby="biz-kimiz">
+        <div className="container-x grid gap-10 lg:grid-cols-12 lg:items-start">
+          <div className="space-y-5 text-base leading-[1.75] text-ink-soft sm:text-[17px] lg:col-span-7">
+            <h2 id="biz-kimiz" className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Biz kimiz?
+            </h2>
             <p>
-              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki ana merkez ve lojistik tesislerinden organize sanayi bölgelerine, üretim fabrikalarına, imalat atölyelerine ve büyük altyapı projelerine toptan teknik hırdavat ve tesis donanımları tedarik etmektedir.
+              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki mağaza ve
+              deposuyla çalışan bir teknik hırdavat ve iş güvenliği tedarikçisidir. Web sitemiz {COMPANY.onlineSince}{" "}
+              yılından beri yayında.
             </p>
             <p>
-              Civata, somun, vida ve bağlantı elemanlarından çelik halata, el ve elektrikli aletlerden kaynak makinelerine, iş güvenliği donanımlarından endüstriyel pompa ve pnömatik sistemlere kadar 30 ana ürün grubunda; koli ve palet bazlı toptan alımlarda doğrudan ambar ve lojistik sevkiyatı yapıyoruz.
+              Mağazamızda bağlantı elemanlarından el ve elektrikli aletlere, kaynak ekipmanlarından hortum ve aşındırıcılara
+              kadar {HARDWARE_GROUPS.length} ürün grubunda ürün bulunur. Online kataloğumuzda ise FABA marka iş eldivenleri,
+              kimyasal koruyucu ve tek kullanımlık tulumlar, önlük, kolluk ve galoşlar yer alır.
             </p>
             <p>
-              Güçlü stok yapımız, rekabetçi toptan fiyatlandırmamız ve anlaşmalı sanayi ambarı ağımız ile Marmara&apos;dan İç Anadolu&apos;ya, Ege&apos;den Güneydoğu&apos;ya Türkiye genelindeki tüm sanayi havzalarına kesintisiz tedarik desteği sunuyoruz.
+              Fabrikaların satın alma birimleri, iş güvenliği uzmanları, şantiye şefleri ve atölyeler için koli ve palet
+              bazında teklif hazırlıyoruz. Tekkeköy mağazamızda ise perakende satış yapıyoruz.
             </p>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Referanslarımız & Çalıştığımız Sanayi Devleri */}
-      <ClientLogos />
-
-      <section className="section border-y border-line bg-white">
-        <div className="container-x grid gap-5 md:grid-cols-2">
-          <Reveal className="surface p-8">
-            <p className="eyebrow">Misyon</p>
-            <p className="mt-4 text-lg leading-relaxed text-ink">
-              Türkiye genelindeki tüm sanayi tesislerinin, organize sanayi bölgelerindeki fabrikaların ve şantiyelerin ihtiyaç duyduğu teknik hırdavat ve ekipmanı doğrudan koli/palet bazında, rekabetçi toptan fiyatlar ve güvenilir ambar teslimatıyla eksiksiz sağlamak.
-            </p>
-          </Reveal>
-          <Reveal className="surface p-8" delay={80}>
-            <p className="eyebrow">Vizyon</p>
-            <p className="mt-4 text-lg leading-relaxed text-ink">
-              Türkiye genelinde sanayi, imalat ve inşaat sektörünün koli ve palet bazlı toptan teknik donanım alımlarında güvenle tercih ettiği, süratli ve öncü kurumsal tedarik ortağı olmak.
-            </p>
-          </Reveal>
-        </div>
-      </section>
-
-      <section className="section" id="insan-kaynaklari">
-        <div className="container-x">
-          <Reveal className="max-w-3xl">
-            <p className="eyebrow">İnsan kaynakları</p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">Ekibimize katılın</h2>
-            <p className="mt-4 text-[17px] leading-[1.75] text-ink-soft">
-              İnsan kaynakları politikamız; misyon ve vizyonumuz doğrultusunda nitelikli insan gücü alımını gerçekleştirmek, çalışanlarımızın etkin ve verimli olabileceği uyumlu bir iş ortamı oluşturmaktır. Eğitime ve gelişime açık, motivasyonu ve kurum aidiyeti yüksek çalışanlara sahip olma ilkesini benimsiyoruz.
-            </p>
-          </Reveal>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {HR.map((h, i) => (
-              <Reveal key={h.title} delay={(i % 3) * 70} className="surface p-6">
-                <h.icon className="h-5 w-5 text-brand" aria-hidden />
-                <h3 className="mt-4 text-base font-semibold text-ink">{h.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{h.text}</p>
-              </Reveal>
-            ))}
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
+              <Link href="/urun-gruplari" className="btn-ghost min-h-[48px] px-5">
+                Teknik hırdavat ürün grupları <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+              <Link href="/urunler" className="btn-ghost min-h-[48px] px-5">
+                İş güvenliği ürünleri <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
           </div>
 
-          <Reveal className="mt-10">
-            <a href={`mailto:${COMPANY.email}?subject=${encodeURIComponent("İş başvurusu")}`} className="btn-ghost">
-              Özgeçmişinizi gönderin: {COMPANY.email}
-            </a>
-          </Reveal>
+          <div className="surface p-6 lg:col-span-5">
+            <h2 className="text-base font-semibold text-ink">Kısaca {COMPANY.name}</h2>
+            <dl className="mt-4 divide-y divide-line text-sm">
+              {FACTS.map((f) => (
+                <div key={f.term} className="grid gap-1 py-3 sm:grid-cols-[9rem_1fr] sm:gap-4">
+                  <dt className="font-medium text-ink-muted">{f.term}</dt>
+                  <dd className="text-ink">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
       </section>
 
-      <CtaBand />
+      {/* Nasıl çalışırız */}
+      <section className="section border-y border-line bg-white" aria-labelledby="nasil-calisiriz">
+        <div className="container-x">
+          <p className="eyebrow">Çalışma şeklimiz</p>
+          <h2 id="nasil-calisiriz" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            Nasıl çalışırız?
+          </h2>
+          <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {STEPS.map((s, i) => (
+              <li key={s.title} className="surface flex flex-col p-6">
+                <span className="icon-tile">
+                  <s.icon className="h-5 w-5" aria-hidden />
+                </span>
+                <h3 className="mt-4 text-base font-semibold text-ink">
+                  <span className="text-brand">{i + 1}.</span> {s.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">{s.text}</p>
+              </li>
+            ))}
+          </ol>
+          <p className="mt-6 text-sm text-ink-soft">
+            Onaylanan siparişlerin ödemesi için{" "}
+            <a
+              href={COMPANY.paymentUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-brand underline-offset-2 hover:underline"
+            >
+              online ödeme sayfamızı
+              <span className="sr-only"> (yeni sekmede açılır)</span>
+            </a>{" "}
+            kullanabilirsiniz. FABA kataloğu için{" "}
+            <Link href="/katalog" className="font-medium text-brand underline-offset-2 hover:underline">
+              katalog sayfasına
+            </Link>{" "}
+            bakın.
+          </p>
+        </div>
+      </section>
+
+      {/* Referanslar (sade, bağlantısız logolar) */}
+      {CLIENT_REFERENCES.length > 0 && (
+        <section className="section" aria-labelledby="referanslar">
+          <div className="container-x">
+            <p className="eyebrow">Referanslar</p>
+            <h2 id="referanslar" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Tedarik sağladığımız firmalardan bazıları
+            </h2>
+            <ul className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {CLIENT_REFERENCES.map((c) => (
+                <li key={c.name} className="surface flex flex-col items-center justify-center gap-3 p-5 text-center">
+                  <div className="relative h-12 w-full">
+                    <Image
+                      src={c.logo}
+                      alt={`${c.name} logosu`}
+                      fill
+                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 30vw, 45vw"
+                      unoptimized={c.logo.endsWith(".svg")}
+                      className={`object-contain opacity-80 grayscale ${LIGHT_LOGOS.has(c.logo) ? "invert" : ""}`}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-ink-soft">{c.name}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Misyon / vizyon */}
+      <section className="section border-y border-line bg-white" aria-label="Misyon ve vizyon">
+        <div className="container-x grid gap-5 md:grid-cols-2">
+          <div className="surface p-6 sm:p-8">
+            <h2 className="eyebrow">Misyonumuz</h2>
+            <p className="mt-4 text-lg leading-relaxed text-ink">
+              Fabrikaların, şantiyelerin ve atölyelerin ihtiyaç duyduğu teknik hırdavat ve iş güvenliği malzemesini doğru
+              ürün, açık teklif ve planlı sevkiyatla sağlamak.
+            </p>
+          </div>
+          <div className="surface p-6 sm:p-8">
+            <h2 className="eyebrow">Vizyonumuz</h2>
+            <p className="mt-4 text-lg leading-relaxed text-ink">
+              Samsun&apos;dan başlayarak Türkiye genelinde sanayinin güvenle çalıştığı tedarikçilerden biri olmak.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Konum */}
+      <section className="section" aria-labelledby="konum">
+        <div className="container-x grid gap-8 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-4">
+            <p className="eyebrow">Konum</p>
+            <h2 id="konum" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              {district} mağaza ve depomuz
+            </h2>
+            <address className="mt-4 not-italic text-base leading-relaxed text-ink-soft">{COMPANY.address.full}</address>
+            <p className="mt-2 text-sm text-ink-muted">{HOURS_TEXT}</p>
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <a href={DIRECTIONS_HREF} target="_blank" rel="noopener noreferrer" className="btn-ghost min-h-[48px] px-5">
+                <Navigation className="h-4 w-4" aria-hidden /> Yol tarifi al
+              </a>
+              <Link href="/iletisim" className="btn-ghost min-h-[48px] px-5">
+                İletişim <ArrowRight className="h-4 w-4" aria-hidden />
+              </Link>
+            </div>
+          </div>
+          <div className="surface overflow-hidden lg:col-span-8">
+            <MapEmbed
+              src={COMPANY.mapEmbed}
+              title={`${COMPANY.name} konumu – ${district}, ${city}`}
+              className="h-[280px] sm:h-[340px]"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Kariyer */}
+      <section className="container-x pb-12 sm:pb-16" id="kariyer" aria-labelledby="kariyer-baslik">
+        <div className="surface flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h2 id="kariyer-baslik" className="text-lg font-semibold text-ink">
+              Kariyer
+            </h2>
+            <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+              Ekibimize katılmak isterseniz özgeçmişinizi e-postayla gönderebilirsiniz. Tüm başvuruları gizlilikle
+              değerlendiririz.
+            </p>
+          </div>
+          <a href={mailtoHref("İş başvurusu")} className="btn-ghost min-h-[48px] shrink-0 px-5">
+            <Mail className="h-4 w-4" aria-hidden /> {COMPANY.email}
+          </a>
+        </div>
+      </section>
+
+      {/* Kapanış CTA */}
+      <section className="container-x pb-20 sm:pb-24" aria-labelledby="cta-baslik">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0F1B2D] via-[#0B1528] to-[#003EA8] p-8 shadow-xl sm:p-12">
+          <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-xl">
+              <h2 id="cta-baslik" className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                İhtiyaç listenizi gönderin, teklifinizi hazırlayalım.
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">{PROMISES.quoteTurnaround}</p>
+            </div>
+            <div className="flex flex-col items-stretch gap-2 sm:items-start lg:items-end">
+              <RfqTriggerButton mode="open" source="kurumsal-1" className="btn-action min-h-[48px] px-7" />
+              <p className="text-center text-xs text-slate-300 sm:text-left lg:text-right">{PROMISES.quoteReassurance}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );
 }

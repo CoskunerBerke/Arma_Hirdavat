@@ -1,117 +1,156 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Play, Pause, Volume2, VolumeX, ShieldCheck, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Info, Pause, Play, ShieldCheck } from "lucide-react";
+
+/*
+ * Ürün tanıtım videosu — YAPAY ZEKÂ İLE ÜRETİLMİŞ TEMSİLÎ bir klip (eldivenli el metal parçayı kavrıyor).
+ * Test, laboratuvar veya "canlı saha" görüntüsü DEĞİLDİR; öyle sunmayın.
+ * Uygun yer: köpük nitril / nitril kaplı eldiven sayfaları. Standart bilgisi verilecekse ürünün
+ * kendi verisinden (p.standards) gelmelidir — burada sabit kod YOK.
+ *
+ * Performans: video yalnızca ekrana yaklaşınca yüklenir (preload="none"); hareket azaltma ve
+ * veri tasarrufu açıksa kendiliğinden oynamaz, kullanıcı düğmeyle başlatır. Ekrandan çıkınca durur.
+ */
+const VIDEO_SRC = "/videos/faba-worker-540.mp4";
+const POSTER_SRC = "/videos/faba-worker-poster-540.jpg";
 
 interface ProductActionVideoProps {
   compact?: boolean;
   className?: string;
+  /** Video altındaki başlık (ör. ürün kodu ve adı) */
   title?: string;
+  /** Başlık altındaki kısa açıklama */
   subtitle?: string;
+  /** Ürünün kendi standart bilgisi (ör. p.standards[0]); verilmezse gösterilmez */
+  standard?: string;
+  /** Dürüstlük notu; varsayılan "Temsilî ürün tanıtım videosu" */
+  disclosure?: string;
+}
+
+type NetworkInfo = { saveData?: boolean; effectiveType?: string };
+
+function autoplayAllowed(): boolean {
+  if (typeof window === "undefined") return false;
+  if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
+  const conn = (navigator as Navigator & { connection?: NetworkInfo }).connection;
+  if (conn?.saveData) return false;
+  if (conn?.effectiveType && /2g$/.test(conn.effectiveType)) return false;
+  return true;
 }
 
 export default function ProductActionVideo({
   compact = false,
   className = "",
-  title = "FABA EP-1301 Mikro Köpük Nitril",
-  subtitle = "Hassas Parça & Yağlı Çelik Tutuş Testi",
+  title = "Eldivenle metal parça kavrama",
+  subtitle,
+  standard,
+  disclosure = "Temsilî ürün tanıtım videosu",
 }: ProductActionVideoProps) {
+  const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(true);
+  const userPausedRef = useRef(false);
+  const autoRef = useRef(false);
+  const [shown, setShown] = useState(false); // ilk kare oynadı
+  const [playing, setPlaying] = useState(false);
 
-  useEffect(() => {
+  const load = () => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || v.getAttribute("src")) return v;
     v.muted = true;
     v.defaultMuted = true;
-    v.setAttribute("playsinline", "true");
-    v.setAttribute("webkit-playsinline", "true");
-    const p = v.play();
-    if (p !== undefined) {
-      p.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
-    }
-  }, []);
-
-  const togglePlay = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      v.play();
-      setIsPlaying(true);
-    } else {
-      v.pause();
-      setIsPlaying(false);
-    }
+    v.src = VIDEO_SRC;
+    return v;
   };
 
-  const toggleMute = () => {
-    const v = videoRef.current;
+  useEffect(() => {
+    autoRef.current = autoplayAllowed();
+    const el = wrapRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        const v = videoRef.current;
+        if (entry.isIntersecting) {
+          if (!autoRef.current || userPausedRef.current) return;
+          const vid = load();
+          vid?.play().catch(() => undefined);
+        } else if (v && !v.paused) {
+          v.pause();
+        }
+      },
+      { rootMargin: "200px 0px", threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+    // load yalnızca ref'leri kullanır
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const toggle = () => {
+    const v = load();
     if (!v) return;
-    v.muted = !v.muted;
-    setIsMuted(v.muted);
+    if (v.paused) {
+      userPausedRef.current = false;
+      v.play().catch(() => undefined);
+    } else {
+      userPausedRef.current = true;
+      v.pause();
+    }
   };
 
   return (
-    <div className={`relative overflow-hidden rounded-3xl border border-line bg-slate-950 shadow-xl ${className}`}>
-      {/* 9:16 Video Container */}
-      <div className="relative aspect-[9/14] sm:aspect-[9/15] w-full max-h-[520px] overflow-hidden">
+    <figure
+      ref={wrapRef}
+      className={`relative overflow-hidden rounded-3xl border border-line bg-slate-950 shadow-xl ${className}`}
+    >
+      <div className={`relative w-full overflow-hidden ${compact ? "aspect-[9/12]" : "aspect-[9/14] sm:aspect-[9/15]"} max-h-[520px]`}>
+        <Image src={POSTER_SRC} alt="" fill sizes="(min-width: 640px) 340px, 300px" className="object-cover" />
         <video
           ref={videoRef}
-          src="/videos/faba-worker-in-action.mp4"
-          poster="/videos/faba-worker-poster.jpg"
-          autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          className="h-full w-full object-cover object-center cursor-pointer transition-transform duration-700 hover:scale-[1.02]"
-          onClick={togglePlay}
-          aria-label="FABA İş Güvenliği Eldiveni Saha Performans Testi Videosu"
+          preload="none"
+          aria-hidden="true"
+          tabIndex={-1}
+          disablePictureInPicture
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
+            shown ? "opacity-100" : "opacity-0"
+          }`}
+          onPlaying={() => {
+            setShown(true);
+            setPlaying(true);
+          }}
+          onPause={() => setPlaying(false)}
         />
 
-        {/* Canlı Gösterim Rozeti (Sol Üst) */}
-        <div className="absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-slate-950/80 px-3 py-1 text-[11px] font-bold text-white shadow-lg backdrop-blur-md border border-white/20">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-action" />
-          </span>
-          <span>SAHADA PERFORMANS</span>
-        </div>
+        <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-slate-950/75 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
+          <Info className="h-3.5 w-3.5" aria-hidden />
+          Temsilî video
+        </span>
 
-        {/* Ses & Oynat Kontrolleri (Sağ Üst) */}
-        <div className="absolute right-3 top-3 z-10 flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={togglePlay}
-            aria-label={isPlaying ? "Videoyu Duraklat" : "Videoyu Oynat"}
-            className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-950/70 text-white backdrop-blur-md transition hover:bg-slate-900 border border-white/20"
-          >
-            {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5 ml-0.5" />}
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label={playing ? "Videoyu duraklat" : "Videoyu oynat"}
+          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-slate-950/70 text-white backdrop-blur-md transition hover:bg-slate-900"
+        >
+          {playing ? <Pause className="h-4 w-4" aria-hidden /> : <Play className="ml-0.5 h-4 w-4" aria-hidden />}
+        </button>
 
-        {/* Video İçi Alt Bilgi Katmanı (Gradient & Açıklama) */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-slate-950 via-slate-950/70 to-transparent p-4 sm:p-5">
-          <div className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-            <Sparkles className="h-3 w-3" /> FABA KKD Laboratuvar Testi
-          </div>
-          <h4 className="mt-1 text-sm font-bold text-white sm:text-base leading-tight">
-            {title}
-          </h4>
-          <p className="mt-1 text-xs text-slate-300 leading-snug">
-            {subtitle}
-          </p>
-
-          <div className="mt-3 flex items-center gap-3 text-[11px] text-slate-400 border-t border-white/10 pt-2.5">
-            <span className="inline-flex items-center gap-1">
-              <ShieldCheck className="h-3.5 w-3.5 text-action" /> EN 388 4131X
-            </span>
-            <span>•</span>
-            <span>Kaymaz Tutuş (Grip)</span>
-          </div>
-        </div>
+        <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent p-4 pt-10 sm:p-5 sm:pt-12">
+          <p className="text-sm font-bold leading-tight text-white sm:text-base">{title}</p>
+          {subtitle && <p className="mt-1 text-xs leading-snug text-slate-300">{subtitle}</p>}
+          {standard && (
+            <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-slate-300">
+              <ShieldCheck className="h-3.5 w-3.5 text-emerald-300" aria-hidden /> {standard}
+            </p>
+          )}
+          <p className="mt-2 border-t border-white/10 pt-2 text-[11px] text-slate-400">{disclosure}</p>
+        </figcaption>
       </div>
-    </div>
+    </figure>
   );
 }

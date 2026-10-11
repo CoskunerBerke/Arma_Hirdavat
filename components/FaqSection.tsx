@@ -1,85 +1,123 @@
-import React from "react";
-import { HelpCircle } from "lucide-react";
-import { SITE_URL } from "@/data/company";
+import FaqAccordion, { type FaqItem } from "./home/FaqAccordion";
+import { COMPANY, HARDWARE_GROUPS, HOURS_TEXT, PROMISES } from "@/data/company";
+import { getProductById, parseKoli } from "@/data/products";
 
-export const FAQS = [
+export type { FaqItem };
+
+/*
+ * Sıkça sorulan sorular (sunucu bileşeni) + yalnızca BU görünür içerikten üretilen FAQPage JSON-LD.
+ * Yanıtlar dürüst ve doğrulanabilir olmalı: süre / sevkiyat ifadeleri PROMISES'tan gelir,
+ * belgelenmemiş vaat (vade, iade süresi, ücretsiz kargo vb.) EKLEMEYİN — işletme sahibi onaylarsa ekleyin.
+ * Başka sayfalar kendi sorularını `items` ile verebilir.
+ */
+function koliExample(): string {
+  const p = getProductById(1);
+  const info = p ? parseKoli(p.koli) : null;
+  return p && info ? ` (ör. ${p.code}: 1 koli = ${info.perCarton.toLocaleString("tr-TR")} ${info.unit})` : "";
+}
+
+export const FAQS: FaqItem[] = [
   {
-    q: "Hangi sanayi bölgelerine ve organize sanayi tesislerine toptan sevkiyat yapıyorsunuz?",
-    a: "Arma Hırdavat olarak Türkiye'nin 81 ilindeki tüm organize sanayi bölgelerine (OSB), fabrikalara, tersanelere ve şantiyelere koli ve palet bazında anlaşmalı sanayi ambar ağımızla doğrudan sevkiyat gerçekleştirmekteyiz. Samsun Tekkeköy merkez lojistik depomuzdan günlük olarak çıkan ambar tırları ile Türkiye'nin her noktasına 24-48 saat içinde güvenli ve hasarsız tesis teslimatı sağlanır.",
+    q: "En az ne kadar sipariş vermem gerekiyor?",
+    a: `Online teklifler koli bazındadır; kaç koli alacağınıza siz karar verirsiniz. Koli içi adet her ürün sayfasında yazılıdır${koliExample()}. Daha az miktar ya da tekil ürün için Tekkeköy'deki mağazamızdan alışveriş yapabilirsiniz.`,
+    link: { href: "/#fiziki-magaza", label: "Mağaza adresi ve saatleri" },
   },
   {
-    q: "Minimum sipariş miktarı (MOQ) ve koli/palet zorunluluğu var mı?",
-    a: "Evet. B2B portalımız üzerinden yalnızca koli, palet ve tesis ambalajı ölçeğindeki yüksek hacimli kurumsal talepler işleme alınmaktadır. Perakende veya tek parça satışlarımız yalnızca Samsun Tekkeköy'deki fiziki mağazamızda devam etmektedir.",
+    q: "Fiyatlar neden sitede yazmıyor?",
+    a: "Toptan alımda birim fiyat; miktara, koli ya da palet tercihine ve teslimat iline göre değişir. Bu yüzden herkese aynı liste fiyatını yazmak yerine, talebinize göre hazırlanmış yazılı bir teklif gönderiyoruz. Teklifte birim fiyat, toplam tutar, tahmini teslim süresi ve nakliye koşulları yer alır.",
   },
   {
-    q: "Birim fiyatlar neden sitede listelenmiyor? Teklif nasıl belirlenir?",
-    a: "Endüstriyel ürünlerde fiyatlar talep edilen miktar (koli/palet adedi), sipariş sıklığı ve teslimat yapılacak şehrin lojistik şartlarına göre belirlenir. Listenizi ilettiğinizde firmanıza özel iskonto matrisi uygulanarak en rekabetçi toptan fiyat teklifi resmi belge olarak tarafınıza sunulur.",
+    q: "Teklif istemek ücretli mi, beni bağlar mı?",
+    a: `Hayır. Teklif ücretsizdir ve bağlayıcı değildir; üyelik de gerekmez. Teklifi inceleyip onaylarsanız sipariş oluşur. ${PROMISES.quoteTurnaround} Çalışma saatlerimiz: ${HOURS_TEXT}.`,
   },
   {
-    q: "Fatura ve ödeme süreci nasıl işlemektedir?",
-    a: "Teklif onayınızın ardından şirket ve vergi levhası bilgileriniz doğrulanarak resmi kurumsal e-faturanız tanzim edilir. Ödemeler banka havalesi/EFT ya da Param POS altyapılı resmi Arma Online E-Tahsilat portalımız (odeme.armahirdavat.com.tr) üzerinden kredi kartına taksit veya tek çekim ile güvenle gerçekleştirilir.",
+    q: "Ödeme ve faturalandırma nasıl yapılıyor?",
+    a: "Tüm satışlarımız faturalıdır. Geçerli ödeme yöntemleri ve koşulları teklifinizde yazılı olarak belirtilir. Onaylanan siparişlerin ödemesi için online ödeme sayfamızı da kullanabilirsiniz.",
+    link: { href: COMPANY.paymentUrl, label: "Online ödeme sayfası", external: true },
   },
   {
-    q: "Özel teknik şartname, kalite sertifikası ve DIN/ISO normlarına uygun malzeme temin ediyor musunuz?",
-    a: "Evet. Ağır sanayi, makine imalatı ve otomotiv yan sanayinin gerektirdiği 8.8, 10.9, 12.9 kalite çelik civatalar, paslanmaz A2/A4 bağlantı elemanları, CE belgeli iş güvenliği ekipmanları ve TSE/DIN standartlarına haiz tüm teknik malzemeler şartnamelerinize uygun olarak temin edilip sevk edilir.",
+    q: "Sevkiyat nasıl yapılıyor, teslim ne kadar sürer?",
+    a: PROMISES.delivery,
+  },
+  {
+    q: "CE uygunluk beyanı veya teknik föy alabilir miyim?",
+    a: `${PROMISES.documentation} Uygunluk beyanı ya da teknik föy ihtiyacınızı teklif formundaki not alanına yazın; temin edebileceğimiz belgeleri teklifle birlikte bildiririz.`,
+  },
+  {
+    q: "Aradığım ürün listede yok. Yine de teklif alabilir miyim?",
+    a: `Evet. Online katalogda FABA iş güvenliği ürünleri yer alır; bunların yanında ${HARDWARE_GROUPS.length} ürün grubunda teknik hırdavat tedarik ediyoruz. İhtiyacınızı teklif formuna serbest metinle yazın; tedarik edebildiğimiz ürünleri fiyatıyla birlikte bildirelim.`,
+    link: { href: "/urun-gruplari", label: "Teknik hırdavat ürün grupları" },
+  },
+  {
+    q: "Doğru eldiven bedenini nasıl seçerim?",
+    a: "Eldiven bedenleri ürüne göre 7 ile 11 arasında değişir ve her ürün sayfasında yazılıdır. Ölçüm için beden tablosu rehberimize bakabilirsiniz. Ekibiniz için farklı bedenler gerekiyorsa her bedeni teklif listesine ayrı satır olarak ekleyebilirsiniz.",
+    link: { href: "/rehber/is-eldiveni-beden-tablosu", label: "İş eldiveni beden tablosu" },
+  },
+  {
+    q: "Numune gönderiyor musunuz?",
+    a: "Numune talebinizi teklif formundaki not alanına yazabilirsiniz. Ürüne ve miktara göre numune verip veremeyeceğimizi teklifte bildiririz.",
   },
 ];
 
-export default function FaqSection() {
+interface FaqSectionProps {
+  /** Varsayılan: ana sayfa soruları (FAQS) */
+  items?: FaqItem[];
+  title?: string;
+  description?: string;
+  eyebrow?: string;
+  /** Bölüm kimliği (menüdeki /#sss bağlantısı için varsayılan "sss") */
+  id?: string;
+  /** FAQPage JSON-LD yazılsın mı (aynı sayfada ikinci bir SSS şeması varsa false verin) */
+  withSchema?: boolean;
+  className?: string;
+}
+
+export default function FaqSection({
+  items = FAQS,
+  title = "Toptan alım hakkında sık sorulan sorular",
+  description = "Sipariş birimi, fiyat, ödeme, sevkiyat ve belgeler hakkında açık yanıtlar.",
+  eyebrow = "Sıkça sorulan sorular",
+  id = "sss",
+  withSchema = true,
+  className = "",
+}: FaqSectionProps) {
+  if (items.length === 0) return null;
+  const headingId = `${id}-baslik`;
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": FAQS.map((f) => ({
+    mainEntity: items.map((f) => ({
       "@type": "Question",
-      "name": f.q,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": f.a,
-      },
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
 
   return (
-    <section className="section bg-white border-b border-line" aria-labelledby="faq-heading">
-      <div className="container-x max-w-4xl">
-        <div className="text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-bold text-brand">
-            <HelpCircle className="h-4 w-4" />
-            <span>SIKÇA SORULAN SORULAR</span>
-          </span>
-          <h2 id="faq-heading" className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-            Kurumsal Satın Alma ve Sevkiyat Hakkında Merak Edilenler
-          </h2>
-          <p className="mt-2 text-sm text-ink-soft">
-            Organize sanayi bölgeleri ve üretim tesislerine toptan malzeme tedarik süreçlerimiz ve kurumsal prosedürler.
-          </p>
-        </div>
+    <section id={id} className={`scroll-mt-24 border-b border-line bg-white py-14 sm:py-20 lg:py-24 ${className}`} aria-labelledby={headingId}>
+      <div className="container-x">
+        <div className="mx-auto max-w-3xl">
+          <div className="text-center">
+            <p className="eyebrow">{eyebrow}</p>
+            <h2 id={headingId} className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              {title}
+            </h2>
+            {description && <p className="mt-2 text-sm text-ink-soft sm:text-base">{description}</p>}
+          </div>
 
-        <div className="mt-10 space-y-4">
-          {FAQS.map((faq, idx) => (
-            <details
-              key={faq.q}
-              className="group rounded-2xl border border-line bg-canvas/40 p-5 transition-all open:bg-white open:shadow-sm"
-            >
-              <summary className="flex cursor-pointer list-none items-center justify-between text-base font-semibold text-ink">
-                <span>{faq.q}</span>
-                <span className="ml-4 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-100 text-ink-muted transition-transform group-open:rotate-180 group-open:bg-brand group-open:text-white">
-                  &darr;
-                </span>
-              </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink-soft border-t border-line/50 pt-3">
-                {faq.a}
-              </p>
-            </details>
-          ))}
+          <div className="mt-8 sm:mt-10">
+            <FaqAccordion items={items} />
+          </div>
         </div>
+      </div>
 
-        {/* JSON-LD Schema for Google Rich Snippets */}
+      {withSchema && (
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
         />
-      </div>
+      )}
     </section>
   );
 }

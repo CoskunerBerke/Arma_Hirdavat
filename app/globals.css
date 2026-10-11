@@ -3,25 +3,24 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * DİKKAT: html veya body'ye overflow-x: hidden / max-width: 100vw EKLEMEYİN.
+   * overflow: hidden kaydırma kabı oluşturur ve tüm position: sticky öğeleri (header,
+   * ürün sayfası yan kutusu, katalog filtresi) bozar. "clip" kaydırma kabı oluşturmaz.
+   * Yatay taşma varsa kaynağında düzeltin.
+   */
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    overflow-x: hidden;
-    max-width: 100vw;
-    width: 100%;
+    overflow-x: clip;
   }
 
   body {
     @apply bg-canvas text-ink antialiased;
     font-feature-settings: "cv11", "ss01";
-    overflow-x: hidden;
-    max-width: 100vw;
-    width: 100%;
-    position: relative;
   }
 
   main {
-    max-width: 100vw;
     overflow-x: clip;
   }
 
@@ -34,11 +33,25 @@
     outline-offset: 3px;
     border-radius: 6px;
   }
+
+  /*
+   * iOS Safari, yazı boyutu 16px'ten küçük alanlara odaklanınca sayfayı yakınlaştırır.
+   * Mobilde tüm metin giriş alanları en az 16px; seçici özgüllüğü text-xs gibi
+   * yardımcı sınıfları bilinçli olarak geçer. 640px ve üzerinde bileşen sınıfları geçerlidir.
+   */
+  @media (max-width: 639.98px) {
+    :root input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="submit"]):not([type="button"]):not([type="reset"]):not([type="image"]),
+    :root select,
+    :root textarea {
+      font-size: 16px;
+    }
+  }
 }
 
 @layer components {
   .container-x {
     @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    /* Mevcut tasarım tam genişlik kullanıyor (max-w-7xl'i bilerek geçersiz kılar). */
     max-width: 100%;
     min-width: 0;
   }
@@ -63,9 +76,9 @@
     @apply btn bg-brand text-white hover:bg-brand-hover shadow-sm shadow-brand/20;
   }
 
-  /* Doğrudan Satın Alma ve Teklif Verme Dönüşüm Butonu (Conversion Emerald Green) */
+  /* Birincil eylem butonu: teklif al / listeye ekle (yeşil, beyaz metin AA kontrast) */
   .btn-action {
-    @apply btn bg-action text-white hover:bg-action-hover shadow-md shadow-action/25 font-bold;
+    @apply btn bg-action text-white hover:bg-action-hover active:bg-action-active shadow-md shadow-action/25 font-bold;
   }
 
   .btn-ghost {
@@ -107,8 +120,27 @@
     box-shadow: 0 0 10px rgba(0, 80, 230, 0.55);
   }
 
+  /*
+   * Form alanı: mobilde 16px yazı (iOS yakınlaştırmasın), 640px+ 14px.
+   * Kenarlık beyaz zeminde ≥ 3:1 kontrast (line-input), odakta marka mavisi.
+   */
   .field {
-    @apply w-full rounded-xl border border-line-strong bg-white px-4 py-3 text-sm text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10;
+    @apply w-full rounded-xl border border-line-input bg-white px-4 py-3 text-base text-ink placeholder:text-ink-muted sm:text-sm;
+    @apply focus:border-brand focus:outline-none focus-visible:ring-4 focus-visible:ring-brand/20;
+  }
+  .field[aria-invalid="true"] {
+    @apply border-red-600 focus:border-red-600 focus-visible:ring-red-600/20;
+  }
+}
+
+@layer utilities {
+  /* Yatay kaydırılan çip şeritleri için kaydırma çubuğunu gizler (içerik kaydırılabilir kalır) */
+  .scrollbar-none {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -130,15 +162,19 @@
   }
 }
 
-/* Kaydırınca beliren içerik */
-.reveal {
+/*
+ * Kaydırınca beliren içerik (components/Reveal.tsx).
+ * İçerik JS olmadan da GÖRÜNÜR: gizleme yalnızca Reveal bileşeni, öğe ekranın altındayken
+ * "reveal-armed" sınıfını eklediğinde başlar. Ekranda olan öğeler hiç gizlenmez.
+ */
+.reveal.reveal-armed:not(.is-visible) {
   opacity: 0;
   transform: translateY(18px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.reveal.is-visible {
+.reveal.reveal-armed.is-visible {
   opacity: 1;
   transform: none;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Sahne kartı geçişi */
@@ -153,20 +189,58 @@
   filter: blur(0);
 }
 
-/* Nehir akışı: işletim sistemi ayarından bağımsız olarak her zaman kesintisiz ve akıcı akar */
+/*
+ * Kayan şerit (logo / kart nehri). Fare üstüne gelince veya klavye odağı içerideyken durur
+ * (WCAG 2.2.2); hareket azaltma tercihinde hiç hareket etmez.
+ */
 .river-track {
-  animation: river 32s linear infinite !important;
+  animation: river 32s linear infinite;
   will-change: transform;
 }
+.river-track:hover,
+.river-track:focus-within {
+  animation-play-state: paused;
+}
 
-/* Hareket hassasiyeti ayarı açık kullanıcılarda yalnızca kaydırma efektleri sadeleşir */
+/* Hareket azaltma tercihi: animasyon ve geçişler kapatılır, içerik hemen görünür */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .river-track,
+  .animate-ping,
+  .animate-pulse,
+  .animate-bounce,
+  .animate-in,
+  .animate-out {
+    animation: none !important;
+  }
+  /* Yükleniyor göstergesi işlevseldir; dönmeye devam eder */
+  .animate-spin {
+    animation: spin 1s linear infinite !important;
+  }
+  .reveal,
+  .reveal.reveal-armed:not(.is-visible) {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .river-track {
+    animation: none !important;
   }
 }

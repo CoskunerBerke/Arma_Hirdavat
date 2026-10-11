@@ -1,108 +1,87 @@
-"use client";
-
-import React from "react";
-import { Package, Archive, Layers, ShieldCheck, ArrowRight, ClipboardList, Calculator } from "lucide-react";
+import { ArrowRight, CheckCircle2, ClipboardList, Layers, MapPin, Package } from "lucide-react";
 import RfqTriggerButton from "./RfqTriggerButton";
-import Reveal from "./Reveal";
+import { CTA, HOURS_SHORT, PROMISES } from "@/data/company";
+import { formatKoliTotal, getProductById } from "@/data/products";
 
-/**
- * 4. İSKONTO & AMBALAJ BİLGİ KUTUSU (Civtec Modeli)
- * Ağır sanayi satın alma standartları:
- * - Standart liste fiyatı yerine tonaj/hacim iskonto matrisi
- * - 4 ambalaj tipi güvencesi
+/*
+ * "Fiyatlar neden sitede yok?" — şeffaflık bandı (sunucu bileşeni).
+ * Dosya adı geriye dönük uyumluluk için korunuyor. İskonto oranı, "en uygun fiyat" veya
+ * süre vaadi YAZMAYIN; süreler yalnızca PROMISES sabitlerinden gelir.
  */
 export default function DiscountPackagingBand() {
-  const PACKAGING_BADGES = [
+  const example = getProductById(1);
+  const anchor = example ? formatKoliTotal(example, 3) : null;
+
+  const factors = [
     {
-      title: "Koli & Kutu Bazlı Sevk",
-      desc: "İç ambalajı bozulmamış, barkodlu standart fabrika kolileri.",
       icon: Package,
-      tone: "text-blue-600 bg-blue-50 border-blue-200",
+      title: "Miktar",
+      text: anchor && example ? `Kaç koli alacağınız. Örnek: ${example.code} için ${anchor}.` : "Kaç koli alacağınız.",
     },
-    {
-      title: "Çuval & Endüstriyel Paket",
-      desc: "Ağır cıvata, somun ve döküm parçalar için yırtılmaz sanayi çuvalları.",
-      icon: Archive,
-      tone: "text-amber-600 bg-amber-50 border-amber-200",
-    },
-    {
-      title: "81 İle Çemberli Palet Sevkiyatı",
-      desc: "Forklift yüklemesine hazır, dağılmayan çemberli streçli paletler tüm OSB ambarlarına kapı teslim sevk edilir.",
-      icon: Layers,
-      tone: "text-emerald-600 bg-emerald-50 border-emerald-200",
-    },
-    {
-      title: "Orijinal Fabrika Ambalajı",
-      desc: "Yetkili üretici garantisi, parti no ve tam teknik uygunluk sertifikası.",
-      icon: ShieldCheck,
-      tone: "text-indigo-600 bg-indigo-50 border-indigo-200",
-    },
+    { icon: Layers, title: "Koli veya palet", text: "Siparişin koli koli mi, palet halinde mi gönderileceği." },
+    { icon: MapPin, title: "Teslimat ili", text: "Nakliye bedeli ve süresi teslimat iline göre değişir." },
+  ];
+
+  const included = [
+    "Ürün bazında birim fiyat",
+    "Toplam tutar",
+    "Tahmini teslim süresi",
+    "Nakliye koşulları",
+    "Ödeme seçenekleri",
   ];
 
   return (
-    <section className="container-x py-8 sm:py-12" aria-labelledby="iskonto-matrisi-baslik">
-      <Reveal className="overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-white via-canvas to-slate-50 p-6 sm:p-8 lg:p-10 shadow-sm ring-1 ring-black/[0.04]">
-        <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-          {/* Sol Kolon: Başlık, Vurgulu İskonto Metni & RFQ Butonu */}
-          <div className="lg:col-span-6">
-            <div className="inline-flex items-center gap-2 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-bold text-brand">
-              <Calculator className="h-3.5 w-3.5 text-brand" />
-              <span>B2B TOPTAN SATIN ALMA POLİTİKASI</span>
-            </div>
-
-            <h2 id="iskonto-matrisi-baslik" className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-              Kurumsal Fiyatlandırma ve İskonto Matrisi
+    <section className="container-x py-10 sm:py-14" aria-labelledby="fiyatlandirma-baslik">
+      <div className="overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-white via-canvas to-slate-50 p-6 shadow-sm ring-1 ring-black/[0.04] sm:p-8 lg:p-10">
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-start">
+          <div className="lg:col-span-7">
+            <p className="eyebrow">Şeffaf fiyatlandırma</p>
+            <h2 id="fiyatlandirma-baslik" className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+              Fiyatlar neden sitede yok?
             </h2>
-
-            {/* Vurgulu Cümle */}
-            <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50/70 p-4 text-xs sm:text-sm font-medium leading-relaxed text-slate-900">
-              <span className="font-bold text-emerald-800 block text-xs uppercase tracking-wider mb-1">
-                Tesis İskontosu İlkesi:
-              </span>
-              &ldquo;Endüstriyel ürünlerimizde standart liste fiyatları yerine; malzeme çeşitliliğine ve tonaj/koli hacmine göre kurumsal iskonto matrisi uygulanır.&rdquo;
-            </div>
-
-            <p className="mt-3.5 text-xs sm:text-sm text-ink-soft leading-relaxed">
-              Satın alma listenizi portalımız üzerinden ilettiğinizde, sipariş hacminiz analiz edilerek firmanıza özel resmi proforma teklif mektubu 2 saat içinde hazırlanır. Onaylanan siparişler, Türkiye&apos;nin 81 ilindeki tesislerinize anlaşmalı ambar tırlarımızla doğrudan sevk edilir.
+            <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
+              Toptan alımda birim fiyat; miktara, koli ya da palet tercihine ve teslimat iline göre değişir. Herkese aynı
+              liste fiyatını yazmak yerine, sizin ihtiyacınıza göre hesaplanmış fiyatı yazılı olarak iletiyoruz.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <RfqTriggerButton className="btn-action shadow-md">
-                <ClipboardList className="h-4 w-4" />
-                <span>Tesisiniz İçin Fiyat Teklifi Alın</span>
-                <ArrowRight className="h-4 w-4" />
+            <ul className="mt-6 grid gap-3 sm:grid-cols-3">
+              {factors.map((f) => (
+                <li key={f.title} className="rounded-2xl border border-line bg-white p-4">
+                  <span className="flex items-center gap-2 text-sm font-semibold text-ink">
+                    <f.icon className="h-4 w-4 text-brand" aria-hidden />
+                    {f.title}
+                  </span>
+                  <p className="mt-1.5 text-xs leading-relaxed text-ink-soft sm:text-[13px]">{f.text}</p>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-4">
+              <RfqTriggerButton className="btn-action min-h-[48px] w-full px-6 sm:w-auto">
+                <ClipboardList className="h-4 w-4" aria-hidden />
+                <span>{CTA.primary}</span>
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </RfqTriggerButton>
+              <p className="text-xs text-ink-muted sm:text-sm">{PROMISES.quoteReassurance}</p>
             </div>
           </div>
 
-          {/* Sağ Kolon: Yan Yana 4 Ambalaj Rozeti */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
-            {PACKAGING_BADGES.map((badge) => {
-              const Icon = badge.icon;
-              return (
-                <div
-                  key={badge.title}
-                  className="rounded-2xl border border-line bg-white p-4 shadow-2xs transition-all hover:border-slate-300 hover:shadow-xs"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${badge.tone}`}>
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div className="min-w-0">
-                      <h3 className="text-xs sm:text-sm font-bold text-ink">
-                        {badge.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <p className="mt-2.5 text-[11px] leading-relaxed text-ink-muted">
-                    {badge.desc}
-                  </p>
-                </div>
-              );
-            })}
+          <div className="rounded-2xl border border-line bg-white p-5 shadow-xs sm:p-6 lg:col-span-5">
+            <h3 className="text-base font-semibold text-ink">Teklifinizde neler yer alır?</h3>
+            <ul className="mt-4 space-y-2.5">
+              {included.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-action" aria-hidden />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-5 border-t border-line pt-4 text-xs leading-relaxed text-ink-muted sm:text-sm">
+              {PROMISES.quoteTurnaround} <span className="whitespace-nowrap">({HOURS_SHORT})</span>
+            </p>
           </div>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

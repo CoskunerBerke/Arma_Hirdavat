@@ -1,98 +1,131 @@
-"use client";
+import Link from "next/link";
+import { ArrowRight, Clock, ExternalLink, Mail, MapPin, Navigation, Phone, Store } from "lucide-react";
+import RfqTriggerButton from "./RfqTriggerButton";
+import TrackedLink from "./home/TrackedLink";
+import { COMPANY, CTA, HARDWARE_GROUPS, HOURS_TEXT, PRIMARY_PHONE, mailtoHref } from "@/data/company";
 
-import React from "react";
-import { Store, MapPin, Phone, ExternalLink, ShieldAlert, Clock, Navigation } from "lucide-react";
-import { COMPANY } from "@/data/company";
-import Reveal from "./Reveal";
-
-/**
- * 6. PERAKENDE / FİZİKİ MAĞAZA AYRIMI (CİVTEC MODELİ)
- * B2B sitemizi boğmamak için ayrı tuttuğumuz mağaza köşesi.
- * Tekkeköy fiziki mağazasını net bir sınırla tanıtır.
+/*
+ * Tekkeköy mağazası (sunucu bileşeni). Küçük alıcıları geri çevirmez, doğru kanala yönlendirir:
+ * koli / palet → online teklif, tekil ve az miktar → mağaza.
+ * Adres, saat, telefon yalnızca data/company.ts'ten gelir; telefon doğrulanmadıysa gösterilmez.
  */
 export default function RetailStoreSection() {
   return (
-    <section id="fiziki-magaza" className="container-x py-10 sm:py-16 scroll-mt-24" aria-labelledby="fiziki-magaza-baslik">
-      <Reveal className="overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-white p-6 sm:p-10 shadow-xl">
+    <section id="fiziki-magaza" className="container-x scroll-mt-24 py-10 sm:py-16" aria-labelledby="fiziki-magaza-baslik">
+      <div className="overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 p-6 text-white shadow-xl sm:p-10">
         <div className="grid gap-8 lg:grid-cols-12 lg:items-center">
-          {/* Sol Kolon: Başlık ve Açıklama */}
           <div className="lg:col-span-7">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-bold text-amber-300">
-              <Store className="h-3.5 w-3.5 text-amber-400" />
-              <span>PERAKENDE & ATÖLYE HİZMET NOKTAMIZ</span>
-            </div>
-
-            <h2 id="fiziki-magaza-baslik" className="mt-3 text-2xl font-black tracking-tight text-white sm:text-3xl">
-              Arma Hırdavat – Samsun Tekkeköy Merkez Mağaza
-            </h2>
-
-            {/* Civtec Modeli Açıklama */}
-            <p className="mt-4 text-xs sm:text-sm leading-relaxed text-slate-300">
-              Tekil parça, atölye ve yerel teknik hırdavat ihtiyaçlarınız için Tekkeköy&apos;deki fiziki mağazamızda hizmetinizdeyiz. Web portalımız ise Türkiye&apos;nin 81 ilindeki fabrikaların, organize sanayi bölgelerinin ve şantiyelerin yüksek hacimli koli ve palet sevkiyatlarına tahsis edilmiştir.
+            <p className="inline-flex items-center gap-2 rounded-full border border-amber-400/40 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-200">
+              <Store className="h-3.5 w-3.5" aria-hidden />
+              Tekkeköy mağazamız
             </p>
 
-            {/* Önemli Ayrım Notu */}
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-slate-300">
-              <div className="flex items-start gap-2.5">
-                <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                <span>
-                  Portalımız üzerinden <strong>81 il geneline doğrudan tesis teslimatlı koli ve palet alımları</strong> kabul edilmektedir. Tekli perakende alımlarınız için mağazamızı ziyaret edebilirsiniz.
-                </span>
-              </div>
-            </div>
+            <h2 id="fiziki-magaza-baslik" className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              Birkaç parça mı lazım? Mağazamıza bekleriz.
+            </h2>
+
+            <p className="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base">
+              Online tekliflerimiz koli ve palet bazındadır. Tekil ürün, birkaç çift eldiven ya da atölyenizin günlük
+              ihtiyaçları için Samsun Tekkeköy&apos;deki mağazamızdan doğrudan alışveriş yapabilirsiniz.
+            </p>
+
+            <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+              <li className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">Koli ve palet alımı</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-300 sm:text-sm">
+                  Listenizi gönderin, fiyatınız e-postanıza gelsin.
+                </p>
+                <RfqTriggerButton className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-emerald-300 hover:text-emerald-200">
+                  <span>{CTA.primary}</span>
+                  <ArrowRight className="h-4 w-4" aria-hidden />
+                </RfqTriggerButton>
+              </li>
+              <li className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <p className="text-sm font-semibold text-white">Tekil ve az miktarda alım</p>
+                <p className="mt-1 text-xs leading-relaxed text-slate-300 sm:text-sm">
+                  Mağazamıza uğrayın; {HARDWARE_GROUPS.length} ürün grubunda teknik hırdavat tedarik ediyoruz.
+                </p>
+                <Link
+                  href="/urun-gruplari"
+                  className="mt-3 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-amber-200 hover:text-amber-100"
+                >
+                  Ürün gruplarını görün <ArrowRight className="h-4 w-4" aria-hidden />
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          {/* Sağ Kolon: Adres, Telefon & Yol Tarifi Butonu */}
-          <div className="lg:col-span-5 rounded-2xl border border-white/10 bg-slate-950/80 p-5 sm:p-6 space-y-4">
+          <div className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/80 p-5 sm:p-6 lg:col-span-5">
             <div className="flex items-start gap-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-amber-400">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-amber-300" aria-hidden>
                 <MapPin className="h-5 w-5" />
-              </div>
+              </span>
               <div>
-                <span className="text-[11px] font-semibold text-slate-400 block">Mağaza Adresi:</span>
-                <span className="text-xs sm:text-sm font-medium text-white leading-snug">
-                  Şabanoğlu Mah. 512. Sok. No: 3 Tekkeköy / SAMSUN
-                </span>
+                <p className="text-xs font-semibold text-slate-400">Adres</p>
+                <address className="text-sm not-italic leading-snug text-white">{COMPANY.address.full}</address>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 border-t border-white/10 pt-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-blue-400">
-                <Phone className="h-4 w-4" />
-              </div>
-              <div>
-                <span className="text-[11px] font-semibold text-slate-400 block">Doğrudan Mağaza Tel:</span>
-                <a href={COMPANY.phones[0].href} className="text-sm font-bold text-white hover:text-amber-400 transition-colors">
-                  +90 (362) 266 60 95
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 border-t border-white/10 pt-3">
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-emerald-400">
+            <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-emerald-300" aria-hidden>
                 <Clock className="h-4 w-4" />
-              </div>
-              <div className="text-xs text-slate-300">
-                <span className="text-[11px] font-semibold text-slate-400 block">Çalışma Saatleri:</span>
-                Hafta İçi & Cumartesi 08:00 - 18:30
+              </span>
+              <div>
+                <p className="text-xs font-semibold text-slate-400">Çalışma saatleri</p>
+                <p className="text-sm text-white">{HOURS_TEXT}</p>
               </div>
             </div>
 
-            <div className="pt-2">
-              <a
-                href={COMPANY.mapLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 px-5 py-3 text-xs sm:text-sm font-bold text-slate-950 transition-colors shadow-lg shadow-amber-500/20"
-              >
-                <Navigation className="h-4 w-4" />
-                <span>Google Haritalar&apos;da Yol Tarifi Al</span>
-                <ExternalLink className="h-3.5 w-3.5 ml-1 opacity-70" />
-              </a>
+            {PRIMARY_PHONE && (
+              <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-sky-300" aria-hidden>
+                  <Phone className="h-4 w-4" />
+                </span>
+                <div>
+                  <p className="text-xs font-semibold text-slate-400">Telefon</p>
+                  <TrackedLink
+                    href={PRIMARY_PHONE.href}
+                    eventKey="phoneClick"
+                    placement="store_section"
+                    className="text-sm font-semibold text-white hover:text-amber-200"
+                  >
+                    {PRIMARY_PHONE.label}
+                  </TrackedLink>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-start gap-3 border-t border-white/10 pt-4">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-slate-800 text-sky-300" aria-hidden>
+                <Mail className="h-4 w-4" />
+              </span>
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-slate-400">E-posta</p>
+                <TrackedLink
+                  href={mailtoHref("Mağaza hakkında bilgi")}
+                  eventKey="emailClick"
+                  placement="store_section"
+                  className="break-all text-sm font-semibold text-white hover:text-amber-200"
+                >
+                  {COMPANY.email}
+                </TrackedLink>
+              </div>
             </div>
+
+            <a
+              href={COMPANY.mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl bg-amber-400 px-5 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition-colors hover:bg-amber-300"
+            >
+              <Navigation className="h-4 w-4" aria-hidden />
+              <span>Google Haritalar&apos;da yol tarifi al</span>
+              <ExternalLink className="h-3.5 w-3.5 opacity-70" aria-hidden />
+              <span className="sr-only">(yeni sekmede açılır)</span>
+            </a>
           </div>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

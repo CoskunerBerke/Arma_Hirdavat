@@ -1,54 +1,61 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Check, Plus } from "lucide-react";
-import { useQuote } from "./QuoteContext";
+import { CTA } from "@/data/company";
+import { QUOTE_DEFAULT_QTY, useQuote } from "./QuoteContext";
 
-export default function ProductCardQuickAdd({ title, slug }: { title: string; slug: string }) {
+interface ProductCardQuickAddProps {
+  title: string;
+  slug: string;
+  /** Koli içi adet ("252 Çift"): teklif listesinde "3 koli = 756 çift" dönüşümü için (isteğe bağlı) */
+  koli?: string;
+  productId?: number;
+  className?: string;
+}
+
+/** Ürün kartında hızlı ekleme: 1 koli, beden belirtilmeden. Bedenler ürün sayfasında seçilir. */
+export default function ProductCardQuickAdd({ title, slug, koli, productId, className = "" }: ProductCardQuickAddProps) {
   const { addItem } = useQuote();
   const [added, setAdded] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addItem(
-      {
-        productTitle: title,
-        productSlug: slug,
-        unit: "Koli",
-        quantity: 50,
-      },
-      false // never auto-open modal!
-    );
+    addItem({ kind: "product", productTitle: title, productSlug: slug, productId, koli, unit: "Koli", quantity: QUOTE_DEFAULT_QTY });
     setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    window.clearTimeout(timer.current);
+    timer.current = window.setTimeout(() => setAdded(false), 2500);
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className={`inline-flex items-center justify-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-bold transition-all duration-200 shrink-0 sm:px-3 sm:py-1.5 sm:text-xs active:scale-95 ${
-        added
-          ? "bg-action text-white shadow-xs ring-2 ring-action/20"
-          : "bg-emerald-50 text-action hover:bg-action hover:text-white border border-emerald-200/90 shadow-2xs"
-      }`}
-      title="Teklif listesine ekle"
-      aria-label={`${title} ürününü teklif listesine ekle`}
-    >
-      {added ? (
-        <>
-          <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span className="hidden sm:inline">Eklendi</span>
-          <span className="sm:hidden text-[10px]">✓</span>
-        </>
-      ) : (
-        <>
-          <Plus className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-          <span className="hidden sm:inline">+ Teklife Ekle</span>
-          <span className="sm:hidden text-[10px]">+ Teklif</span>
-        </>
-      )}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={handleClick}
+        className={`inline-flex min-h-[44px] shrink-0 items-center justify-center gap-1.5 rounded-xl px-3 text-xs font-bold transition-colors duration-200 sm:text-sm ${
+          added
+            ? "bg-action text-white"
+            : "border border-action-border bg-action-light text-action-hover hover:bg-action hover:text-white"
+        } ${className}`}
+      >
+        {added ? <Check className="h-4 w-4" aria-hidden /> : <Plus className="h-4 w-4" aria-hidden />}
+        <span className="sr-only">{title}: </span>
+        {added ? (
+          CTA.added
+        ) : (
+          <>
+            <span className="sm:hidden">Ekle</span>
+            <span className="hidden sm:inline">{CTA.addShort}</span>
+          </>
+        )}
+      </button>
+      <span className="sr-only" role="status" aria-live="polite">
+        {added ? `${CTA.added}: ${title}` : ""}
+      </span>
+    </>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,146 +11,155 @@ import { QuoteProvider } from "@/components/QuoteContext";
 import { RetailModalProvider } from "@/components/RetailStoreModal";
 import { SearchProvider } from "@/components/ProductSearchModal";
 import RfqModal from "@/components/RfqModal";
-import { COMPANY, SEO_KEYWORDS, SITE_URL, TURKEY_PROVINCES } from "@/data/company";
+import { COMPANY, CONTACT_NUMBERS_VERIFIED, IS_INDEXABLE, OPENING_HOURS, PRIMARY_PHONE, SITE_URL } from "@/data/company";
+import { CATEGORY_PAGES } from "@/data/categories";
 
 // Türkçe karakterler (ğ, ş, ı, İ) için latin-ext alt kümesi gerekli
 const inter = Inter({ subsets: ["latin", "latin-ext"], display: "swap", variable: "--font-inter" });
 
+// Yakınlaştırma serbest (WCAG 1.4.4): maximumScale / userScalable KULLANMAYIN.
 export const viewport: Viewport = {
   themeColor: "#FFFFFF",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
+const DEFAULT_TITLE = "Samsun Hırdavat ve İş Eldiveni Toptan | Arma Hırdavat";
+const DEFAULT_DESCRIPTION =
+  "Samsun Tekkeköy'de teknik hırdavat mağazası ve iş güvenliği tedarikçisi. FABA iş eldiveni, koruyucu tulum ve KKD ürünlerinde koli bazında teklif alın.";
+
+/*
+ * Kök metadata. Notlar (sayfa sahipleri için):
+ * - Kök düzeyde canonical YOK: her sayfa kendi alternates.canonical değerini verir
+ *   (ana sayfa: app/page.tsx → alternates: { canonical: "/" }).
+ * - Sayfa başlıkları markasız yazılır; şablon " | Arma Hırdavat" ekler.
+ *   Başlık markayı zaten içeriyorsa title: { absolute: "…" } kullanın.
+ * - og:title / og:description / twitter:* sayfanın title ve description değerinden otomatik gelir.
+ * - Bir sayfa kendi openGraph nesnesini verirse kökteki openGraph TAMAMEN değişir:
+ *   type / locale / siteName / url alanlarını da verin. Alt klasördeki sayfalar images de vermeli:
+ *   images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: "…" }] (ya da kendi görseli).
+ */
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
-    template: "%s | Arma Hırdavat - Endüstriyel Tesis Tedariği",
+    default: DEFAULT_TITLE,
+    template: "%s | Arma Hırdavat",
   },
-  description:
-    "Organize sanayi bölgeleri, üretim tesisleri ve ağır sanayi şantiyelerine koli ve palet bazında toptan teknik hırdavat, bağlantı elemanları, kaynak ve iş güvenliği tedariği.",
+  description: DEFAULT_DESCRIPTION,
   applicationName: COMPANY.name,
-  keywords: SEO_KEYWORDS,
-  category: "Industrial Supplies & Hardware Wholesale",
-  classification: "Endüstriyel Tedarik, Toptan Teknik Hırdavat ve Fabrika Malzemeleri B2B Portalı",
-  alternates: { canonical: "/" },
+  // title / description burada BİLEREK yok: Next her sayfanın kendi title/description
+  // değerini og: ve twitter: etiketlerine otomatik kopyalar. Varsayılan görsel: public/og/arma-og.png.
   openGraph: {
     type: "website",
     locale: "tr_TR",
     siteName: COMPANY.name,
-    title: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri B2B Portalı",
-    description:
-      "Organize sanayi bölgeleri, fabrikalar ve şantiyeler için koli ve palet bazında toptan teknik hırdavat ve endüstriyel malzeme tedariği. Kurumsal iskonto matrisi.",
-    images: [{ url: "/images/logo.png", width: 305, height: 101, alt: "Arma Hırdavat - Endüstriyel Tesis Tedariği" }],
+    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name}: FABA iş eldiveni ve koruyucu giyim` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Arma Hırdavat | Endüstriyel Tedarik & Tesis Malzemeleri",
-    description: "Fabrika, şantiye ve tesis malzemeleri toptan satışı ve kurumsal iskonto avantajları.",
-    images: ["/images/logo.png"],
+    images: ["/og/arma-og.png"],
   },
   robots: {
-    index: true,
-    follow: true,
+    index: IS_INDEXABLE,
+    follow: IS_INDEXABLE,
     googleBot: {
-      index: true,
-      follow: true,
+      index: IS_INDEXABLE,
+      follow: IS_INDEXABLE,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
     },
   },
-  formatDetection: { telephone: true, email: true, address: true },
-  other: {
-    "geo.region": "TR",
-    "geo.placename": "Samsun, Türkiye",
-    "geo.position": "41.2867;36.33",
-    "ICBM": "41.2867, 36.33",
-    "distribution": "Global",
-    "target": "all",
+  // Doğrulanmamış numaraların iOS'ta otomatik bağlantıya dönüşmesini engeller
+  formatDetection: { telephone: false },
+};
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Yapısal veri (JSON-LD) — YALNIZCA data/company.ts ve data/categories.ts'ten üretilir.
+ * Doğrulanmamış bilgi (telefon, fiyat aralığı, ödeme yöntemi) yazılmaz. Koordinat Google İşletme Profili pininden alınır.
+ * ──────────────────────────────────────────────────────────────────────────── */
+
+const sameAs = [COMPANY.googleBusinessUrl, ...COMPANY.socialProfiles].filter((u) => typeof u === "string" && u.trim() !== "");
+
+const storeJsonLd: Record<string, unknown> = {
+  "@type": "HardwareStore",
+  "@id": `${SITE_URL}/#store`,
+  name: COMPANY.name,
+  legalName: COMPANY.legalName,
+  url: SITE_URL,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/icon.png`,
+    width: 256,
+    height: 256,
+  },
+  image: `${SITE_URL}/og/arma-og.png`,
+  description: COMPANY.description,
+  email: COMPANY.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: COMPANY.address.street,
+    addressLocality: COMPANY.address.district,
+    addressRegion: COMPANY.address.city,
+    postalCode: COMPANY.address.postalCode,
+    addressCountry: COMPANY.address.country,
+  },
+  openingHoursSpecification: OPENING_HOURS.map((h) => ({
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: [...h.days],
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: COMPANY.geo.latitude,
+    longitude: COMPANY.geo.longitude,
+  },
+  hasMap: COMPANY.mapLink,
+  areaServed: { "@type": "Country", name: "Türkiye", identifier: "TR" },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "İş güvenliği ve teknik hırdavat ürünleri",
+    itemListElement: [
+      ...CATEGORY_PAGES.map((c) => ({
+        "@type": "OfferCatalog",
+        name: c.name,
+        url: `${SITE_URL}/kategori/${c.slug}`,
+      })),
+      {
+        "@type": "OfferCatalog",
+        name: "Teknik hırdavat ürün grupları",
+        url: `${SITE_URL}/urun-gruplari`,
+      },
+    ],
   },
 };
+
+// Telefon / faks yalnızca numaralar doğrulandıysa (CONTACT_NUMBERS_VERIFIED) yazılır.
+if (PRIMARY_PHONE) storeJsonLd.telephone = PRIMARY_PHONE.e164;
+if (CONTACT_NUMBERS_VERIFIED && COMPANY.faxE164) storeJsonLd.faxNumber = COMPANY.faxE164;
+if (sameAs.length > 0) storeJsonLd.sameAs = sameAs;
 
 const orgJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
-    {
-      "@type": ["HardwareStore", "WholesaleStore"],
-      "@id": `${SITE_URL}/#store`,
-      name: COMPANY.name,
-      legalName: COMPANY.legalName,
-      url: SITE_URL,
-      logo: `${SITE_URL}/images/logo.png`,
-      image: `${SITE_URL}/images/logo.png`,
-      description: COMPANY.description,
-      telephone: "+90-362-266-60-95",
-      faxNumber: "+90-362-266-60-94",
-      email: COMPANY.email,
-      priceRange: "$$",
-      currenciesAccepted: "TRY",
-      paymentAccepted: "Cash, Credit Card, Bank Transfer",
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: COMPANY.address.street,
-        addressLocality: COMPANY.address.district,
-        addressRegion: COMPANY.address.city,
-        postalCode: COMPANY.address.postalCode,
-        addressCountry: "TR",
-      },
-      areaServed: [
-        {
-          "@type": "Country",
-          name: "Türkiye",
-          identifier: "TR",
-        },
-        {
-          "@type": "AdministrativeArea",
-          name: "Türkiye Organize Sanayi Bölgeleri ve Ağır Sanayi Havzaları",
-        },
-      ],
-      hasOfferCatalog: {
-        "@type": "OfferCatalog",
-        name: "Endüstriyel Tedarik & Tesis Malzemeleri Kataloğu",
-        itemListElement: [
-          { "@type": "OfferCatalog", name: "Bağlantı & Sabitleme Elemanları" },
-          { "@type": "OfferCatalog", name: "Çelik Halat & Kaldırma Ekipmanları" },
-          { "@type": "OfferCatalog", name: "El Aletleri & Sanayi Makineleri" },
-          { "@type": "OfferCatalog", name: "Kaynak Makineleri & Gaz Ekipmanları" },
-          { "@type": "OfferCatalog", name: "İş Güvenliği ve KKD Ekipmanları" },
-          { "@type": "OfferCatalog", name: "Tesisat, Pompa & Pnömatik Ürünler" },
-          { "@type": "OfferCatalog", name: "Kesici & Aşındırıcı Taşlar" },
-          { "@type": "OfferCatalog", name: "Kimyasal & Endüstriyel Ambalaj" },
-        ],
-      },
-      openingHoursSpecification: [
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          opens: "08:00",
-          closes: "18:00",
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          dayOfWeek: "Saturday",
-          opens: "08:00",
-          closes: "14:00",
-        },
-      ],
-    },
+    storeJsonLd,
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
       name: COMPANY.name,
+      alternateName: COMPANY.legalName,
       inLanguage: "tr-TR",
       publisher: { "@id": `${SITE_URL}/#store` },
+      // components/ProductCatalog.tsx /urunler?q=… parametresini okuyup aramayı uygular.
       potentialAction: {
         "@type": "SearchAction",
-        target: `${SITE_URL}/urunler?q={search_term_string}`,
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/urunler?q={search_term_string}`,
+        },
         "query-input": "required name=search_term_string",
       },
     },
@@ -159,7 +170,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="tr" className={inter.variable}>
       <body className="flex min-h-screen flex-col font-sans">
-        <a href="#icerik" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-white">
+        <a
+          href="#icerik"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-white"
+        >
           İçeriğe atla
         </a>
         <QuoteProvider>
@@ -176,7 +190,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </SearchProvider>
           </RetailModalProvider>
         </QuoteProvider>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd).replace(/</g, "\\u003c") }}
+        />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -1,302 +1,394 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowRight, CheckCircle2, Mail, Phone, Shield, Package, Ruler, Factory, FileCheck, Sparkles } from "lucide-react";
-import PageHero from "@/components/PageHero";
+import { notFound, permanentRedirect } from "next/navigation";
+import { ArrowRight, BookOpen, FileText, Ruler } from "lucide-react";
+import ProductActionVideo from "@/components/ProductActionVideo";
 import ProductCard from "@/components/ProductCard";
 import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
-import ProductActionVideo from "@/components/ProductActionVideo";
-import Reveal from "@/components/Reveal";
-import { COMPANY, SITE_URL } from "@/data/company";
-import { PRODUCT_GROUPS, getProduct, getRelated } from "@/data/products";
+import { splitSizes } from "@/components/quote/koli";
+import Breadcrumbs from "@/components/catalog/Breadcrumbs";
+import ContactLinks from "@/components/catalog/ContactLinks";
+import JsonLd from "@/components/catalog/JsonLd";
+import QuoteSteps from "@/components/catalog/QuoteSteps";
+import { GUIDES, isGloveCategory } from "@/components/catalog/guides";
+import {
+  catalogPageFor,
+  featureBullets,
+  hasSizeOptions,
+  koliLabel,
+  mainStandard,
+  productMetaDescription,
+  productSeoTitle,
+  productShortLabel,
+  quoteSizes,
+  safeBadge,
+  sizeFact,
+} from "@/components/catalog/productFacts";
+import { OG_BASE, absoluteUrl, breadcrumbNode, type Crumb } from "@/components/catalog/seo";
+import { explainStandard } from "@/components/catalog/standards";
+import { categoryHref } from "@/data/categories";
+import { CTA, HOURS_TEXT, latestCatalogFor } from "@/data/company";
+import {
+  PRODUCT_GROUPS,
+  getProduct,
+  getProductsByCategory,
+  getRelated,
+  isFeatured,
+  productHref,
+  resolveLegacySlug,
+  type CategoryName,
+  type ProductGroup,
+} from "@/data/products";
 
+/*
+ * Ürün sayfası. Eski adresler (data/legacy-slugs.ts) next.config.mjs → redirects() ile zaten
+ * 308 yönlendirilir; sayfadaki resolveLegacySlug yalnızca yedek güvencedir.
+ */
 export const dynamicParams = false;
 
 export function generateStaticParams() {
   return PRODUCT_GROUPS.map((p) => ({ slug: p.slug }));
 }
 
+/** Ürün fotoğrafları 800×800 px (public/images/products/faba_<id>.jpg). */
+const IMAGE_SIZE = 800;
+
+/** Temsilî eldiven tanıtım videosu yalnızca nitril / köpük nitril kaplı eldiven sayfalarında gösterilir. */
+const VIDEO_CATEGORIES: readonly CategoryName[] = ["Nitril Kaplı İş Eldivenleri", "Köpük Nitril Eldivenler"];
+
+/** İlgili ürün ızgarası: mobil 2, lg 4 sütun. */
+const RELATED_SIZES = "(min-width:1280px) 280px, (min-width:1024px) 22vw, 46vw";
+
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const p = getProduct(params.slug);
   if (!p) return {};
-  const title = `${p.code} ${p.title} | Toptan Fiyat Teklifi & OSB Ambar Sevkiyatı`;
-  const description = `${p.title} (${p.code}) koli ve palet alımlarında kurumsal iskonto. ${p.description} Koli içi: ${p.koli}. Beden: ${p.sizes}. FABA Kastamonu OSB üretimi toptan tedarik.`;
-
+  const title = productSeoTitle(p);
+  const description = productMetaDescription(p);
+  const url = productHref(p);
   return {
-    title,
+    title: title.absolute ? { absolute: title.text } : title.text,
     description,
-    keywords: [
-      `toptan ${p.code.toLowerCase()}`,
-      `faba ${p.code.toLowerCase()}`,
-      `${p.title.toLowerCase()} toptan teklif`,
-      `koli palet ${p.code.toLowerCase()}`,
-      `${p.category.toLowerCase()} toptan`,
-      "faba iş güvenliği kastamonu osb",
-      "toptan kkd ürünleri türkiye",
-    ],
-    alternates: { canonical: `/urunler/${p.slug}` },
+    alternates: { canonical: url },
     openGraph: {
-      title,
+      ...OG_BASE,
+      url,
+      title: title.text,
       description,
-      url: `${SITE_URL}/urunler/${p.slug}`,
-      images: [{ url: p.image, alt: `${p.title} (${p.code}) Toptan KKD` }],
+      images: [{ url: p.image, width: IMAGE_SIZE, height: IMAGE_SIZE, alt: p.title }],
     },
+  };
+}
+
+function productJsonLd(p: ProductGroup, crumbs: Crumb[]) {
+  const url = absoluteUrl(productHref(p));
+  const size = sizeFact(p);
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Product",
+        "@id": `${url}#urun`,
+        name: p.title,
+        description: p.description,
+        sku: p.code,
+        mpn: p.code,
+        brand: { "@type": "Brand", name: "FABA" },
+        category: p.category,
+        image: absoluteUrl(p.image),
+        url,
+        additionalProperty: [
+          ...p.standards.map((s) => ({ "@type": "PropertyValue", name: "Standart", value: s })),
+          { "@type": "PropertyValue", name: "Koli içi adet", value: p.koli },
+          ...(p.sizes ? [{ "@type": "PropertyValue", name: size.label, value: p.sizes }] : []),
+        ],
+      },
+      breadcrumbNode(crumbs, `${url}#breadcrumb`),
+    ],
   };
 }
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const p = getProduct(params.slug);
-  if (!p) notFound();
-  const related = getRelated(p);
+  if (!p) {
+    const moved = resolveLegacySlug(params.slug);
+    if (moved) permanentRedirect(productHref(moved));
+    notFound();
+  }
 
-  const productJsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Product",
-        "name": `${p.title} (${p.code})`,
-        "description": p.description,
-        "image": `${SITE_URL}${p.image}`,
-        "category": p.category,
-        "sku": p.code,
-        "brand": {
-          "@type": "Brand",
-          "name": "FABA Safety",
-        },
-        "offers": {
-          "@type": "AggregateOffer",
-          "priceCurrency": "TRY",
-          "availability": "https://schema.org/InStock",
-          "seller": {
-            "@type": "Organization",
-            "name": COMPANY.name,
-            "url": SITE_URL,
-          },
-          "areaServed": {
-            "@type": "Country",
-            "name": "Türkiye",
-            "identifier": "TR",
-          },
-          "eligibleQuantity": {
-            "@type": "QuantitativeValue",
-            "unitText": "Koli / Palet",
-          },
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Ana Sayfa",
-            "item": SITE_URL,
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Ürünler",
-            "item": `${SITE_URL}/urunler`,
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": `${p.code} - ${p.title}`,
-            "item": `${SITE_URL}/urunler/${p.slug}`,
-          },
-        ],
-      },
-    ],
-  };
+  const href = productHref(p);
+  const catHref = categoryHref(p.category);
+  const crumbs: Crumb[] = [
+    { label: "Ana Sayfa", href: "/" },
+    { label: "Ürünler", href: "/urunler" },
+    { label: p.category, href: catHref },
+    { label: productShortLabel(p), href },
+  ];
+
+  const related = getRelated(p, 4);
+  const categoryCount = getProductsByCategory(p.category).length;
+  const features = featureBullets(p);
+  // Aynı rehber (ör. kimyasal tulum tipleri) birden çok standart satırında tekrar etmesin: yalnızca ilk satırda.
+  const seenGuides = new Set<string>();
+  const standards = p.standards.map(explainStandard).map((s) => {
+    if (!s.guide) return s;
+    if (seenGuides.has(s.guide.href)) return { ...s, guide: undefined };
+    seenGuides.add(s.guide.href);
+    return s;
+  });
+  const main = mainStandard(p);
+  const size = sizeFact(p);
+  const badge = isFeatured(p.id) ? "Öne çıkan" : safeBadge(p);
+  const catalog = latestCatalogFor("FABA");
+  const catalogPage = catalogPageFor(p.id);
+  const showVideo = VIDEO_CATEGORIES.includes(p.category);
+  const isGlove = isGloveCategory(p.category);
+  const rfqProduct: ProductGroup = { ...p, sizes: quoteSizes(p) };
+
+  const facts: { label: string; value: ReactNode; wide?: boolean }[] = [
+    { label: "Kod", value: <span className="font-mono">{p.code}</span> },
+    {
+      label: "Kategori",
+      value: (
+        <Link href={catHref} className="text-brand underline-offset-2 hover:underline">
+          {p.category}
+        </Link>
+      ),
+    },
+    { label: "Koli içi", value: koliLabel(p) },
+    { label: size.label, value: size.value },
+    ...(main ? [{ label: "Ana standart", value: main }] : []),
+    ...(p.origin ? [{ label: "Üretim yeri", value: p.origin, wide: true }] : []),
+  ];
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
-      />
-      <PageHero
-        eyebrow={`${p.category} • Kod: ${p.code}`}
-        title={p.title}
-        description={p.description}
-        crumbs={[
-          { label: "Ürünler", href: "/urunler" },
-          { label: p.code, href: `/urunler/${p.slug}` },
-        ]}
-      />
+      <JsonLd data={productJsonLd(p, crumbs)} />
 
-      <section className="section overflow-hidden w-full max-w-full py-8 sm:py-16">
-        <div className="container-x w-full max-w-full min-w-0 grid gap-8 lg:gap-12 lg:grid-cols-12">
-          {/* Sol Kolon: Görsel + Teknik Detay Tablosu + Ürün Kalemleri */}
-          <Reveal className="lg:col-span-7 min-w-0">
-            {/* Ürün Görsel Kartı */}
-            <div className="glass mx-auto max-w-[620px] p-3 sm:p-4 rounded-3xl">
-              <div className="photo-well relative aspect-square w-full rounded-2xl bg-white p-4 sm:p-8">
-                <Image
-                  src={p.image}
-                  alt={`${p.title} (${p.code}) resmi ürün görseli`}
-                  fill
-                  priority
-                  sizes="(min-width:1024px) 600px, 92vw"
-                  className="object-contain p-4"
-                />
-                {p.badge && (
-                  <span className="absolute left-4 top-4 rounded-full bg-brand px-3 py-1 text-xs font-bold text-white shadow-sm">
-                    {p.badge}
-                  </span>
-                )}
+      <section className="relative isolate border-b border-line">
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,#FFFFFF_0%,#F5F7FA_100%)]" />
+        <div className="container-x pb-12 pt-5 sm:pt-8 lg:pb-16">
+          <Breadcrumbs items={crumbs} />
+
+          <div className="mt-4 grid gap-6 sm:mt-6 lg:grid-cols-12 lg:gap-10">
+            {/* 1 — Başlık, görsel, künye (mobilde ilk) */}
+            <div className="min-w-0 lg:col-span-7">
+              <p className="eyebrow">FABA · {p.category}</p>
+              <h1 className="mt-2 text-2xl font-bold leading-tight tracking-tight text-ink sm:text-4xl">{p.title}</h1>
+              <p className="mt-3 max-w-2xl text-base leading-relaxed text-ink-soft">{p.description}</p>
+
+              <div className="glass mt-5 rounded-3xl p-2.5 sm:p-3">
+                <div className="photo-well relative aspect-[4/3] w-full rounded-2xl bg-white sm:aspect-square">
+                  <Image
+                    src={p.image}
+                    alt={`${p.title} ürün fotoğrafı`}
+                    fill
+                    priority
+                    sizes="(min-width:1280px) 640px, (min-width:1024px) 55vw, 92vw"
+                    className="object-contain p-4 sm:p-8"
+                  />
+                  {badge && (
+                    <span
+                      className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold shadow-sm ${
+                        badge === "Öne çıkan"
+                          ? "bg-amber-700 text-white"
+                          : "border border-brand/20 bg-brand-50 text-brand"
+                      }`}
+                    >
+                      {badge}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <dl className="mt-4 grid grid-cols-2 gap-2 text-sm sm:grid-cols-3">
+                {facts.map((f) => (
+                  <div
+                    key={f.label}
+                    className={`min-w-0 rounded-xl border border-line/70 bg-white px-3 py-2.5 ${f.wide ? "col-span-2 sm:col-span-3" : ""}`}
+                  >
+                    <dt className="text-xs text-ink-muted">{f.label}</dt>
+                    <dd className="mt-0.5 break-words font-semibold text-ink">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            {/* 2 — Teklif kutusu: mobilde görsel ve künyenin hemen altında, masaüstünde yapışkan sağ sütun */}
+            <div className="min-w-0 lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-1">
+              {/* Yalnızca kutu ekrana sığacak yükseklikte yapışkan: kısa ekranda (ör. 1366×768) "Listeye ekle" düğmesi ekran dışında kalıyordu */}
+              <div className="space-y-4 lg:top-24 [@media(min-width:1024px)_and_(min-height:1040px)]:sticky">
+                <ProductRfqBox product={rfqProduct} />
+                <section aria-labelledby="urun-iletisim" className="surface p-5">
+                  <h2 id="urun-iletisim" className="text-sm font-semibold text-ink">
+                    Sorunuz mu var?
+                  </h2>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">
+                    Doğru modeli veya bedeni birlikte seçelim. Çalışma saatlerimiz: {HOURS_TEXT}.
+                  </p>
+                  <ContactLinks
+                    className="mt-2"
+                    subject={`Teklif talebi – ${p.code}`}
+                    body={`Merhaba,\n\n${p.title} (${p.code}) için teklif almak istiyorum.\nMiktar (koli):\nBeden:\nTeslimat ili:\n`}
+                    whatsappText={`Merhaba, ${p.title} (${p.code}) için teklif almak istiyorum.`}
+                  />
+                </section>
               </div>
             </div>
 
-            {/* Teknik Özellikler Özeti (Teknik Tablo Kartı) */}
-            <div className="mt-6 rounded-2xl border border-line bg-white p-4 sm:p-6 shadow-2xs">
-              <h2 className="text-base sm:text-lg font-bold text-ink flex items-center gap-2">
-                <FileCheck className="h-5 w-5 text-brand" /> Teknik Parametreler & Lojistik
-              </h2>
-
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                <div className="rounded-xl bg-slate-50 p-3 border border-line/60">
-                  <span className="text-[11px] font-medium text-ink-muted block flex items-center gap-1">
-                    <Package className="h-3.5 w-3.5 text-brand" /> Koli İçi Adet
-                  </span>
-                  <span className="mt-1 text-xs sm:text-sm font-bold text-ink block">
-                    {p.koli}
-                  </span>
-                </div>
-
-                <div className="rounded-xl bg-slate-50 p-3 border border-line/60">
-                  <span className="text-[11px] font-medium text-ink-muted block flex items-center gap-1">
-                    <Ruler className="h-3.5 w-3.5 text-brand" /> Mevcut Bedenler
-                  </span>
-                  <span className="mt-1 text-xs sm:text-sm font-bold text-ink block">
-                    {p.sizes || "Standart"}
-                  </span>
-                </div>
-
-                <div className="col-span-2 sm:col-span-1 rounded-xl bg-slate-50 p-3 border border-line/60">
-                  <span className="text-[11px] font-medium text-ink-muted block flex items-center gap-1">
-                    <Factory className="h-3.5 w-3.5 text-brand" /> Üretim Tesisi
-                  </span>
-                  <span className="mt-1 text-xs sm:text-sm font-bold text-emerald-700 block">
-                    Kastamonu OSB (%100 Yerli)
-                  </span>
-                </div>
-              </div>
+            {/* 3 — Ayrıntılar */}
+            <div className="min-w-0 space-y-6 lg:col-span-7">
+              <ProductItemsSelector
+                productTitle={p.title}
+                productSlug={p.slug}
+                items={features}
+                hasSizeChoice={splitSizes(p.sizes).length > 1}
+              />
 
               {/* Standartlar */}
-              {p.standards && p.standards.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-line/60">
-                  <span className="text-xs font-semibold text-ink-soft block mb-2 flex items-center gap-1.5">
-                    <Shield className="h-4 w-4 text-brand" /> Sertifikalar & Standart Normları:
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.standards.map((std) => (
-                      <span
-                        key={std}
-                        className="inline-flex items-center rounded-lg bg-blue-50/80 border border-blue-200/80 px-2.5 py-1 text-xs font-semibold text-brand"
-                      >
-                        {std}
-                      </span>
+              <section aria-labelledby="standartlar" className="surface p-5 sm:p-6">
+                <h2 id="standartlar" className="text-base font-bold text-ink">
+                  Standartlar ve anlamları
+                </h2>
+                {standards.length > 0 ? (
+                  <ul className="mt-4 divide-y divide-line">
+                    {standards.map((s) => (
+                      <li key={s.raw} className="py-3 first:pt-0 last:pb-0">
+                        <p className="text-sm font-semibold text-ink">{s.raw}</p>
+                        {s.meaning && <p className="mt-1 text-sm leading-relaxed text-ink-soft">{s.meaning}</p>}
+                        {s.levels && s.levels.length > 0 && (
+                          <dl className="mt-2 grid gap-x-4 gap-y-1 rounded-xl bg-slate-50 px-3 py-2 text-xs sm:grid-cols-2">
+                            {s.levels.map((l) => (
+                              <div key={l.label} className="flex justify-between gap-3">
+                                <dt className="text-ink-muted">{l.label}</dt>
+                                <dd className="shrink-0 font-semibold text-ink">{l.value}</dd>
+                              </div>
+                            ))}
+                          </dl>
+                        )}
+                        {s.guide && (
+                          <Link
+                            href={s.guide.href}
+                            className="mt-1 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-medium text-brand hover:underline"
+                          >
+                            <BookOpen className="h-4 w-4 shrink-0" aria-hidden />
+                            {s.guide.label}
+                          </Link>
+                        )}
+                      </li>
                     ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Uygulama / Kullanım Alanları */}
-              {p.applications && (
-                <div className="mt-4 pt-4 border-t border-line/60">
-                  <span className="text-xs font-semibold text-ink-soft block mb-1">
-                    Önerilen Uygulama ve Sektörler:
-                  </span>
-                  <p className="text-xs sm:text-sm leading-relaxed text-ink-soft">
-                    {p.applications}
+                  </ul>
+                ) : (
+                  <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                    Bu ürün için norm bilgisi listelenmiyor. Ürünün belge durumunu teklif aşamasında üretici
+                    bilgisinden teyit ederiz.
                   </p>
-                </div>
+                )}
+              </section>
+
+              {p.applications && (
+                <section aria-labelledby="kullanim-alanlari" className="surface p-5 sm:p-6">
+                  <h2 id="kullanim-alanlari" className="text-base font-bold text-ink">
+                    Kullanım alanları
+                  </h2>
+                  <p className="mt-2 text-sm leading-relaxed text-ink-soft">{p.applications}</p>
+                  <p className="mt-2 text-xs text-ink-muted">
+                    Kaynak: üretici kataloğundaki önerilen kullanım alanları.
+                  </p>
+                </section>
               )}
-            </div>
 
-            {/* Canlı Saha Performans & Tutuş Testi Videosu (Google Flow AI) */}
-            {p.category.includes("Eldiven") && (
-              <div className="mt-6 rounded-2xl border border-line bg-white p-4 sm:p-5 shadow-xs">
-                <div className="flex items-center justify-between mb-3.5">
-                  <div>
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-action">
-                      <Sparkles className="h-3.5 w-3.5" /> Canlı Saha Performansı
-                    </span>
-                    <h3 className="mt-1 text-sm sm:text-base font-bold text-ink">Hassas Parça & Yağlı Yüzey Tutuş Testi</h3>
-                  </div>
-                  <span className="text-[11px] text-ink-muted hidden sm:inline">10 sn Döngü</span>
-                </div>
-                <div className="max-w-[300px] sm:max-w-[340px] mx-auto">
+              {showVideo && (
+                <section aria-labelledby="tanitim-videosu" className="surface p-5 sm:p-6">
+                  <h2 id="tanitim-videosu" className="text-base font-bold text-ink">
+                    Tanıtım videosu
+                  </h2>
                   <ProductActionVideo
-                    title={`${p.code} - ${p.title}`}
-                    subtitle="Kaymaz Mikro Köpük Nitril Hassas Parça Tutuşu"
+                    className="mx-auto mt-4 max-w-[340px]"
+                    title={p.title}
+                    subtitle="Eldivenli elle metal parça kavrama"
+                    standard={main || undefined}
                   />
-                </div>
-              </div>
-            )}
+                </section>
+              )}
 
-            {/* Ürün Maddeleri & Hızlı Çoklu Seçici */}
-            <div className="mt-6">
-              <ProductItemsSelector productTitle={p.title} productSlug={p.slug} items={p.items} />
-            </div>
-          </Reveal>
-
-          {/* Sağ Kolon: Hacimli RFQ Teklif Kutusu & İletişim */}
-          <Reveal className="lg:col-span-5 min-w-0" delay={80}>
-            <div className="lg:sticky lg:top-24 space-y-6">
-              {/* Hacimli Teklif Kutusu (RFQ) */}
-              <ProductRfqBox product={p} />
-
-              {/* Doğrudan İletişim & Danışma */}
-              <div className="surface p-4 sm:p-5">
-                <h3 className="text-sm font-semibold text-ink">B2B Kurumsal Satış & Sevkiyat Hattı</h3>
-                <p className="mt-1 text-xs text-ink-muted">
-                  Organize sanayi bölgeleri ve fabrikalara doğrudan ambar ve tır sevkiyatı yapılmaktadır.
+              {/* Belgeler ve katalog */}
+              <section aria-labelledby="belgeler" className="surface p-5 sm:p-6">
+                <h2 id="belgeler" className="text-base font-bold text-ink">
+                  Katalog ve belgeler
+                </h2>
+                <ul className="mt-2">
+                  {catalogPage && (
+                    <li>
+                      <a
+                        href={`${catalog.url}#page=${catalogPage}`}
+                        target="_blank"
+                        rel="noopener"
+                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-brand hover:underline"
+                      >
+                        <FileText className="h-4 w-4 shrink-0" aria-hidden />
+                        Üretici kataloğunda bu ürünün sayfası (s. {catalogPage})
+                      </a>
+                    </li>
+                  )}
+                  <li>
+                    <a
+                      href={catalog.url}
+                      target="_blank"
+                      rel="noopener"
+                      className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-brand hover:underline"
+                    >
+                      <FileText className="h-4 w-4 shrink-0" aria-hidden />
+                      {CTA.catalog}
+                      <span className="font-normal text-ink-muted">· {catalog.size}</span>
+                    </a>
+                  </li>
+                  {isGlove && hasSizeOptions(p.sizes) && (
+                    <li>
+                      <Link
+                        href={GUIDES.beden.href}
+                        className="inline-flex min-h-[44px] items-center gap-2 text-sm font-medium text-brand hover:underline"
+                      >
+                        <Ruler className="h-4 w-4 shrink-0" aria-hidden />
+                        {GUIDES.beden.label}
+                      </Link>
+                    </li>
+                  )}
+                </ul>
+                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                  CE uygunluk beyanı veya teknik föy gerekiyorsa teklif formundaki not alanına yazın; temin
+                  edebileceğimiz belgeleri teklifle birlikte bildiririz.
                 </p>
-                <div className="mt-3.5 space-y-2.5 text-xs sm:text-sm">
-                  <a href={COMPANY.phones[0].href} className="flex items-center gap-2.5 text-ink-soft hover:text-brand font-medium">
-                    <Phone className="h-4 w-4 text-brand shrink-0" aria-hidden /> {COMPANY.phones[0].label}
-                  </a>
-                  <a href={`mailto:${COMPANY.email}?subject=${encodeURIComponent(`Teklif Talebi: ${p.code} - ${p.title}`)}`} className="flex items-center gap-2.5 text-ink-soft hover:text-brand font-medium">
-                    <Mail className="h-4 w-4 text-brand shrink-0" aria-hidden /> {COMPANY.email}
-                  </a>
-                </div>
-                <div className="mt-4 pt-3.5 border-t border-line/60">
-                  <Link
-                    href="/katalog"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-brand hover:underline"
-                  >
-                    Resmi FABA Kataloğunu İndir (PDF) <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </div>
+              </section>
+
+              <QuoteSteps headingId="urun-teklif-sureci" />
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* Benzer / Aynı Kategorideki Ürünler */}
+      {/* Benzer ürünler */}
       {related.length > 0 && (
-        <section className="section border-t border-line py-12 sm:py-16 bg-slate-50/50">
+        <section aria-labelledby="benzer-urunler" className="bg-slate-50/60 py-12 sm:py-16">
           <div className="container-x">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-brand">Aynı Kategorideki Ürünler</p>
-                <h2 className="mt-1 text-xl sm:text-2xl font-bold tracking-tight text-ink">
-                  {p.category} Grubu
-                </h2>
-              </div>
-              <Link href="/urunler" className="text-xs sm:text-sm font-semibold text-brand hover:underline">
-                Tümünü Gör →
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+              <h2 id="benzer-urunler" className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
+                Benzer ürünler
+              </h2>
+              <Link
+                href={catHref}
+                className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand hover:underline"
+              >
+                Tüm {p.category} ({categoryCount})
+                <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
-            <ul className="mt-6 sm:mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
               {related.map((r) => (
                 <li key={r.id} className="min-w-0">
-                  <ProductCard product={r} />
+                  <ProductCard product={r} sizes={RELATED_SIZES} headingLevel="h3" />
                 </li>
               ))}
             </ul>

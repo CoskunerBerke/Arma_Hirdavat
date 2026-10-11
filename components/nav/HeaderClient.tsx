@@ -1,0 +1,206 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Clock, Mail, Menu, Phone, Search, Store } from "lucide-react";
+import { COMPANY, HOURS_SHORT, PRIMARY_PHONE, PROMISES, mailtoHref } from "@/data/company";
+import { track, EVENTS } from "@/lib/track";
+import { useRetailModal } from "@/components/RetailStoreModal";
+import { preloadSearch, useProductSearch } from "@/components/ProductSearchModal";
+import DesktopNav from "./DesktopNav";
+import MobileMenu, { MOBILE_MENU_ID } from "./MobileMenu";
+import QuoteButton from "./QuoteButton";
+import type { HeaderNavProps } from "./types";
+
+/** Üst bilgi şeridinin yüksekliği (h-8). Header bu kadar yukarı kayar; menü satırı yapışkan kalır. */
+const UTILITY_BAR_CLASS = "h-8";
+
+export default function HeaderClient({ categories, totalProducts }: HeaderNavProps) {
+  const pathname = usePathname() ?? "/";
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const { openSearch } = useProductSearch();
+  const { openModal: openRetailModal } = useRetailModal();
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Sayfa değişince mobil menüyü kapat
+  useEffect(() => setMenuOpen(false), [pathname]);
+
+  // Masaüstü genişliğe geçilince mobil menüyü kapat (görünmez kaydırma kilidi kalmasın)
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const onChange = () => {
+      if (mq.matches) setMenuOpen(false);
+    };
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
+
+  // Yapışkan menü satırının yüksekliğini sayfaya bildir: çapa (#sss gibi) başlıkları menünün altında kalmasın
+  useEffect(() => {
+    const row = rowRef.current;
+    if (!row) return;
+    const root = document.documentElement;
+    const apply = () => {
+      const h = Math.round(row.getBoundingClientRect().height);
+      if (h <= 0) return;
+      root.style.setProperty("--header-h", `${h}px`);
+      root.style.scrollPaddingTop = `${h + 16}px`;
+    };
+    apply();
+    if (typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver(apply);
+    ro.observe(row);
+    return () => ro.disconnect();
+  }, []);
+
+  const dark = pathname === "/" && !scrolled && !menuOpen;
+
+  return (
+    <header className="sticky -top-8 z-50 w-full">
+      {/* Üst bilgi şeridi: yalnızca doğrulanabilir bilgiler (data/company.ts) */}
+      <div className={`${UTILITY_BAR_CLASS} border-b border-white/10 bg-slate-950 text-xs text-slate-300`}>
+        <div className="container-x flex h-full items-center justify-between gap-4">
+          <p className="flex min-w-0 items-center gap-2 whitespace-nowrap">
+            <Clock className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden />
+            <span className="font-semibold text-white">{PROMISES.quoteShort}</span>
+            <span aria-hidden className="text-slate-500">
+              ·
+            </span>
+            <span>{HOURS_SHORT}</span>
+            <span aria-hidden className="hidden text-slate-500 xl:inline">
+              ·
+            </span>
+            <span className="hidden xl:inline">{PROMISES.deliveryShort}</span>
+          </p>
+          <div className="hidden shrink-0 items-center gap-4 sm:flex">
+            {PRIMARY_PHONE && (
+              <a
+                href={PRIMARY_PHONE.href}
+                onClick={() => track(EVENTS.phoneClick, { kaynak: "header" })}
+                className="inline-flex min-h-[24px] items-center gap-1.5 font-semibold text-white hover:text-emerald-300"
+              >
+                <Phone className="h-3.5 w-3.5" aria-hidden />
+                {PRIMARY_PHONE.label}
+              </a>
+            )}
+            <a
+              href={mailtoHref()}
+              onClick={() => track(EVENTS.emailClick, { kaynak: "header" })}
+              className="hidden min-h-[24px] items-center gap-1.5 hover:text-white md:inline-flex"
+            >
+              <Mail className="h-3.5 w-3.5" aria-hidden />
+              {COMPANY.email}
+            </a>
+            <button
+              type="button"
+              onClick={openRetailModal}
+              aria-haspopup="dialog"
+              className="hidden min-h-[24px] items-center gap-1.5 hover:text-white lg:inline-flex"
+            >
+              <Store className="h-3.5 w-3.5" aria-hidden />
+              Tekkeköy mağazamız
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Menü satırı (yapışkan) */}
+      <div
+        className={`border-b backdrop-blur-xl transition-colors duration-300 ${
+          dark
+            ? "border-white/10 bg-slate-950/90 text-white"
+            : "border-line bg-white/95 text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
+        }`}
+      >
+        <div ref={rowRef} className="container-x flex h-16 items-center justify-between gap-2 sm:gap-4 lg:h-[72px] lg:gap-3 xl:gap-4">
+          <Link href="/" className="group flex shrink-0 items-center gap-3 rounded-md">
+            <Image
+              src="/images/logo.png"
+              alt={COMPANY.name}
+              width={109}
+              height={36}
+              loading="eager"
+              className="h-8 w-auto rounded-md transition-transform duration-300 group-hover:scale-[1.02] sm:h-9"
+            />
+            <span
+              aria-hidden
+              className={`hidden text-xs font-semibold leading-tight sm:block lg:hidden xl:block ${
+                dark ? "text-slate-300" : "text-slate-600"
+              }`}
+            >
+              Teknik hırdavat
+              <br />
+              ve iş güvenliği
+            </span>
+          </Link>
+
+          <DesktopNav categories={categories} totalProducts={totalProducts} pathname={pathname} dark={dark} />
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => openSearch()}
+              onPointerEnter={preloadSearch}
+              onFocus={preloadSearch}
+              aria-haspopup="dialog"
+              aria-keyshortcuts="Control+K"
+              title="Ürün ara (Ctrl+K)"
+              className={`inline-flex h-11 min-w-[44px] items-center justify-center gap-2 rounded-xl border px-2.5 text-sm font-semibold transition-colors xl:px-3 ${
+                dark
+                  ? "border-white/25 bg-white/10 text-white hover:bg-white/20"
+                  : "border-line-strong bg-white text-ink-soft hover:border-brand/40 hover:text-ink"
+              }`}
+            >
+              <Search className={`h-[18px] w-[18px] shrink-0 ${dark ? "text-white" : "text-brand"}`} aria-hidden />
+              <span className="sr-only xl:not-sr-only">Ürün ara</span>
+              <kbd
+                aria-hidden
+                className={`hidden rounded border px-1.5 py-0.5 text-[10px] font-bold xl:inline-flex ${
+                  dark ? "border-white/25 text-slate-300" : "border-line-strong text-ink-muted"
+                }`}
+              >
+                Ctrl K
+              </kbd>
+            </button>
+
+            <QuoteButton />
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              aria-expanded={menuOpen}
+              aria-controls={MOBILE_MENU_ID}
+              aria-haspopup="dialog"
+              aria-label="Menüyü aç"
+              className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors lg:hidden ${
+                dark ? "text-white hover:bg-white/10" : "text-ink hover:bg-slate-100"
+              }`}
+            >
+              <Menu className="h-6 w-6" aria-hidden />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {menuOpen && (
+        <MobileMenu
+          categories={categories}
+          totalProducts={totalProducts}
+          pathname={pathname}
+          onClose={() => setMenuOpen(false)}
+        />
+      )}
+    </header>
+  );
+}
