@@ -5,8 +5,6 @@ import HowItWorks from "@/components/home/HowItWorks";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import ShowcaseVideo from "@/components/home/ShowcaseVideo";
 import ClientLogos from "@/components/ClientLogos";
-import WhyArma from "@/components/home/WhyArma";
-import DiscountPackagingBand from "@/components/DiscountPackagingBand";
 import RetailStoreSection from "@/components/RetailStoreSection";
 import ReviewsRiver from "@/components/ReviewsRiver";
 import FaqSection from "@/components/FaqSection";
@@ -44,8 +42,6 @@ export default function HomePage() {
       <FeaturedProducts />
       <ShowcaseVideo />
       <ClientLogos />
-      <WhyArma />
-      <DiscountPackagingBand />
       <RetailStoreSection />
       <ReviewsRiver />
       <FaqSection />

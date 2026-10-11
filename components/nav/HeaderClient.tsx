@@ -14,8 +14,6 @@ import MobileMenu, { MOBILE_MENU_ID } from "./MobileMenu";
 import QuoteButton from "./QuoteButton";
 import type { HeaderNavProps } from "./types";
 
-/** Üst bilgi şeridinin yüksekliği (h-8). Header bu kadar yukarı kayar; menü satırı yapışkan kalır. */
-const UTILITY_BAR_CLASS = "h-8";
 
 export default function HeaderClient({ categories, totalProducts }: HeaderNavProps) {
   const pathname = usePathname() ?? "/";
@@ -67,54 +65,7 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
   const dark = pathname === "/" && !scrolled && !menuOpen;
 
   return (
-    <header className="sticky -top-8 z-50 w-full">
-      {/* Üst bilgi şeridi: yalnızca doğrulanabilir bilgiler (data/company.ts) */}
-      <div className={`${UTILITY_BAR_CLASS} border-b border-white/10 bg-slate-950 text-xs text-slate-300`}>
-        <div className="container-x flex h-full items-center justify-between gap-4">
-          <p className="flex min-w-0 items-center gap-2 whitespace-nowrap">
-            <Clock className="h-3.5 w-3.5 shrink-0 text-emerald-400" aria-hidden />
-            <span className="font-semibold text-white">{PROMISES.quoteShort}</span>
-            <span aria-hidden className="text-slate-500">
-              ·
-            </span>
-            <span>{HOURS_SHORT}</span>
-            <span aria-hidden className="hidden text-slate-500 xl:inline">
-              ·
-            </span>
-            <span className="hidden xl:inline">{PROMISES.deliveryShort}</span>
-          </p>
-          <div className="hidden shrink-0 items-center gap-4 sm:flex">
-            {PRIMARY_PHONE && (
-              <a
-                href={PRIMARY_PHONE.href}
-                onClick={() => track(EVENTS.phoneClick, { kaynak: "header" })}
-                className="inline-flex min-h-[24px] items-center gap-1.5 font-semibold text-white hover:text-emerald-300"
-              >
-                <Phone className="h-3.5 w-3.5" aria-hidden />
-                {PRIMARY_PHONE.label}
-              </a>
-            )}
-            <a
-              href={mailtoHref()}
-              onClick={() => track(EVENTS.emailClick, { kaynak: "header" })}
-              className="hidden min-h-[24px] items-center gap-1.5 hover:text-white md:inline-flex"
-            >
-              <Mail className="h-3.5 w-3.5" aria-hidden />
-              {COMPANY.email}
-            </a>
-            <button
-              type="button"
-              onClick={openRetailModal}
-              aria-haspopup="dialog"
-              className="hidden min-h-[24px] items-center gap-1.5 hover:text-white lg:inline-flex"
-            >
-              <Store className="h-3.5 w-3.5" aria-hidden />
-              Tekkeköy mağazamız
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <header className="sticky top-0 z-50 w-full">
       {/* Menü satırı (yapışkan) */}
       <div
         className={`border-b backdrop-blur-xl transition-colors duration-300 ${
@@ -133,16 +84,6 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
               loading="eager"
               className="h-8 w-auto rounded-md transition-transform duration-300 group-hover:scale-[1.02] sm:h-9"
             />
-            <span
-              aria-hidden
-              className={`hidden text-xs font-semibold leading-tight sm:block lg:hidden xl:block ${
-                dark ? "text-slate-300" : "text-slate-600"
-              }`}
-            >
-              Teknik hırdavat
-              <br />
-              ve iş güvenliği
-            </span>
           </Link>
 
           <DesktopNav categories={categories} totalProducts={totalProducts} pathname={pathname} dark={dark} />

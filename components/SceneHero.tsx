@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { getImageProps } from "next/image";
-import { ArrowRight, Clock, ClipboardList, ShieldCheck, Store, Truck, Wrench } from "lucide-react";
+import { ArrowRight, ClipboardList, ShieldCheck } from "lucide-react";
 import RfqTriggerButton from "./RfqTriggerButton";
 import HeroVideo from "./home/HeroVideo";
-import HeroSearchButton from "./home/HeroSearchButton";
-import { CTA, HARDWARE_GROUPS, HOURS_SHORT, PROMISES } from "@/data/company";
-import { PRODUCT_GROUPS } from "@/data/products";
+import { CTA, PROMISES } from "@/data/company";
 
 /*
  * Ana sayfa karşılama bölümü (sunucu bileşeni).
@@ -33,15 +31,6 @@ export default function SceneHero() {
   } = getImageProps({ ...posterBase, src: POSTER.wide });
   const { props: portraitImg } = getImageProps({ ...posterBase, src: POSTER.portrait });
 
-  const productCount = PRODUCT_GROUPS.length;
-
-  const trust = [
-    { icon: Truck, text: PROMISES.deliveryShort },
-    { icon: ShieldCheck, text: "EN standart kodları açıkça yazılı" },
-    { icon: Store, text: "Tekkeköy'de fiziki mağaza" },
-    { icon: Wrench, text: `${HARDWARE_GROUPS.length} ürün grubunda teknik hırdavat` },
-  ];
-
   return (
     <section
       aria-labelledby="hero-baslik"
@@ -57,25 +46,21 @@ export default function SceneHero() {
       <HeroVideo wideSrc={VIDEO.wide} portraitSrc={VIDEO.portrait} wideMedia={WIDE_MEDIA} />
 
       {/* Okunurluk için degrade katmanları */}
+      {/* Okunurluk: yalnızca metnin olduğu alt-sol bölge koyulaşır; video aydınlık ve görünür kalır */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/45"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/90 via-slate-950/25 to-transparent"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 hidden bg-gradient-to-r from-slate-950/80 via-slate-950/35 to-transparent md:block"
+        className="pointer-events-none absolute inset-0 -z-10 hidden bg-gradient-to-r from-slate-950/60 via-transparent to-transparent md:block"
       />
 
       <div className="container-x relative">
-        <div className="max-w-3xl">
-          <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-slate-950/60 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md sm:text-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
-            Fabrika, şantiye ve atölyeler için
-          </p>
-
+        <div className="max-w-2xl">
           <h1
             id="hero-baslik"
-            className="mt-4 text-[1.75rem] font-extrabold leading-[1.15] tracking-tight text-white sm:text-5xl lg:text-6xl"
+            className="text-[1.9rem] font-extrabold leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl"
           >
             Samsun&apos;dan toptan{" "}
             <span className="bg-gradient-to-r from-sky-300 via-emerald-200 to-white bg-clip-text text-transparent">
@@ -84,9 +69,8 @@ export default function SceneHero() {
             ve teknik hırdavat
           </h1>
 
-          <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-slate-200 sm:text-lg">
-            {productCount} FABA iş güvenliği ürününde koli bazında toptan teklif veriyoruz. Listenizi gönderin,
-            firmanıza özel fiyat e-postanıza gelsin.
+          <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-100 drop-shadow sm:text-lg">
+            Listenizi gönderin, firmanıza özel fiyat e-postanıza gelsin.
           </p>
 
           <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:items-center">
@@ -103,30 +87,11 @@ export default function SceneHero() {
             </Link>
           </div>
 
-          <ul className="mt-3 flex flex-col gap-1 text-xs text-slate-300 sm:flex-row sm:flex-wrap sm:gap-x-5 sm:text-sm">
-            <li className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-300" aria-hidden />
-              {PROMISES.quoteReassurance}
-            </li>
-            <li className="inline-flex items-center gap-1.5">
-              <Clock className="h-3.5 w-3.5 shrink-0 text-emerald-300" aria-hidden />
-              {PROMISES.quoteShort} (mesai: {HOURS_SHORT})
-            </li>
-          </ul>
-
-          <div className="mt-5">
-            <HeroSearchButton />
-          </div>
+          <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-slate-200 sm:text-sm">
+            <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-emerald-300" aria-hidden />
+            {PROMISES.quoteReassurance}
+          </p>
         </div>
-
-        <ul className="mt-6 grid grid-cols-2 gap-x-3 gap-y-2.5 border-t border-white/15 pt-5 text-xs text-slate-200 sm:mt-8 sm:text-sm lg:grid-cols-4">
-          {trust.map(({ icon: Icon, text }) => (
-            <li key={text} className="flex items-start gap-2">
-              <Icon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-300" aria-hidden />
-              <span>{text}</span>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );
