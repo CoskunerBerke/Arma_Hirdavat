@@ -24,7 +24,7 @@ function shouldSkipVideo(): boolean {
  * - LCP posterdir (SceneHero içinde next/image ile, priority). Video ilk boyamayı geciktirmez:
  *   kaynak yalnızca sayfa yüklendikten sonra, tarayıcı boştayken atanır.
  * - Ekran yönüne göre küçük kodlama seçilir (dikey 540p / yatay 1080×608).
- * - Görünür bir duraklat / oynat düğmesi vardır (WCAG 2.2.2). Hero ekrandan çıkınca video durur.
+ * - Düğme yok: video her zaman kendiliğinden oynar (işletme tercihi). Hero ekrandan çıkınca durur, dönünce sürer.
  */
 export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -48,7 +48,7 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
       v.defaultMuted = true;
       v.src = wide ? wideSrc : portraitSrc;
       setActive(true);
-      // Otomatik oynatma engellenirse (ör. iOS düşük güç modu) poster kalır, kullanıcı düğmeyle başlatabilir
+      // Otomatik oynatma engellenirse (ör. iOS düşük güç modu) poster görünür kalır
       v.play().catch(() => setPlaying(false));
     };
 

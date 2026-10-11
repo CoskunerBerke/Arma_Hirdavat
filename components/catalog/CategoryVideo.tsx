@@ -10,8 +10,8 @@ import { CATEGORY_VIDEOS, type CategoryVideo as CategoryVideoEntry } from "@/dat
  * Performans / erişilebilirlik:
  * - Poster hemen görünür; video preload="none" ve src yalnızca kutu ekrana girince eklenir.
  * - Hareket azaltma (prefers-reduced-motion) veya veri tasarrufu (saveData) açıksa kendiliğinden
- *   OYNAMAZ; poster + oynat düğmesi gösterilir, kullanıcı isterse başlatır.
- * - Ekrandan çıkınca durur; kullanıcı durdurduysa geri gelince yeniden başlamaz.
+ *   (artık uygulanmıyor: işletme tercihiyle her zaman otomatik oynar; düğme yok)
+ * - Ekrandan çıkınca durur, geri gelince kendiliğinden devam eder.
  */
 
 
