@@ -21,8 +21,8 @@ const SERVICES = [
     icon: Truck,
     title: "Türkiye geneli sevkiyat",
     text: `${PROMISES.deliveryShort.charAt(0).toUpperCase()}${PROMISES.deliveryShort.slice(1)}. Nakliye koşulları teklifte yazılır.`,
-    href: "/#teslimat",
-    cta: "Teslimat haritası",
+    href: "/#kurumsal-tedarik",
+    cta: "Tedarik standartlarımız",
   },
   {
     icon: Wrench,

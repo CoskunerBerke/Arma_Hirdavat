@@ -55,7 +55,7 @@ export default function StorePopover({ dark = false }: { dark?: boolean }) {
       >
         <Store className={`h-[18px] w-[18px] shrink-0 ${dark ? "text-accent" : "text-brand"}`} aria-hidden />
         <span className="hidden 2xl:inline">Perakende Satış &amp; Mağazamız</span>
-        <span className="hidden sm:inline lg:hidden xl:inline 2xl:hidden">Perakende</span>
+        <span className="hidden sm:inline lg:hidden">Perakende</span>
       </button>
 
       {open && (

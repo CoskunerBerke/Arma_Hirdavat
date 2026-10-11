@@ -63,6 +63,7 @@ function DroneSlide() {
 
       <HeroVideo wideSrc={VIDEO.wide} portraitSrc={VIDEO.portrait} wideMedia={WIDE_MEDIA} />
 
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 bg-gradient-to-b from-slate-950/45 to-transparent" />
       {/* Okunurluk: yalnızca metnin olduğu alt-sol bölge koyulaşır; video aydınlık ve görünür kalır */}
       <div
         aria-hidden
@@ -74,12 +75,12 @@ function DroneSlide() {
       />
 
       <div className={SLIDE_INNER}>
-        <div className="max-w-2xl">
+        <div className="max-w-5xl">
           <h1
             id="hero-baslik"
-            className="text-[1.9rem] font-extrabold leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl [@media(max-height:500px)]:text-[1.7rem]"
+            className="max-w-5xl text-[2rem] font-extrabold leading-[1.1] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-[3.6rem] xl:text-[4rem] [@media(max-height:500px)]:text-[1.7rem]"
           >
-            Türkiye&apos;nin dört bir yanına{" "}
+            Türkiye&apos;nin dört bir yanına hırdavat ve fabrika malzemelerinde{" "}
             <span className="bg-gradient-to-r from-sky-300 via-emerald-200 to-white bg-clip-text text-transparent">
               kurumsal sevk
             </span>

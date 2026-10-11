@@ -5,13 +5,13 @@ import HowItWorks from "@/components/home/HowItWorks";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import ShowcaseVideo from "@/components/home/ShowcaseVideo";
 import ClientLogos from "@/components/ClientLogos";
-import RetailStoreSection from "@/components/RetailStoreSection";
+import PricingLogistics from "@/components/home/PricingLogistics";
 import ReviewsRiver from "@/components/ReviewsRiver";
 import FaqSection from "@/components/FaqSection";
 import CtaBand from "@/components/CtaBand";
 import IntroSection from "@/components/home/IntroSection";
 import ServicesGrid from "@/components/home/ServicesGrid";
-import DeliveryMapSection from "@/components/home/DeliveryMapSection";
+import CatalogsCertificates from "@/components/home/CatalogsCertificates";
 import StatsBand from "@/components/home/StatsBand";
 import GuidesSection from "@/components/home/GuidesSection";
 import { COMPANY } from "@/data/company";
@@ -19,7 +19,7 @@ import { COMPANY } from "@/data/company";
 /*
  * Ana sayfa (kurumsal düzen) — ilgiden "Ücretsiz Teklif Al"a giden sıra:
  * Hero kaydırıcısı → referanslar (#referanslar) → tanıtım metni → hizmetlerimiz (#hizmetler) →
- * 81 ile teslimat haritası (#teslimat) → kategoriler → sayaç bandı → öne çıkan ürünler → ürün videosu →
+ * ürün katalogları ve sertifika belgeleri (#belgeler) → kategoriler → sayaç bandı → öne çıkan ürünler → ürün videosu →
  * nasıl çalışır → mağaza → yorumlar (varsa) → rehberler → SSS → teklif bandı.
  *
  * Kök layout canonical vermez; ana sayfanın canonical'ı burada. OG görseli: public/og/arma-og.png.
@@ -44,10 +44,10 @@ export default function HomePage() {
     <>
       <SceneHero />
       <ClientLogos />
-      <RetailStoreSection />
+      <PricingLogistics />
       <IntroSection />
       <ServicesGrid />
-      <DeliveryMapSection />
+      <CatalogsCertificates />
       <CategoryGrid />
       <StatsBand />
       <FeaturedProducts />

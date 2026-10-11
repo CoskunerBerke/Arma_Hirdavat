@@ -1,51 +1,83 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { COMPANY, HARDWARE_GROUPS, PROMISES } from "@/data/company";
-import { CATEGORY_PAGES } from "@/data/categories";
-import { PRODUCT_GROUPS } from "@/data/products";
+import { ArrowRight, Boxes, Truck } from "lucide-react";
+import { COMPANY } from "@/data/company";
 
 /*
- * Ana sayfa tanıtım metni (sunucu bileşeni) — kurumsal düzendeki sola hizalı giriş yazısı.
- * Sayılar veriden gelir; sevkiyat cümlesi yalnızca PROMISES.delivery'dir. Sayfa H1'ini tekrar etmez.
+ * Ana sayfa tanıtım metni (sunucu bileşeni): firmanın ne sattığını, nasıl paketleyip nereye sevk ettiğini anlatır.
+ * Ürün grupları firmanın kendi ürün grubu listesinden (data/company.ts → HARDWARE_GROUPS) özetlenmiştir.
  */
+const PRODUCT_CHIPS = [
+  "Pompa ve hidrofor sistemleri",
+  "Cıvata, somun ve bağlantı elemanları",
+  "Hortum, vana ve boru ek parçaları",
+  "İş güvenliği malzemeleri",
+  "Kesici ve aşındırıcı taşlar",
+  "El ve elektrikli aletler",
+  "Kaynak makineleri ve sarf malzemeleri",
+  "Endüstriyel kimyasallar ve yapıştırıcılar",
+];
+
+const LINK_CLASS =
+  "inline-flex min-h-[44px] items-center gap-1.5 text-sm font-bold text-navy underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-ink";
+
 export default function IntroSection() {
   return (
     <section aria-labelledby="tanitim-baslik" className="border-b border-line bg-white py-12 sm:py-16">
       <div className="container-x">
         <div className="max-w-4xl">
           <h2 id="tanitim-baslik" className="text-2xl font-extrabold leading-tight tracking-tight text-accent-ink sm:text-3xl">
-            Samsun&apos;da Teknik Hırdavat ve İş Güvenliği Malzemeleri
+            Hırdavat ve Fabrika Malzemelerinde Kurumsal Tedarik
           </h2>
           <span aria-hidden className="mt-4 block h-1 w-16 rounded-full bg-accent" />
           <div className="mt-5 space-y-4 text-base leading-[1.75] text-ink-soft sm:text-[17px]">
             <p>
-              {COMPANY.name}, Samsun Tekkeköy&apos;deki mağazası ve deposundan fabrikalara, şantiyelere ve atölyelere
-              teknik hırdavat ve iş güvenliği malzemesi tedarik eder. Mağazamızda ve tedarik ağımızda bağlantı
-              elemanlarından kaynak ekipmanlarına {HARDWARE_GROUPS.length} ürün grubu bulunur; perakende alım için
-              mağazamıza gelebilirsiniz.
+              {COMPANY.name}; pompa ve hidrofor sistemlerinden cıvata, somun ve bağlantı elemanlarına, hortum ve vanalardan
+              kesici-aşındırıcı taşlara, el ve elektrikli aletlerden iş güvenliği malzemelerine kadar fabrikaların,
+              şantiyelerin ve atölyelerin ihtiyaç duyduğu teknik hırdavat ve fabrika malzemelerini tedarik eder.
             </p>
             <p>
-              Online kataloğumuzda {CATEGORY_PAGES.length} kategoride {PRODUCT_GROUPS.length} FABA kişisel koruyucu
-              donanım ürünü yer alır. İş eldiveni, koruyucu tulum ve önlüklerde koli ve palet bazında toptan teklif
-              veriyoruz. {PROMISES.delivery}
+              Siparişlerinizi <strong className="font-semibold text-ink">koli ve palet</strong> bazında hazırlıyor,
+              <strong className="font-semibold text-ink"> Türkiye&apos;nin dört bir yanına</strong> fabrikalara, şantiyelere ve
+              organize sanayi bölgelerine kurumsal olarak sevk ediyoruz.
             </p>
           </div>
-          <div className="mt-6 flex flex-wrap gap-x-6 gap-y-1">
-            <Link
-              href="/kurumsal"
-              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-bold text-navy underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-ink"
+        </div>
+
+        <ul className="mt-8 flex flex-wrap gap-2.5" aria-label="Tedarik ettiğimiz başlıca ürün grupları">
+          {PRODUCT_CHIPS.map((c) => (
+            <li
+              key={c}
+              className="rounded-full border border-line bg-canvas px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-accent"
             >
-              Hakkımızda
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-            <Link
-              href="/urun-gruplari"
-              className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-bold text-navy underline decoration-accent decoration-2 underline-offset-4 hover:text-accent-ink"
-            >
-              {HARDWARE_GROUPS.length} teknik hırdavat ürün grubu
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-          </div>
+              {c}
+            </li>
+          ))}
+        </ul>
+
+        <ul className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm font-semibold text-navy">
+          <li className="inline-flex items-center gap-2">
+            <Boxes className="h-5 w-5 text-accent-ink" aria-hidden />
+            Koli ve palet bazında sevk
+          </li>
+          <li className="inline-flex items-center gap-2">
+            <Truck className="h-5 w-5 text-accent-ink" aria-hidden />
+            Türkiye&apos;nin dört bir yanına kurumsal sevk
+          </li>
+        </ul>
+
+        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-1">
+          <Link href="/urun-gruplari" className={LINK_CLASS}>
+            Ürün gruplarımız
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+          <Link href="/urunler" className={LINK_CLASS}>
+            İş güvenliği ürünleri
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
+          <Link href="/kurumsal" className={LINK_CLASS}>
+            Hakkımızda
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </Link>
         </div>
       </div>
     </section>

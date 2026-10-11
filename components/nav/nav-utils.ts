@@ -55,7 +55,7 @@ export function buildMainMenu(categories: NavCategory[], totalProducts: number):
       children: [
         { label: "Hizmetlerimiz", href: "/#hizmetler" },
         { label: "Toptan satış (koli & palet)", href: PRODUCTS_HREF },
-        { label: "81 ile teslimat", href: "/#teslimat" },
+        { label: "Kurumsal tedarik standartları", href: "/#kurumsal-tedarik" },
         { label: "Teknik hırdavat tedariki", href: "/urun-gruplari" },
         { label: "Ürün belgeleri ve katalog", href: "/katalog" },
       ],

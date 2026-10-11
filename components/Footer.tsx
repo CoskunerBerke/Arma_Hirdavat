@@ -36,7 +36,7 @@ const CORPORATE_LINKS = [
   { href: "/kurumsal", label: "Hakkımızda" },
   { href: "/#referanslar", label: "Referanslarımız" },
   { href: "/#hizmetler", label: "Hizmetlerimiz" },
-  { href: "/#teslimat", label: "81 ile teslimat" },
+  { href: "/#kurumsal-tedarik", label: "Kurumsal tedarik standartları" },
   { href: "/markalar", label: "Markalar" },
   { href: "/katalog", label: "Katalog" },
   { href: "/#sss", label: "Sıkça Sorulan Sorular" },
