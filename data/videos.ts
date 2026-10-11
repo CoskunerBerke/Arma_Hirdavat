@@ -35,3 +35,17 @@ export const CATEGORY_VIDEOS: Record<string, CategoryVideo> = {
   "onluk-laboratuvar-onlugu": video("onluk-laboratuvar-onlugu", 10.8),
   "kolluk-galos-baslik": video("kolluk-galos-baslik", 13.2),
 };
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * ÜRÜN TANITIM VİDEOLARI — /videos/urun/<ürün id>.mp4
+ * Kategori videolarıyla aynı stil; tek ürün fotoğrafı iki farklı kamera hareketiyle (7,2 sn döngü).
+ * Yeni ürün eklenince videosu üretilip id buraya eklenmelidir; listede olmayan üründe video gösterilmez.
+ * ──────────────────────────────────────────────────────────────────────────── */
+const PRODUCT_VIDEO_IDS = Array.from({ length: 39 }, (_, i) => i + 1);
+
+export const PRODUCT_VIDEOS: Record<number, CategoryVideo> = Object.fromEntries(
+  PRODUCT_VIDEO_IDS.map((id) => [
+    id,
+    { src: `/videos/urun/${id}.mp4`, poster: `/videos/urun/${id}.jpg`, width: 1280, height: 720, durationSec: 7.2 },
+  ])
+);

@@ -194,12 +194,27 @@
  * (WCAG 2.2.2); hareket azaltma tercihinde hiç hareket etmez.
  */
 .river-track {
-  animation: river 32s linear infinite;
+  animation: river var(--river-duration, 32s) linear infinite;
   will-change: transform;
 }
 .river-track:hover,
 .river-track:focus-within {
   animation-play-state: paused;
+}
+
+/* Ürün kartı görselleri: yavaş, sürekli yakınlaşma (Ken Burns) */
+@keyframes kenburns {
+  0%,
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.07) translate3d(-1.5%, -1%, 0);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 9s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Hareket azaltma tercihi: animasyon ve geçişler kapatılır, içerik hemen görünür */
@@ -215,13 +230,22 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .river-track,
   .animate-ping,
   .animate-pulse,
   .animate-bounce,
   .animate-in,
   .animate-out {
     animation: none !important;
+  }
+  /* İşletme tercihi: yorum nehri ve ürün kartı animasyonu her cihazda sürer (nehirde durdur düğmesi var) */
+  /* Yalnızca süre/tekrar geri alınır; animation-play-state serbest kalır (durdur düğmesi ve hover çalışır) */
+  .river-track {
+    animation-duration: var(--river-duration, 32s) !important;
+    animation-iteration-count: infinite !important;
+  }
+  .animate-kenburns {
+    animation-duration: 9s !important;
+    animation-iteration-count: infinite !important;
   }
   /* Yükleniyor göstergesi işlevseldir; dönmeye devam eder */
   .animate-spin {

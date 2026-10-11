@@ -103,18 +103,18 @@ export default function ReviewsRiver() {
 
       {/* Kayan şerit — iki özdeş yarım: animasyon %50 kaydırınca kesintisiz döner */}
       <div
-        className="relative mt-8 overflow-hidden motion-reduce:overflow-x-auto [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+        className="relative mt-8 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
         role="region"
         aria-label="Google yorumları"
       >
         <div
           className="river-track flex w-max"
-          style={{ animationDuration: `${duration}s`, animationPlayState: paused ? "paused" : undefined }}
+          style={{ ["--river-duration" as string]: `${duration}s`, animationPlayState: paused ? "paused" : undefined } as React.CSSProperties}
         >
           {[0, 1].map((copy) => (
             <ul
               key={copy}
-              className={`flex gap-4 pr-4 ${copy === 1 ? "motion-reduce:hidden" : ""}`}
+              className="flex gap-4 pr-4"
               aria-hidden={copy === 1 ? true : undefined}
             >
               {REVIEWS.map((r) => (
@@ -133,7 +133,7 @@ export default function ReviewsRiver() {
           type="button"
           onClick={() => setPaused((p) => !p)}
           aria-pressed={paused}
-          className="inline-flex min-h-[44px] items-center gap-2 rounded-lg px-3 text-xs font-semibold text-ink-soft hover:text-brand motion-reduce:hidden"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-lg px-3 text-xs font-semibold text-ink-soft hover:text-brand"
         >
           {paused ? <Play className="h-4 w-4" aria-hidden /> : <Pause className="h-4 w-4" aria-hidden />}
           {paused ? "Akışı başlat" : "Akışı durdur"}

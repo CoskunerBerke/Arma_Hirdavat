@@ -72,7 +72,6 @@ export default function ShowcaseVideo() {
                 title={`FABA ${p.code}`}
                 subtitle="Köpük nitril kaplı iş eldiveni"
                 standard={standard || undefined}
-                disclosure="Temsilî ürün tanıtım videosu"
               />
             </div>
           </div>

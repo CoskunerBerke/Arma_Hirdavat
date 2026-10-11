@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Info, Pause, Play, ShieldCheck } from "lucide-react";
+import { Pause, Play, ShieldCheck } from "lucide-react";
 
 /*
  * Ürün tanıtım videosu — YAPAY ZEKÂ İLE ÜRETİLMİŞ TEMSİLÎ bir klip (eldivenli el metal parçayı kavrıyor).
@@ -25,19 +25,14 @@ interface ProductActionVideoProps {
   subtitle?: string;
   /** Ürünün kendi standart bilgisi (ör. p.standards[0]); verilmezse gösterilmez */
   standard?: string;
-  /** Dürüstlük notu; varsayılan "Temsilî ürün tanıtım videosu" */
+  /** Video altı küçük not (boşsa gösterilmez) */
   disclosure?: string;
 }
 
-type NetworkInfo = { saveData?: boolean; effectiveType?: string };
 
 function autoplayAllowed(): boolean {
-  if (typeof window === "undefined") return false;
-  if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return false;
-  const conn = (navigator as Navigator & { connection?: NetworkInfo }).connection;
-  if (conn?.saveData) return false;
-  if (conn?.effectiveType && /2g$/.test(conn.effectiveType)) return false;
-  return true;
+  // İşletme tercihi: ekrana gelince her zaman otomatik ve döngüde oynar.
+  return typeof window !== "undefined";
 }
 
 export default function ProductActionVideo({
@@ -46,7 +41,7 @@ export default function ProductActionVideo({
   title = "Eldivenle metal parça kavrama",
   subtitle,
   standard,
-  disclosure = "Temsilî ürün tanıtım videosu",
+  disclosure = "",
 }: ProductActionVideoProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -126,11 +121,6 @@ export default function ProductActionVideo({
           onPause={() => setPlaying(false)}
         />
 
-        <span className="absolute left-3 top-3 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-slate-950/75 px-2.5 py-1 text-[11px] font-semibold text-white backdrop-blur-md">
-          <Info className="h-3.5 w-3.5" aria-hidden />
-          Temsilî video
-        </span>
-
         <button
           type="button"
           onClick={toggle}
@@ -148,7 +138,7 @@ export default function ProductActionVideo({
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-300" aria-hidden /> {standard}
             </p>
           )}
-          <p className="mt-2 border-t border-white/10 pt-2 text-[11px] text-slate-400">{disclosure}</p>
+          {disclosure && <p className="mt-2 border-t border-white/10 pt-2 text-[11px] text-slate-400">{disclosure}</p>}
         </figcaption>
       </div>
     </figure>

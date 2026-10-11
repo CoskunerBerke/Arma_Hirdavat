@@ -5,6 +5,8 @@ import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, BookOpen, FileText, Ruler } from "lucide-react";
 import ProductActionVideo from "@/components/ProductActionVideo";
+import CategoryVideo from "@/components/catalog/CategoryVideo";
+import { PRODUCT_VIDEOS } from "@/data/videos";
 import ProductCard from "@/components/ProductCard";
 import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
@@ -56,7 +58,7 @@ export function generateStaticParams() {
 /** Ürün fotoğrafları 800×800 px (public/images/products/faba_<id>.jpg). */
 const IMAGE_SIZE = 800;
 
-/** Temsilî eldiven tanıtım videosu yalnızca nitril / köpük nitril kaplı eldiven sayfalarında gösterilir. */
+/** Eldiven tanıtım videosu yalnızca nitril / köpük nitril kaplı eldiven sayfalarında gösterilir. */
 const VIDEO_CATEGORIES: readonly CategoryName[] = ["Nitril Kaplı İş Eldivenleri", "Köpük Nitril Eldivenler"];
 
 /** İlgili ürün ızgarası: mobil 2, lg 4 sütun. */
@@ -297,6 +299,15 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                   <p className="mt-2 text-xs text-ink-muted">
                     Kaynak: üretici kataloğundaki önerilen kullanım alanları.
                   </p>
+                </section>
+              )}
+
+              {PRODUCT_VIDEOS[p.id] && (
+                <section aria-labelledby="urun-tanitimi" className="surface p-5 sm:p-6">
+                  <h2 id="urun-tanitimi" className="text-base font-bold text-ink">
+                    Ürün tanıtımı
+                  </h2>
+                  <CategoryVideo slug={`urun-${p.id}`} title={p.title} video={PRODUCT_VIDEOS[p.id]} className="mt-4" />
                 </section>
               )}
 

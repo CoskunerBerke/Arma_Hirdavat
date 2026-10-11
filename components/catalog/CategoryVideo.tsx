@@ -15,15 +15,10 @@ import { CATEGORY_VIDEOS, type CategoryVideo as CategoryVideoEntry } from "@/dat
  * - Ekrandan çıkınca durur; kullanıcı durdurduysa geri gelince yeniden başlamaz.
  */
 
-type NetworkInfo = { saveData?: boolean };
 
 function autoplayAllowed(): boolean {
-  if (typeof window === "undefined") return false;
-  if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return false;
-  }
-  const conn = (navigator as Navigator & { connection?: NetworkInfo }).connection;
-  return !conn?.saveData;
+  // İşletme tercihi: ekrana gelince her zaman otomatik ve döngüde oynar.
+  return typeof window !== "undefined";
 }
 
 function attachSource(v: HTMLVideoElement, src: string): void {
@@ -39,10 +34,12 @@ interface CategoryVideoProps {
   /** Altyazıda gösterilecek başlık (ör. kategori adı) */
   title: string;
   className?: string;
+  /** Kategori dışı video (ör. ürün videosu, data/videos.ts → PRODUCT_VIDEOS) */
+  video?: CategoryVideoEntry;
 }
 
-export default function CategoryVideo({ slug, title, className = "" }: CategoryVideoProps) {
-  const entry = CATEGORY_VIDEOS[slug];
+export default function CategoryVideo({ slug, title, className = "", video }: CategoryVideoProps) {
+  const entry = video ?? CATEGORY_VIDEOS[slug];
   if (!entry) return null;
   // key: slug değişirse oynatıcı durumu sıfırlanır
   return <CategoryVideoPlayer key={slug} entry={entry} title={title} className={className} />;

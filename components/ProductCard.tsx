@@ -38,7 +38,8 @@ export default function ProductCard({ product, priority = false, sizes = DEFAULT
           alt={product.title}
           fill
           sizes={sizes}
-          className="object-contain p-2 transition-transform duration-500 group-hover:scale-105 motion-reduce:transform-none sm:p-3"
+          className="animate-kenburns object-contain p-2 sm:p-3"
+          style={{ animationDelay: `-${(product.id * 1.7) % 9}s` }}
           priority={priority}
         />
         {(featured || badge) && (

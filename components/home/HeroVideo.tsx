@@ -14,18 +14,10 @@ interface HeroVideoProps {
   children?: ReactNode;
 }
 
-type NetworkInfo = { saveData?: boolean; effectiveType?: string };
 
-/** Hareket azaltma, veri tasarrufu veya 2G bağlantıda video hiç indirilmez; poster kalır. */
 function shouldSkipVideo(): boolean {
-  if (typeof window === "undefined") return true;
-  if (typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    return true;
-  }
-  const conn = (navigator as Navigator & { connection?: NetworkInfo }).connection;
-  if (conn?.saveData) return true;
-  if (conn?.effectiveType && /2g$/.test(conn.effectiveType)) return true; // "2g" | "slow-2g"
-  return false;
+  // İşletme tercihi: video her cihazda otomatik ve sürekli oynar (sessiz, döngü). Yalnızca SSR'da atlanır.
+  return typeof window === "undefined";
 }
 
 /**

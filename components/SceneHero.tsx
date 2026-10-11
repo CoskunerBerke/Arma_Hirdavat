@@ -54,11 +54,7 @@ export default function SceneHero() {
         <img {...portraitImg} alt="" className="-z-30 object-cover object-center" />
       </picture>
 
-      <HeroVideo wideSrc={VIDEO.wide} portraitSrc={VIDEO.portrait} wideMedia={WIDE_MEDIA}>
-        <span className="rounded-full bg-slate-950/60 px-2.5 py-1 text-[11px] font-medium text-slate-200 backdrop-blur-md">
-          Temsilî görüntü
-        </span>
-      </HeroVideo>
+      <HeroVideo wideSrc={VIDEO.wide} portraitSrc={VIDEO.portrait} wideMedia={WIDE_MEDIA} />
 
       {/* Okunurluk için degrade katmanları */}
       <div
