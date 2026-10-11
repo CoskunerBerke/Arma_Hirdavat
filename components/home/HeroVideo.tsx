@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { Pause, Play } from "lucide-react";
 
 interface HeroVideoProps {
   /** Yatay (masaüstü) kırpım */
@@ -90,17 +89,6 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
     return () => io.disconnect();
   }, [active]);
 
-  const toggle = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      userPausedRef.current = false;
-      v.play().catch(() => undefined);
-    } else {
-      userPausedRef.current = true;
-      v.pause();
-    }
-  };
 
   return (
     <>
@@ -125,16 +113,6 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
 
       <div className="absolute right-3 top-3 z-10 flex items-center gap-2 sm:right-6 sm:top-5">
         {children}
-        {active && (
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={playing ? "Arka plan videosunu duraklat" : "Arka plan videosunu oynat"}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-slate-950/60 text-white backdrop-blur-md transition hover:bg-slate-900/80"
-          >
-            {playing ? <Pause className="h-4 w-4" aria-hidden /> : <Play className="ml-0.5 h-4 w-4" aria-hidden />}
-          </button>
-        )}
       </div>
     </>
   );

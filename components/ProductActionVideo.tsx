@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Pause, Play, ShieldCheck } from "lucide-react";
+import { ShieldCheck } from "lucide-react";
 
 /*
  * Ürün tanıtım videosu — YAPAY ZEKÂ İLE ÜRETİLMİŞ TEMSİLÎ bir klip (eldivenli el metal parçayı kavrıyor).
@@ -83,17 +83,6 @@ export default function ProductActionVideo({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const toggle = () => {
-    const v = load();
-    if (!v) return;
-    if (v.paused) {
-      userPausedRef.current = false;
-      v.play().catch(() => undefined);
-    } else {
-      userPausedRef.current = true;
-      v.pause();
-    }
-  };
 
   return (
     <figure
@@ -121,14 +110,6 @@ export default function ProductActionVideo({
           onPause={() => setPlaying(false)}
         />
 
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label={playing ? "Videoyu duraklat" : "Videoyu oynat"}
-          className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-slate-950/70 text-white backdrop-blur-md transition hover:bg-slate-900"
-        >
-          {playing ? <Pause className="h-4 w-4" aria-hidden /> : <Play className="ml-0.5 h-4 w-4" aria-hidden />}
-        </button>
 
         <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-slate-950 via-slate-950/75 to-transparent p-4 pt-10 sm:p-5 sm:pt-12">
           <p className="text-sm font-bold leading-tight text-white sm:text-base">{title}</p>

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 import { CATEGORY_VIDEOS, type CategoryVideo as CategoryVideoEntry } from "@/data/videos";
 
 /*
@@ -83,18 +82,6 @@ function CategoryVideoPlayer({
     return () => io.disconnect();
   }, [src]);
 
-  const toggle = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    if (v.paused) {
-      userPausedRef.current = false;
-      attachSource(v, src);
-      v.play().catch(() => undefined);
-    } else {
-      userPausedRef.current = true;
-      v.pause();
-    }
-  };
 
   return (
     <figure ref={figRef} className={`m-0 ${className}`}>
@@ -131,14 +118,6 @@ function CategoryVideoPlayer({
             setPlaying(false);
           }}
         />
-        <button
-          type="button"
-          onClick={toggle}
-          aria-label={playing ? "Videoyu durdur" : "Videoyu oynat"}
-          className="absolute left-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-slate-950/70 text-white backdrop-blur-md transition-colors hover:bg-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-        >
-          {playing ? <Pause className="h-4 w-4" aria-hidden /> : <Play className="ml-0.5 h-4 w-4" aria-hidden />}
-        </button>
       </div>
       <figcaption className="mt-2 text-sm leading-snug text-ink-muted">
         <span className="font-semibold text-ink-soft">Ürün tanıtım videosu</span>
