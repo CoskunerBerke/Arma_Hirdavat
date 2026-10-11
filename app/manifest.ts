@@ -3,10 +3,10 @@ import { COMPANY } from "@/data/company";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: `${COMPANY.name} – endüstriyel tedarik ve teknik hırdavat`,
+    name: `${COMPANY.name} – Samsun teknik hırdavat ve iş güvenliği`,
     short_name: COMPANY.name,
     description:
-      "Fabrikalar ve sanayi tesisleri için teknik hırdavat, endüstriyel sarf ve iş güvenliği ürünlerinde koli ve palet bazında kurumsal tedarik.",
+      "FABA iş eldiveni, koruyucu tulum ve KKD ürünlerinde koli bazında toptan teklif. Tekkeköy / Samsun'da teknik hırdavat mağazası.",
     start_url: "/",
     scope: "/",
     display: "browser",

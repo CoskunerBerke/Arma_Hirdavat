@@ -8,7 +8,7 @@
 
 import React, { useEffect, useId, useMemo, useRef, useState } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
-import { CTA } from "@/data/company";
+import { CTA, HOURS_TEXT } from "@/data/company";
 import {
   LEAD_LIMITS,
   LEAD_MIN_FILL_MS,
@@ -194,7 +194,7 @@ export default function ContactForm() {
             </h3>
             <p className="mt-1 text-sm leading-relaxed text-ink-soft">
               Yanıtımızı <strong className="break-all font-semibold text-ink">{success.email}</strong> adresine
-              göndereceğiz.
+              göndereceğiz. Çalışma saatlerimiz: {HOURS_TEXT}.
             </p>
             <p className="mt-2 text-sm text-ink-soft">
               Referans numaranız: <strong className="font-mono text-ink">{success.id}</strong>

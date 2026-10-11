@@ -7,7 +7,8 @@ import CustomRequest from "@/components/catalog/CustomRequest";
 import PromiseChips from "@/components/catalog/PromiseChips";
 import { DEFAULT_OG_IMAGE, OG_BASE } from "@/components/catalog/seo";
 import { CATEGORY_PAGES } from "@/data/categories";
-import { getProductsByCategory, parseKoli } from "@/data/products";
+import { HARDWARE_GROUPS } from "@/data/company";
+import { PRODUCT_GROUPS, getProductsByCategory, parseKoli } from "@/data/products";
 
 const TITLE = "FABA İş Eldiveni ve Koruyucu Tulum Ürünleri";
 const DESCRIPTION =
@@ -37,12 +38,14 @@ function koliRange(name: (typeof CATEGORY_PAGES)[number]["name"]): string | null
 }
 
 export default function ProductsPage() {
+  const total = PRODUCT_GROUPS.length;
+
   return (
     <>
       <PageHero
-        eyebrow="İş güvenliği · FABA"
+        eyebrow={`FABA KKD kataloğu · ${total} ürün`}
         title={TITLE}
-        description="FABA kişisel koruyucu donanım ürünleri: iş eldivenleri, kimyasal koruyucu ve tek kullanımlık tulumlar, önlük, kolluk ve galoşlar. Her ürün sayfasında EN standart kodu, bedenler ve koli içi adet yazılıdır; siparişler koli ve palet bazında kurumsal teklifle verilir."
+        description={`Online kataloğumuzda ${CATEGORY_PAGES.length} kategoride ${total} FABA kişisel koruyucu donanım ürünü var. Her ürün sayfasında EN standart kodu, bedenler ve koli içi adet yazılıdır; siparişler koli ve palet bazında teklifle verilir.`}
         crumbs={[{ label: "Ürünler", href: "/urunler" }]}
         label="Ürünlerimiz"
       >
@@ -98,16 +101,16 @@ export default function ProductsPage() {
                 Aradığınızı bulamadınız mı?
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
-                Bu sayfada FABA iş güvenliği ürünleri listelenir. Tedarik ağımızda bağlantı elemanlarından el aletlerine,
-                kaynak ekipmanından hortum, pompa ve vanalara kadar fabrikanızın ihtiyaç duyduğu endüstriyel malzemeler de
-                bulunur.
+                Online katalogda yalnızca FABA iş güvenliği ürünleri listelenir. Tekkeköy&apos;deki mağazamızda ve tedarik
+                ağımızda bağlantı elemanlarından el aletlerine, kaynak ekipmanından hortum ve vanalara kadar{" "}
+                {HARDWARE_GROUPS.length} teknik hırdavat ürün grubu daha bulunur.
               </p>
               <Link
                 href="/urun-gruplari"
                 className="mt-4 inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand hover:underline"
               >
                 <Wrench className="h-4 w-4" aria-hidden />
-                Endüstriyel malzeme ürün gruplarını görün
+                {HARDWARE_GROUPS.length} teknik hırdavat ürün grubunu görün
               </Link>
             </div>
             <div className="rounded-2xl border border-line bg-white p-4 sm:p-5">

@@ -14,9 +14,9 @@ export default function ProductRfqBox({ product }: { product: ProductGroup }) {
   const hasSizeChoice = splitSizes(product.sizes).length > 1;
   return (
     <section id="teklif-kutusu" aria-labelledby={headingId} className="surface scroll-mt-24 p-5 sm:p-6">
-      <p className="eyebrow">Kurumsal teklif</p>
+      <p className="eyebrow">Toptan teklif</p>
       <h2 id={headingId} className="mt-1 text-lg font-bold leading-snug text-ink">
-        Bu ürün için kurumsal teklif alın
+        Bu ürün için ücretsiz teklif alın
       </h2>
       <p className="mt-1 text-sm leading-relaxed text-ink-soft">
         {hasSizeChoice ? "Beden ve koli adedini" : "Koli adedini"} seçip listenize ekleyin. Fiyatı miktar ve teslimat

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight, Mail, Package, Search } from "lucide-react";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
-import { COMPANY, CTA, PROMISES, mailtoHref } from "@/data/company";
+import { COMPANY, CTA, HOURS_SHORT, PROMISES, mailtoHref } from "@/data/company";
 
 export const metadata: Metadata = {
   title: "Sayfa bulunamadı",
@@ -80,6 +80,7 @@ export default function NotFound() {
           <Mail className="h-4 w-4 text-brand" aria-hidden />
           {COMPANY.email}
         </a>
+        <span className="text-ink-muted">{HOURS_SHORT}</span>
       </div>
     </section>
   );

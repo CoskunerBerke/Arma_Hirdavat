@@ -38,8 +38,6 @@ export const EVENTS = {
   catalogDownload: "catalog_download",
   /** Ürün araması yapıldı (props.results) */
   search: "search",
-  /** Üst şeritteki fiziki mağaza kartı açıldı */
-  storeInfoOpen: "store_info_open",
 } as const;
 
 export type TrackEvent = (typeof EVENTS)[keyof typeof EVENTS] | (string & {});

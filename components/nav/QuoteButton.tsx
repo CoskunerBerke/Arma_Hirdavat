@@ -3,10 +3,11 @@
 import { ClipboardList } from "lucide-react";
 import { CTA } from "@/data/company";
 import { useQuote } from "@/components/QuoteContext";
+import { splitLeadWord } from "./nav-utils";
 
 interface QuoteButtonProps {
   /**
-   * "header": dar ekranda kısa etiket (CTA.primaryShort), sm ve üzerinde tam etiket.
+   * "header": dar ekranda kısa etiket ("Teklif Al" / "Teklif 3"), sm ve üzerinde tam etiket.
    * "block": her ekranda tam etiket, tam genişlik (mobil menü).
    */
   variant?: "header" | "block";
@@ -18,11 +19,14 @@ interface QuoteButtonProps {
 }
 
 /**
- * Sitenin birincil eylemi. Liste boşken CTA.primary, listede ürün varken CTA.openList + adet rozeti gösterir.
+ * Sitenin birincil eylemi. Liste boşken CTA.primary ("Ücretsiz Teklif Al"),
+ * listede ürün varken CTA.openList + adet gösterir.
  */
 export default function QuoteButton({ variant = "header", className = "", onBeforeOpen, source = "header" }: QuoteButtonProps) {
   const { items, openModal } = useQuote();
   const count = items.length;
+  const split = splitLeadWord(CTA.primary);
+  const shortList = CTA.openList.split(" ")[0] || CTA.openList;
 
   const label = count > 0 ? `${CTA.openList} (${count} ürün)` : CTA.primary;
 
@@ -64,16 +68,19 @@ export default function QuoteButton({ variant = "header", className = "", onBefo
       <ClipboardList className="h-4 w-4 shrink-0" aria-hidden />
       {count > 0 ? (
         <>
-          <span>{CTA.openList}</span>
-          <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white px-1.5 text-xs font-black text-action-active">
+          <span className="sm:hidden">{shortList}</span>
+          <span className="hidden sm:inline">{CTA.openList}</span>
+          <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-white px-1.5 text-[11px] font-black text-action-active">
             {count}
           </span>
         </>
+      ) : split ? (
+        <span>
+          <span className="hidden sm:inline">{split[0]} </span>
+          {split[1]}
+        </span>
       ) : (
-        <>
-          <span className="sm:hidden">{CTA.primaryShort}</span>
-          <span className="hidden sm:inline">{CTA.primary}</span>
-        </>
+        <span>{CTA.primary}</span>
       )}
     </button>
   );

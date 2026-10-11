@@ -1,6 +1,6 @@
 import { ArrowRight, ClipboardList, ListChecks, Mail, Truck } from "lucide-react";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
-import { CTA, PROMISES } from "@/data/company";
+import { CTA, HOURS_SHORT, PROMISES } from "@/data/company";
 import { formatKoliTotal, getProductById } from "@/data/products";
 
 /*
@@ -23,7 +23,7 @@ export default function HowItWorks() {
       icon: Mail,
       title: "Teklifiniz e-postanıza gelsin",
       text: "Birim fiyat, toplam tutar, tahmini teslim süresi ve nakliye koşullarını içeren yazılı teklifi e-postanıza gönderiyoruz.",
-      note: PROMISES.quoteShort,
+      note: `${PROMISES.quoteShort} (mesai: ${HOURS_SHORT})`,
     },
     {
       icon: Truck,
@@ -39,7 +39,7 @@ export default function HowItWorks() {
         <div className="max-w-2xl">
           <p className="eyebrow">Nasıl çalışır?</p>
           <h2 id="nasil-calisir-baslik" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl lg:text-4xl">
-            Üç adımda kurumsal fiyat teklifi
+            Üç adımda toptan fiyat teklifi
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
             Teklif almak ücretsizdir ve sizi bağlamaz. Listenizi gönderirsiniz, fiyatı görüp sonra karar verirsiniz.

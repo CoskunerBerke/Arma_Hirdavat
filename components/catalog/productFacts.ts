@@ -305,9 +305,9 @@ export function productMetaDescription(p: ProductGroup): string {
     sentence(p.title),
   ].filter(Boolean);
   const ctas = [
-    "Koli ve palet bazında kurumsal teklif alın.",
-    "Koli bazında kurumsal teklif alın.",
-    "Kurumsal teklif alın.",
+    "Samsun'dan koli bazında toptan teklif alın.",
+    "Koli bazında toptan teklif alın.",
+    "Toptan teklif alın.",
   ];
 
   const all: string[] = [];

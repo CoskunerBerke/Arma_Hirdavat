@@ -1,8 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  CalendarDays,
   ChevronRight,
   Clock,
+  CreditCard,
+  ExternalLink,
   Mail,
   MapPin,
   MessageCircle,
@@ -13,7 +16,7 @@ import {
 import {
   COMPANY,
   CONTACT_NUMBERS_VERIFIED,
-  FEATURED_HARDWARE_GROUPS,
+  HARDWARE_GROUPS,
   HOURS_TEXT,
   PROMISES,
   VISIBLE_PHONES,
@@ -21,9 +24,10 @@ import {
   whatsappHref,
 } from "@/data/company";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
-import { slugify } from "@/data/slug";
+import { GUIDES, guideHref } from "@/data/guides";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
 import FooterSkyline from "@/components/FooterSkyline";
+import { formatTrDate } from "@/components/guides/jsonld";
 
 /** Derleme (sunucu) anında hesaplanır. */
 const YEAR = new Date().getFullYear();
@@ -32,11 +36,9 @@ const CORPORATE_LINKS = [
   { href: "/kurumsal", label: "Hakkımızda" },
   { href: "/#referanslar", label: "Referanslarımız" },
   { href: "/#hizmetler", label: "Hizmetlerimiz" },
-  { href: "/#kurumsal-tedarik", label: "Kurumsal tedarik ve sevkiyat" },
-  { href: "/#fiziki-magaza", label: "Fiziki mağaza & perakende" },
-  { href: "/markalar", label: "Markalarımız" },
-  { href: "/katalog", label: "E-Kataloglar" },
-  { href: "/rehber", label: "Rehberler" },
+  { href: "/#teslimat", label: "81 ile teslimat" },
+  { href: "/markalar", label: "Markalar" },
+  { href: "/katalog", label: "Katalog" },
   { href: "/#sss", label: "Sıkça Sorulan Sorular" },
   { href: "/iletisim", label: "İletişim" },
 ] as const;
@@ -56,12 +58,12 @@ function Bar() {
 
 /**
  * Alt bilgi (kurumsal düzen): üstte sanayi silueti, koyu lacivert zemin;
- * sütunlar: logo + iletişim · Kurumsal · Endüstriyel Malzemeler · İş Güvenliği (FABA) — iki ürün sütunu eşit ağırlıkta;
- * altta KVKK ve telif satırı. Çalışma saatleri burada gösterilir (üst şeritte gösterilmez).
+ * sütunlar: logo + iletişim · Kurumsal · Ürünler · Rehberler; altta KVKK ve telif satırı.
  * İletişim verisi yalnızca data/company.ts'ten (telefon yalnızca doğrulanınca görünür).
  */
 export default function Footer() {
   const whatsapp = whatsappHref();
+  const guides = [...GUIDES].sort((a, b) => b.dateModified.localeCompare(a.dateModified)).slice(0, 4);
 
   return (
     <footer className="text-slate-300">
@@ -90,7 +92,7 @@ export default function Footer() {
                     className="mt-1 inline-flex min-h-[40px] items-center gap-1.5 font-semibold text-accent hover:text-white sm:min-h-[32px]"
                   >
                     <Navigation className="h-3.5 w-3.5" aria-hidden />
-                    Google Haritalar&apos;da yol tarifi al
+                    Yol tarifi al
                     {NEW_TAB}
                   </a>
                 </div>
@@ -103,10 +105,7 @@ export default function Footer() {
               </p>
               <p className="flex gap-2.5">
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden />
-                <span>
-                  {HOURS_TEXT}
-                  <span className="block text-xs text-slate-400">Pazar kapalı</span>
-                </span>
+                <span>{HOURS_TEXT}</span>
               </p>
               {VISIBLE_PHONES.length > 0 && (
                 <p className="flex gap-2.5">
@@ -165,33 +164,10 @@ export default function Footer() {
             </ul>
           </nav>
 
-          {/* Ürün grupları: endüstriyel malzemeler ve FABA iş güvenliği eşit ağırlıkta */}
-          <nav aria-labelledby="footer-endustriyel" className="lg:col-span-3">
-            <h2 id="footer-endustriyel" className={headingClass}>
-              Endüstriyel Malzemeler
-            </h2>
-            <Bar />
-            <ul className="mt-3 space-y-0.5 text-sm">
-              {FEATURED_HARDWARE_GROUPS.slice(0, 8).map((g) => (
-                <li key={g.group}>
-                  <Link href={`/urun-gruplari#${slugify(g.group)}`} className={linkClass}>
-                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                    {g.label}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/urun-gruplari" className={strongLinkClass}>
-                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                  Tüm ürün grupları
-                </Link>
-              </li>
-            </ul>
-          </nav>
-
+          {/* Ürünler: 8 kategori */}
           <nav aria-labelledby="footer-urunler" className="lg:col-span-3">
             <h2 id="footer-urunler" className={headingClass}>
-              İş Güvenliği · FABA
+              Ürünler
             </h2>
             <Bar />
             <ul className="mt-3 space-y-0.5 text-sm">
@@ -206,7 +182,40 @@ export default function Footer() {
               <li>
                 <Link href="/urunler" className={strongLinkClass}>
                   <ChevronRight className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                  Tüm FABA ürünleri
+                  Tüm ürünler
+                </Link>
+              </li>
+              <li>
+                <Link href="/urun-gruplari" className={strongLinkClass}>
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                  Teknik hırdavat ({HARDWARE_GROUPS.length} grup)
+                </Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Rehberler (tarihli) */}
+          <nav aria-labelledby="footer-rehberler" className="lg:col-span-3">
+            <h2 id="footer-rehberler" className={headingClass}>
+              Rehberler
+            </h2>
+            <Bar />
+            <ul className="mt-3 space-y-2 text-sm">
+              {guides.map((g) => (
+                <li key={g.slug}>
+                  <Link href={guideHref(g.slug)} className="block py-1 text-slate-300 transition-colors hover:text-accent">
+                    <span className="block font-medium leading-snug">{g.h1}</span>
+                    <span className="mt-0.5 inline-flex items-center gap-1 text-xs text-slate-400">
+                      <CalendarDays className="h-3 w-3 shrink-0" aria-hidden />
+                      <time dateTime={g.dateModified}>{formatTrDate(g.dateModified)}</time>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/rehber" className={strongLinkClass}>
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
+                  Tüm rehberler
                 </Link>
               </li>
             </ul>

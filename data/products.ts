@@ -1,5 +1,4 @@
 import { LEGACY_SLUGS, LEGACY_SLUGS_EXTRA } from "./legacy-slugs";
-import { slugify } from "./slug";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * ÜRÜN VERİSİ — TEK KAYNAK (online katalog: 39 FABA KKD ürünü, 8 kategori)
@@ -64,8 +63,19 @@ export const CATEGORIES: CategoryName[] = [
   "Kolluk, Galoş ve Başlık",
 ];
 
-/** URL parçası üretici (data/slug.ts; istemci bileşenleri ürün verisini almadan oradan kullanır). */
-export { slugify };
+/** Türkçe karakterleri ASCII'ye çevirip URL uyumlu, küçük harfli, tireli metin üretir. */
+export function slugify(input: string): string {
+  const map: Record<string, string> = {
+    ç: "c", Ç: "c", ğ: "g", Ğ: "g", ı: "i", I: "i", İ: "i", ö: "o", Ö: "o", ş: "s", Ş: "s", ü: "u", Ü: "u",
+  };
+  return input
+    .split("")
+    .map((ch) => map[ch] ?? ch)
+    .join("")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
 
 type Raw = Omit<ProductGroup, "slug" | "image">;
 
@@ -75,7 +85,7 @@ const RAW: Raw[] = [
     "code": "EP-1301",
     "title": "FABA EP-1301 Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1301 Nitril Kaplı İş Eldiveni (EN 388 3121A)",
-    "metaDescription": "FABA EP-1301 nitril kaplı iş eldiveni: polyester örme astar, yağ ve grese dayanıklı. EN 388 3121A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1301 nitril kaplı iş eldiveni: polyester örme astar, yağ ve grese dayanıklı. EN 388 3121A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Eli terletmeyen polyester örme astar; avuç içi ve parmaklarda mavi nitril kaplama. Yağ ve grese dayanıklıdır, EN 388 3121A sınıfındadır.",
     "koli": "252 Çift",
@@ -103,7 +113,7 @@ const RAW: Raw[] = [
     "code": "EP-1302",
     "title": "FABA EP-1302 3/4 Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1302 3/4 Nitril Kaplı İş Eldiveni (3121A)",
-    "metaDescription": "FABA EP-1302 3/4 nitril kaplı iş eldiveni: el sırtı büyük ölçüde kaplı, polyester astar. EN 388 3121A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1302 3/4 nitril kaplı iş eldiveni: el sırtı büyük ölçüde kaplı, polyester astar. EN 388 3121A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Polyester örme astar üzerine 3/4 mavi nitril kaplama: avuç içi, parmaklar ve el sırtının büyük kısmı kaplıdır. Yağ ve grese dayanıklı, EN 388 3121A.",
     "koli": "252 Çift",
@@ -131,7 +141,7 @@ const RAW: Raw[] = [
     "code": "EP-1303",
     "title": "FABA EP-1303 Tam Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1303 Tam Nitril Kaplı İş Eldiveni (3121A)",
-    "metaDescription": "FABA EP-1303 tam nitril kaplı iş eldiveni: el sırtı dahil kaplı, yağ ve grese dayanıklı. EN 388 3121A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1303 tam nitril kaplı iş eldiveni: el sırtı dahil kaplı, yağ ve grese dayanıklı. EN 388 3121A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Polyester örme astar; el sırtı dahil tüm el yüzeyi mavi nitril kaplıdır. Yağ ve grese dayanıklı, EN 388 3121A.",
     "koli": "252 Çift",
@@ -159,7 +169,7 @@ const RAW: Raw[] = [
     "code": "EP-1401",
     "title": "FABA EP-1401 Kalın Astarlı Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1401 Nitril Kaplı İş Eldiveni (EN 388 4131A)",
-    "metaDescription": "FABA EP-1401 nitril kaplı iş eldiveni: kalın polyester astar, yağ ve grese dayanıklı. EN 388 4131A, beden 7–11, koli içi 192 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1401 nitril kaplı iş eldiveni: kalın polyester astar, yağ ve grese dayanıklı. EN 388 4131A, beden 7–11, koli içi 192 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Uzun süreli dayanıklılık için daha kalın polyester örme astar; avuç içi ve parmaklar nitril kaplı. EN 388 4131A ile aşınma direnci seviye 4'tür.",
     "koli": "192 Çift",
@@ -187,7 +197,7 @@ const RAW: Raw[] = [
     "code": "EP-1402",
     "title": "FABA EP-1402 Kalın Astarlı 3/4 Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1402 3/4 Nitril Kaplı İş Eldiveni (4131A)",
-    "metaDescription": "FABA EP-1402 kalın astarlı 3/4 nitril kaplı iş eldiveni, yağ ve grese dayanıklı. EN 388 4131A, beden 7–11, koli içi 192 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1402 kalın astarlı 3/4 nitril kaplı iş eldiveni, yağ ve grese dayanıklı. EN 388 4131A, beden 7–11, koli içi 192 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Daha kalın polyester örme astar üzerine 3/4 nitril kaplama: avuç içi, parmaklar ve el sırtının büyük kısmı kaplıdır. EN 388 4131A.",
     "koli": "192 Çift",
@@ -215,7 +225,7 @@ const RAW: Raw[] = [
     "code": "EP-1403",
     "title": "FABA EP-1403 Kalın Astarlı Tam Nitril Kaplı İş Eldiveni",
     "seoTitle": "FABA EP-1403 Tam Nitril Kaplı İş Eldiveni (4131A)",
-    "metaDescription": "FABA EP-1403 kalın astarlı, el sırtı dahil tam nitril kaplı iş eldiveni. EN 388 4131A (aşınma 4), beden 7–11, koli içi 192 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA EP-1403 kalın astarlı, el sırtı dahil tam nitril kaplı iş eldiveni. EN 388 4131A (aşınma 4), beden 7–11, koli içi 192 çift. Toptan teklif alın.",
     "category": "Nitril Kaplı İş Eldivenleri",
     "description": "Daha kalın polyester örme astar; el sırtı dahil tüm el yüzeyi nitril kaplıdır. Yağ ve grese dayanıklı, EN 388 4131A.",
     "koli": "192 Çift",
@@ -243,7 +253,7 @@ const RAW: Raw[] = [
     "code": "TruFlex EN-1501",
     "title": "FABA TruFlex EN-1501 Köpük Nitril İş Eldiveni",
     "seoTitle": "FABA TruFlex EN-1501 Köpük Nitril Eldiven (3131A)",
-    "metaDescription": "FABA TruFlex EN-1501 köpük nitril iş eldiveni: 15 gauge naylon örgü, nefes alan kaplama. EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruFlex EN-1501 köpük nitril iş eldiveni: 15 gauge naylon örgü, nefes alan kaplama. EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Köpük Nitril Eldivenler",
     "description": "Siyah 15 gauge naylon örgü üzerine avuç içi ve parmaklarda köpük nitril kaplama. Hassas montaj ve el becerisi gerektiren işler için; EN 388 3131A.",
     "koli": "252 Çift",
@@ -254,7 +264,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "Gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
+    "applications": "Tarım ve meyve toplama, gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
     "badge": "Parmak Ucu Kaplama",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -272,7 +282,7 @@ const RAW: Raw[] = [
     "code": "TruFlex EN-1502",
     "title": "FABA TruFlex EN-1502 3/4 Köpük Nitril İş Eldiveni",
     "seoTitle": "FABA TruFlex EN-1502 3/4 Köpük Nitril Eldiven",
-    "metaDescription": "FABA TruFlex EN-1502 3/4 köpük nitril iş eldiveni: 15 gauge siyah naylon örgü. EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruFlex EN-1502 3/4 köpük nitril iş eldiveni: 15 gauge siyah naylon örgü. EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Köpük Nitril Eldivenler",
     "description": "Siyah 15 gauge naylon örgü; avuç içi, parmaklar ve el sırtının büyük kısmı köpük nitril kaplıdır. EN 388 3131A.",
     "koli": "252 Çift",
@@ -283,7 +293,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "Gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
+    "applications": "Tarım ve meyve toplama, gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
     "badge": "3/4 Kaplama",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -301,7 +311,7 @@ const RAW: Raw[] = [
     "code": "TruFlex EN-1503",
     "title": "FABA TruFlex EN-1503 Tam Kaplı Köpük Nitril İş Eldiveni",
     "seoTitle": "FABA TruFlex EN-1503 Tam Kaplı Köpük Nitril Eldiven",
-    "metaDescription": "FABA TruFlex EN-1503 tam kaplı köpük nitril iş eldiveni: 15 gauge siyah naylon örgü. EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruFlex EN-1503 tam kaplı köpük nitril iş eldiveni: 15 gauge siyah naylon örgü. EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Köpük Nitril Eldivenler",
     "description": "Siyah 15 gauge naylon örgü; el sırtı dahil tüm el yüzeyi köpük nitril kaplıdır. EN 388 3131A.",
     "koli": "252 Çift",
@@ -312,7 +322,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "Gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
+    "applications": "Tarım ve meyve toplama, gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
     "badge": "Tam Kaplama",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -330,7 +340,7 @@ const RAW: Raw[] = [
     "code": "TruFlex EN-1511",
     "title": "FABA TruFlex EN-1511 Turuncu Köpük Nitril İş Eldiveni",
     "seoTitle": "FABA TruFlex EN-1511 Turuncu Köpük Nitril Eldiven",
-    "metaDescription": "FABA TruFlex EN-1511 iş eldiveni: turuncu 15 gauge örgü, avuç içi köpük nitril kaplı. EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruFlex EN-1511 iş eldiveni: turuncu 15 gauge örgü, avuç içi köpük nitril kaplı. EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Köpük Nitril Eldivenler",
     "description": "Turuncu 15 gauge naylon örgü üzerine avuç içi ve parmaklarda siyah köpük nitril kaplama. Yüksek el becerisi ve hassasiyet; EN 388 3131A.",
     "koli": "252 Çift",
@@ -341,7 +351,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "Gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
+    "applications": "Tarım ve meyve toplama, gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
     "badge": "Parmak Ucu Kaplama",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -359,7 +369,7 @@ const RAW: Raw[] = [
     "code": "TruFlex EN-1512",
     "title": "FABA TruFlex EN-1512 Turuncu 3/4 Köpük Nitril İş Eldiveni",
     "seoTitle": "FABA TruFlex EN-1512 Turuncu 3/4 Köpük Nitril Eldiven",
-    "metaDescription": "FABA TruFlex EN-1512 iş eldiveni: turuncu 15 gauge örgü, 3/4 köpük nitril kaplı. EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruFlex EN-1512 iş eldiveni: turuncu 15 gauge örgü, 3/4 köpük nitril kaplı. EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
     "category": "Köpük Nitril Eldivenler",
     "description": "Turuncu 15 gauge naylon örgü; avuç içi, parmaklar ve el sırtının büyük kısmı siyah köpük nitril kaplıdır. EN 388 3131A.",
     "koli": "252 Çift",
@@ -370,7 +380,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "Gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
+    "applications": "Tarım ve meyve toplama, gıda işleme, ambalaj, kuru ilaç, otomotiv, küçük parça montajı, elektronik ve yarı iletken üretimi, bakım ve genel işler.",
     "badge": "3/4 Kaplama",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -388,7 +398,7 @@ const RAW: Raw[] = [
     "code": "TruCut EK-5000",
     "title": "FABA TruCut EK-5000 Kaplamasız Kesilmeye Dirençli Eldiven",
     "seoTitle": "FABA TruCut EK-5000 Kesilmeye Dirençli Eldiven 4X41C",
-    "metaDescription": "FABA TruCut EK-5000 kaplamasız kesilmeye dirençli eldiven: kesilme seviyesi C, EN 388 4X41C, makinede yıkanabilir. Koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruCut EK-5000 kaplamasız kesilmeye dirençli eldiven: kesilme seviyesi C, EN 388 4X41C, makinede yıkanabilir. Koli içi 72 çift. Toptan teklif alın.",
     "category": "Kesilmeye Dirençli Eldivenler",
     "description": "Kesilme riski olan işler için kaplamasız örme eldiven. EN ISO 13997'ye göre kesilme koruma sınıfı C, EN 388 4X41C; hafif yapısı ve dokunma hissiyle hassas işlere uygundur.",
     "koli": "72 Çift",
@@ -416,7 +426,7 @@ const RAW: Raw[] = [
     "code": "TruCut EK-5610",
     "title": "FABA TruCut EK-5610 Nitril Kaplı Kesilmeye Dirençli Eldiven",
     "seoTitle": "FABA EK-5610 Nitril Kaplı Kesilmeye Dirençli Eldiven",
-    "metaDescription": "FABA TruCut EK-5610 nitril kaplı kesilmeye dirençli eldiven: HPPE-çelik tel astar, seviye C, EN 388 4X43C. Koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruCut EK-5610 nitril kaplı kesilmeye dirençli eldiven: HPPE-çelik tel astar, seviye C, EN 388 4X43C. Koli içi 72 çift. Toptan teklif alın.",
     "category": "Kesilmeye Dirençli Eldivenler",
     "description": "Dikişsiz HPPE, spandeks, çelik tel ve naylon karışımı astar; avuç içi ve parmaklarda nitril kaplama. Kesilme sınıfı C (EN ISO 13997), EN 388 4X43C.",
     "koli": "72 Çift",
@@ -444,7 +454,7 @@ const RAW: Raw[] = [
     "code": "TruCut EK-5620",
     "title": "FABA TruCut EK-5620 3/4 Nitril Kaplı Kesilmeye Dirençli Eldiven",
     "seoTitle": "FABA EK-5620 Kesilmeye Dirençli Eldiven, 3/4 Nitril",
-    "metaDescription": "FABA TruCut EK-5620 3/4 nitril kaplı kesilmeye dirençli eldiven: HPPE-çelik tel astar, seviye C, EN 388 4X43C. Koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruCut EK-5620 3/4 nitril kaplı kesilmeye dirençli eldiven: HPPE-çelik tel astar, seviye C, EN 388 4X43C. Koli içi 72 çift. Toptan teklif alın.",
     "category": "Kesilmeye Dirençli Eldivenler",
     "description": "Dikişsiz HPPE, spandeks, çelik tel ve naylon karışımı astar; 3/4 nitril kaplama el sırtının büyük kısmını da örter. Kesilme sınıfı C, EN 388 4X43C.",
     "koli": "72 Çift",
@@ -472,7 +482,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D200-35",
     "title": "FABA Zevahir D200-35 Kaynakçı Eldiveni (35 cm)",
     "seoTitle": "FABA Zevahir D200-35 Kaynakçı Eldiveni, EN 12477 Tip A",
-    "metaDescription": "FABA Zevahir D200-35 kaynakçı eldiveni: yarma sığır derisi, Kevlar dikiş, 35 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D200-35 kaynakçı eldiveni: yarma sığır derisi, Kevlar dikiş, 35 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Yarma sığır derisinden, iç kısmı kot ve pamuk astarlı, Kevlar iplik dikişli 35 cm kaynakçı eldiveni. EN 12477 Tip A ve EN 407 413X4X ile ağır kaynak işlerine uygundur.",
     "koli": "36 Çift",
@@ -501,7 +511,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D200-40",
     "title": "FABA Zevahir D200-40 Kaynakçı Eldiveni (40 cm)",
     "seoTitle": "FABA Zevahir D200-40 Kaynakçı Eldiveni, EN 12477 Tip A",
-    "metaDescription": "FABA Zevahir D200-40 kaynakçı eldiveni: yarma sığır derisi, 40 cm uzun konç. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D200-40 kaynakçı eldiveni: yarma sığır derisi, 40 cm uzun konç. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "40 cm uzun konçlu, yarma sığır derisi kaynakçı eldiveni. Kot ve pamuk astar, Kevlar iplik dikiş; EN 12477 Tip A ve EN 407 413X4X.",
     "koli": "36 Çift",
@@ -530,7 +540,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D300-35",
     "title": "FABA Zevahir D300-35 Başparmak Takviyeli Kaynakçı Eldiveni (35 cm)",
     "seoTitle": "FABA D300-35 Başparmak Takviyeli Kaynakçı Eldiveni",
-    "metaDescription": "FABA Zevahir D300-35 kaynakçı eldiveni: avuç içi ve başparmak takviyeli, 35 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D300-35 kaynakçı eldiveni: avuç içi ve başparmak takviyeli, 35 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Avuç içi ve başparmakta ekstra takviyeli, yarma sığır derisi 35 cm kaynakçı eldiveni. Kot ve pamuk astar, Kevlar iplik dikiş; EN 12477 Tip A.",
     "koli": "36 Çift",
@@ -559,7 +569,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D300-40",
     "title": "FABA Zevahir D300-40 Başparmak Takviyeli Kaynakçı Eldiveni (40 cm)",
     "seoTitle": "FABA D300-40 Başparmak Takviyeli Kaynakçı Eldiveni",
-    "metaDescription": "FABA Zevahir D300-40 kaynakçı eldiveni: avuç içi ve başparmak takviyeli, 40 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D300-40 kaynakçı eldiveni: avuç içi ve başparmak takviyeli, 40 cm. EN 12477 Tip A, EN 407 413X4X, koli içi 36 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Avuç içi ve başparmakta ekstra takviyeli, 40 cm uzun konçlu yarma sığır derisi kaynakçı eldiveni. Kevlar iplik dikiş; EN 12477 Tip A.",
     "koli": "36 Çift",
@@ -588,7 +598,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D-105",
     "title": "FABA Zevahir D-105 Keçi Derisi Sürücü Eldiveni",
     "seoTitle": "FABA D-105 Keçi Derisi Sürücü Eldiveni, Krom VI İçermez",
-    "metaDescription": "FABA Zevahir D-105 keçi derisi sürücü eldiveni: yumuşak deri, büzgülü elastik bilek, Krom VI içermez. EN 388 2111X, koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D-105 keçi derisi sürücü eldiveni: yumuşak deri, büzgülü elastik bilek, Krom VI içermez. EN 388 2111X, koli içi 72 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Yumuşak ve aşınmaya dayanıklı cilt keçi derisinden sürücü eldiveni. Dokunma hissi gerektiren işlere uygundur; büzgülü elastik bilek, Krom VI içermez.",
     "koli": "72 Çift",
@@ -598,7 +608,7 @@ const RAW: Raw[] = [
       "EN ISO 21420:2020",
       "KKD Yönetmeliği (AB) 2016/425"
     ],
-    "applications": "İnşaat, genel bakım ve imalat, duvarcılık, malzeme taşıma, metal ve çelik imalat, demiryolu çalışmaları, depolama, kaynak ve dökümhanede hafif işler.",
+    "applications": "Tarım, inşaat, genel bakım ve imalat, duvarcılık, malzeme taşıma, metal ve çelik imalat, demiryolu çalışmaları, depolama, kaynak ve dökümhanede hafif işler.",
     "badge": "Krom VI İçermez",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -615,7 +625,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D-100",
     "title": "FABA Zevahir D-100 Argon (TIG) Kaynak Eldiveni",
     "seoTitle": "FABA Zevahir D-100 Argon (TIG) Kaynak Eldiveni, Tip B",
-    "metaDescription": "FABA Zevahir D-100 argon (TIG) kaynak eldiveni: keçi derisi, inek derisi manşet, 35 cm. EN 12477 Tip B, beden 10, koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D-100 argon (TIG) kaynak eldiveni: keçi derisi, inek derisi manşet, 35 cm. EN 12477 Tip B, beden 10, koli içi 72 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Hassas TIG (argon) kaynağı için EN 12477 Tip B eldiven. El kısmı cilt keçi derisi, uzun yarma inek derisi manşet, para-aramid iplik dikiş; 35 cm (beden 10).",
     "koli": "72 Çift",
@@ -645,7 +655,7 @@ const RAW: Raw[] = [
     "code": "Zevahir D-101",
     "title": "FABA Zevahir D-101 Elastik Bilekli Argon (TIG) Kaynak Eldiveni",
     "seoTitle": "FABA D-101 Elastik Bilekli Argon (TIG) Kaynak Eldiveni",
-    "metaDescription": "FABA Zevahir D-101 argon (TIG) kaynak eldiveni: keçi derisi, elastik bilek, uzun manşet. EN 12477 Tip B, beden 10, koli içi 72 çift. Kurumsal teklif alın.",
+    "metaDescription": "FABA Zevahir D-101 argon (TIG) kaynak eldiveni: keçi derisi, elastik bilek, uzun manşet. EN 12477 Tip B, beden 10, koli içi 72 çift. Toptan teklif alın.",
     "category": "Kaynakçı ve Sürücü Eldivenleri",
     "description": "Elastik bilekli TIG (argon) kaynak eldiveni: el kısmı cilt keçi derisi, uzun yarma inek derisi manşet, para-aramid iplik dikiş. EN 12477 Tip B; 35 cm (beden 10).",
     "koli": "72 Çift",
@@ -675,7 +685,7 @@ const RAW: Raw[] = [
     "code": "TruChem T-800",
     "title": "FABA TruChem T-800 Tip 3B/4B/5B/6B Kimyasal Koruyucu Tulum",
     "seoTitle": "FABA T-800 Kimyasal Koruyucu Tulum Tip 3B/4B/5B/6B",
-    "metaDescription": "FABA TruChem T-800 kimyasal tulum: Tip 3B/4B/5B/6B, EN 14126 biyolojik, EN 1149-5 antistatik, bantlı dikiş. S–4XL, koli içi 20 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem T-800 kimyasal tulum: Tip 3B/4B/5B/6B, EN 14126 biyolojik, EN 1149-5 antistatik, bantlı dikiş. S–4XL, koli içi 20 adet. Toptan teklif alın.",
     "category": "Kimyasal Koruyucu Tulumlar",
     "description": "Tamamen sıvı geçirmez, sarı TruChem kimyasal koruyucu tulum: Tip 3B/4B/5B/6B, EN 14126, EN 1149-5 ve EN 1073-2. Kumaş ve dikişler kimyasal geçirmez bantla kapatılmıştır.",
     "koli": "20 Adet",
@@ -708,7 +718,7 @@ const RAW: Raw[] = [
     "code": "TruChem T-800-G",
     "title": "FABA TruChem T-800-G Kendinden Çoraplı Kimyasal Tulum",
     "seoTitle": "FABA T-800-G Çoraplı Kimyasal Tulum Tip 3B/4B/5B/6B",
-    "metaDescription": "FABA TruChem T-800-G çoraplı kimyasal tulum: Tip 3B/4B/5B/6B, EN 14126, EN 1149-5, bantlı dikiş. Beden S–4XL, koli içi 20 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem T-800-G çoraplı kimyasal tulum: Tip 3B/4B/5B/6B, EN 14126, EN 1149-5, bantlı dikiş. Beden S–4XL, koli içi 20 adet. Toptan teklif alın.",
     "category": "Kimyasal Koruyucu Tulumlar",
     "description": "T-800'ün çoraplı modeli: ayak kısmı tulumla bütündür. Tip 3B/4B/5B/6B, EN 14126, EN 1149-5 ve EN 1073-2; dikişler kimyasal geçirmez bantla kapatılmıştır.",
     "koli": "20 Adet",
@@ -741,7 +751,7 @@ const RAW: Raw[] = [
     "code": "TruChem T-630",
     "title": "FABA TruChem T-630 Tip 4B/5B/6B Kimyasal Koruyucu Tulum",
     "seoTitle": "FABA T-630 Bantlı Kimyasal Koruyucu Tulum Tip 4B/5B/6B",
-    "metaDescription": "FABA TruChem T-630 kimyasal tulum: 63 gr/m² lamine, tüm dikişler bantlı, Tip 4B/5B/6B, EN 14126. Beden S–4XL, koli içi 48 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem T-630 kimyasal tulum: 63 gr/m² lamine, tüm dikişler bantlı, Tip 4B/5B/6B, EN 14126. Beden S–4XL, koli içi 48 adet. Toptan teklif alın.",
     "category": "Kimyasal Koruyucu Tulumlar",
     "description": "63 gr/m² mikro gözenekli lamine kumaştan, tüm dikişleri bantlı kimyasal koruyucu tulum. Tip 4B/5B/6B, EN 14126, EN 1149-5 ve EN 1073-2.",
     "koli": "48 Adet",
@@ -772,7 +782,7 @@ const RAW: Raw[] = [
     "code": "TruChem T-630-G",
     "title": "FABA TruChem T-630-G Kendinden Çoraplı Kimyasal Tulum",
     "seoTitle": "FABA T-630-G Çoraplı Kimyasal Tulum Tip 4B/5B/6B",
-    "metaDescription": "FABA TruChem T-630-G çoraplı kimyasal tulum: 63 gr/m² lamine, dikişler bantlı, Tip 4B/5B/6B, EN 14126. Beden S–4XL, koli içi 48 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem T-630-G çoraplı kimyasal tulum: 63 gr/m² lamine, dikişler bantlı, Tip 4B/5B/6B, EN 14126. Beden S–4XL, koli içi 48 adet. Toptan teklif alın.",
     "category": "Kimyasal Koruyucu Tulumlar",
     "description": "T-630'un çoraplı modeli: 63 gr/m² lamine kumaş, tüm dikişler bantlı, ayak kısmı tulumla bütün. Tip 4B/5B/6B, EN 14126, EN 1149-5 ve EN 1073-2.",
     "koli": "48 Adet",
@@ -804,7 +814,7 @@ const RAW: Raw[] = [
     "code": "T-535",
     "title": "FABA T-535 Tip 5/6 Dikiş Bantlı Lamineli Tulum (55 gr/m²)",
     "seoTitle": "FABA T-535 Dikiş Bantlı Tek Kullanımlık Tulum Tip 5/6",
-    "metaDescription": "FABA T-535 tek kullanımlık tulum: 55 gr/m² lamine, tüm dikişler bantlı, Tip 5/6, EN 1149-5 antistatik. Beden S–3XL, koli içi 48 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA T-535 tek kullanımlık tulum: 55 gr/m² lamine, tüm dikişler bantlı, Tip 5/6, EN 1149-5 antistatik. Beden S–3XL, koli içi 48 adet. Toptan teklif alın.",
     "category": "Tek Kullanımlık Tulumlar",
     "description": "55 gr/m² mikro gözenekli lamine kumaştan, tüm dikişleri bantlı tek kullanımlık tulum. Tip 5/6 ve EN 1149-5 antistatik; tehlikeli olmayan sıvılara ve partiküllere karşı.",
     "koli": "48 Adet",
@@ -833,7 +843,7 @@ const RAW: Raw[] = [
     "code": "T-530",
     "title": "FABA T-530 Tip 5B/6B Tek Kullanımlık Lamineli Tulum (55 gr/m²)",
     "seoTitle": "FABA T-530 Lamineli Tek Kullanımlık Tulum Tip 5B/6B",
-    "metaDescription": "FABA T-530 lamineli tek kullanımlık tulum: 55 gr/m², Tip 5B/6B, EN 14126, EN 1149-5 ve EN 1073-2. Beden S–3XL, koli içi 48 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA T-530 lamineli tek kullanımlık tulum: 55 gr/m², Tip 5B/6B, EN 14126, EN 1149-5 ve EN 1073-2. Beden S–3XL, koli içi 48 adet. Toptan teklif alın.",
     "category": "Tek Kullanımlık Tulumlar",
     "description": "55 gr/m² mikro gözenekli lamine kumaştan tek kullanımlık tulum. Tip 5B/6B, EN 14126 biyolojik koruma, EN 1149-5 antistatik ve EN 1073-2.",
     "koli": "48 Adet",
@@ -864,7 +874,7 @@ const RAW: Raw[] = [
     "code": "T-500",
     "title": "FABA T-500 SMS Tip 5/6 Tek Kullanımlık Tulum (50 gr/m²)",
     "seoTitle": "FABA T-500 SMS Tek Kullanımlık Tulum Tip 5/6 (50 gr/m²)",
-    "metaDescription": "FABA T-500 SMS tek kullanımlık tulum: 50 gr/m², nefes alabilir, Tip 5/6, Kategori III. Mavi ve beyaz, beden S–3XL, koli içi 40 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA T-500 SMS tek kullanımlık tulum: 50 gr/m², nefes alabilir, Tip 5/6, Kategori III. Mavi ve beyaz, beden S–3XL, koli içi 40 adet. Toptan teklif alın.",
     "category": "Tek Kullanımlık Tulumlar",
     "description": "50 gr/m² SMS kumaştan nefes alabilir tek kullanımlık tulum. Tehlikeli tozlar ve sınırlı sıvı sıçramaları için Tip 5/6, KKD Kategori III; mavi ve beyaz renk seçeneği.",
     "koli": "40 Adet",
@@ -891,13 +901,13 @@ const RAW: Raw[] = [
     "code": "T-300",
     "title": "FABA T-300 Tek Kullanımlık Tulum (30 gr SS Kumaş)",
     "seoTitle": "FABA T-300 Tek Kullanımlık Tulum (30 gr SS Kumaş)",
-    "metaDescription": "FABA T-300 tek kullanımlık tulum: 30 gr SS kumaş; tehlikeli olmayan, minimum riskli işler için. Beden S–3XL, koli içi 60 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA T-300 tek kullanımlık tulum: 30 gr SS kumaş; tehlikeli olmayan, minimum riskli işler için. Beden S–3XL, koli içi 60 adet. Toptan teklif alın.",
     "category": "Tek Kullanımlık Tulumlar",
     "description": "30 gr SS kumaştan, nefes alabilir tek kullanımlık tulum; tehlikeli olmayan, minimum riskli işler için. Toz veya sıvı sıçraması koruması (Tip 5/6) gerekiyorsa T-500 ya da T-530 seçilmelidir.",
     "koli": "60 Adet",
     "sizes": "S, M, L, XL, 2XL, 3XL",
     "standards": [],
-    "applications": "Genel bakım ve onarım, otomotiv onarımları ve gıda işleme gibi tehlikeli olmayan, minimum riskli işler.",
+    "applications": "Genel bakım ve onarım, otomotiv onarımları, gıda işleme ve tarım gibi tehlikeli olmayan, minimum riskli işler.",
     "badge": "Hafif İşler İçin",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -913,7 +923,7 @@ const RAW: Raw[] = [
     "code": "LO-530",
     "title": "FABA LO-530 Fermuarlı Laboratuvar Önlüğü (55 gr/m²)",
     "seoTitle": "FABA LO-530 Fermuarlı Laboratuvar Önlüğü, Tip PB6-B",
-    "metaDescription": "FABA LO-530 laboratuvar önlüğü: 55 gr/m² lamine, fermuarlı, iki cepli. Tip PB6-B, EN 14126, EN 1149-5; XS–2XL, koli içi 60 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA LO-530 laboratuvar önlüğü: 55 gr/m² lamine, fermuarlı, iki cepli. Tip PB6-B, EN 14126, EN 1149-5; beden XS–2XL, koli içi 60 adet. Toptan teklif alın.",
     "category": "Önlük ve Laboratuvar Önlüğü",
     "description": "55 gr/m² lamine kumaştan, önden fermuarlı, iki cepli ve yakalı laboratuvar önlüğü. Tip PB6-B kısmi vücut koruması, EN 14126 ve EN 1149-5.",
     "koli": "60 Adet",
@@ -925,7 +935,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "İlaç sanayi, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "Tip PB6-B · Fermuarlı",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -942,7 +952,7 @@ const RAW: Raw[] = [
     "code": "LO-531",
     "title": "FABA LO-531 Arkadan Bağlamalı Lamineli Önlük",
     "seoTitle": "FABA LO-531 Lamineli Koruyucu Önlük (Tip PB6-B)",
-    "metaDescription": "FABA LO-531 lamineli koruyucu önlük: boyun askılı, arkadan bağlamalı. Tip PB6-B, EN 14126, EN 1149-5, Kat. III. Koli içi 240 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA LO-531 lamineli koruyucu önlük: boyun askılı, arkadan bağlamalı. Tip PB6-B, EN 14126, EN 1149-5, Kategori III. Koli içi 240 adet. Toptan teklif alın.",
     "category": "Önlük ve Laboratuvar Önlüğü",
     "description": "Boyun askılı, arkadan bağlamalı lamineli önlük. Hafif, tehlikeli olmayan sıvılara karşı; Tip PB6-B, EN 14126 ve EN 1149-5.",
     "koli": "240 Adet",
@@ -954,7 +964,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "Demir-çelik endüstrisi, metal işleri, otomotiv, kimya, inşaat ve sağlık sektörü.",
+    "applications": "Demir-çelik endüstrisi, metal işleri, tarım, otomotiv, kimya, inşaat ve sağlık sektörü.",
     "badge": "Tip PB6-B",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -970,7 +980,7 @@ const RAW: Raw[] = [
     "code": "LK-530",
     "title": "FABA LK-530 Lamineli Koruyucu Kolluk",
     "seoTitle": "FABA LK-530 Lamineli Kolluk, 50 cm (Tip PB6-B)",
-    "metaDescription": "FABA LK-530 lamineli kolluk: 55 gr/m², iki ucu elastik, 50 cm. Tip PB6-B, EN 14126, EN 1149-5, Kategori III. Koli içi 720 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA LK-530 lamineli kolluk: 55 gr/m², iki ucu elastik, 50 cm. Tip PB6-B, EN 14126, EN 1149-5, Kategori III. Koli içi 720 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "55 gr/m² lamine kumaştan, iki ucu elastik 50 cm koruyucu kolluk. Tip PB6-B, EN 14126 ve EN 1149-5.",
     "koli": "720 Adet",
@@ -982,7 +992,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "İlaç sanayi, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "50 cm · Tip PB6-B",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -998,7 +1008,7 @@ const RAW: Raw[] = [
     "code": "AG-530",
     "title": "FABA AG-530 Lamineli Kaymaz Ayakkabı Galoşu",
     "seoTitle": "FABA AG-530 Kaymaz Tabanlı Lamineli Ayakkabı Galoşu",
-    "metaDescription": "FABA AG-530 kaymaz tabanlı ayakkabı galoşu: T-530 ile aynı 55 gr/m² kumaş, elastik ağız. Tip PB6-B, 18 × 35 cm, koli içi 500 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA AG-530 kaymaz tabanlı ayakkabı galoşu: T-530 ile aynı 55 gr/m² kumaş, elastik ağız. Tip PB6-B, 18 × 35 cm, koli içi 500 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "Kaymaz tabanlı, ağzı elastik lamineli ayakkabı galoşu. Tip 5B/6B sertifikalı FABA T-530 ile aynı kumaştan ve aynı dikiş tekniğiyle üretilir.",
     "koli": "500 Adet",
@@ -1010,7 +1020,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "İlaç sanayi, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "Kaymaz Taban",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -1026,7 +1036,7 @@ const RAW: Raw[] = [
     "code": "LB-530",
     "title": "FABA LB-530 Lamineli Koruyucu Başlık (Kukuleta)",
     "seoTitle": "FABA LB-530 Lamineli Koruyucu Başlık (Kukuleta)",
-    "metaDescription": "FABA LB-530 lamineli başlık (kukuleta): baş, boyun ve omuzları örter; elastik yüz açıklığı. Tip PB6-B, EN 14126, koli içi 200 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA LB-530 lamineli başlık (kukuleta): baş, boyun ve omuzları örter; elastik yüz açıklığı. Tip PB6-B, EN 14126, koli içi 200 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "Baş, boyun ve omuzları örten lamineli koruyucu başlık (kukuleta). 55 gr/m² kumaş, elastik yüz açıklığı; Tip PB6-B, EN 14126 ve EN 1149-5.",
     "koli": "200 Adet",
@@ -1038,7 +1048,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "İlaç sanayi, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "Tip PB6-B",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -1054,7 +1064,7 @@ const RAW: Raw[] = [
     "code": "KK-800",
     "title": "FABA KK-800 TruChem Tip PB3-B/PB4-B Kimyasal Kolluk",
     "seoTitle": "FABA KK-800 Kimyasal Kolluk, Tip PB3-B/PB4-B, 50 cm",
-    "metaDescription": "FABA TruChem KK-800 kimyasal kolluk: Tip PB3-B/PB4-B/PB6-B, bantlı dikiş, elastik başparmak halkası, 50 cm. Koli içi 320 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem KK-800 kimyasal kolluk: Tip PB3-B/PB4-B/PB6-B, bantlı dikiş, elastik başparmak halkası, 50 cm. Koli içi 320 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "Sarı TruChem kimyasal kolluk: tamamen sıvı geçirmez, bantlı dikiş, elastik başparmak halkası. Tip PB3-B/PB4-B/PB6-B; belirli bir kimyasala dayanımı teklif aşamasında teknik föyden doğrulayın.",
     "koli": "320 Adet",
@@ -1086,7 +1096,7 @@ const RAW: Raw[] = [
     "code": "KO-800",
     "title": "FABA KO-800 TruChem Tip PB3-B/PB4-B Kimyasal Önlük",
     "seoTitle": "FABA KO-800 TruChem Kimyasal Önlük, Tip PB3-B/PB4-B",
-    "metaDescription": "FABA TruChem KO-800 kimyasal önlük: tamamen sıvı geçirmez, bantlı dikiş, Tip PB3-B/PB4-B/PB6-B, EN 1149-5. Koli içi 160 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem KO-800 kimyasal önlük: tamamen sıvı geçirmez, bantlı dikiş, Tip PB3-B/PB4-B/PB6-B, EN 1149-5. Koli içi 160 adet. Toptan teklif alın.",
     "category": "Önlük ve Laboratuvar Önlüğü",
     "description": "Sarı TruChem kimyasal önlük: tamamen sıvı geçirmez, dikişleri kimyasal geçirmez bantla kapatılmış. Tip PB3-B/PB4-B/PB6-B; belirli bir kimyasala dayanımı teklif aşamasında teknik föyden doğrulayın.",
     "koli": "160 Adet",
@@ -1118,7 +1128,7 @@ const RAW: Raw[] = [
     "code": "BG-800",
     "title": "FABA BG-800 TruChem Tip PB3-B/PB4-B Kimyasal Bot Galoşu",
     "seoTitle": "FABA BG-800 Kimyasal Bot Galoşu, Tip PB3-B/PB4-B",
-    "metaDescription": "FABA TruChem BG-800 kimyasal bot galoşu: Tip PB3-B/PB4-B/PB6-B, bantlı dikiş, kaymaz taban, bilekten bağcıklı. Koli içi 160 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA TruChem BG-800 kimyasal bot galoşu: Tip PB3-B/PB4-B/PB6-B, bantlı dikiş, kaymaz taban, bilekten bağcıklı. Koli içi 160 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "Sarı TruChem kimyasal bot galoşu: tamamen sıvı geçirmez, bantlı dikiş, kaymaz taban. Tip PB3-B/PB4-B/PB6-B; belirli bir kimyasala dayanımı teklif aşamasında teknik föyden doğrulayın.",
     "koli": "160 Adet",
@@ -1150,7 +1160,7 @@ const RAW: Raw[] = [
     "code": "BG-530",
     "title": "FABA BG-530 Lamineli Kaymaz Bot Galoşu",
     "seoTitle": "FABA BG-530 Lamineli Kaymaz Bot Galoşu (Tip PB6-B)",
-    "metaDescription": "FABA BG-530 lamineli bot galoşu: T-530 ile aynı 55 gr/m² kumaş, kaymaz taban, bilekten bağcıklı, 48 cm. Tip PB6-B, koli içi 200 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA BG-530 lamineli bot galoşu: T-530 ile aynı 55 gr/m² kumaş, kaymaz taban, bilekten bağcıklı, 48 cm. Tip PB6-B, koli içi 200 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "Kaymaz tabanlı, bilekten bağcıklı lamineli bot galoşu. Tip 5B/6B sertifikalı FABA T-530 ile aynı kumaştan ve dikiş tekniğiyle üretilir; 48 cm yükseklik.",
     "koli": "200 Adet",
@@ -1162,7 +1172,7 @@ const RAW: Raw[] = [
       "EN ISO 13688:2013/A1:2021",
       "KKD Yönetmeliği (AB) 2016/425 – Kategori III"
     ],
-    "applications": "İlaç sanayi, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, olay yeri inceleme, veterinerlik, steril ortamlar, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "Kaymaz Taban",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [
@@ -1179,13 +1189,13 @@ const RAW: Raw[] = [
     "code": "BG-630",
     "title": "FABA BG-630 Dikiş Bantlı Kimyasal Bot Galoşu",
     "seoTitle": "FABA BG-630 Dikiş Bantlı Bot Galoşu (63 gr/m²)",
-    "metaDescription": "FABA BG-630 bot galoşu: 63 gr/m² lamine, tüm dikişler bantlı, kaymaz taban, bilekten bağcıklı; T-630 tulumla set. Koli içi 200 adet. Kurumsal teklif alın.",
+    "metaDescription": "FABA BG-630 bot galoşu: 63 gr/m² lamine, tüm dikişler bantlı, kaymaz taban, bilekten bağcıklı; T-630 tulumla set. Koli içi 200 adet. Toptan teklif alın.",
     "category": "Kolluk, Galoş ve Başlık",
     "description": "63 gr/m² lamine kumaştan, tüm dikişleri bantlı, kaymaz tabanlı bot galoşu. T-630 tulumla set olarak veya ayrı alınabilir; norm bilgisi teklifte teyit edilir.",
     "koli": "200 Adet",
     "sizes": "Yükseklik 48 cm, uzunluk 42 cm",
     "standards": [],
-    "applications": "İlaç sanayi, veterinerlik, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
+    "applications": "İlaç sanayi, tarım, veterinerlik, hafif endüstriyel temizlik ve makine bakımı, hafif kimyasallarla çalışma, hastane, klinik ve laboratuvarlar.",
     "badge": "Bantlı Dikiş",
     "origin": "Türkiye – FABA Kastamonu OSB tesisi",
     "items": [

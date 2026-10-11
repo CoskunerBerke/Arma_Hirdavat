@@ -7,15 +7,21 @@ import CatalogActions from "./CatalogActions";
 import { COMPANY, PROMISES, SITE_URL, CTA } from "@/data/company";
 import { CATALOGS, LATEST_CATALOG, formatCatalogDate, type Catalog } from "@/data/catalogs";
 import { categoryHref } from "@/data/categories";
+import { CATEGORIES, PRODUCT_GROUPS } from "@/data/products";
 
 const PATH = "/katalog";
 const latest = LATEST_CATALOG;
 const olderCatalogs = CATALOGS.slice(1);
+const pageCount = Number.parseInt(latest.pages, 10) || 0;
 const single = CATALOGS.length === 1;
 
-/* Sayfa adı "E-Kataloglar" (adres /katalog olarak kalır). Katalog sayısı yazılmaz (işletme kuralı). */
-const TITLE = "E-Kataloglar – Üretici Katalogları (PDF)";
-const DESCRIPTION = `Üretici ve distribütör e-kataloglarını PDF olarak görüntüleyin veya indirin. En güncel: ${latest.title}. Üyelik gerekmez.`;
+/* Tek katalog varken başlık o kataloğu hedefler; katalog sayısı arttıkça genel başlığa geçer. */
+const TITLE = single
+  ? `${latest.brand} Ürün Kataloğu (PDF${pageCount ? `, ${pageCount} Sayfa` : ""})`
+  : `Ürün Katalogları (PDF) – ${CATALOGS.length} Katalog`;
+const DESCRIPTION = single
+  ? `${latest.brand} iş eldiveni, kaynakçı eldiveni ve koruyucu tulum kataloğunu PDF olarak indirin: ${latest.pages.toLocaleLowerCase("tr-TR")}, ${latest.size}. Ürün kodları, EN normları ve koli içi adetler.`
+  : `Arma Hırdavat'ın sunduğu ${CATALOGS.length} üretici kataloğunu PDF olarak görüntüleyin veya indirin. En güncel: ${latest.title}. Ücretsiz, üyelik gerekmez.`;
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -28,7 +34,7 @@ export const metadata: Metadata = {
     url: PATH,
     title: `${TITLE} | ${COMPANY.name}`,
     description: DESCRIPTION,
-    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name} – e-kataloglar` }],
+    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name} – ürün katalogları` }],
   },
 };
 
@@ -71,10 +77,14 @@ export default function CatalogPage() {
   return (
     <>
       <PageHero
-        eyebrow="Üretici ve distribütör katalogları"
-        title="E-Kataloglar"
-        description="Çalıştığımız üretici ve distribütörlerin güncel e-kataloglarını görüntüleyin veya PDF olarak indirin. En yeni katalog en üstte yer alır; üyelik gerekmez."
-        crumbs={[{ label: "E-Kataloglar", href: PATH }]}
+        eyebrow="Ücretsiz katalog"
+        title={single ? `${latest.brand} Ürün Kataloğu (PDF)` : "Ürün Katalogları (PDF)"}
+        description={
+          single
+            ? `${latest.brand}'nın hazırladığı ${pageCount ? `${pageCount} sayfalık ` : ""}üretici kataloğu: ürün kodları, EN normları, bedenler ve koli içi adetler. Ücretsiz, üyelik gerekmez.`
+            : "Çalıştığımız üreticilerin güncel kataloglarını görüntüleyin veya indirin. En yeni katalog en üstte yer alır. Ücretsiz, üyelik gerekmez."
+        }
+        crumbs={[{ label: "Katalog", href: PATH }]}
       />
 
       <section className="section py-10 sm:py-16">
@@ -109,7 +119,7 @@ export default function CatalogPage() {
                 <Package className="h-4 w-4 shrink-0 text-brand" aria-hidden /> Koli içi adet bilgileri
               </li>
               <li className="flex items-center gap-2">
-                <BookOpen className="h-4 w-4 shrink-0 text-brand" aria-hidden /> Bölümlerden ürün sayfalarına bağlantı
+                <BookOpen className="h-4 w-4 shrink-0 text-brand" aria-hidden /> Sitede {PRODUCT_GROUPS.length} ürün · {CATEGORIES.length} kategori
               </li>
             </ul>
           </div>
@@ -169,7 +179,7 @@ export default function CatalogPage() {
           {olderCatalogs.length > 0 && (
             <div className="mt-12 sm:mt-14">
               <p className="eyebrow">Arşiv</p>
-              <h2 className="mt-2 text-xl font-bold text-ink sm:text-2xl">Diğer e-kataloglar</h2>
+              <h2 className="mt-2 text-xl font-bold text-ink sm:text-2xl">Diğer kataloglar</h2>
               <ul className="mt-6 grid gap-4 sm:grid-cols-2">
                 {olderCatalogs.map((c) => (
                   <li key={c.id} className="surface flex flex-col gap-4 p-5 sm:p-6">

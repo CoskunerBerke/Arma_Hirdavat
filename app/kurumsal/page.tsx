@@ -16,15 +16,17 @@ import MapEmbed from "@/app/iletisim/MapEmbed";
 import {
   CLIENT_REFERENCES,
   COMPANY,
+  HARDWARE_GROUPS,
   HOURS_TEXT,
   PROMISES,
   SITE_URL,
   mailtoHref,
 } from "@/data/company";
+import { PRODUCT_GROUPS } from "@/data/products";
 
 const PATH = "/kurumsal";
-const TITLE = "Hakkımızda – Endüstriyel Tedarik";
-const DESCRIPTION = `${COMPANY.name}: fabrikalara, şantiyelere ve imalat hatlarına teknik hırdavat, endüstriyel sarf ve iş güvenliği tedariki. Merkez: Samsun Tekkeköy.`;
+const TITLE = "Hakkımızda – Teknik Hırdavat ve KKD, Samsun";
+const DESCRIPTION = `${COMPANY.name}: Samsun Tekkeköy'deki mağaza ve depodan fabrika, şantiye ve atölyelere iş güvenliği ve teknik hırdavat tedariki. Kimiz, nasıl çalışırız?`;
 
 const { street, district, city } = COMPANY.address;
 const DIRECTIONS_HREF =
@@ -51,10 +53,11 @@ const LIGHT_LOGOS: ReadonlySet<string> = new Set(["/images/clients/sampa.png"]);
 const FACTS: { term: string; value: string }[] = [
   { term: "Unvan", value: COMPANY.legalName },
   { term: "Mağaza ve depo", value: COMPANY.address.full },
+  { term: "Çalışma saatleri", value: HOURS_TEXT },
   { term: "Web sitemiz", value: `${COMPANY.onlineSince} yılından beri yayında` },
   {
     term: "Ürün kapsamı",
-    value: "Bağlantı elemanı, hortum, pompa, vana, kesici taş, el aletleri, kaynak malzemeleri ve FABA iş güvenliği ürünleri",
+    value: `${HARDWARE_GROUPS.length} teknik hırdavat ürün grubu; online katalogda ${PRODUCT_GROUPS.length} FABA iş güvenliği ürünü`,
   },
   { term: "Satış", value: `${COMPANY.minOrderType}; mağazada perakende` },
   { term: "Sevkiyat", value: PROMISES.deliveryShort },
@@ -101,8 +104,8 @@ export default function CorporatePage() {
     <>
       <PageHero
         eyebrow="Kurumsal"
-        title={`${COMPANY.name}: fabrikalara ve sanayi tesislerine kurumsal tedarik`}
-        description="Fabrikaların, şantiyelerin ve imalat hatlarının ihtiyaç duyduğu teknik hırdavat, endüstriyel sarf ve iş güvenliği malzemelerini koli ve palet bazında tedarik ediyoruz. Merkez mağazamız Samsun Tekkeköy'dedir."
+        title={`${COMPANY.name}: Tekkeköy'den fabrikalara ve şantiyelere tedarik`}
+        description="Samsun Tekkeköy'deki mağaza ve depomuzdan fabrikalara, şantiyelere ve atölyelere teknik hırdavat ve iş güvenliği malzemesi tedarik ediyoruz."
         crumbs={[{ label: "Kurumsal", href: PATH }]}
       />
 
@@ -114,19 +117,18 @@ export default function CorporatePage() {
               Biz kimiz?
             </h2>
             <p>
-              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, fabrikalara ve sanayi tesislerine
-              teknik hırdavat, endüstriyel sarf ve iş güvenliği malzemesi tedarik eden bir kurumsal tedarikçidir. Merkez
-              mağaza ve depomuz Samsun Tekkeköy&apos;dedir. Web sitemiz {COMPANY.onlineSince}{" "}
+              <strong className="font-semibold text-ink">{COMPANY.legalName}</strong>, Samsun Tekkeköy&apos;deki mağaza ve
+              deposuyla çalışan bir teknik hırdavat ve iş güvenliği tedarikçisidir. Web sitemiz {COMPANY.onlineSince}{" "}
               yılından beri yayında.
             </p>
             <p>
               Mağazamızda bağlantı elemanlarından el ve elektrikli aletlere, kaynak ekipmanlarından hortum ve aşındırıcılara
-              kadar geniş bir endüstriyel malzeme yelpazesi bulunur. Online kataloğumuzda ise FABA marka iş eldivenleri,
+              kadar {HARDWARE_GROUPS.length} ürün grubunda ürün bulunur. Online kataloğumuzda ise FABA marka iş eldivenleri,
               kimyasal koruyucu ve tek kullanımlık tulumlar, önlük, kolluk ve galoşlar yer alır.
             </p>
             <p>
               Fabrikaların satın alma birimleri, iş güvenliği uzmanları, şantiye şefleri ve atölyeler için koli ve palet
-              bazında kurumsal teklif hazırlıyoruz. Tekkeköy mağazamızda ise perakende satış yapıyoruz.
+              bazında teklif hazırlıyoruz. Tekkeköy mağazamızda ise perakende satış yapıyoruz.
             </p>
             <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
               <Link href="/urun-gruplari" className="btn-ghost min-h-[48px] px-5">
@@ -224,7 +226,7 @@ export default function CorporatePage() {
           <div className="surface p-6 sm:p-8">
             <h2 className="eyebrow">Vizyonumuz</h2>
             <p className="mt-4 text-lg leading-relaxed text-ink">
-              Türkiye&apos;nin dört bir yanındaki sanayi tesislerinin güvenle çalıştığı tedarikçilerden biri olmak.
+              Samsun&apos;dan başlayarak Türkiye genelinde sanayinin güvenle çalıştığı tedarikçilerden biri olmak.
             </p>
           </div>
         </div>

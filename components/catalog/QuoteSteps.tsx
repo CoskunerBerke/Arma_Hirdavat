@@ -1,4 +1,4 @@
-import { CTA, PROMISES } from "@/data/company";
+import { CTA, HOURS_TEXT, PROMISES } from "@/data/company";
 
 /**
  * "Teklif sürecinde neler olur?" — taahhüt merdiveni (listeye ekle → gönder → teklif e-postada).
@@ -23,8 +23,8 @@ export default function QuoteSteps({
       text: `Firma ve iletişim bilgilerinizi yazıp “${CTA.submit}” deyin. ${PROMISES.quoteReassurance}.`,
     },
     {
-      title: "Resmi teknik teklifiniz gelir",
-      text: PROMISES.quoteTurnaround,
+      title: "Teklifiniz e-postanıza gelir",
+      text: `${PROMISES.quoteTurnaround} Çalışma saatlerimiz: ${HOURS_TEXT}.`,
     },
     {
       title: "Onaylarsanız sevk edilir",

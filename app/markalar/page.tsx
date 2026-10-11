@@ -4,12 +4,12 @@ import Link from "next/link";
 import { ArrowRight, FileText, Mail } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
-import { BRANDS, CATALOGS, COMPANY, LEGACY_BRAND_NAMES, PROMISES, SITE_URL, mailtoHref, type Brand } from "@/data/company";
+import { BRANDS, CATALOGS, COMPANY, CTA, LEGACY_BRAND_NAMES, PROMISES, SITE_URL, mailtoHref, type Brand } from "@/data/company";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
-import { getProductsByCategory, slugify } from "@/data/products";
+import { PRODUCT_GROUPS, getProductsByCategory, slugify } from "@/data/products";
 
 const PATH = "/markalar";
-const TITLE = "Markalarımız: Bosch, Makita, İzeltaş, 3M, FABA";
+const TITLE = "Markalar: FABA, Bosch, Makita, İzeltaş, 3M";
 const DESCRIPTION =
   "FABA iş eldiveni ve koruyucu tulumlar online katalogda. Mağazamızdaki Bosch, Makita, İzeltaş, 3M, Askaynak, Loctite ve diğer markalar için teklif alın.";
 
@@ -74,10 +74,10 @@ export default function BrandsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Markalarımız"
-        title="Markalarımız: endüstriyel tedarikte çalıştığımız markalar"
-        description="Bağlantı elemanından pompaya, el aletlerinden kaynak ekipmanına kadar tedarik ağımızdaki tanınmış markalar. Online kataloğumuzdaki iş güvenliği ürünleri FABA markalıdır."
-        crumbs={[{ label: "Markalarımız", href: PATH }]}
+        eyebrow="Markalar"
+        title="FABA ve mağazamızdaki diğer markalar"
+        description={`Online kataloğumuzdaki ${PRODUCT_GROUPS.length} ürünün tamamı FABA markalıdır. Tekkeköy mağazamızda ve tedarik ağımızda ise el aletlerinden kaynak ekipmanlarına kadar birçok tanınmış marka yer alır.`}
+        crumbs={[{ label: "Markalar", href: PATH }]}
       />
 
       {/* FABA — online katalogdaki tek marka (ekranın üst kısmı: Reveal yok) */}
@@ -109,7 +109,7 @@ export default function BrandsPage() {
                   {faba.name}
                 </h2>
                 <p className="mt-3 text-base leading-relaxed text-ink-soft">
-                  Sitemizdeki iş güvenliği ürünlerinin tamamı FABA markalıdır: nitril ve köpük nitril
+                  Sitemizdeki {PRODUCT_GROUPS.length} iş güvenliği ürününün tamamı FABA markalıdır: nitril ve köpük nitril
                   iş eldivenleri, kesilmeye dirençli eldivenler, kaynakçı eldivenleri, kimyasal koruyucu ve tek kullanımlık
                   tulumlar, önlük, kolluk ve galoşlar. Her ürün sayfasında EN standart kodları, bedenler ve koli içi adet yazılıdır.
                 </p>
@@ -134,7 +134,7 @@ export default function BrandsPage() {
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <Link href="/urunler" className="btn-primary min-h-[48px] px-6">
-                    FABA ürünlerini inceleyin <ArrowRight className="h-4 w-4" aria-hidden />
+                    {CTA.browse} <ArrowRight className="h-4 w-4" aria-hidden />
                   </Link>
                   <Link href="/katalog" className="btn-ghost min-h-[48px] px-6">
                     <FileText className="h-4 w-4" aria-hidden /> FABA kataloğu (PDF · {catalog.size})
