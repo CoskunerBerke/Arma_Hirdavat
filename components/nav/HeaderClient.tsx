@@ -106,7 +106,10 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
                 className={`inline-flex h-12 min-w-[44px] items-center justify-center gap-2.5 rounded-full border-2 px-3 text-sm font-semibold shadow-sm transition-all xl:min-w-[210px] xl:justify-start xl:px-4 2xl:min-w-[320px] ${overHero ? "border-white/50 bg-white/15 text-white backdrop-blur-md hover:border-accent hover:bg-white/25" : "border-brand/30 bg-white text-ink-soft hover:border-accent hover:shadow-md"}`}
               >
                 <Search className={`h-5 w-5 shrink-0 ${overHero ? "text-accent" : "text-brand"}`} aria-hidden />
-                <span className="sr-only xl:not-sr-only xl:flex-1 xl:text-left">Ürün, kod veya standart ara…</span>
+                <span className="sr-only xl:not-sr-only xl:flex-1 xl:truncate xl:whitespace-nowrap xl:text-left">
+                  <span className="2xl:hidden">Ürün veya kod ara…</span>
+                  <span className="hidden 2xl:inline">Ürün, kod veya standart ara…</span>
+                </span>
                 <kbd
                   aria-hidden
                   className={`hidden rounded border px-1.5 py-0.5 text-[11px] font-bold xl:inline-flex ${overHero ? "border-white/30 text-white/70" : "border-line-strong text-ink-muted"}`}
