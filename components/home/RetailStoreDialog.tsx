@@ -41,9 +41,9 @@ export default function RetailStoreDialog({ onClose }: { onClose: () => void }) 
               <Store className="h-5 w-5" />
             </span>
             <div>
-              <p className="text-xs font-medium text-ink-muted">Fiziki mağaza</p>
+              <p className="text-xs font-medium text-ink-muted">Fiziki mağaza &amp; perakende</p>
               <h2 id="retail-modal-title" className="text-base font-bold text-ink sm:text-lg">
-                Tekkeköy mağazamız
+                Tekkeköy merkez mağazamız
               </h2>
             </div>
           </div>
@@ -59,8 +59,8 @@ export default function RetailStoreDialog({ onClose }: { onClose: () => void }) 
 
         <div className="space-y-4 p-5 text-sm text-ink-soft sm:p-6">
           <p id="retail-modal-desc" className="leading-relaxed">
-            Tekil ürün ve az miktardaki ihtiyaçlarınız için mağazamıza bekleriz. Koli ve palet alımlarında ise online
-            teklif alabilirsiniz; fiyatınız e-postanıza gelir.
+            Tekil parça, atölye ve bireysel teknik hırdavat ihtiyaçlarınız için mağazamıza bekleriz. Koli ve palet bazlı
+            kurumsal alımlarda ise online teklif alabilirsiniz.
           </p>
 
           <div className="space-y-3 rounded-2xl border border-line bg-canvas/60 p-4">
@@ -76,6 +76,7 @@ export default function RetailStoreDialog({ onClose }: { onClose: () => void }) 
               <div>
                 <p className="font-semibold text-ink">Çalışma saatleri</p>
                 <p>{HOURS_TEXT}</p>
+                <p className="text-xs text-ink-muted">Pazar kapalı</p>
               </div>
             </div>
             {PRIMARY_PHONE && (
@@ -118,7 +119,7 @@ export default function RetailStoreDialog({ onClose }: { onClose: () => void }) 
               className="btn-primary min-h-[48px] w-full sm:flex-1"
             >
               <Navigation className="h-4 w-4" aria-hidden />
-              <span>Yol tarifi al</span>
+              <span>Google Haritalar&apos;da yol tarifi al</span>
               <ExternalLink className="h-3.5 w-3.5 opacity-70" aria-hidden />
               <span className="sr-only">(Google Haritalar, yeni sekmede açılır)</span>
             </a>

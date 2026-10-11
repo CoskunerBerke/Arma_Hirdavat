@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ChevronRight, Wrench } from "lucide-react";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
-import { HARDWARE_GROUPS, PROMISES } from "@/data/company";
+import { PROMISES } from "@/data/company";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
 import { PRODUCT_GROUPS, getProductsByCategory } from "@/data/products";
 import ActiveChipScroller from "./ActiveChipScroller";
@@ -110,7 +110,7 @@ export default function CategorySidebar({
               href="/urunler"
               className="flex min-h-[40px] items-center gap-1.5 text-sm font-bold text-brand hover:text-accent-ink"
             >
-              Tüm ürünler ({PRODUCT_GROUPS.length})
+              Tüm FABA ürünleri ({PRODUCT_GROUPS.length})
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <Link
@@ -118,13 +118,13 @@ export default function CategorySidebar({
               className="flex min-h-[40px] items-center gap-1.5 text-sm font-semibold text-ink-soft hover:text-accent-ink"
             >
               <Wrench className="h-4 w-4 shrink-0" aria-hidden />
-              Teknik hırdavat ({HARDWARE_GROUPS.length} grup)
+              Endüstriyel malzemeler
             </Link>
           </div>
         </nav>
 
         <div className="rounded-xl border border-line bg-white p-4 shadow-xs">
-          <p className="text-sm font-bold text-ink">Toptan teklif</p>
+          <p className="text-sm font-bold text-ink">Kurumsal teklif</p>
           <p className="mt-1 text-xs leading-relaxed text-ink-soft">
             Model, beden ve koli adedini yazın; fiyatı e-postanıza gönderelim. {PROMISES.quoteShort}.
           </p>

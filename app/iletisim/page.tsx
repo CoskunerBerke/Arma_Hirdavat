@@ -194,16 +194,16 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Toptan / perakende yönlendirme */}
+      {/* Kurumsal / perakende yönlendirme */}
       <section className="container-x pb-12 sm:pb-16" aria-labelledby="alim-baslik">
         <h2 id="alim-baslik" className="text-2xl font-bold tracking-tight text-ink sm:text-3xl">
           Size uygun alım şekli
         </h2>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
           <div className="surface p-6">
-            <h3 className="text-base font-semibold text-ink">Kurumsal ve toptan alım</h3>
+            <h3 className="text-base font-semibold text-ink">Kurumsal tedarik (koli ve palet)</h3>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              Fabrika, şantiye ve atölyelere koli ve palet bazında teklif veriyoruz. {PROMISES.delivery}
+              Fabrikalara, şantiyelere ve sanayi tesislerine koli ve palet bazında kurumsal teklif veriyoruz. {PROMISES.delivery}
             </p>
           </div>
           <div className="surface p-6">

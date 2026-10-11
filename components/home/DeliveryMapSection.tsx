@@ -6,7 +6,7 @@ import CountUp from "./CountUp";
 import DeliveryMapFrame from "./DeliveryMapFrame";
 
 /*
- * "81 ile teslimat" — Türkiye il haritası (sunucuda satır içi SVG), id="teslimat".
+ * (Ana sayfada GÖSTERİLMİYOR — işletme kararı, dosya duruyor.) Türkiye il haritası (sunucuda satır içi SVG), id="teslimat".
  * - İller Samsun'dan uzaklık sırasına göre tek tek yanar (kademeli CSS animasyonu, sürekli döngü; 81 ilin hepsi yanar).
  * - Samsun'dan dönen bir il kümesine kavisli sevkiyat çizgileri çizilir (stroke-dashoffset).
  * - Yalnızca opacity / stroke-dashoffset (ve halka için transform) canlandırılır; anahtar kareler app/globals.css'te.
@@ -78,7 +78,7 @@ export default function DeliveryMapSection() {
                   aria-labelledby="teslimat-harita-baslik"
                 >
                   <title id="teslimat-harita-baslik">
-                    Türkiye il haritası: Samsun Tekkeköy deposundan 81 ile sevkiyat
+                    Türkiye il haritası: Samsun Tekkeköy deposundan Türkiye geneline sevkiyat
                   </title>
                   <g>
                     {provinces.map((p) => {
@@ -162,7 +162,7 @@ export default function DeliveryMapSection() {
         <div className="min-w-0 lg:col-span-5">
           <p className="eyebrow text-accent-ink">Sevkiyat</p>
           <h2 id="teslimat-baslik" className="mt-2 text-2xl font-extrabold leading-tight tracking-tight text-navy sm:text-4xl">
-            Türkiye&apos;nin 81 iline teslimat
+            Türkiye&apos;nin dört bir yanına teslimat
           </h2>
           <span aria-hidden className="mt-4 block h-1 w-16 rounded-full bg-accent" />
 

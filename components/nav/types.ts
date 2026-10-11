@@ -6,33 +6,36 @@ export interface NavCategory {
   shortName: string;
   /** "/kategori/<slug>" */
   href: string;
-  /** Kategorideki ürün sayısı (gerçek katalog verisi) */
-  count: number;
 }
 
 export interface HeaderNavProps {
   categories: NavCategory[];
-  /** Online katalogdaki toplam ürün sayısı */
-  totalProducts: number;
 }
 
 /** Açılır menüdeki tek bağlantı */
 export interface NavLinkItem {
   label: string;
   href: string;
-  /** Sağda gösterilen kısa not (ör. "6 ürün") */
-  hint?: string;
-  /** Alt çizgiyle ayrılan vurgulu bağlantı (ör. "Tüm ürünler") */
+  /** Alt çizgiyle ayrılan vurgulu bağlantı (ör. "Tüm ürün grupları") */
   strong?: boolean;
 }
 
-/** Ana menü öğesi. children varsa masaüstünde açılır menü, mobilde akordeon olur. */
+/** Geniş ürün menüsündeki sütun (ör. "Endüstriyel Malzemeler" / "İş Güvenliği · FABA") */
+export interface NavColumn {
+  title: string;
+  links: NavLinkItem[];
+  /** Sütunun altındaki "tümü" bağlantısı */
+  all: NavLinkItem;
+}
+
+/** Ana menü öğesi. children / columns varsa masaüstünde açılır menü, mobilde akordeon olur. */
 export interface NavMenuItem {
   label: string;
   href: string;
-  /** Bu öğeyi etkin sayan yol önekleri (boşsa hiçbir sayfada etkin değildir; ör. "/#hizmetler") */
+  /** Bu öğeyi etkin sayan yol önekleri */
   match: readonly string[];
+  /** Basit açılır liste */
   children?: NavLinkItem[];
-  /** "products": geniş ürün paneli (iki sütun + teklif kutusu) */
-  panel?: "list" | "products";
+  /** Geniş (mega) menü sütunları */
+  columns?: NavColumn[];
 }

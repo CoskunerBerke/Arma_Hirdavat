@@ -1,5 +1,5 @@
 import FaqAccordion, { type FaqItem } from "./home/FaqAccordion";
-import { COMPANY, HARDWARE_GROUPS, HOURS_TEXT, PROMISES } from "@/data/company";
+import { PROMISES } from "@/data/company";
 import { getProductById, parseKoli } from "@/data/products";
 
 export type { FaqItem };
@@ -24,11 +24,11 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "Fiyatlar neden sitede yazmıyor?",
-    a: "Toptan alımda birim fiyat; miktara, koli ya da palet tercihine ve teslimat iline göre değişir. Bu yüzden herkese aynı liste fiyatını yazmak yerine, talebinize göre hazırlanmış yazılı bir teklif gönderiyoruz. Teklifte birim fiyat, toplam tutar, tahmini teslim süresi ve nakliye koşulları yer alır.",
+    a: "Endüstriyel ürünlerimizde standart liste fiyatları yerine; malzeme çeşitliliğine ve tonaj/koli hacmine göre kurumsal iskonto matrisi uygulanır. Bu yüzden herkese aynı liste fiyatını yazmak yerine, talebinize göre hazırlanmış resmi bir teknik teklif gönderiyoruz. Teklifte birim fiyat, toplam tutar, tahmini teslim süresi ve nakliye koşulları yer alır.",
   },
   {
     q: "Teklif istemek ücretli mi, beni bağlar mı?",
-    a: `Hayır. Teklif ücretsizdir ve bağlayıcı değildir; üyelik de gerekmez. Teklifi inceleyip onaylarsanız sipariş oluşur. ${PROMISES.quoteTurnaround} Çalışma saatlerimiz: ${HOURS_TEXT}.`,
+    a: `Hayır. Teklif ücretsizdir ve bağlayıcı değildir; üyelik de gerekmez. Teklifi inceleyip onaylarsanız sipariş oluşur. ${PROMISES.quoteTurnaround}`,
   },
   {
     q: "Ödeme ve faturalandırma nasıl yapılıyor?",
@@ -44,8 +44,8 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "Aradığım ürün listede yok. Yine de teklif alabilir miyim?",
-    a: `Evet. Online katalogda FABA iş güvenliği ürünleri yer alır; bunların yanında ${HARDWARE_GROUPS.length} ürün grubunda teknik hırdavat tedarik ediyoruz. İhtiyacınızı teklif formuna serbest metinle yazın; tedarik edebildiğimiz ürünleri fiyatıyla birlikte bildirelim.`,
-    link: { href: "/urun-gruplari", label: "Teknik hırdavat ürün grupları" },
+    a: `Evet. Online katalogda FABA iş güvenliği ürünleri yer alır; bunların yanında bağlantı elemanından pompaya, hortumdan kesici taşa kadar fabrikanızın ihtiyaç duyduğu endüstriyel malzemeleri tedarik ediyoruz. İhtiyacınızı teklif formuna serbest metinle yazın; tedarik edebildiğimiz ürünleri fiyatıyla birlikte bildirelim.`,
+    link: { href: "/urun-gruplari", label: "Endüstriyel malzeme ürün grupları" },
   },
   {
     q: "Doğru eldiven bedenini nasıl seçerim?",
@@ -73,7 +73,7 @@ interface FaqSectionProps {
 
 export default function FaqSection({
   items = FAQS,
-  title = "Toptan alım hakkında sık sorulan sorular",
+  title = "Kurumsal tedarik hakkında sık sorulan sorular",
   description = "Sipariş birimi, fiyat, ödeme, sevkiyat ve belgeler hakkında açık yanıtlar.",
   eyebrow = "Sıkça sorulan sorular",
   id = "sss",

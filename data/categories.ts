@@ -49,9 +49,9 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     name: "Nitril Kaplı İş Eldivenleri",
     slug: "nitril-kapli-is-eldiveni",
     shortName: "Nitril Kaplı",
-    seoTitle: "Nitril Kaplı İş Eldiveni Toptan (FABA EP)",
+    seoTitle: "Nitril Kaplı İş Eldiveni (FABA EP Serisi)",
     metaDescription:
-      "FABA EP serisi nitril kaplı iş eldivenleri: parmak ucu, 3/4 ve tam kaplama, EN 388 3121A ve 4131A, beden 7–11, koli içi 192–252 çift. Toptan teklif alın.",
+      "FABA EP serisi nitril kaplı iş eldivenleri: parmak ucu, 3/4 ve tam kaplama, EN 388 3121A ve 4131A, beden 7–11, koli içi 192–252 çift. Kurumsal teklif alın.",
     h1: "Nitril Kaplı İş Eldivenleri (FABA EP Serisi)",
     intro:
       "Nitril kaplı iş eldiveni, örme bir astarın avuç içi ve parmaklarına ya da elin tamamına nitril kaplanmasıyla üretilir. Kaplama yağlı ve gresli parçalarda tutuşu korur, örme astar ise elin rahat hareket etmesini sağlar. Halk arasında işçi eldiveni denen ürünlerin en yaygın türüdür.\n\n" +
@@ -80,14 +80,14 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     name: "Köpük Nitril Eldivenler",
     slug: "kopuk-nitril-eldiven",
     shortName: "Köpük Nitril",
-    seoTitle: "Köpük Nitril Eldiven Toptan (FABA TruFlex)",
+    seoTitle: "Köpük Nitril Eldiven (FABA TruFlex Serisi)",
     metaDescription:
-      "FABA TruFlex köpük nitril eldiven: 15 gauge naylon örgü, parmak ucu, 3/4 ve tam kaplama, EN 388 3131A, beden 7–11, koli içi 252 çift. Toptan teklif alın.",
+      "FABA TruFlex köpük nitril eldiven: 15 gauge naylon örgü, parmak ucu, 3/4 ve tam kaplama, EN 388 3131A, beden 7–11, koli içi 252 çift. Kurumsal teklif alın.",
     h1: "Köpük Nitril Eldivenler (FABA TruFlex)",
     intro:
       "Köpük nitril eldivende kaplama gözenekli (köpük) yapıdadır. FABA kataloğuna göre bu yapı nefes alabilirliği artırır, el yorgunluğunu ve eldiven içindeki yoğunlaşmayı azaltır. İnce örgüyle birleşince küçük parçaları parmak uçlarıyla hissederek tutmak kolaylaşır; bu yüzden hassas montaj ve el becerisi gerektiren işlerde tercih edilir.\n\n" +
       "Bu kategoride FABA TruFlex serisinden 5 model bulunur. Hepsinin astarı 15 gauge naylon örgüdür ve hepsi EN 388 3131A (aşınma 3, kesilme 1, yırtılma 3, delinme 1, TDM kesilme A) ile EN 407 X1XXXX sınıfındadır. EN-1501, EN-1502 ve EN-1503 siyah örgülüdür; sırasıyla parmak ucu, 3/4 ve tam kaplama seçenekleridir. EN-1511 ve EN-1512 turuncu örgü üzerine siyah köpük nitril kaplıdır; parmak ucu ve 3/4 kaplama olarak sunulur. Örgü bilek, eldivenin kullanım sırasında elden çıkmasını önler. Tüm modeller 7–11 bedenlerindedir ve kolide 252 çift bulunur.\n\n" +
-      "FABA kataloğunda önerilen kullanım alanları küçük parça montajı, elektronik ve yarı iletken üretimi, otomotiv, ambalaj, tarım ve meyve toplama, bakım ve genel işlerdir. Yağ ve grese dayanıklı kaplama ya da daha yüksek aşınma direnci gerekiyorsa nitril kaplı EP serisini inceleyin. Modelleri aşağıdaki tabloda karşılaştırıp beden ve koli adediyle ücretsiz teklif isteyebilirsiniz.",
+      "FABA kataloğunda önerilen kullanım alanları küçük parça montajı, elektronik ve yarı iletken üretimi, otomotiv, ambalaj, bakım ve genel işlerdir. Yağ ve grese dayanıklı kaplama ya da daha yüksek aşınma direnci gerekiyorsa nitril kaplı EP serisini inceleyin. Modelleri aşağıdaki tabloda karşılaştırıp beden ve koli adediyle ücretsiz teklif isteyebilirsiniz.",
     faqs: [
       {
         q: "Köpük nitril ile nitril kaplı eldiven arasındaki fark nedir?",
@@ -148,7 +148,7 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     shortName: "Kaynakçı ve Sürücü",
     seoTitle: "Kaynakçı ve Argon Eldiveni (FABA Zevahir)",
     metaDescription:
-      "FABA Zevahir deri kaynakçı eldivenleri: EN 12477 Tip A (35 ve 40 cm), TIG argon kaynağı için Tip B ve keçi derisi sürücü eldiveni. Toptan teklif alın.",
+      "FABA Zevahir deri kaynakçı eldivenleri: EN 12477 Tip A (35 ve 40 cm), TIG argon kaynağı için Tip B ve keçi derisi sürücü eldiveni. Kurumsal teklif alın.",
     h1: "Kaynakçı, Argon ve Deri Sürücü Eldivenleri",
     intro:
       "Kaynakçı eldiveni seçerken temel ölçüt EN 12477 standardıdır. Tip A eldivenler ısıya ve erimiş metal sıçramasına karşı daha yüksek dayanım sunar; elektrot ve gazaltı (MIG/MAG) kaynağı gibi işler içindir. Tip B eldivenler daha yüksek el becerisi sağlar ve parmak hassasiyeti gerektiren TIG (argon) kaynağında tercih edilir.\n\n" +
@@ -184,7 +184,7 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     shortName: "Kimyasal Tulum",
     seoTitle: "Kimyasal Koruyucu Tulum Tip 3B/4B/5B/6B",
     metaDescription:
-      "FABA TruChem kimyasal koruyucu tulumlar: T-800 Tip 3B/4B/5B/6B, T-630 Tip 4B/5B/6B, EN 14126, antistatik EN 1149-5, S–4XL. Koli bazında toptan teklif alın.",
+      "FABA TruChem kimyasal koruyucu tulumlar: T-800 Tip 3B/4B/5B/6B, T-630 Tip 4B/5B/6B, EN 14126, antistatik EN 1149-5, S–4XL. Koli bazında teklif alın.",
     h1: "Kimyasal Koruyucu Tulumlar (Tip 3B, 4B, 5B, 6B)",
     intro:
       "Kimyasal koruyucu tulumlar koruma tipine göre sınıflandırılır: Tip 3 basınçlı sıvı jetine, Tip 4 sıvı spreyine, Tip 5 tehlikeli kuru partiküllere, Tip 6 ise hafif sıvı sıçramasına karşıdır. Tip numarasının yanındaki B eki, kumaşın EN 14126'ya göre enfektif (biyolojik) ajanlara karşı da test edildiğini gösterir.\n\n" +
@@ -219,12 +219,12 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     shortName: "Tek Kullanımlık Tulum",
     seoTitle: "Tek Kullanımlık Tulum: Lamineli ve SMS",
     metaDescription:
-      "FABA T-535, T-530, T-500 SMS ve T-300 tek kullanımlık tulumlar: lamineli ve SMS modellerde Tip 5/6, 30–55 gr/m², koli içi 40–60 adet. Toptan teklif alın.",
+      "FABA T-535, T-530, T-500 SMS ve T-300 tek kullanımlık tulumlar: lamineli ve SMS modellerde Tip 5/6, 30–55 gr/m², koli içi 40–60 adet. Kurumsal teklif alın.",
     h1: "Tek Kullanımlık Tulumlar: Lamineli, SMS ve Ekonomik",
     intro:
       "Tek kullanımlık tulumlar toz, lif ve hafif sıvı sıçramasına karşı vücudu ve iş kıyafetini korur; iş bitince atılır. Seçimde kumaş tipi (lamineli, SMS veya SS) ve koruma tipi (Tip 5: tehlikeli kuru partikül, Tip 6: hafif sıvı sıçraması) belirleyicidir.\n\n" +
       "Bu kategoride 4 FABA tulum bulunur. T-535 ve T-530, 55 gr/m² nefes alabilir mikro gözenekli PE film lamine kumaştan üretilir; tüm dikişleri bantlı, kasık bölgesi takviyelidir. T-535, Tip 5/6 ve EN 1149-5 (antistatik) belgelidir. T-530 ise Tip 5B/6B sınıfındadır: EN 14126 ile biyolojik ajanlara karşı da test edilmiştir, ayrıca EN 1149-5 ve EN 1073-2 belgelidir. T-500, 50 gr/m² SMS (spunbond-meltblown-spunbond PP) kumaştan, hava geçirgenliği yüksek bir Tip 5/6 tulumdur; mavi ve beyaz renkte bulunur. Bu üç model KKD Kategori III'tedir. T-300 ise 30 gr SS kumaştan hafif bir tulumdur ve yalnızca tehlikeli olmayan, minimum riskli işler içindir; toz veya sıvı sıçraması koruması gerekiyorsa T-500 ya da T-530 seçilmelidir.\n\n" +
-      "Tüm modeller S–3XL bedenlerindedir. Koli içi adet T-535 ve T-530'da 48, T-500'de 40, T-300'de 60'tır. FABA kataloğu lamineli modelleri ilaç üretimi, tıbbi uygulamalar ve laboratuvarlar için; T-500'ü asbest ve kurşun azaltma, kömür tozu, kuru gübre ve tarım ilacı uygulaması, endüstriyel temizlik ve makine bakımı için önerir.",
+      "Tüm modeller S–3XL bedenlerindedir. Koli içi adet T-535 ve T-530'da 48, T-500'de 40, T-300'de 60'tır. FABA kataloğu lamineli modelleri ilaç üretimi, tıbbi uygulamalar ve laboratuvarlar için; T-500'ü asbest ve kurşun azaltma, kömür tozu, endüstriyel temizlik ve makine bakımı için önerir.",
     faqs: [
       {
         q: "Lamineli ve SMS tulum arasındaki fark nedir?",
@@ -236,7 +236,7 @@ export const CATEGORY_PAGES: CategoryPage[] = [
       },
       {
         q: "T-300 hangi işler için uygundur?",
-        a: "T-300, 30 gr SS kumaştan hafif bir tulumdur ve Tip 5/6 belgesi yoktur. Genel bakım ve onarım, otomotiv onarımı ve tarım gibi tehlikeli olmayan, minimum riskli işlerde kıyafeti kirden korumak için kullanılır. Tehlikeli toz veya sıvı sıçraması varsa T-500 ya da T-530 seçin.",
+        a: "T-300, 30 gr SS kumaştan hafif bir tulumdur ve Tip 5/6 belgesi yoktur. Genel bakım ve onarım, otomotiv onarımı gibi tehlikeli olmayan, minimum riskli işlerde kıyafeti kirden korumak için kullanılır. Tehlikeli toz veya sıvı sıçraması varsa T-500 ya da T-530 seçin.",
       },
       {
         q: "Asbest veya kurşun tozu olan işlerde hangi tulum kullanılır?",
@@ -256,7 +256,7 @@ export const CATEGORY_PAGES: CategoryPage[] = [
       "Bu kategoride gövdenin önünü koruyan üç FABA ürünü bulunur. Hepsi kısmi vücut koruması (PB) sınıfındadır: önlük yalnızca örttüğü bölgeyi korur. Sıçrama her yönden geliyorsa veya tüm vücudun korunması gerekiyorsa tulum seçilmelidir.\n\n" +
       "LO-530, 55 gr/m² lamine kumaştan, önden fermuarlı, yakalı ve önde iki cepli bir laboratuvar önlüğüdür. Kol ağızları lastiklidir; suyu ve bazı tehlikeli olmayan yağları iter. Tip PB6-B, EN 14126 ve EN 1149-5 belgelidir; XS–2XL bedenlerinde, kolide 60 adet gelir. LO-531 boyun askılı, belden arkadan bağlanan lamineli bir önlüktür; aynı şekilde Tip PB6-B, EN 14126 ve EN 1149-5 belgelidir ve kolide 240 adet bulunur. Bu iki model hafif, tehlikeli olmayan sıvılara karşıdır.\n\n" +
       "Daha ağır kimyasal işler için KO-800 TruChem kimyasal önlük vardır: tamamen sıvı geçirmez kumaş, kimyasal geçirmez bantla kapatılmış dikişler ve boyun askılı kesim. Tip PB3-B/PB4-B/PB6-B sınıfındadır; FABA kataloğuna göre petrol ürünlerine, nitrik ve sülfürik asit gibi asitlere, ince tozlara ve atık suya karşı bariyer oluşturur. Kolide 160 adet bulunur. Belirli bir kimyasala dayanımı teklif aşamasında teknik föyden doğrulayın.\n\n" +
-      "Önlükler ilaç sanayi, hastane, klinik ve laboratuvarlar, veterinerlik, tarım, metal işleri, otomotiv ve kimya sektöründe kullanılır. Kolları da korumak için boyun askılı önlükleri LK-530 veya KK-800 kollukla birlikte kullanabilirsiniz.",
+      "Önlükler ilaç sanayi, hastane, klinik ve laboratuvarlar, veterinerlik, metal işleri, otomotiv ve kimya sektöründe kullanılır. Kolları da korumak için boyun askılı önlükleri LK-530 veya KK-800 kollukla birlikte kullanabilirsiniz.",
     faqs: [
       {
         q: "Önlük mü, tulum mu seçmeliyim?",
@@ -280,9 +280,9 @@ export const CATEGORY_PAGES: CategoryPage[] = [
     name: "Kolluk, Galoş ve Başlık",
     slug: "kolluk-galos-baslik",
     shortName: "Kolluk, Galoş, Başlık",
-    seoTitle: "Kolluk, Galoş ve Koruyucu Başlık Toptan",
+    seoTitle: "Kolluk, Galoş ve Koruyucu Başlık (FABA)",
     metaDescription:
-      "Lamineli ve kimyasal (PB3-B/PB4-B) kolluk, ayakkabı ve bot galoşu, koruyucu başlık: FABA LK, AG, BG, KK ve LB serisi. Koli içi adetler ve toptan teklif.",
+      "Lamineli ve kimyasal (PB3-B/PB4-B) kolluk, ayakkabı ve bot galoşu, koruyucu başlık: FABA LK, AG, BG, KK ve LB serisi. Koli içi adetler ve kurumsal teklif.",
     h1: "Kolluk, Galoş ve Koruyucu Başlıklar",
     intro:
       "Kolluk, galoş ve başlık; tulum veya önlükle birlikte kullanılan, vücudun yalnızca bir bölümünü koruyan tamamlayıcı ürünlerdir (kısmi vücut koruması, PB). Bu kategorideki 7 FABA ürünü lamineli ve kimyasal olmak üzere iki gruba ayrılır.\n\n" +

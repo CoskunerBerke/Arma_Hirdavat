@@ -15,7 +15,7 @@ export const DEFAULT_OG_IMAGE = {
   url: "/og/arma-og.png",
   width: 1200,
   height: 630,
-  alt: `${COMPANY.name}: FABA iş eldiveni ve koruyucu giyim, koli bazında toptan teklif`,
+  alt: `${COMPANY.name}: FABA iş eldiveni ve koruyucu giyim, koli bazında kurumsal teklif`,
 } as const;
 
 /** "/urunler/x" → "https://alanadi/urunler/x" */

@@ -33,7 +33,7 @@ import {
 import { OG_BASE, absoluteUrl, breadcrumbNode, type Crumb } from "@/components/catalog/seo";
 import { explainStandard } from "@/components/catalog/standards";
 import { categoryHref } from "@/data/categories";
-import { CTA, HOURS_TEXT, latestCatalogFor } from "@/data/company";
+import { CTA, PROMISES, latestCatalogFor } from "@/data/company";
 import {
   PRODUCT_GROUPS,
   getProduct,
@@ -240,7 +240,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                     Sorunuz mu var?
                   </h2>
                   <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-                    Doğru modeli veya bedeni birlikte seçelim. Çalışma saatlerimiz: {HOURS_TEXT}.
+                    Doğru modeli veya bedeni birlikte seçelim. {PROMISES.quoteShort}.
                   </p>
                   <ContactLinks
                     className="mt-2"

@@ -28,7 +28,7 @@ import {
   Trash2,
   X,
 } from "lucide-react";
-import { CTA, HOURS_TEXT, PROMISES, TURKEY_PROVINCES } from "@/data/company";
+import { CTA, PROMISES, TURKEY_PROVINCES } from "@/data/company";
 import {
   LEAD_LIMITS,
   LEAD_MIN_FILL_MS,
@@ -59,7 +59,6 @@ const SECTORS = [
   "Enerji ve altyapı",
   "Tersane ve denizcilik",
   "Lojistik ve depolama",
-  "Tarım ve hayvancılık",
   "Kamu kurumu / belediye",
   "Atölye / küçük işletme",
   "Bayi / yeniden satış",
@@ -408,14 +407,14 @@ export default function RfqDialog() {
             <PackageOpen className="mx-auto h-8 w-8 text-ink-muted" aria-hidden />
             <p className="mt-2 font-semibold text-ink">Teklif listeniz boş</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-ink-soft">
-              İş güvenliği ürünlerini listeye ekleyin ya da ihtiyacınızı aşağıya yazın.
+              Ürünleri listeye ekleyin ya da ihtiyacınızı aşağıya yazın.
             </p>
             <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:justify-center">
               <Link href="/urunler" onClick={closeModal} className="btn-ghost min-h-[44px]">
-                {CTA.browse}
+                FABA iş güvenliği ürünleri
               </Link>
               <Link href="/urun-gruplari" onClick={closeModal} className="btn-ghost min-h-[44px]">
-                Teknik hırdavat grupları
+                Endüstriyel malzeme grupları
               </Link>
             </div>
           </div>
@@ -497,7 +496,7 @@ export default function RfqDialog() {
           {customOpen && (
             <form id={`${uid}-custom`} noValidate onSubmit={onCustomAdd} className="border-t border-line px-4 pb-4 pt-3">
               <p className="text-xs leading-relaxed text-ink-soft">
-                Mağazamızdaki 30 ürün grubundan (cıvata, el aletleri, kaynak malzemesi, hortum vb.) ya da katalogda
+                Endüstriyel malzeme ürün gruplarımızdan (cıvata, hortum, pompa, kesici taş, el aletleri vb.) ya da katalogda
                 bulamadığınız her ürün için yazabilirsiniz.
               </p>
               <div className="mt-3 grid gap-3">
@@ -754,7 +753,7 @@ export default function RfqDialog() {
             Referans numaranız: <strong className="font-mono text-ink">{success.id}</strong>
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
-            {PROMISES.quoteTurnaround} Çalışma saatlerimiz: {HOURS_TEXT}.
+            {PROMISES.quoteTurnaround}
           </p>
         </div>
         <h3 className="mt-6 text-sm font-semibold text-ink">Sonraki adımlar</h3>

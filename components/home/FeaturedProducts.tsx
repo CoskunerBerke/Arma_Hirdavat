@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
-import { getFeaturedProducts, PRODUCT_GROUPS } from "@/data/products";
+import { getFeaturedProducts } from "@/data/products";
 
 /*
  * Öne çıkan ürünler: data/products.ts → FEATURED_IDS (elle seçilmiş vitrin, her kategoriden bir ürün).
@@ -13,13 +13,13 @@ export default function FeaturedProducts({ limit }: { limit?: number }) {
   if (products.length === 0) return null;
 
   return (
-    <section className="py-14 sm:py-20 lg:py-24" aria-labelledby="one-cikan-baslik">
+    <section className="bg-white py-16 sm:py-20" aria-labelledby="one-cikan-baslik">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <p className="eyebrow">Öne çıkan ürünler</p>
-            <h2 id="one-cikan-baslik" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl lg:text-4xl">
-              Her kategoriden bir örnek
+            <p className="eyebrow text-accent-ink">Öne çıkan ürünler</p>
+            <h2 id="one-cikan-baslik" className="mt-3 text-2xl font-extrabold tracking-tight text-navy sm:text-3xl lg:text-4xl">
+              FABA iş güvenliği vitrini
             </h2>
             <p className="mt-2 max-w-xl text-sm text-ink-soft">
               Kodu, EN standartları, bedenleri ve koli içi adediyle. Beğendiğiniz ürünü listenize ekleyin, teklifi tek seferde
@@ -28,9 +28,9 @@ export default function FeaturedProducts({ limit }: { limit?: number }) {
           </div>
           <Link
             href="/urunler"
-            className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand hover:text-brand-hover"
+            className="inline-flex min-h-[44px] items-center gap-2 text-sm font-bold text-navy hover:text-accent-ink"
           >
-            Tüm {PRODUCT_GROUPS.length} ürünü inceleyin <ArrowRight className="h-4 w-4" aria-hidden />
+            Tüm FABA ürünlerini inceleyin <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
         </div>
 

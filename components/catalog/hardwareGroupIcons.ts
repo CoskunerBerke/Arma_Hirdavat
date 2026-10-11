@@ -1,0 +1,73 @@
+import type { LucideIcon } from "lucide-react";
+import {
+  Anchor,
+  Bolt,
+  Cable,
+  CircleDot,
+  Construction,
+  Cylinder,
+  Disc,
+  Disc3,
+  Drill,
+  Droplets,
+  Fan,
+  Flame,
+  FlaskConical,
+  Gauge,
+  Hammer,
+  Hand,
+  HardHat,
+  Nut,
+  Package,
+  Plug,
+  Ruler,
+  Scissors,
+  ShieldCheck,
+  Sparkles,
+  SprayCan,
+  Waves,
+  Waypoints,
+  Weight,
+  Wind,
+  Wrench,
+} from "lucide-react";
+import type { HardwareGroupName } from "@/data/company";
+
+/** Grup simgeleri (eşleşmeyen grup Wrench ile gösterilir). */
+export const GROUP_ICONS: Partial<Record<HardwareGroupName, LucideIcon>> = {
+  "Bağlantı Elemanları": Nut,
+  "Diğer Bağlantı Elemanları": Bolt,
+  "Çelik Halat ve Gemi Halatı": Anchor,
+  "Polyester Halat, Kaldırma ve İndirme Ekipmanları": Weight,
+  "Havalı El Aletleri": Wind,
+  "Elektrikli El Aletleri": Plug,
+  "Vana, Flanş ve Boru Ek Parçaları": Waypoints,
+  "Hortum Çeşitleri": Cable,
+  "El Aletleri": Wrench,
+  "İzeltaş El Aletleri": Hammer,
+  "Eldiven Çeşitleri": Hand,
+  "İş Güvenliği Ekipmanları": HardHat,
+  "3M Ürünleri": ShieldCheck,
+  "Ölçü Aletleri": Ruler,
+  "Kaynak Makinaları": Flame,
+  "Elektrot ve Gazaltı Kaynak Teli Ekipmanları": Sparkles,
+  "Gaz ve Gaz Aletleri": Cylinder,
+  "Pnömatik Ürünler (Pakkens)": Gauge,
+  "Matkap Ucu, Kılavuz ve Pafta": Drill,
+  "Testere, Profil Kesme, Karot ve Sarf Malzemeleri": Scissors,
+  "Kesme ve Taşlama Taşları": Disc3,
+  "Aşındırıcı Ürünler": Disc,
+  "Yıkama ve Yağlama Ekipmanları": Droplets,
+  "Kompresör ve Airless Boya Makinası": SprayCan,
+  "Endüstriyel Kimyasallar ve Yapıştırıcılar": FlaskConical,
+  "Sanayi Bantları ve Ambalaj Ürünleri": Package,
+  "Aspiratör, Mengene, İşkence ve Boya Sarf Malzemeleri": Fan,
+  "Sanayi Tekerleri": CircleDot,
+  "Merdiven, İnşaat Makinaları ve İnşaat El Aletleri": Construction,
+  "Domak Pompa ve Sufil Ürünleri": Waves,
+};
+
+/** Grubun simgesi (eşleşme yoksa Wrench). */
+export function hardwareGroupIcon(group: string): LucideIcon {
+  return GROUP_ICONS[group as HardwareGroupName] ?? Wrench;
+}

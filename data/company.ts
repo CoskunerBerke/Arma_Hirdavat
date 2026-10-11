@@ -35,9 +35,9 @@ export const CONTACT_NUMBERS_VERIFIED = false;
 export const COMPANY = {
   legalName: "Arma Fabrika Malzemeleri Teknik Hırdavat San. Tic. A.Ş.",
   name: "Arma Hırdavat",
-  tagline: "Samsun Tekkeköy'den Türkiye geneline teknik hırdavat ve iş güvenliği tedariki",
+  tagline: "Fabrikalar ve sanayi tesisleri için yüksek hacimli endüstriyel tedarik",
   description:
-    "Arma Hırdavat; Samsun Tekkeköy'deki mağaza ve deposundan fabrikalara, şantiyelere ve atölyelere teknik hırdavat ve iş güvenliği malzemesi tedarik eder. FABA iş eldivenleri ve koruyucu tulumlarda koli bazında toptan teklif verir, Türkiye'nin 81 iline anlaşmalı ambar ve kargo ile sevkiyat yapar.",
+    "Arma Hırdavat; fabrikalara, şantiyelere ve imalat hatlarına bağlantı elemanından hortuma, kesici taştan el aletine ve iş güvenliği ürünlerine kadar teknik hırdavat ve endüstriyel sarf malzemesi tedarik eder. Koli ve palet bazlı siparişler kurumsal teklifle hazırlanır, Türkiye'nin dört bir yanındaki organize sanayi bölgelerine kurumsal lojistik standartlarıyla sevk edilir. Merkez mağaza: Tekkeköy / Samsun.",
   phones: [
     { label: "+90 (362) 266 60 95", href: "tel:+903622666095", e164: "+903622666095" },
     { label: "+90 (362) 266 67 50", href: "tel:+903622666750", e164: "+903622666750" },
@@ -65,8 +65,8 @@ export const COMPANY = {
   /** Diğer resmi profiller (LinkedIn, Facebook, Instagram…) — JSON-LD sameAs. */
   socialProfiles: [] as string[],
   paymentUrl: "https://odeme.armahirdavat.com.tr/",
-  coverage: "Türkiye'nin 81 iline anlaşmalı ambar ve kargo ile sevkiyat",
-  minOrderType: "Koli ve palet bazında toptan satış",
+  coverage: "Türkiye'nin dört bir yanındaki organize sanayi bölgelerine kurumsal sevk",
+  minOrderType: "Koli ve palet bazında kurumsal tedarik",
   /** Eski sitede (armahirdavat.com.tr) 2014'ten beri yayında olduğu belirtiliyor. */
   onlineSince: 2014,
 };
@@ -92,37 +92,43 @@ export function mailtoHref(subject?: string, body?: string): string {
 
 /* ────────────────────────────────────────────────────────────────────────────
  * ÇALIŞMA SAATLERİ — TEK KAYNAK (görünür metin + JSON-LD buradan üretilir)
- * NOT: Eski kodda iki farklı saat vardı (JSON-LD: Pzt–Cum 08–18, Cmt 08–14; sayfa: Pzt–Cmt 08–18:30).
- * Sayfada görünen değer esas alındı — işletme sahibi teyit etmeli.
+ * İşletme sahibi tarafından teyit edildi (11.10.2026): Pzt–Cum 08:00–17:50, Cmt 08:00–16:00, Pazar kapalı.
+ * Saatler üst şeritte GÖSTERİLMEZ; yalnızca footer, mağaza bölümü/kartı ve iletişim sayfasında yer alır.
  * ──────────────────────────────────────────────────────────────────────────── */
 export const OPENING_HOURS = [
   {
-    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const,
+    days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"] as const,
     opens: "08:00",
-    closes: "18:30",
+    closes: "17:50",
+  },
+  {
+    days: ["Saturday"] as const,
+    opens: "08:00",
+    closes: "16:00",
   },
 ];
-export const HOURS_TEXT = "Pazartesi–Cumartesi 08:00–18:30";
-export const HOURS_SHORT = "Pzt–Cmt 08:00–18:30";
+export const HOURS_TEXT = "Hafta içi 08:00–17:50, Cumartesi 08:00–16:00";
+export const HOURS_SHORT = "Hf. içi 08:00–17:50 · Cmt 08:00–16:00";
 
 /* ────────────────────────────────────────────────────────────────────────────
  * VERİLEN SÖZLER — TEK KAYNAK
- * Eski sürümde "2 saatte proforma" ve "81 ile 24-48 saatte teslim" gibi doğrulanmamış iddialar vardı.
- * Burada bunların içerdiği, daha temkinli ifadeler var. İşletme ölçülebilir daha güçlü bir
- * süre taahhüt ediyorsa yalnızca bu dosyayı güncellemek yeterli.
+ * Metinler işletme sahibinin brifinden (Ekim 2026) alındı: sayısal sınır (il sayısı, ürün adedi) YAZILMAZ;
+ * "toptan" kelimesi kullanılmaz (yerine "kurumsal tedarik", "koli ve palet bazında"). Değişiklik için
+ * yalnızca bu dosyayı güncellemek yeterli.
  * ──────────────────────────────────────────────────────────────────────────── */
 export const PROMISES = {
-  /** Teklif dönüş süresi (uzun) */
-  quoteTurnaround: "Mesai saatlerinde gelen teklif taleplerine aynı iş günü içinde dönüş yapıyoruz.",
+  /** Teklif dönüş süresi (uzun) — işletme sahibinin kendi taahhüdü */
+  quoteTurnaround:
+    "Talepleriniz uzman teknik ekibimizce değerlendirilip aynı gün resmi teknik teklif formu olarak iletilir (E-posta / WhatsApp / PDF).",
   /** Teklif dönüş süresi (rozet / çip) */
-  quoteShort: "Aynı iş günü dönüş",
+  quoteShort: "Aynı gün resmi teknik teklif",
   /** Sevkiyat (uzun) */
   delivery:
-    "Samsun Tekkeköy depomuzdan anlaşmalı ambar ve kargo firmalarıyla Türkiye'nin 81 iline sevkiyat yapıyoruz. Tahmini teslim süresi ve nakliye koşulları teklifinizde ayrıca belirtilir.",
+    "Koli ve palet bazlı siparişlerinizi Türkiye'nin dört bir yanındaki organize sanayi bölgelerine ve tesislerinize kurumsal lojistik standartlarıyla sevk ediyoruz. Tahmini teslim süresi ve nakliye koşulları teklifinizde belirtilir.",
   /** Sevkiyat (rozet / çip) */
-  deliveryShort: "81 ile ambar ve kargo sevkiyatı",
+  deliveryShort: "Türkiye'nin dört bir yanına kurumsal sevk",
   /** Teklif CTA'larının altındaki risk azaltıcı mikro metin */
-  quoteReassurance: "Ücretsiz · Bağlayıcı değildir · Üyelik gerekmez",
+  quoteReassurance: "Resmi teknik teklif · Bağlayıcı değildir · Üyelik gerekmez",
   /** Ürün belgeleri */
   documentation: "Her ürün sayfasında CE işareti ve EN standart kodları açıkça yazılıdır.",
 };
@@ -131,8 +137,10 @@ export const PROMISES = {
  * CTA ETİKETLERİ — sitenin her yerinde aynı eylem için aynı kelimeler
  * ──────────────────────────────────────────────────────────────────────────── */
 export const CTA = {
-  /** Teklif akışını açar (hero, header, bantlar) */
-  primary: "Ücretsiz Teklif Al",
+  /** Teklif akışını açar (hero, header, bantlar). İşletme sahibi alternatifler arasından seçecek: yalnızca burayı değiştirin. */
+  primary: "Fiyat Teklifi Alın",
+  /** Dar ekranlarda (header) birincil eylemin kısa hali */
+  primaryShort: "Teklif Alın",
   /** Ürünü teklif listesine ekler */
   addToList: "Teklif Listesine Ekle",
   addShort: "Listeye Ekle",
@@ -140,10 +148,10 @@ export const CTA = {
   /** Liste doluyken header / bar etiketi (yanına adet eklenir) */
   openList: "Teklif Listesi",
   /** Form gönderimi */
-  submit: "Teklif Talebimi Gönder",
+  submit: "Teklif Talebini Gönder",
   /** İkincil eylem */
-  browse: "Ürünleri İncele",
-  catalog: "Kataloğu İndir (PDF)",
+  browse: "E-Kataloglar ve Ürün Grupları",
+  catalog: "E-Kataloğu İndir (PDF)",
 };
 
 /** Türkiye 81 İl Listesi — teslimat ili seçimi için */
@@ -163,11 +171,13 @@ export const TURKEY_PROVINCES = [
  * Gerçek ürün gamıyla (FABA KKD kataloğu + mağazadaki teknik hırdavat grupları) uyumludur.
  */
 export const SEO_KEYWORDS = [
+  "endüstriyel hırdavat",
+  "fabrika malzemeleri",
   "samsun hırdavat",
-  "tekkeköy hırdavat",
   "samsun iş güvenliği malzemeleri",
-  "iş eldiveni toptan",
-  "faba eldiven toptan",
+  "faba iş eldiveni",
+  "endüstriyel tedarik",
+  "kurumsal hırdavat tedariki",
   "nitril kaplı iş eldiveni",
   "köpük nitril eldiven",
   "kesilmeye dirençli eldiven",
@@ -176,14 +186,6 @@ export const SEO_KEYWORDS = [
   "tek kullanımlık tulum",
   "teknik hırdavat samsun",
 ];
-
-export const NAV = [
-  { href: "/urunler", label: "İş Güvenliği Ürünleri" },
-  { href: "/urun-gruplari", label: "Teknik Hırdavat" },
-  { href: "/katalog", label: "Katalog" },
-  { href: "/kurumsal", label: "Kurumsal" },
-  { href: "/iletisim", label: "İletişim" },
-] as const;
 
 /**
  * Mağazada / tedarikte bulunan teknik hırdavat ürün grupları.
@@ -223,14 +225,34 @@ export const HARDWARE_GROUPS = [
   "Domak Pompa ve Sufil Ürünleri",
 ] as const;
 
+export type HardwareGroupName = (typeof HARDWARE_GROUPS)[number];
+
+/**
+ * Menüde ve ana sayfada öne çıkan endüstriyel malzeme grupları (kısa görünen adlarıyla).
+ * Bağlantılar /urun-gruplari#<slugify(group)> çapasına gider. Sıra = görünüm sırası.
+ */
+export const FEATURED_HARDWARE_GROUPS: { group: HardwareGroupName; label: string }[] = [
+  { group: "Bağlantı Elemanları", label: "Bağlantı Elemanları" },
+  { group: "Hortum Çeşitleri", label: "Endüstriyel Hortumlar" },
+  { group: "Domak Pompa ve Sufil Ürünleri", label: "Pompa ve Hidrofor" },
+  { group: "Vana, Flanş ve Boru Ek Parçaları", label: "Vana, Flanş ve Boru Ek Parçaları" },
+  { group: "Kesme ve Taşlama Taşları", label: "Kesme ve Taşlama Taşları" },
+  { group: "Aşındırıcı Ürünler", label: "Aşındırıcı Ürünler" },
+  { group: "El Aletleri", label: "El Aletleri" },
+  { group: "Elektrikli El Aletleri", label: "Elektrikli El Aletleri" },
+  { group: "Elektrot ve Gazaltı Kaynak Teli Ekipmanları", label: "Kaynak Teli ve Elektrot" },
+  { group: "Endüstriyel Kimyasallar ve Yapıştırıcılar", label: "Endüstriyel Kimyasallar" },
+];
+
 export interface Brand {
+
   name: string;
   desc?: string;
   /** /public altındaki logo yolu. Yoksa sayfada yazılı rozet gösterilir. */
   logo?: string;
   url?: string;
   /** Markanın ait olduğu mağaza ürün grubu (HARDWARE_GROUPS). Yalnızca eşleşme kesinse doldurun. */
-  group?: (typeof HARDWARE_GROUPS)[number];
+  group?: HardwareGroupName;
   /** Aynı markanın diğer yazılışları (LEGACY_BRAND_NAMES ile eşleştirme için). */
   aliases?: readonly string[];
 }
@@ -263,7 +285,8 @@ export const BRANDS: Brand[] = [
   { name: "Fireflex", desc: "Aşındırıcı ürünler", logo: "/images/brands/fireflex.jpg", group: "Aşındırıcı Ürünler" },
   { name: "Lupamat", desc: "Kompresörler", logo: "/images/brands/lupamat.jpg", group: "Kompresör ve Airless Boya Makinası" },
   { name: "Loctite", desc: "Endüstriyel yapıştırıcılar ve sızdırmazlık ürünleri", logo: "/images/brands/loctite.jpg", group: "Endüstriyel Kimyasallar ve Yapıştırıcılar" },
-  { name: "Makina Tarım Endüstrisi", logo: "/images/brands/makina-tarim-endustrisi.jpg" },
+  // MTE logosu: firmanın doğru unvanı "Makina Takım Endüstrisi" (kesici takım üreticisi); eski sitedeki yazım hatalıydı.
+  { name: "Makina Takım Endüstrisi", logo: "/images/brands/makina-tarim-endustrisi.jpg", aliases: ["MTE"] },
   { name: "Ateş A.Ş.", logo: "/images/brands/ates.jpg" },
   { name: "Beybi", logo: "/images/brands/beybi.jpg" },
   { name: "Kama", logo: "/images/brands/kama.jpg" },
@@ -277,7 +300,7 @@ export const BRANDS: Brand[] = [
  * eşleyerek birleştirir, bu yüzden buraya eklenen yeni bir isim de otomatik görünür.
  */
 export const LEGACY_BRAND_NAMES = [
-  "Domak Pompa", "Çetin Cıvata", "Makina Tarım Endüstrisi", "Ateş A.Ş.", "Loctite", "Yıldız Gaz Armatürleri",
+  "Domak Pompa", "Çetin Cıvata", "Makina Takım Endüstrisi", "Ateş A.Ş.", "Loctite", "Yıldız Gaz Armatürleri",
   "Fireflex", "SEL Hortumları", "3M", "Bosch", "Karbosan", "Beybi", "İzeltaş", "Makita", "Kama", "Netlift",
   "Pakkens", "Has Çelik", "Foster", "Lupamat", "Express Weld", "Askaynak", "Lincoln Electric",
 ] as const;
@@ -299,9 +322,8 @@ export interface ClientReference {
 }
 
 /**
- * Tedarik sağlanan firmalar.
- * NOT (işletme sahibi): Logolarının ve isimlerinin referans olarak kullanılması için
- * firmalardan yazılı onay alınması önerilir. Onay alınamayan firmayı bu listeden çıkarın.
+ * Tedarik sağlanan firmalar (sıra işletme sahibinin brifindeki sıradır).
+ * İşletme sahibi logoların kullanımı için yazılı onay aldığını teyit etti (11.10.2026).
  */
 export const CLIENT_REFERENCES: ClientReference[] = [
   /*
@@ -312,20 +334,10 @@ export const CLIENT_REFERENCES: ClientReference[] = [
    * firmanın onay verdiği bilgi yazılmalıdır.
    */
   {
-    name: "Rönesans Holding",
-    sector: "İnşaat ve müteahhitlik",
-    logo: "/images/clients/ronesans.svg",
-    url: "https://ronesans.com/",
-    badge: "",
-    description: "",
-    supplyScope: "",
-    tags: [],
-  },
-  {
-    name: "Sampa Otomotiv",
-    sector: "Ticari araç yedek parça imalatı",
-    logo: "/images/clients/sampa.png",
-    url: "https://www.sampa.com/tr",
+    name: "Samsun Makina Sanayi",
+    sector: "Döküm boru ve makine imalatı",
+    logo: "/images/clients/samsunmakina.png",
+    url: "https://www.samsunmakina.com.tr/",
     badge: "",
     description: "",
     supplyScope: "",
@@ -342,17 +354,31 @@ export const CLIENT_REFERENCES: ClientReference[] = [
     tags: [],
   },
   {
-    name: "Samsun Makina Sanayi",
-    sector: "Döküm boru ve makine imalatı",
-    logo: "/images/clients/samsunmakina.png",
-    url: "https://www.samsunmakina.com.tr/",
+    name: "Sampa Otomotiv",
+    sector: "Ticari araç yedek parça imalatı",
+    logo: "/images/clients/sampa.png",
+    url: "https://www.sampa.com/tr",
     badge: "",
     description: "",
     supplyScope: "",
     tags: [],
   },
   {
-    name: "CNR Otomasyon",
+    name: "Rönesans Holding",
+    sector: "İnşaat ve müteahhitlik",
+    logo: "/images/clients/ronesans.svg",
+    url: "https://ronesans.com/",
+    badge: "",
+    description: "",
+    supplyScope: "",
+    tags: [],
+  },
+  {
+    /*
+     * Görünen ad yalnızca "CNR". İşletme sahibi brifte "CNR (CRRC)" yazdı; ancak elimizdeki logo dosyası
+     * CNR Grup Otomasyon'a ait. Hangi firma olduğunu işletme sahibi TEYİT ETMELİ (CRRC yazılmadı).
+     */
+    name: "CNR",
     sector: "Endüstriyel otomasyon",
     logo: "/images/clients/cnr.png",
     url: "https://www.cnrotomasyon.com.tr/",

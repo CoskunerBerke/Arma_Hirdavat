@@ -21,9 +21,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Check, ChevronRight, ClipboardList, Mail, Phone, Plus, Search, Wrench, X } from "lucide-react";
 import { getHardwareHint, searchProducts, HARDWARE_GROUPS_HREF, type HardwareHint, type SearchMatch } from "@/lib/search";
-import { PRODUCT_GROUPS, getFeaturedProducts, productHref, type ProductGroup } from "@/data/products";
+import { getFeaturedProducts, productHref, type ProductGroup } from "@/data/products";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
-import { CTA, HARDWARE_GROUPS, PRIMARY_PHONE, PROMISES, mailtoHref } from "@/data/company";
+import { CTA, PRIMARY_PHONE, PROMISES, mailtoHref } from "@/data/company";
 import { useQuote } from "@/components/QuoteContext";
 import { useModal } from "@/lib/useModal";
 import { track, EVENTS } from "@/lib/track";
@@ -209,7 +209,7 @@ export default function SearchDialog({ query, setQuery, onClose }: SearchDialogP
                 }}
                 aria-controls={resultsId}
                 aria-describedby={helpId}
-                placeholder="Ürün adı veya kodu yazın"
+                placeholder="Malzeme adı, parça veya standart ara…"
                 className="h-12 w-full rounded-2xl border border-line-input bg-white pl-11 pr-11 text-base font-medium text-ink placeholder:text-ink-muted focus:border-brand focus:outline-none focus-visible:ring-4 focus-visible:ring-brand/20 [&::-webkit-search-cancel-button]:appearance-none"
               />
               {query && (
@@ -523,9 +523,9 @@ function StartView({
         <span className="flex items-center gap-3">
           <Wrench className="h-5 w-5 shrink-0 text-ink-muted" aria-hidden />
           <span>
-            <span className="block font-semibold text-ink">Teknik hırdavat ürün gruplarımız</span>
+            <span className="block font-semibold text-ink">Endüstriyel malzeme ürün gruplarımız</span>
             <span className="block text-xs text-ink-muted">
-              Cıvata, halat, kaynak makinesi, el aletleri… toplam {HARDWARE_GROUPS.length} ürün grubu
+              Cıvata, hortum, pompa, kesici taş, el aletleri, kaynak…
             </span>
           </span>
         </span>
@@ -620,9 +620,9 @@ function NoResults({
       <section aria-label="Sonuç bulunamadı" className="rounded-2xl border border-line p-4 sm:p-5">
         <p className="text-base font-bold text-ink">&ldquo;{truncate(query, 60)}&rdquo; online katalogda yok</p>
         <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
-          Online katalogda {PRODUCT_GROUPS.length} FABA iş güvenliği ürünü listelenir; mağazamızda ve tedarikte{" "}
-          {HARDWARE_GROUPS.length} teknik hırdavat ürün grubu daha var. Bu ürünü listenize ekleyin; temin edebiliyorsak
-          fiyatıyla birlikte dönüş yapalım.
+          Online katalogda FABA iş güvenliği ürünleri listelenir; tedarik ağımızda ise fabrikanızın ihtiyaç duyduğu
+          endüstriyel malzemeler de var. Bu ürünü listenize ekleyin; temin edebiliyorsak resmi teknik teklifle dönüş
+          yapalım.
         </p>
         <button
           type="button"

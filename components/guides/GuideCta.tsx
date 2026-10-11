@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, ClipboardList, Clock, Mail, Phone } from "lucide-react";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
-import { COMPANY, CTA, HOURS_SHORT, PRIMARY_PHONE, PROMISES, mailtoHref } from "@/data/company";
+import { COMPANY, CTA, PRIMARY_PHONE, PROMISES, mailtoHref } from "@/data/company";
 
 interface Props {
   title?: string;
@@ -18,10 +18,10 @@ interface Props {
  * dönüş sözü çalışma saatleriyle birlikte. Telefon yalnızca doğrulanmışsa gösterilir.
  */
 export default function GuideCta({
-  title = "Bu ürünler için ücretsiz teklif alın",
+  title = "Bu ürünler için kurumsal teklif alın",
   text,
   browseHref,
-  browseLabel = CTA.browse,
+  browseLabel = "Ürünleri inceleyin",
   id = "rehber-teklif",
 }: Props) {
   return (
@@ -52,9 +52,7 @@ export default function GuideCta({
       <ul className="mt-4 flex flex-col gap-2 text-sm text-ink-soft sm:flex-row sm:flex-wrap sm:gap-x-6">
         <li className="flex items-center gap-2">
           <Clock className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
-          <span>
-            {PROMISES.quoteShort} · {HOURS_SHORT}
-          </span>
+          <span>{PROMISES.quoteShort}</span>
         </li>
         <li className="flex items-center gap-2">
           <Mail className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />

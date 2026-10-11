@@ -18,7 +18,7 @@ import { guidesForCategory } from "@/components/catalog/guides";
 import { koliRange } from "@/components/catalog/productFacts";
 import { DEFAULT_OG_IMAGE, OG_BASE, absoluteUrl, breadcrumbNode, type Crumb } from "@/components/catalog/seo";
 import { CATEGORY_PAGES, getCategoryBySlug, introParagraphs, type CategoryPage } from "@/data/categories";
-import { CTA, HARDWARE_GROUPS, PROMISES, latestCatalogFor } from "@/data/company";
+import { CTA, PROMISES, latestCatalogFor } from "@/data/company";
 import { CATEGORIES, getFeaturedProducts, getProductsByCategory, productHref } from "@/data/products";
 
 export const dynamicParams = false;
@@ -119,11 +119,11 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
       <JsonLd data={jsonLd} />
 
       <PageHero
-        eyebrow="FABA KKD kataloğu"
+        eyebrow="İş güvenliği · FABA"
         title={c.h1}
-        description={`Bu kategoride ${products.length} FABA modeli var${
-          koli ? `; koli içi ${koli}` : ""
-        }. Standart kodlarını, beden ve koli bilgilerini karşılaştırın, koli bazında ücretsiz teklif alın.`}
+        description={`FABA modellerinin standart kodlarını, beden ve koli bilgilerini karşılaştırın${
+          koli ? ` (koli içi ${koli})` : ""
+        }; koli ve palet bazında kurumsal teklif alın.`}
         crumbs={crumbs.slice(1)}
         emitJsonLd={false}
         label="Ürünlerimiz"
@@ -252,7 +252,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
       <section aria-labelledby="modeller-baslik" id="modeller" className="scroll-mt-24 bg-slate-50/60 py-10 sm:py-14">
         <div className="container-x">
           <h2 id="modeller-baslik" className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
-            {c.name}: {products.length} model
+            {c.name}: modeller
           </h2>
           <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
             {products.map((p) => (
@@ -268,9 +268,9 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
       <section aria-labelledby="kategori-teklif" className="py-10 sm:py-14">
         <div className="container-x grid gap-6 xl:grid-cols-12 xl:gap-10">
           <div className="min-w-0 rounded-3xl border border-line bg-white p-5 sm:p-8 xl:col-span-7">
-            <p className="eyebrow">Toptan teklif</p>
+            <p className="eyebrow">Kurumsal teklif</p>
             <h2 id="kategori-teklif" className="mt-1 text-xl font-bold tracking-tight text-ink sm:text-2xl">
-              {c.name} için ücretsiz teklif alın
+              {c.name} için kurumsal teklif alın
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
               İhtiyacınız olan modelleri, bedenleri ve koli adedini teklif listenize ekleyin. Fiyatı miktar ve teslimat
@@ -349,7 +349,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
               className="inline-flex min-h-[44px] items-center gap-2 text-sm font-semibold text-brand hover:underline"
             >
               <Wrench className="h-4 w-4" aria-hidden />
-              {HARDWARE_GROUPS.length} teknik hırdavat ürün grubu
+              Endüstriyel malzeme ürün grupları
             </Link>
           </div>
         </div>

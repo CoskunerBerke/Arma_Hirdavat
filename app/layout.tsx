@@ -25,9 +25,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-const DEFAULT_TITLE = "Samsun Hırdavat ve İş Eldiveni Toptan | Arma Hırdavat";
+const DEFAULT_TITLE = "Endüstriyel Tedarik ve Teknik Hırdavat | Arma Hırdavat";
 const DEFAULT_DESCRIPTION =
-  "Samsun Tekkeköy'de teknik hırdavat mağazası ve iş güvenliği tedarikçisi. FABA iş eldiveni, koruyucu tulum ve KKD ürünlerinde koli bazında teklif alın.";
+  "Fabrikalar ve sanayi tesisleri için teknik hırdavat, endüstriyel sarf ve iş güvenliği ürünlerinde koli ve palet bazında kurumsal tedarik ve teklif.";
 
 /*
  * Kök metadata. Notlar (sayfa sahipleri için):
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     siteName: COMPANY.name,
-    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name}: FABA iş eldiveni ve koruyucu giyim` }],
+    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name}: endüstriyel tedarik ve teknik hırdavat` }],
   },
   twitter: {
     card: "summary_large_image",
@@ -120,7 +120,7 @@ const storeJsonLd: Record<string, unknown> = {
   areaServed: { "@type": "Country", name: "Türkiye", identifier: "TR" },
   hasOfferCatalog: {
     "@type": "OfferCatalog",
-    name: "İş güvenliği ve teknik hırdavat ürünleri",
+    name: "Endüstriyel malzemeler, teknik hırdavat ve iş güvenliği ürünleri",
     itemListElement: [
       ...CATEGORY_PAGES.map((c) => ({
         "@type": "OfferCatalog",
@@ -129,7 +129,7 @@ const storeJsonLd: Record<string, unknown> = {
       })),
       {
         "@type": "OfferCatalog",
-        name: "Teknik hırdavat ürün grupları",
+        name: "Endüstriyel malzeme ve teknik hırdavat ürün grupları",
         url: `${SITE_URL}/urun-gruplari`,
       },
     ],

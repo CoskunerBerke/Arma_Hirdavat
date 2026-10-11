@@ -1,63 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
-import {
-  Anchor,
-  ArrowRight,
-  Bolt,
-  Cable,
-  CircleDot,
-  Clock,
-  Construction,
-  Cylinder,
-  Disc,
-  Disc3,
-  Drill,
-  Droplets,
-  Fan,
-  Flame,
-  FlaskConical,
-  Gauge,
-  Hammer,
-  Hand,
-  HardHat,
-  Mail,
-  MapPin,
-  Nut,
-  Package,
-  Plug,
-  Ruler,
-  Scissors,
-  ShieldCheck,
-  Sparkles,
-  SprayCan,
-  Truck,
-  Waves,
-  Waypoints,
-  Weight,
-  Wind,
-  Wrench,
-} from "lucide-react";
+import { ArrowRight, Clock, Mail, MapPin, Truck } from "lucide-react";
 import PageHero from "@/components/PageHero";
 import RfqTriggerButton from "@/components/RfqTriggerButton";
 import GroupQuoteButton from "./GroupQuoteButton";
+import { hardwareGroupIcon } from "@/components/catalog/hardwareGroupIcons";
 import {
   BRANDS,
   COMPANY,
   HARDWARE_GROUPS,
-  HOURS_SHORT,
-  HOURS_TEXT,
   PROMISES,
   SITE_URL,
   mailtoHref,
 } from "@/data/company";
-import { PRODUCT_GROUPS, slugify } from "@/data/products";
+import { slugify } from "@/data/products";
 
 const PATH = "/urun-gruplari";
-const TITLE = "Teknik Hırdavat Ürün Grupları – Samsun";
-const DESCRIPTION = `Tekkeköy, Samsun'da teknik hırdavat: bağlantı elemanı, el aleti, kaynak, hortum ve aşındırıcı dahil ${HARDWARE_GROUPS.length} ürün grubu. İhtiyacınızı yazın, teklif verelim.`;
-const H1 = `Samsun Tekkeköy'de Teknik Hırdavat: ${HARDWARE_GROUPS.length} Ürün Grubu`;
+const TITLE = "Endüstriyel Malzeme Ürün Grupları";
+const DESCRIPTION = "Fabrikalar için bağlantı elemanı, hortum, pompa, vana, kesici taş, el aleti, kaynak ve iş güvenliği ürün grupları. Koli/palet bazında kurumsal teklif alın.";
+const H1 = "Endüstriyel Malzeme ve Teknik Hırdavat Ürün Grupları";
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -70,45 +32,12 @@ export const metadata: Metadata = {
     url: PATH,
     title: `${TITLE} | ${COMPANY.name}`,
     description: DESCRIPTION,
-    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name} – teknik hırdavat ürün grupları` }],
+    images: [{ url: "/og/arma-og.png", width: 1200, height: 630, alt: `${COMPANY.name} – endüstriyel malzeme ürün grupları` }],
   },
 };
 
 type HardwareGroup = (typeof HARDWARE_GROUPS)[number];
 
-/** Grup simgeleri (eşleşmeyen grup Wrench ile gösterilir). */
-const GROUP_ICONS: Partial<Record<HardwareGroup, LucideIcon>> = {
-  "Bağlantı Elemanları": Nut,
-  "Diğer Bağlantı Elemanları": Bolt,
-  "Çelik Halat ve Gemi Halatı": Anchor,
-  "Polyester Halat, Kaldırma ve İndirme Ekipmanları": Weight,
-  "Havalı El Aletleri": Wind,
-  "Elektrikli El Aletleri": Plug,
-  "Vana, Flanş ve Boru Ek Parçaları": Waypoints,
-  "Hortum Çeşitleri": Cable,
-  "El Aletleri": Wrench,
-  "İzeltaş El Aletleri": Hammer,
-  "Eldiven Çeşitleri": Hand,
-  "İş Güvenliği Ekipmanları": HardHat,
-  "3M Ürünleri": ShieldCheck,
-  "Ölçü Aletleri": Ruler,
-  "Kaynak Makinaları": Flame,
-  "Elektrot ve Gazaltı Kaynak Teli Ekipmanları": Sparkles,
-  "Gaz ve Gaz Aletleri": Cylinder,
-  "Pnömatik Ürünler (Pakkens)": Gauge,
-  "Matkap Ucu, Kılavuz ve Pafta": Drill,
-  "Testere, Profil Kesme, Karot ve Sarf Malzemeleri": Scissors,
-  "Kesme ve Taşlama Taşları": Disc3,
-  "Aşındırıcı Ürünler": Disc,
-  "Yıkama ve Yağlama Ekipmanları": Droplets,
-  "Kompresör ve Airless Boya Makinası": SprayCan,
-  "Endüstriyel Kimyasallar ve Yapıştırıcılar": FlaskConical,
-  "Sanayi Bantları ve Ambalaj Ürünleri": Package,
-  "Aspiratör, Mengene, İşkence ve Boya Sarf Malzemeleri": Fan,
-  "Sanayi Tekerleri": CircleDot,
-  "Merdiven, İnşaat Makinaları ve İnşaat El Aletleri": Construction,
-  "Domak Pompa ve Sufil Ürünleri": Waves,
-};
 
 /** Online katalogda karşılığı olan gruplar (FABA KKD ürünleri). */
 const ONLINE_GROUPS: ReadonlySet<string> = new Set<HardwareGroup>(["Eldiven Çeşitleri", "İş Güvenliği Ekipmanları"]);
@@ -211,7 +140,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
   {
     q: "Az miktarda alım yapabilir miyim?",
-    a: `Evet. Tekkeköy mağazamızdan perakende alım yapabilirsiniz (${HOURS_TEXT}). Kurumsal ve toptan alımlarda koli veya palet bazında teklif veriyoruz.`,
+    a: "Evet. Tekkeköy merkez mağazamızdan perakende alım yapabilirsiniz. Kurumsal alımlarda koli veya palet bazında teklif veriyoruz.",
   },
   {
     q: "Ödemeyi nasıl yapabilirim?",
@@ -242,10 +171,10 @@ export default function HardwareGroupsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Teknik hırdavat"
+        eyebrow="Ürün grupları"
         title={H1}
-        description="Tekkeköy'deki mağaza ve depomuzdan fabrikalara, şantiyelere ve atölyelere teknik hırdavat tedarik ediyoruz. Online katalogda FABA iş güvenliği ürünleri yer alır; aşağıdaki gruplar için ihtiyacınızı yazın, teklifle dönelim."
-        crumbs={[{ label: "Teknik Hırdavat", href: PATH }]}
+        description="Fabrikaların, şantiyelerin ve imalat hatlarının ihtiyaç duyduğu teknik hırdavat ve endüstriyel sarf malzemelerini koli ve palet bazında tedarik ediyoruz. Aşağıdaki gruplar için ihtiyacınızı yazın, kurumsal teklifle dönelim."
+        crumbs={[{ label: "Ürün Grupları", href: PATH }]}
       />
 
       {/* Hızlı bilgiler + birincil eylem (ekranın üst kısmı: Reveal yok) */}
@@ -257,9 +186,9 @@ export default function HardwareGroupsPage() {
                 <MapPin className="h-5 w-5" aria-hidden />
               </span>
               <span className="text-sm leading-snug">
-                <strong className="block font-semibold text-ink">Mağaza ve depo</strong>
+                <strong className="block font-semibold text-ink">Merkez mağaza ve depo</strong>
                 <span className="text-ink-soft">
-                  {COMPANY.address.district} / {COMPANY.address.city} · {HOURS_SHORT}
+                  {COMPANY.address.district} / {COMPANY.address.city}
                 </span>
               </span>
             </li>
@@ -269,7 +198,7 @@ export default function HardwareGroupsPage() {
               </span>
               <span className="text-sm leading-snug">
                 <strong className="block font-semibold text-ink">{PROMISES.quoteShort}</strong>
-                <span className="text-ink-soft">Mesai saatlerinde gelen taleplere</span>
+                <span className="text-ink-soft">E-posta / WhatsApp / PDF</span>
               </span>
             </li>
             <li className="flex items-start gap-3">
@@ -289,14 +218,14 @@ export default function HardwareGroupsPage() {
         </div>
       </section>
 
-      {/* 30 ürün grubu (SSR liste; yalnızca düğmeler istemci adası) */}
+      {/* Ürün grupları (SSR liste; yalnızca düğmeler istemci adası) */}
       <section className="section" aria-labelledby="gruplar-baslik">
         <div className="container-x">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
-              <p className="eyebrow">Mağaza ve tedarik</p>
+              <p className="eyebrow">Endüstriyel tedarik</p>
               <h2 id="gruplar-baslik" className="mt-3 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-                {HARDWARE_GROUPS.length} ürün grubu
+                Ürün gruplarımız
               </h2>
               <p className="mt-3 text-base leading-relaxed text-ink-soft">
                 Her grupta farklı ölçü, kalite ve marka seçenekleri bulunur. Aradığınız ürünü, ölçüsünü ve miktarını yazın;
@@ -307,7 +236,7 @@ export default function HardwareGroupsPage() {
               href="/urunler"
               className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand hover:underline"
             >
-              {PRODUCT_GROUPS.length} FABA iş güvenliği ürünü online <ArrowRight className="h-4 w-4" aria-hidden />
+              FABA iş güvenliği ürünleri online <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
           </div>
 
@@ -333,7 +262,7 @@ export default function HardwareGroupsPage() {
                 <h3 className="text-lg font-bold text-ink sm:text-xl">{c.title}</h3>
                 <ul className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                   {c.groups.map((group) => {
-                    const Icon = GROUP_ICONS[group as HardwareGroup] ?? Wrench;
+                    const Icon = hardwareGroupIcon(group);
                     const brands = brandsByGroup(group);
                     const online = ONLINE_GROUPS.has(group);
                     return (
@@ -392,9 +321,9 @@ export default function HardwareGroupsPage() {
             </li>
             <li className="surface p-6">
               <span className="text-sm font-bold text-brand">2</span>
-              <h3 className="mt-2 text-base font-semibold text-ink">Teklifinizi alın</h3>
+              <h3 className="mt-2 text-base font-semibold text-ink">Resmi teknik teklifinizi alın</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                {PROMISES.quoteTurnaround} Teklifiniz e-postanıza gelir.
+                {PROMISES.quoteTurnaround}
               </p>
             </li>
             <li className="surface p-6">
@@ -488,7 +417,7 @@ export default function HardwareGroupsPage() {
 
       {/* Kapanış CTA */}
       <section className="container-x pb-20 pt-4 sm:pb-24" aria-labelledby="cta-baslik">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0F1B2D] via-[#0B1528] to-[#003EA8] p-8 shadow-xl sm:p-12">
+        <div className="relative overflow-hidden rounded-3xl bg-navy p-8 shadow-xl sm:p-12">
           <div className="relative flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-xl">
               <h2 id="cta-baslik" className="text-2xl font-bold tracking-tight text-white sm:text-3xl">

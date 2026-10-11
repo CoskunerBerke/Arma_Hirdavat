@@ -3,20 +3,13 @@
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronDown, ChevronRight, Clock, Mail, MessageCircle, Phone, Search, Store, X } from "lucide-react";
-import {
-  COMPANY,
-  HOURS_TEXT,
-  PRIMARY_PHONE,
-  PROMISES,
-  mailtoHref,
-  whatsappHref,
-} from "@/data/company";
+import { ArrowRight, ChevronDown, ChevronRight, FileCheck2, Mail, MessageCircle, Phone, Search, Store, X } from "lucide-react";
+import { COMPANY, PRIMARY_PHONE, PROMISES, mailtoHref, whatsappHref } from "@/data/company";
 import { useModal } from "@/lib/useModal";
 import { track, EVENTS } from "@/lib/track";
-import { useRetailModal } from "@/components/RetailStoreModal";
 import { preloadSearch, useProductSearch } from "@/components/ProductSearchModal";
 import QuoteButton from "./QuoteButton";
+import StoreInfoCard from "./StoreInfoCard";
 import { buildMainMenu, isMenuItemActive } from "./nav-utils";
 import type { HeaderNavProps } from "./types";
 
@@ -31,18 +24,19 @@ interface MobileMenuProps extends HeaderNavProps {
  * Mobil menü (lg altı): tam ekran erişilebilir diyalog.
  * Odak tuzağı, Escape, kaydırma kilidi ve kapanınca odağın menü düğmesine dönmesi useModal'dan gelir.
  */
-export default function MobileMenu({ categories, totalProducts, pathname, onClose }: MobileMenuProps) {
+export default function MobileMenu({ categories, pathname, onClose }: MobileMenuProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const { panelRef } = useModal<HTMLDivElement>({ open: true, onClose, initialFocusRef: closeRef });
   const { openSearch } = useProductSearch();
-  const { openModal: openRetailModal } = useRetailModal();
-  const menu = buildMainMenu(categories, totalProducts);
+  const menu = buildMainMenu(categories);
   // Bulunulan sayfanın grubu açık başlar (ör. kategori sayfasında "Ürünler")
   const [openGroup, setOpenGroup] = useState<number | null>(() => {
-    const i = menu.findIndex((m) => m.children?.length && isMenuItemActive(pathname, m));
+    const i = menu.findIndex((m) => (m.children?.length || m.columns?.length) && isMenuItemActive(pathname, m));
     return i >= 0 ? i : null;
   });
   const groupBaseId = useId();
+  const storeId = useId();
+  const [storeOpen, setStoreOpen] = useState(false);
   const titleId = useId();
   const wa = whatsappHref();
 
@@ -81,7 +75,7 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
               className="flex min-h-[48px] w-full items-center gap-2.5 rounded-xl border border-line-input bg-white px-3.5 text-left text-base text-ink-muted"
             >
               <Search className="h-5 w-5 shrink-0 text-brand" aria-hidden />
-              <span>Ürün, kod veya ihtiyaç ara</span>
+              <span>Malzeme adı, parça veya standart ara…</span>
             </button>
 
             <div>
@@ -93,7 +87,7 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
               <ul className="divide-y divide-line border-y border-line">
                 {menu.map((item, idx) => {
                   const active = isMenuItemActive(pathname, item);
-                  if (item.children?.length) {
+                  if (item.children?.length || item.columns?.length) {
                     const isOpen = openGroup === idx;
                     const groupId = `${groupBaseId}-${idx}`;
                     return (
@@ -113,34 +107,28 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
                             className={`h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                           />
                         </button>
-                        <ul id={groupId} hidden={!isOpen} className="border-l-[3px] border-accent pb-3 pl-1">
-                          {item.children.map((c) => {
-                            const here = pathname === c.href;
-                            return (
-                              <li key={c.href}>
-                                <Link
-                                  href={c.href}
-                                  onClick={onClose}
-                                  aria-current={here ? "page" : undefined}
-                                  className={`flex min-h-[44px] items-center justify-between gap-3 rounded-lg px-3 text-base hover:bg-slate-50 ${
-                                    here
-                                      ? "font-semibold text-accent-ink"
-                                      : c.strong
-                                        ? "font-semibold text-brand"
-                                        : "text-ink-soft"
-                                  }`}
-                                >
-                                  <span>{c.label}</span>
-                                  {c.hint ? (
-                                    <span className="shrink-0 text-xs text-ink-muted">{c.hint}</span>
-                                  ) : (
-                                    <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
-                                  )}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
+                        <div id={groupId} hidden={!isOpen} className="border-l-[3px] border-accent pb-3 pl-1">
+                          {item.columns ? (
+                            item.columns.map((col) => (
+                              <div key={col.title} className="mt-1 first:mt-0">
+                                <p className="px-3 pb-1 pt-2 text-xs font-bold uppercase tracking-[0.12em] text-accent-ink">
+                                  {col.title}
+                                </p>
+                                <ul>
+                                  {[...col.links, col.all].map((c) => (
+                                    <MenuLink key={c.href} label={c.label} href={c.href} strong={c.strong} pathname={pathname} onClose={onClose} />
+                                  ))}
+                                </ul>
+                              </div>
+                            ))
+                          ) : (
+                            <ul>
+                              {item.children!.map((c) => (
+                                <MenuLink key={c.href} label={c.label} href={c.href} strong={c.strong} pathname={pathname} onClose={onClose} />
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       </li>
                     );
                   }
@@ -163,31 +151,38 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
               </ul>
             </nav>
 
-            <button
-              type="button"
-              aria-haspopup="dialog"
-              onClick={() => {
-                onClose();
-                openRetailModal();
-              }}
-              className="mt-2 flex min-h-[56px] w-full items-center justify-between gap-3 rounded-xl border border-line bg-slate-50 px-4 text-left"
-            >
-              <span className="flex items-center gap-3">
-                <Store className="h-5 w-5 shrink-0 text-ink-muted" aria-hidden />
-                <span>
-                  <span className="block text-sm font-semibold text-ink">Tekkeköy mağazamız</span>
-                  <span className="block text-xs text-ink-muted">Adres, çalışma saatleri ve perakende alım</span>
+            {/* Fiziki mağaza & perakende (masaüstünde üst şeritteki açılır kart) */}
+            <div className="mt-2 overflow-hidden rounded-xl border border-line bg-slate-50">
+              <button
+                type="button"
+                aria-expanded={storeOpen}
+                aria-controls={storeId}
+                onClick={() => setStoreOpen((v) => !v)}
+                className="flex min-h-[56px] w-full items-center justify-between gap-3 px-4 text-left"
+              >
+                <span className="flex items-center gap-3">
+                  <Store className="h-5 w-5 shrink-0 text-accent-ink" aria-hidden />
+                  <span>
+                    <span className="block text-sm font-bold text-ink">Fiziki Mağazamız &amp; Perakende</span>
+                    <span className="block text-xs text-ink-muted">Tekkeköy merkez mağaza: adres, saatler, yol tarifi</span>
+                  </span>
                 </span>
-              </span>
-              <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
-            </button>
+                <ChevronDown
+                  className={`h-4 w-4 shrink-0 text-ink-muted transition-transform duration-200 ${storeOpen ? "rotate-180" : ""}`}
+                  aria-hidden
+                />
+              </button>
+              <div id={storeId} hidden={!storeOpen} className="border-t border-line bg-white p-4">
+                <StoreInfoCard source="mobil_menu_magaza" />
+              </div>
+            </div>
 
             <div className="mt-1 rounded-2xl border border-line p-4 text-sm">
-              <p className="flex items-center gap-2 font-semibold text-ink">
-                <Clock className="h-4 w-4 shrink-0 text-action" aria-hidden />
+              <p className="flex items-start gap-2 font-semibold text-ink">
+                <FileCheck2 className="mt-0.5 h-4 w-4 shrink-0 text-action" aria-hidden />
                 {PROMISES.quoteShort}
               </p>
-              <p className="mt-1 pl-6 text-ink-soft">{HOURS_TEXT}</p>
+              <p className="mt-1 pl-6 text-xs leading-relaxed text-ink-soft">{PROMISES.quoteTurnaround}</p>
               <div className="mt-3 grid gap-2">
                 <a
                   href={mailtoHref()}
@@ -226,5 +221,41 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
         </div>
       </div>
     </div>
+  );
+}
+
+/** Mobil menü alt bağlantısı */
+function MenuLink({
+  label,
+  href,
+  strong,
+  pathname,
+  onClose,
+}: {
+  label: string;
+  href: string;
+  strong?: boolean;
+  pathname: string;
+  onClose: () => void;
+}) {
+  const here = pathname === href;
+  return (
+    <li>
+      <Link
+        href={href}
+        onClick={onClose}
+        aria-current={here ? "page" : undefined}
+        className={`flex min-h-[44px] items-center justify-between gap-3 rounded-lg px-3 text-base hover:bg-slate-50 ${
+          here ? "font-semibold text-accent-ink" : strong ? "font-bold text-navy" : "text-ink-soft"
+        }`}
+      >
+        <span>{label}</span>
+        {strong ? (
+          <ArrowRight className="h-4 w-4 shrink-0 text-accent-ink" aria-hidden />
+        ) : (
+          <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
+        )}
+      </Link>
+    </li>
   );
 }

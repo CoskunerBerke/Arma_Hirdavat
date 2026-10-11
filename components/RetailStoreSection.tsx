@@ -3,18 +3,19 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, Clock, ExternalLink, MapPin, Navigation, Phone, Store } from "lucide-react";
 import TrackedLink from "./home/TrackedLink";
 import RetailModalTrigger from "./home/RetailModalTrigger";
-import { COMPANY, HARDWARE_GROUPS, HOURS_TEXT, PRIMARY_PHONE } from "@/data/company";
+import { COMPANY, HOURS_TEXT, PRIMARY_PHONE } from "@/data/company";
 
 /*
- * Perakende satış — Tekkeköy mağazası (sunucu bileşeni), ana sayfada vurgulu bölüm.
+ * Perakende satış — Tekkeköy merkez mağaza (sunucu bileşeni). İşletme kararı: ana sayfada referans
+ * şeridinin hemen altında, "Perakende satış" rozetiyle vurgulu kalır.
  * Görsel: mağaza binası (hero posteri). Adres, saat, telefon yalnızca data/company.ts'ten gelir;
  * telefon doğrulanmadıysa gösterilmez.
  */
 const POINTS = [
-  "Tek parça ve az miktarda alım",
+  "Tekil parça ve az miktarda alım",
   "Ürünleri yerinde görüp seçme",
-  `${HARDWARE_GROUPS.length} ürün grubunda teknik hırdavat`,
-  "İş eldiveni, tulum ve iş güvenliği ürünleri",
+  "Atölye ve bireysel teknik hırdavat",
+  "İş güvenliği ürünleri ve sarf malzemeleri",
 ];
 
 export default function RetailStoreSection() {
@@ -45,13 +46,13 @@ export default function RetailStoreSection() {
 
           {/* İçerik */}
           <div className="p-6 sm:p-10">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Mağazamız</p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Fiziki mağaza &amp; perakende</p>
             <h2 id="fiziki-magaza-baslik" className="mt-3 text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-              Perakende satış: Tekkeköy mağazamıza bekleriz
+              Perakende satış: Tekkeköy merkez mağazamıza bekleriz
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">
-              Koli ve palet gerekmez. Tek ürün, birkaç çift eldiven ya da atölyenizin günlük ihtiyaçları için mağazamızdan
-              doğrudan alışveriş yapabilirsiniz.
+              Tekil parça, atölye ve bireysel teknik hırdavat ihtiyaçlarınız için Tekkeköy mağazamızda hizmetinizdeyiz. Koli
+              ve palet gerekmez; ürünleri yerinde görüp doğrudan satın alabilirsiniz.
             </p>
 
             <ul className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -77,7 +78,10 @@ export default function RetailStoreSection() {
                 <Clock className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" aria-hidden />
                 <div>
                   <dt className="sr-only">Çalışma saatleri</dt>
-                  <dd className="text-ink">{HOURS_TEXT}</dd>
+                  <dd className="text-ink">
+                    {HOURS_TEXT}
+                    <span className="block text-xs text-ink-muted">Pazar kapalı</span>
+                  </dd>
                 </div>
               </div>
               {PRIMARY_PHONE && (
@@ -100,7 +104,7 @@ export default function RetailStoreSection() {
               )}
             </dl>
 
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href={COMPANY.mapLink}
                 target="_blank"
@@ -108,7 +112,7 @@ export default function RetailStoreSection() {
                 className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-amber-400 px-6 text-sm font-bold text-slate-950 shadow-lg shadow-amber-500/20 transition-colors hover:bg-amber-300"
               >
                 <Navigation className="h-4 w-4" aria-hidden />
-                Yol tarifi al
+                Google Haritalar&apos;da yol tarifi al
                 <ExternalLink className="h-3.5 w-3.5 opacity-70" aria-hidden />
                 <span className="sr-only">(yeni sekmede açılır)</span>
               </a>

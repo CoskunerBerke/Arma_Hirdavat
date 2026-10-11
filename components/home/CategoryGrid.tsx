@@ -1,124 +1,138 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Wrench } from "lucide-react";
+import { ArrowRight, HardHat, Wrench } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "./SectionHeading";
+import { hardwareGroupIcon } from "@/components/catalog/hardwareGroupIcons";
 import { CATEGORY_PAGES, categoryHref } from "@/data/categories";
-import { HARDWARE_GROUPS } from "@/data/company";
-import { getProductsByCategory, isFeatured, parseKoli, PRODUCT_GROUPS, type ProductGroup } from "@/data/products";
+import { FEATURED_HARDWARE_GROUPS } from "@/data/company";
+import { getProductsByCategory, isFeatured } from "@/data/products";
+import { slugify } from "@/data/slug";
 
 /*
- * Hero'nun hemen altındaki taranabilir kategori ızgarası (sunucu bileşeni).
- * Bağlantı metni = kategori adı (alıcıların arama dili). Sayılar ve koli aralıkları veriden üretilir.
- * Kısa açıklamalar kullanım alanını anlatır; performans iddiası (EN kodu, seviye) İÇERMEZ.
+ * Ana sayfa ürün grupları (sunucu bileşeni) — DENGELİ iki eşit panel:
+ * solda endüstriyel malzemeler (HARDWARE_GROUPS'tan seçilmiş 8 grup), sağda FABA iş güvenliği (8 kategori).
+ * Site yalnızca KKD sitesi gibi okunmasın diye iki panel aynı görsel ağırlıktadır. Sayı (ürün / grup adedi) yazılmaz.
  */
-const BLURB: Record<string, string> = {
-  "nitril-kapli-is-eldiveni": "Genel montaj, taşıma ve depo işleri",
-  "kopuk-nitril-eldiven": "Hassas montaj ve güvenli kavrama",
-  "kesilmeye-direncli-eldiven": "Keskin kenarlı sac, cam ve parça ile çalışma",
-  "kaynakci-eldiveni": "Elektrot, gazaltı ve TIG kaynağı; deri sürücü eldiveni",
-  "kimyasal-koruyucu-tulum": "Sıvı jeti, sprey, toz ve sıçramaya karşı Tip 3–6 tulumlar",
-  "tek-kullanimlik-tulum": "Toz ve hafif sıvı sıçramasına karşı lamineli, SMS ve ekonomik tulumlar",
-  "onluk-laboratuvar-onlugu": "Laboratuvar ve kimyasal işlemler için önlükler",
-  "kolluk-galos-baslik": "Kolluk, ayakkabı ve bot galoşu, koruyucu başlık",
-};
+const HOME_HARDWARE_COUNT = 8;
 
-/** "Koli içi 192–252 çift" (birimler farklıysa veya veri yoksa null) */
-function koliRange(products: ProductGroup[]): string | null {
-  const infos = products.map((p) => parseKoli(p.koli)).filter((i): i is NonNullable<typeof i> => i !== null);
-  if (infos.length === 0) return null;
-  const units = new Set(infos.map((i) => i.unit));
-  if (units.size !== 1) return null;
-  const unit = infos[0].unit;
-  const min = Math.min(...infos.map((i) => i.perCarton));
-  const max = Math.max(...infos.map((i) => i.perCarton));
-  const fmt = (n: number) => n.toLocaleString("tr-TR");
-  return min === max ? `Koli içi ${fmt(min)} ${unit}` : `Koli içi ${fmt(min)}–${fmt(max)} ${unit}`;
+interface Tile {
+  key: string;
+  label: string;
+  href: string;
+  icon?: LucideIcon;
+  image?: string;
 }
 
 export default function CategoryGrid() {
-  const tiles = CATEGORY_PAGES.map((c) => {
+  const hardware: Tile[] = FEATURED_HARDWARE_GROUPS.slice(0, HOME_HARDWARE_COUNT).map((g) => ({
+    key: g.group,
+    label: g.label,
+    href: `/urun-gruplari#${slugify(g.group)}`,
+    icon: hardwareGroupIcon(g.group),
+  }));
+
+  const ppe: Tile[] = CATEGORY_PAGES.map((c) => {
     const products = getProductsByCategory(c.name);
     const cover = products.find((p) => isFeatured(p.id)) ?? products[0];
-    return { c, count: products.length, cover, koli: koliRange(products) };
+    return { key: c.slug, label: c.name, href: categoryHref(c.name), image: cover?.image, count: products.length };
   }).filter((t) => t.count > 0);
 
   return (
-    <section aria-labelledby="kategoriler-baslik" className="border-b border-line bg-white py-12 sm:py-16">
+    <section id="urun-gruplari" aria-labelledby="kategoriler-baslik" className="scroll-mt-24 bg-canvas py-16 sm:py-20">
       <div className="container-x">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="eyebrow">Kategoriler</p>
-            <h2 id="kategoriler-baslik" className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              Kategoriye göre iş güvenliği ürünleri
-            </h2>
-            <p className="mt-2 max-w-2xl text-sm text-ink-soft sm:text-base">
-              {tiles.length} kategoride {PRODUCT_GROUPS.length} FABA ürünü. Her ürün sayfasında EN standartları, bedenler
-              ve koli içi adet yazılıdır.
-            </p>
+        <SectionHeading
+          id="kategoriler-baslik"
+          eyebrow="Ürün grupları"
+          title="Bir tesisin ihtiyaç duyduğu tüm malzemeler tek tedarikçide"
+          description="Bağlantı elemanından pompaya, kesici taştan iş güvenliğine; marka, ölçü ve standart seçenekleriyle."
+        />
+
+        <div className="mt-10 grid gap-5 lg:grid-cols-2 lg:gap-6">
+          <Panel
+            icon={Wrench}
+            title="Endüstriyel Malzemeler"
+            text="Teknik hırdavat, tesisat ve sarf malzemeleri"
+            tiles={hardware}
+            all={{ href: "/urun-gruplari", label: "Tüm ürün grupları" }}
+          />
+          <Panel
+            icon={HardHat}
+            title="İş Güvenliği · FABA"
+            text="EN standartlı eldiven, tulum ve koruyucu giyim"
+            tiles={ppe}
+            all={{ href: "/urunler", label: "Tüm FABA ürünleri" }}
+            delay={90}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Panel({
+  icon: Icon,
+  title,
+  text,
+  tiles,
+  all,
+  delay = 0,
+}: {
+  icon: LucideIcon;
+  title: string;
+  text: string;
+  tiles: Tile[];
+  all: { href: string; label: string };
+  delay?: number;
+}) {
+  return (
+    <Reveal delay={delay} className="min-w-0">
+      <div className="flex h-full flex-col rounded-3xl border border-line bg-white p-5 shadow-xs sm:p-7">
+        <div className="flex items-center gap-3 border-b border-line pb-4">
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-navy text-accent">
+            <Icon className="h-5 w-5" aria-hidden />
+          </span>
+          <div className="min-w-0">
+            <h3 className="text-lg font-extrabold tracking-tight text-navy sm:text-xl">{title}</h3>
+            <p className="text-sm text-ink-muted">{text}</p>
           </div>
-          <Link
-            href="/urunler"
-            className="inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-brand hover:text-brand-hover"
-          >
-            Tüm ürünler <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
         </div>
 
-        <ul className="mt-8 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-          {tiles.map(({ c, count, cover, koli }) => (
-            <li key={c.slug} className="min-w-0">
+        <ul className="mt-4 grid flex-1 content-start gap-1.5 sm:grid-cols-2">
+          {tiles.map((t) => (
+            <li key={t.key} className="min-w-0">
               <Link
-                href={categoryHref(c.name)}
-                className="surface group flex h-full items-center gap-4 p-3 hover:border-brand/40 hover:shadow-md sm:p-4"
+                href={t.href}
+                className="group flex min-h-[56px] items-center gap-3 rounded-xl border border-transparent px-2.5 py-2 transition duration-200 hover:border-line hover:bg-canvas"
               >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-slate-50 ring-1 ring-line sm:h-20 sm:w-20">
-                  {cover && (
-                    <Image src={cover.image} alt="" fill sizes="80px" className="object-contain p-1.5" />
-                  )}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-sm font-semibold leading-snug text-ink group-hover:text-brand sm:text-base">
-                    {c.name}
-                  </h3>
-                  {BLURB[c.slug] && (
-                    <p className="mt-0.5 hidden text-sm leading-relaxed text-ink-soft sm:block">{BLURB[c.slug]}</p>
-                  )}
-                  <p className="mt-1 text-xs text-ink-muted">
-                    {count} ürün{koli ? ` · ${koli}` : ""}
-                  </p>
-                </div>
+                <span className="relative flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-slate-100 text-navy ring-1 ring-line transition-colors group-hover:bg-accent-soft">
+                  {t.image ? (
+                    <Image src={t.image} alt="" fill sizes="40px" className="object-contain p-1" />
+                  ) : t.icon ? (
+                    <t.icon className="h-5 w-5" aria-hidden />
+                  ) : null}
+                </span>
+                <span className="min-w-0 flex-1 text-sm font-semibold leading-snug text-ink group-hover:text-navy">
+                  {t.label}
+                </span>
                 <ArrowRight
-                  className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brand"
+                  className="h-4 w-4 shrink-0 text-line-strong transition duration-200 group-hover:translate-x-0.5 group-hover:text-accent-ink"
                   aria-hidden
                 />
               </Link>
             </li>
           ))}
-
-          <li className="min-w-0">
-            <Link
-              href="/urun-gruplari"
-              className="surface group flex h-full items-center gap-4 border-dashed p-3 hover:border-brand/40 hover:shadow-md sm:p-4"
-            >
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand ring-1 ring-brand/15 sm:h-20 sm:w-20">
-                <Wrench className="h-7 w-7" aria-hidden />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h3 className="text-sm font-semibold leading-snug text-ink group-hover:text-brand sm:text-base">
-                  Teknik hırdavat: {HARDWARE_GROUPS.length} ürün grubu
-                </h3>
-                <p className="mt-0.5 hidden text-sm leading-relaxed text-ink-soft sm:block">
-                  Bağlantı elemanı, el aletleri, kaynak ve pnömatik ürünler
-                </p>
-                <p className="mt-1 text-xs text-ink-muted">Serbest metinle teklif isteyin</p>
-              </div>
-              <ArrowRight
-                className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brand"
-                aria-hidden
-              />
-            </Link>
-          </li>
         </ul>
+
+        <Link
+          href={all.href}
+          className="mt-4 inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-lg text-sm font-bold text-navy hover:text-accent-ink"
+        >
+          {all.label}
+          <ArrowRight className="h-4 w-4" aria-hidden />
+        </Link>
       </div>
-    </section>
+    </Reveal>
   );
 }

@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { ArrowRight, Info, Search, X } from "lucide-react";
 import { CATEGORIES, PRODUCT_GROUPS, type CategoryName } from "@/data/products";
 import { categoryHref, getCategoryByName } from "@/data/categories";
-import { HARDWARE_GROUPS, PROMISES } from "@/data/company";
+import { PROMISES } from "@/data/company";
 import { getHardwareHint, searchProducts } from "@/lib/search";
 import { EVENTS, track } from "@/lib/track";
 import ProductCard from "./ProductCard";
@@ -224,9 +224,9 @@ function CatalogView({ urlQuery, urlCategory }: { urlQuery: string; urlCategory:
               {q ? `“${q}” için online katalogda ürün bulamadık.` : "Bu filtreyle eşleşen ürün yok."}
             </p>
             <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-              Online katalogda FABA iş güvenliği ürünleri listelenir. Mağazamızda ve tedarikte ayrıca{" "}
-              {HARDWARE_GROUPS.length} teknik hırdavat ürün grubu bulunur. İhtiyacınızı yazın; temin edebildiğimiz ürünler
-              için fiyat teklifi gönderelim.
+              Online katalogda FABA iş güvenliği ürünleri listelenir. Tedarik ağımızda ayrıca bağlantı elemanından pompaya
+              kadar endüstriyel malzemeler bulunur. İhtiyacınızı yazın; temin edebildiğimiz ürünler için resmi teknik teklif
+              gönderelim.
             </p>
             {hardwareHint && (
               <p className="mt-3 text-sm text-ink-soft">
