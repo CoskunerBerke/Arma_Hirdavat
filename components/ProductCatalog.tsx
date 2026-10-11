@@ -158,14 +158,14 @@ function CatalogView({ urlQuery, urlCategory }: { urlQuery: string; urlCategory:
                       aria-current={active ? "true" : undefined}
                       className={`flex min-h-[44px] items-center justify-between gap-2 whitespace-nowrap rounded-xl px-3.5 text-sm transition-colors lg:min-h-[40px] lg:whitespace-normal lg:rounded-lg lg:px-3 ${
                         active
-                          ? "bg-brand font-semibold text-white shadow-xs"
+                          ? "bg-accent font-semibold text-navy shadow-xs"
                           : "border border-line bg-white text-ink-soft hover:bg-slate-50 hover:text-ink lg:border-transparent lg:bg-transparent"
                       }`}
                     >
                       <span>{c ?? "Tüm ürünler"}</span>
                       <span
                         className={`rounded-full px-1.5 py-0.5 text-xs ${
-                          active ? "bg-white/20 text-white" : "bg-slate-100 text-ink-muted"
+                          active ? "bg-white/40 text-navy" : "bg-slate-100 text-ink-muted"
                         }`}
                       >
                         {count}

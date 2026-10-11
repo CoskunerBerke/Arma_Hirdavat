@@ -2,59 +2,63 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, ChevronDown } from "lucide-react";
-import { CTA, NAV, PROMISES } from "@/data/company";
+import { ArrowRight, BookOpen, ChevronDown, ChevronRight } from "lucide-react";
+import { CTA, PROMISES } from "@/data/company";
 import { useQuote } from "@/components/QuoteContext";
-import { PRODUCTS_HREF, isNavActive } from "./nav-utils";
-import type { HeaderNavProps } from "./types";
+import { buildMainMenu, isMenuItemActive } from "./nav-utils";
+import type { HeaderNavProps, NavMenuItem } from "./types";
 
 interface DesktopNavProps extends HeaderNavProps {
   pathname: string;
-  /** Ana sayfanın koyu hero alanı üzerinde mi (açık renk metin) */
-  dark: boolean;
+  /** Eski koyu hero varyantı için bırakıldı; artık başlık her sayfada beyazdır (yok sayılır). */
+  dark?: boolean;
 }
 
-function linkTone(dark: boolean, active: boolean) {
-  if (dark) return active ? "text-white" : "text-slate-300 hover:text-white";
-  return active ? "text-brand" : "text-ink-soft hover:text-ink";
+/** Üst menü metin rengi: koyu gri, etkin/üzerine gelince vurgu rengi (beyaz zeminde 5:1). */
+function tone(active: boolean) {
+  return active ? "text-accent-ink" : "text-ink-soft hover:text-accent-ink";
 }
 
-/** Masaüstü ana menü (lg ve üzeri). "İş Güvenliği Ürünleri" öğesi kategori menüsü açar. */
-export default function DesktopNav({ categories, totalProducts, pathname, dark }: DesktopNavProps) {
+/** Metnin altındaki vurgu çizgisi: etkin sayfada sürekli, üzerine gelince kayarak belirir. */
+function Underline({ active, className = "inset-x-3" }: { active: boolean; className?: string }) {
   return (
-    <nav aria-label="Ana menü" className="hidden lg:block">
+    <span
+      aria-hidden
+      className={`pointer-events-none absolute bottom-1 h-[3px] origin-left rounded-full bg-accent transition-transform duration-300 ${className} ${
+        active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+      }`}
+    />
+  );
+}
+
+/**
+ * Masaüstü ana menü (lg ve üzeri): klasik kurumsal yatay metin menüsü.
+ * "Kurumsal" ve "Ürünler" üzerine gelince (veya ok düğmesiyle) açılan menüye sahiptir.
+ */
+export default function DesktopNav({ categories, totalProducts, pathname }: DesktopNavProps) {
+  const menu = buildMainMenu(categories, totalProducts);
+
+  return (
+    <nav aria-label="Ana menü" className="relative hidden lg:block">
       <ul className="flex items-center whitespace-nowrap xl:gap-1">
-        {NAV.map((item) => {
-          const active = isNavActive(pathname, item.href);
-          if (item.href === PRODUCTS_HREF) {
+        {menu.map((item) => {
+          const active = isMenuItemActive(pathname, item);
+          if (item.children?.length) {
             return (
-              <li key={item.href}>
-                <ProductsMenu
-                  label={item.label}
-                  href={item.href}
-                  active={active}
-                  dark={dark}
-                  pathname={pathname}
-                  categories={categories}
-                  totalProducts={totalProducts}
-                />
+              <li key={item.label} className={item.panel === "products" ? "" : "relative"}>
+                <MenuDropdown item={item} active={active} pathname={pathname} />
               </li>
             );
           }
           return (
-            <li key={item.href}>
+            <li key={item.label}>
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`relative inline-flex h-11 items-center rounded-lg px-2 text-sm font-semibold transition-colors xl:px-3 ${linkTone(dark, active)}`}
+                className={`group relative inline-flex h-11 items-center px-3 text-[15px] font-medium transition-colors xl:px-4 ${tone(active)}`}
               >
                 {item.label}
-                {active && (
-                  <span
-                    aria-hidden
-                    className={`absolute inset-x-2 bottom-1 h-0.5 xl:inset-x-3 rounded-full ${dark ? "bg-sky-400" : "bg-brand"}`}
-                  />
-                )}
+                <Underline active={active} className="inset-x-3 xl:inset-x-4" />
               </Link>
             </li>
           );
@@ -64,29 +68,26 @@ export default function DesktopNav({ categories, totalProducts, pathname, dark }
   );
 }
 
-interface ProductsMenuProps extends HeaderNavProps {
-  label: string;
-  href: string;
+interface MenuDropdownProps {
+  item: NavMenuItem;
   active: boolean;
-  dark: boolean;
   pathname: string;
 }
 
 /**
- * Açılır kategori menüsü (disclosure deseni):
- * - Metin bağlantısı /urunler'e gider; yanındaki ok düğmesi menüyü açar/kapatır (aria-expanded)
+ * Açılır menü (disclosure deseni):
+ * - Metin bağlantısı öğenin sayfasına gider; yanındaki ok düğmesi menüyü açar/kapatır (aria-expanded)
  * - Fareyle üzerine gelince açılır, ayrılınca kısa gecikmeyle kapanır
  * - Escape kapatır ve odağı düğmeye döndürür; odak menü dışına çıkınca kapanır
- * - Kapalıyken de DOM'da (hidden) kalır: kategori bağlantıları her sayfada taranabilir
+ * - Kapalıyken de DOM'da (hidden) kalır: bağlantılar her sayfada taranabilir
  */
-function ProductsMenu({ label, href, active, dark, pathname, categories, totalProducts }: ProductsMenuProps) {
+function MenuDropdown({ item, active, pathname }: MenuDropdownProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const timer = useRef<number | null>(null);
   const hoverOpenedAt = useRef(0);
   const panelId = useId();
-  const { openModal: openQuote } = useQuote();
 
   const clearTimer = () => {
     if (timer.current !== null) window.clearTimeout(timer.current);
@@ -111,10 +112,12 @@ function ProductsMenu({ label, href, active, dark, pathname, categories, totalPr
     setOpen(false);
   };
 
+  const products = item.panel === "products";
+
   return (
     <div
       ref={wrapRef}
-      className="relative flex items-center"
+      className="flex items-center"
       onPointerEnter={(e) => {
         if (e.pointerType !== "mouse") return;
         clearTimer();
@@ -141,87 +144,139 @@ function ProductsMenu({ label, href, active, dark, pathname, categories, totalPr
       }}
     >
       <Link
-        href={href}
-        aria-current={active ? "page" : undefined}
-        className={`relative inline-flex h-11 items-center rounded-lg pl-2 pr-0.5 text-sm font-semibold xl:pl-3 transition-colors ${linkTone(dark, active)}`}
+        href={item.href}
+        aria-current={active && pathname === item.href ? "page" : undefined}
+        className={`group relative inline-flex h-11 items-center pl-3 pr-0.5 text-[15px] font-medium transition-colors xl:pl-4 ${tone(
+          active || open
+        )}`}
       >
-        {label}
-        {active && (
-          <span aria-hidden className={`absolute bottom-1 left-2 right-0.5 h-0.5 xl:left-3 rounded-full ${dark ? "bg-sky-400" : "bg-brand"}`} />
-        )}
+        {item.label}
+        <Underline active={active || open} className="left-3 right-0.5 xl:left-4" />
       </Link>
       <button
         ref={buttonRef}
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        aria-label={`${label}: kategoriler`}
+        aria-label={`${item.label}: alt menü`}
         onClick={() => {
           clearTimer();
           // Fareyle az önce açıldıysa tıklama menüyü kapatmasın
           if (open && Date.now() - hoverOpenedAt.current < 500) return;
           setOpen((v) => !v);
         }}
-        className={`inline-flex h-11 w-8 items-center justify-center rounded-lg transition-colors ${linkTone(dark, active)}`}
+        className={`inline-flex h-11 w-7 items-center justify-center transition-colors xl:w-8 ${tone(active || open)}`}
       >
         <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
 
-      <div id={panelId} hidden={!open} className="absolute left-0 top-full z-50 whitespace-normal pt-2">
-        <div className="w-[min(46rem,calc(100vw-3rem))] overflow-hidden rounded-2xl border border-line bg-white text-ink shadow-2xl animate-in fade-in slide-in-from-top-1 duration-150">
-          <div className="grid grid-cols-[minmax(0,1fr)_15rem]">
-            <div className="p-3">
-              <ul className="grid grid-cols-2 gap-1">
-                {categories.map((c) => (
-                  <li key={c.href}>
-                    <Link
-                      href={c.href}
-                      onClick={close}
-                      className="group flex min-h-[48px] flex-col justify-center rounded-xl px-3 py-2 transition-colors hover:bg-slate-50 focus-visible:bg-slate-50"
+      <div
+        id={panelId}
+        hidden={!open}
+        className={`absolute top-full z-50 whitespace-normal pt-2 ${products ? "left-1/2 -translate-x-1/2" : "left-0"}`}
+      >
+        {products ? (
+          <ProductsPanel item={item} pathname={pathname} onNavigate={close} />
+        ) : (
+          <ul className="w-60 overflow-hidden rounded-b-xl border border-t-[3px] border-line border-t-accent bg-white py-1.5 text-ink shadow-2xl animate-in fade-in slide-in-from-top-1 duration-150">
+            {item.children!.map((c) => {
+              const here = pathname === c.href;
+              return (
+                <li key={c.href}>
+                  <Link
+                    href={c.href}
+                    onClick={close}
+                    aria-current={here ? "page" : undefined}
+                    className={`group flex min-h-[44px] items-center justify-between gap-3 px-4 text-sm transition-colors hover:bg-slate-50 hover:text-accent-ink ${
+                      here ? "font-semibold text-accent-ink" : "text-ink-soft"
+                    }`}
+                  >
+                    {c.label}
+                    <ChevronRight className="h-3.5 w-3.5 shrink-0 text-ink-muted group-hover:text-accent-ink" aria-hidden />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Geniş ürün paneli: 8 kategori (iki sütun) + tüm ürünler / teknik hırdavat + teklif kutusu. */
+function ProductsPanel({ item, pathname, onNavigate }: { item: NavMenuItem; pathname: string; onNavigate: () => void }) {
+  const { openModal: openQuote } = useQuote();
+  const children = item.children ?? [];
+  const cats = children.filter((c) => !c.strong);
+  const strong = children.filter((c) => c.strong);
+
+  return (
+    <div className="w-[min(46rem,calc(100vw-3rem))] overflow-hidden rounded-b-2xl border border-t-[3px] border-line border-t-accent bg-white text-ink shadow-2xl animate-in fade-in slide-in-from-top-1 duration-150">
+      <div className="grid grid-cols-[minmax(0,1fr)_15rem]">
+        <div className="p-3">
+          <ul className="grid grid-cols-2 gap-1">
+            {cats.map((c) => {
+              const here = pathname === c.href;
+              return (
+                <li key={c.href}>
+                  <Link
+                    href={c.href}
+                    onClick={onNavigate}
+                    aria-current={here ? "page" : undefined}
+                    className="group flex min-h-[48px] flex-col justify-center rounded-lg px-3 py-2 transition-colors hover:bg-slate-50 focus-visible:bg-slate-50"
+                  >
+                    <span
+                      className={`text-sm font-semibold leading-snug group-hover:text-accent-ink ${here ? "text-accent-ink" : "text-ink"}`}
                     >
-                      <span className="text-sm font-semibold leading-snug text-ink group-hover:text-brand">{c.name}</span>
-                      <span className="text-xs text-ink-muted">{c.count} ürün</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+                      {c.label}
+                    </span>
+                    {c.hint && <span className="text-xs text-ink-muted">{c.hint}</span>}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="mt-1 flex flex-wrap gap-x-4 border-t border-line px-1 pt-1">
+            {strong.map((c) => (
               <Link
-                href={href}
-                onClick={close}
-                className="mt-1 inline-flex min-h-[44px] items-center gap-1.5 rounded-xl px-3 text-sm font-bold text-brand hover:underline"
+                key={c.href}
+                href={c.href}
+                onClick={onNavigate}
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-2 text-sm font-bold text-brand hover:text-accent-ink hover:underline"
               >
-                Tüm ürünler ({totalProducts})
+                {c.label}
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
-            </div>
-
-            <div className="flex flex-col gap-3 border-l border-line bg-slate-50 p-5">
-              <p className="text-sm font-bold leading-snug text-ink">Aradığınız ürün listede yok mu?</p>
-              <p className="text-xs leading-relaxed text-ink-soft">
-                İhtiyacınızı yazın; temin edebildiğimiz ürünler için fiyatıyla dönüş yapalım. {PROMISES.quoteShort}.
-              </p>
-              <button
-                type="button"
-                aria-haspopup="dialog"
-                onClick={() => {
-                  close();
-                  openQuote("menu_kategori");
-                }}
-                className="btn-action min-h-[44px] w-full px-3 py-2 text-sm"
-              >
-                {CTA.primary}
-              </button>
-              <p className="text-xs text-ink-muted">{PROMISES.quoteReassurance}</p>
-              <Link
-                href="/katalog"
-                onClick={close}
-                className="mt-auto inline-flex min-h-[32px] items-center gap-1.5 text-xs font-semibold text-ink-soft hover:text-brand"
-              >
-                <BookOpen className="h-4 w-4" aria-hidden />
-                FABA ürün kataloğu
-              </Link>
-            </div>
+            ))}
           </div>
+        </div>
+
+        <div className="flex flex-col gap-3 border-l border-line bg-slate-50 p-5">
+          <p className="text-sm font-bold leading-snug text-ink">Aradığınız ürün listede yok mu?</p>
+          <p className="text-xs leading-relaxed text-ink-soft">
+            İhtiyacınızı yazın; temin edebildiğimiz ürünler için fiyatıyla dönüş yapalım. {PROMISES.quoteShort}.
+          </p>
+          <button
+            type="button"
+            aria-haspopup="dialog"
+            onClick={() => {
+              onNavigate();
+              openQuote("menu_kategori");
+            }}
+            className="btn-action min-h-[44px] w-full px-3 py-2 text-sm"
+          >
+            {CTA.primary}
+          </button>
+          <p className="text-xs text-ink-muted">{PROMISES.quoteReassurance}</p>
+          <Link
+            href="/katalog"
+            onClick={onNavigate}
+            className="mt-auto inline-flex min-h-[40px] items-center gap-1.5 text-xs font-semibold text-ink-soft hover:text-accent-ink"
+          >
+            <BookOpen className="h-4 w-4" aria-hidden />
+            FABA ürün kataloğu
+          </Link>
         </div>
       </div>
     </div>

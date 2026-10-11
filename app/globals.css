@@ -56,6 +56,15 @@
     min-width: 0;
   }
 
+  /*
+   * Sol kategori menülü sayfalar (kategori / ürün): içerik sütunundaki bölümler kendi container-x
+   * kenar boşluğunu tekrar eklemesin (dış kap zaten container-x).
+   */
+  .sidebar-content .container-x {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
   /* Cam kart (referans sitedeki glass card'ın açık tema karşılığı) */
   .glass {
     @apply rounded-3xl border border-white/70 bg-white/80 backdrop-blur-2xl;
@@ -244,6 +253,124 @@
   pointer-events: none;
 }
 
+/*
+ * Teslimat haritası (components/home/DeliveryMapSection.tsx). Yalnızca opacity, stroke-dashoffset
+ * ve halka için transform canlandırılır. İller gecikmeleriyle (Samsun'a uzaklık) sırayla yanar.
+ */
+.map-province {
+  fill: #4f7dd9;
+  opacity: 0.4;
+  stroke: #ffffff;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  animation: map-province-wave 16s linear infinite both;
+  transition: fill 0.2s;
+  cursor: pointer;
+}
+.map-province:hover,
+.map-province[data-selected] {
+  fill: #93c5fd;
+  opacity: 1 !important;
+}
+.map-province--hub,
+.map-province--hub:hover,
+.map-province--hub[data-selected] {
+  fill: #f5b800;
+  opacity: 1;
+  animation: none;
+}
+@keyframes map-province-wave {
+  0% {
+    opacity: 0.4;
+  }
+  3% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  82%,
+  100% {
+    opacity: 0.4;
+  }
+}
+.map-route {
+  fill: none;
+  stroke: #f5b800;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  animation: map-route 17.6s ease-in-out infinite both;
+}
+@keyframes map-route {
+  0% {
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  12% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  24% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  30%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+.map-route-dot {
+  fill: #f5b800;
+  stroke: #0b1f4d;
+  stroke-width: 2;
+  opacity: 0;
+  animation: map-route-dot 17.6s ease-out infinite both;
+}
+@keyframes map-route-dot {
+  0%,
+  11% {
+    opacity: 0;
+  }
+  13%,
+  25% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    opacity: 0;
+  }
+}
+.map-hub-dot {
+  fill: #f5b800;
+  stroke: #0b1f4d;
+  stroke-width: 3;
+}
+.map-hub-ring {
+  fill: none;
+  stroke: #f5b800;
+  stroke-width: 3;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-hub-ring 2.4s ease-out infinite both;
+}
+@keyframes map-hub-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
 /* Hareket azaltma tercihi: animasyon ve geçişler kapatılır, içerik hemen görünür */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -276,6 +403,20 @@
   }
   .shine-card::after {
     animation-duration: 6s !important;
+    animation-iteration-count: infinite !important;
+  }
+  /* Teslimat haritası (işletme tercihi: her cihazda çalışır) */
+  .map-province {
+    animation-duration: 16s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .map-route,
+  .map-route-dot {
+    animation-duration: 17.6s !important;
+    animation-iteration-count: infinite !important;
+  }
+  .map-hub-ring {
+    animation-duration: 2.4s !important;
     animation-iteration-count: infinite !important;
   }
   /* Yükleniyor göstergesi işlevseldir; dönmeye devam eder */

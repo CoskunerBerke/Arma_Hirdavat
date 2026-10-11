@@ -47,8 +47,9 @@ export default function ProductsPage() {
         title={TITLE}
         description={`Online kataloğumuzda ${CATEGORY_PAGES.length} kategoride ${total} FABA kişisel koruyucu donanım ürünü var. Her ürün sayfasında EN standart kodu, bedenler ve koli içi adet yazılıdır; siparişler koli ve palet bazında teklifle verilir.`}
         crumbs={[{ label: "Ürünler", href: "/urunler" }]}
+        label="Ürünlerimiz"
       >
-        <PromiseChips />
+        <PromiseChips className="justify-center" />
       </PageHero>
 
       {/* Taranabilir kategori bağlantıları */}

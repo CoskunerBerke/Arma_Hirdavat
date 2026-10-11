@@ -1,6 +1,5 @@
-import Link from "next/link";
 import type { ReactNode } from "react";
-import { ChevronRight } from "lucide-react";
+import { PageBanner, TitleMark } from "@/components/PageHero";
 
 export interface GuideCrumb {
   label: string;
@@ -15,47 +14,32 @@ interface Props {
   /** H1 altındaki giriş paragrafı (öne çıkan snippet için soruyu doğrudan yanıtlar) */
   lead?: string;
   meta?: ReactNode;
+  /** Banttaki sarı etiket (varsayılan "Rehberler") */
+  label?: string;
 }
 
 /**
- * Rehber sayfası başlığı. PageHero ile aynı görsel dil; BreadcrumbList JSON-LD'si sayfada
- * Article ile birlikte tek @graph içinde verilir (burada üretilmez). Ekranın üstünde olduğu için
- * animasyon (Reveal) kullanılmaz.
+ * Rehber sayfası başlığı — PageHero ile aynı kurumsal düzen: görsel bant + sarı etiket + kırıntı,
+ * altında ortalı simge ve vurgu renginde H1. BreadcrumbList JSON-LD'si sayfada Article ile birlikte
+ * tek @graph içinde verilir (burada üretilmez). Ekranın üstünde olduğu için animasyon (Reveal) kullanılmaz.
  */
-export default function GuideHero({ crumbs, eyebrow, title, lead, meta }: Props) {
+export default function GuideHero({ crumbs, eyebrow, title, lead, meta, label = "Rehberler" }: Props) {
   return (
-    <section className="relative isolate overflow-hidden border-b border-line">
-      <div className="absolute inset-0 -z-20 bg-[linear-gradient(180deg,#FFFFFF_0%,#F5F7FA_100%)]" />
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_90%_at_88%_0%,rgba(0,80,230,0.09),transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 -z-10 opacity-60 [background-image:radial-gradient(#C9D2DE_1px,transparent_1px)] [background-size:26px_26px] [mask-image:linear-gradient(to_bottom,#000,transparent)]" />
+    <section className="relative isolate border-b border-line bg-white">
+      <PageBanner crumbs={crumbs} label={label} />
 
-      <div className="container-x py-10 sm:py-14">
-        <div className="mx-auto max-w-6xl">
-          <nav aria-label="Sayfa konumu">
-            <ol className="flex flex-wrap items-center gap-1.5 text-xs text-ink-muted">
-              {crumbs.map((c, i) => (
-                <li key={c.href} className="flex items-center gap-1.5">
-                  {i < crumbs.length - 1 ? (
-                    <Link href={c.href} className="inline-flex min-h-[24px] items-center transition-colors hover:text-brand">
-                      {c.label}
-                    </Link>
-                  ) : (
-                    <span aria-current="page" className="font-medium text-ink-soft">
-                      {c.label}
-                    </span>
-                  )}
-                  {i < crumbs.length - 1 && <ChevronRight className="h-3 w-3" aria-hidden />}
-                </li>
-              ))}
-            </ol>
-          </nav>
-
-          {eyebrow && <p className="eyebrow mt-7">{eyebrow}</p>}
-          <h1 className="mt-3 max-w-4xl text-3xl font-bold leading-tight tracking-tight text-ink sm:text-[2.75rem] sm:leading-[1.15]">
+      <div className="container-x py-10 text-center sm:py-14">
+        <div className="mx-auto max-w-4xl">
+          <TitleMark />
+          {eyebrow && <p className="eyebrow mt-4 justify-center">{eyebrow}</p>}
+          <h1 className="mt-3 text-[1.7rem] font-extrabold leading-tight tracking-tight text-accent-ink sm:text-[2.5rem] sm:leading-[1.15]">
             {title}
           </h1>
-          {lead && <p className="mt-5 max-w-3xl text-base leading-relaxed text-ink-soft sm:text-lg">{lead}</p>}
-          {meta && <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-ink-muted">{meta}</div>}
+          <span aria-hidden className="mx-auto mt-4 block h-1 w-16 rounded-full bg-accent" />
+          {lead && <p className="mx-auto mt-5 max-w-3xl text-left text-base leading-relaxed text-ink-soft sm:text-center sm:text-lg">{lead}</p>}
+          {meta && (
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-sm text-ink-muted">{meta}</div>
+          )}
         </div>
       </div>
     </section>

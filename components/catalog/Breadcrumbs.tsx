@@ -20,7 +20,7 @@ export default function Breadcrumbs({ items, className = "" }: { items: Crumb[];
                 </span>
               ) : (
                 <>
-                  <Link href={c.href} className="inline-flex items-center py-1.5 transition-colors hover:text-brand">
+                  <Link href={c.href} className="inline-flex min-h-[40px] items-center transition-colors hover:text-accent-ink">
                     {c.label}
                   </Link>
                   <ChevronRight className="h-3 w-3 shrink-0" aria-hidden />

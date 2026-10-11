@@ -29,6 +29,22 @@ module.exports = {
           accent: "#D97706",
         },
 
+        // 3b. Kurumsal düzen renkleri (üst şerit, sayfa bandı, sayaç bandı, alt bilgi)
+        // navy: koyu marka laciverti (beyaz metinle ≥ 12:1)
+        navy: {
+          DEFAULT: "#0B1F4D",
+          deep: "#081634",
+          light: "#16357A",
+        },
+        // accent: logodaki sarı. Zemin olarak kullanılır (üzerinde navy metin, ≥ 9:1).
+        // Beyaz zeminde METİN rengi olarak yalnızca accent-ink (amber-700, 5.0:1) kullanın.
+        accent: {
+          DEFAULT: "#F5B800",
+          hover: "#E0A800",
+          ink: "#B45309",
+          soft: "#FEF3C7",
+        },
+
         // 4. Birincil eylem rengi (teklif / listeye ekle). Yeşil "ilerle" işaretidir.
         // Beyaz metinle kontrast: DEFAULT 5.0:1, hover 7.1:1, active 9.1:1 (WCAG AA).
         action: {

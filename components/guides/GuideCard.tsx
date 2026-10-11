@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Flame, FlaskConical, Ruler, ShieldCheck, type LucideIcon } from "lucide-react";
 import { guideHref, guideReadingMinutes, type Guide } from "@/data/guides";
 
-const ICONS: Record<string, LucideIcon> = {
+export const GUIDE_ICONS: Record<string, LucideIcon> = {
   "en-388-eldiven-kodlari": ShieldCheck,
   "kimyasal-tulum-tipleri": FlaskConical,
   "kaynakci-eldiveni-tip-a-tip-b": Flame,
@@ -11,7 +11,7 @@ const ICONS: Record<string, LucideIcon> = {
 
 /** Rehber kartı: tüm kart tek bağlantıdır (başlık bağlantının adıdır). */
 export default function GuideCard({ guide, headingLevel = "h2" }: { guide: Guide; headingLevel?: "h2" | "h3" }) {
-  const Icon = ICONS[guide.slug] ?? BookOpen;
+  const Icon = GUIDE_ICONS[guide.slug] ?? BookOpen;
   const Heading = headingLevel;
   return (
     <article className="surface group relative flex h-full flex-col p-5 hover:-translate-y-0.5 hover:border-brand/30 hover:shadow-md sm:p-6">

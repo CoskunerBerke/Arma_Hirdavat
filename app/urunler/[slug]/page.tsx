@@ -11,7 +11,8 @@ import ProductCard from "@/components/ProductCard";
 import ProductItemsSelector from "@/components/ProductItemsSelector";
 import ProductRfqBox from "@/components/ProductRfqBox";
 import { splitSizes } from "@/components/quote/koli";
-import Breadcrumbs from "@/components/catalog/Breadcrumbs";
+import { PageBanner } from "@/components/PageHero";
+import CategorySidebar, { CategoryChips } from "@/components/catalog/CategorySidebar";
 import ContactLinks from "@/components/catalog/ContactLinks";
 import JsonLd from "@/components/catalog/JsonLd";
 import QuoteSteps from "@/components/catalog/QuoteSteps";
@@ -169,12 +170,23 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     <>
       <JsonLd data={productJsonLd(p, crumbs)} />
 
+      <PageBanner
+        crumbs={crumbs}
+        label="Ürünlerimiz"
+        image={PRODUCT_VIDEOS[p.id]?.poster}
+        imagePosition="88% 50%"
+        compact
+      />
+
       <section className="relative isolate border-b border-line">
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,#FFFFFF_0%,#F5F7FA_100%)]" />
-        <div className="container-x pb-12 pt-5 sm:pt-8 lg:pb-16">
-          <Breadcrumbs items={crumbs} />
-
-          <div className="mt-4 grid gap-6 sm:mt-6 lg:grid-cols-12 lg:gap-10">
+        <div className="container-x pb-12 lg:pb-16">
+          <CategoryChips activeName={p.category} from="xl" />
+          {/* Kurumsal düzen: xl+ solda kategori menüsü (lg'de içerik sütunları dar kalmasın diye xl) */}
+          <div className="xl:flex xl:gap-10">
+            <CategorySidebar activeName={p.category} from="xl" source={`urun-${p.slug}-yan`} className="pt-8" />
+            <div className="min-w-0 flex-1">
+          <div className="mt-5 grid gap-6 sm:mt-6 lg:grid-cols-12 lg:gap-10 xl:mt-8">
             {/* 1 — Başlık, görsel, künye (mobilde ilk) */}
             <div className="min-w-0 lg:col-span-7">
               <p className="eyebrow">FABA · {p.category}</p>
@@ -375,6 +387,8 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
               </section>
 
               <QuoteSteps headingId="urun-teklif-sureci" />
+            </div>
+          </div>
             </div>
           </div>
         </div>

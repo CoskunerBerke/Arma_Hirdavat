@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useHeroSlideActive } from "./heroSlideContext";
 
 interface HeroVideoProps {
   /** Yatay (masaüstü) kırpım */
@@ -25,6 +26,8 @@ function shouldSkipVideo(): boolean {
  *   kaynak yalnızca sayfa yüklendikten sonra, tarayıcı boştayken atanır.
  * - Ekran yönüne göre küçük kodlama seçilir (dikey 540p / yatay 1080×608).
  * - Düğme yok: video her zaman kendiliğinden oynar (işletme tercihi). Hero ekrandan çıkınca durur, dönünce sürer.
+ * - Hero kaydırıcısında (HeroCarousel) başka slayda geçilince durur, bu slayda dönülünce sürer.
+ *   Karusel dışında bağlamın varsayılanı "etkin"dir; davranış değişmez.
  */
 export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }: HeroVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -32,6 +35,9 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
   const [active, setActive] = useState(false); // kaynak atandı
   const [shown, setShown] = useState(false); // ilk kare oynadı, poster üzerine yumuşakça gelir
   const [playing, setPlaying] = useState(false);
+  const slideActive = useHeroSlideActive();
+  const slideActiveRef = useRef(slideActive);
+  slideActiveRef.current = slideActive;
 
   // Gecikmeli yükleme
   useEffect(() => {
@@ -49,7 +55,7 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
       v.src = wide ? wideSrc : portraitSrc;
       setActive(true);
       // Otomatik oynatma engellenirse (ör. iOS düşük güç modu) poster görünür kalır
-      v.play().catch(() => setPlaying(false));
+      if (slideActiveRef.current) v.play().catch(() => setPlaying(false));
     };
 
     const schedule = () => {
@@ -78,7 +84,7 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
       ([entry]) => {
         if (!entry) return;
         if (entry.isIntersecting) {
-          if (!userPausedRef.current && v.paused) v.play().catch(() => undefined);
+          if (!userPausedRef.current && slideActiveRef.current && v.paused) v.play().catch(() => undefined);
         } else if (!v.paused) {
           v.pause();
         }
@@ -88,6 +94,17 @@ export default function HeroVideo({ wideSrc, portraitSrc, wideMedia, children }:
     io.observe(v);
     return () => io.disconnect();
   }, [active]);
+
+  // Kaydırıcıda slayt değişince: etkin değilse dur, yeniden etkin olunca sür
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v || !active) return;
+    if (!slideActive) {
+      if (!v.paused) v.pause();
+    } else if (!userPausedRef.current && v.paused) {
+      v.play().catch(() => undefined);
+    }
+  }, [slideActive, active]);
 
 
   return (

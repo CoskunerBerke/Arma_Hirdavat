@@ -27,6 +27,7 @@ export default function ClientLogos({
 
   return (
     <section
+      id="referanslar"
       aria-labelledby="referanslar-baslik"
       className={`relative isolate overflow-hidden bg-gradient-to-br from-[#0B1528] via-[#0F1B2D] to-[#0B2A6B] py-16 sm:py-20 ${className}`}
     >

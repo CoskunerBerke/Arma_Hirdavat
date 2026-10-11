@@ -12,6 +12,7 @@ import JsonLd from "@/components/catalog/JsonLd";
 import PromiseChips from "@/components/catalog/PromiseChips";
 import QuoteSteps from "@/components/catalog/QuoteSteps";
 import CategoryVideo from "@/components/catalog/CategoryVideo";
+import CategorySidebar, { CategoryChips } from "@/components/catalog/CategorySidebar";
 import { CATEGORY_VIDEOS } from "@/data/videos";
 import { guidesForCategory } from "@/components/catalog/guides";
 import { koliRange } from "@/components/catalog/productFacts";
@@ -56,8 +57,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-/** Ürün ızgarası: mobil 2, md 3, lg 4 sütun. */
-const GRID_SIZES = "(min-width:1280px) 280px, (min-width:1024px) 22vw, (min-width:768px) 30vw, 46vw";
+/** Ürün ızgarası: mobil 2, md 3, xl 4 sütun (lg'de solda kategori menüsü var). */
+const GRID_SIZES = "(min-width:1280px) 240px, (min-width:768px) 30vw, 46vw";
 
 export default function CategoryLandingPage({ params }: { params: { slug: string } }) {
   const c = getCategoryBySlug(params.slug);
@@ -125,8 +126,11 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
         }. Standart kodlarını, beden ve koli bilgilerini karşılaştırın, koli bazında ücretsiz teklif alın.`}
         crumbs={crumbs.slice(1)}
         emitJsonLd={false}
+        label="Ürünlerimiz"
+        image={CATEGORY_VIDEOS[c.slug]?.poster}
+        imagePosition="88% 50%"
       >
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
           <RfqTriggerButton className="btn-action min-h-[44px]" source={`kategori-${c.slug}-hero`} />
           <a href="#karsilastirma" className="btn-ghost min-h-[44px]">
             <LayoutGrid className="h-4 w-4" aria-hidden />
@@ -134,14 +138,21 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
           </a>
         </div>
         <p className="mt-2 text-xs text-ink-muted">{PROMISES.quoteReassurance}</p>
-        <PromiseChips className="mt-4" />
+        <PromiseChips className="mt-4 justify-center" />
       </PageHero>
+
+      {/* Kurumsal düzen: solda kategori menüsü (lg+), dar ekranda çip şeridi */}
+      <div className="container-x">
+        <CategoryChips activeName={c.name} />
+        <div className="lg:flex lg:gap-8 xl:gap-10">
+          <CategorySidebar activeName={c.name} source={`kategori-${c.slug}-yan`} className="pb-14 pt-14" />
+          <div className="sidebar-content min-w-0 flex-1">
 
       {/* Giriş metni + kısa künye */}
       <section aria-label={`${c.name} hakkında`} className="py-10 sm:py-14">
-        <div className="container-x grid gap-8 lg:grid-cols-12 lg:gap-12">
+        <div className="container-x grid gap-8 xl:grid-cols-12 xl:gap-12">
           {paragraphs.length > 0 && (
-            <div className="min-w-0 lg:col-span-8">
+            <div className="min-w-0 xl:col-span-8">
               <h2 className="text-xl font-bold tracking-tight text-ink sm:text-2xl">{c.name} hakkında</h2>
               <div className="mt-4 space-y-4 text-base leading-relaxed text-ink-soft">
                 {paragraphs.map((t, i) => (
@@ -153,7 +164,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
 
           <aside
             aria-label="Kategori özeti"
-            className={`min-w-0 ${paragraphs.length > 0 ? "lg:col-span-4" : "lg:col-span-6"}`}
+            className={`min-w-0 ${paragraphs.length > 0 ? "xl:col-span-4" : "xl:col-span-6"}`}
           >
             <div className="surface p-5 sm:p-6">
               <dl className="grid grid-cols-2 gap-3 text-sm">
@@ -243,7 +254,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
           <h2 id="modeller-baslik" className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
             {c.name}: {products.length} model
           </h2>
-          <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-4">
             {products.map((p) => (
               <li key={p.id} className="min-w-0">
                 <ProductCard product={p} sizes={GRID_SIZES} headingLevel="h3" />
@@ -255,8 +266,8 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
 
       {/* Teklif çağrısı */}
       <section aria-labelledby="kategori-teklif" className="py-10 sm:py-14">
-        <div className="container-x grid gap-6 lg:grid-cols-12 lg:gap-10">
-          <div className="min-w-0 rounded-3xl border border-line bg-white p-5 sm:p-8 lg:col-span-7">
+        <div className="container-x grid gap-6 xl:grid-cols-12 xl:gap-10">
+          <div className="min-w-0 rounded-3xl border border-line bg-white p-5 sm:p-8 xl:col-span-7">
             <p className="eyebrow">Toptan teklif</p>
             <h2 id="kategori-teklif" className="mt-1 text-xl font-bold tracking-tight text-ink sm:text-2xl">
               {c.name} için ücretsiz teklif alın
@@ -282,7 +293,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
               />
             </div>
           </div>
-          <QuoteSteps headingId="kategori-teklif-sureci" className="min-w-0 lg:col-span-5" />
+          <QuoteSteps headingId="kategori-teklif-sureci" className="min-w-0 xl:col-span-5" />
         </div>
       </section>
 
@@ -306,7 +317,7 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
           <h2 id="diger-kategoriler" className="text-xl font-bold tracking-tight text-ink sm:text-2xl">
             Diğer kategoriler
           </h2>
-          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {others.map((o) => (
               <li key={o.slug}>
                 <Link
@@ -343,6 +354,9 @@ export default function CategoryLandingPage({ params }: { params: { slug: string
           </div>
         </div>
       </section>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -7,7 +7,6 @@ import { ChevronDown, ChevronRight, Clock, Mail, MessageCircle, Phone, Search, S
 import {
   COMPANY,
   HOURS_TEXT,
-  NAV,
   PRIMARY_PHONE,
   PROMISES,
   mailtoHref,
@@ -18,7 +17,7 @@ import { track, EVENTS } from "@/lib/track";
 import { useRetailModal } from "@/components/RetailStoreModal";
 import { preloadSearch, useProductSearch } from "@/components/ProductSearchModal";
 import QuoteButton from "./QuoteButton";
-import { PRODUCTS_HREF, isNavActive } from "./nav-utils";
+import { buildMainMenu, isMenuItemActive } from "./nav-utils";
 import type { HeaderNavProps } from "./types";
 
 export const MOBILE_MENU_ID = "mobil-menu";
@@ -37,9 +36,13 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
   const { panelRef } = useModal<HTMLDivElement>({ open: true, onClose, initialFocusRef: closeRef });
   const { openSearch } = useProductSearch();
   const { openModal: openRetailModal } = useRetailModal();
-  const productsActive = isNavActive(pathname, PRODUCTS_HREF);
-  const [productsOpen, setProductsOpen] = useState(productsActive);
-  const groupId = useId();
+  const menu = buildMainMenu(categories, totalProducts);
+  // Bulunulan sayfanın grubu açık başlar (ör. kategori sayfasında "Ürünler")
+  const [openGroup, setOpenGroup] = useState<number | null>(() => {
+    const i = menu.findIndex((m) => m.children?.length && isMenuItemActive(pathname, m));
+    return i >= 0 ? i : null;
+  });
+  const groupBaseId = useId();
   const titleId = useId();
   const wa = whatsappHref();
 
@@ -88,52 +91,51 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
 
             <nav aria-label="Mobil menü" className="mt-1">
               <ul className="divide-y divide-line border-y border-line">
-                {NAV.map((item) => {
-                  const active = isNavActive(pathname, item.href);
-                  if (item.href === PRODUCTS_HREF) {
+                {menu.map((item, idx) => {
+                  const active = isMenuItemActive(pathname, item);
+                  if (item.children?.length) {
+                    const isOpen = openGroup === idx;
+                    const groupId = `${groupBaseId}-${idx}`;
                     return (
-                      <li key={item.href}>
+                      <li key={item.label}>
                         <button
                           type="button"
-                          aria-expanded={productsOpen}
+                          aria-expanded={isOpen}
                           aria-controls={groupId}
-                          onClick={() => setProductsOpen((v) => !v)}
+                          onClick={() => setOpenGroup(isOpen ? null : idx)}
                           className={`flex min-h-[56px] w-full items-center justify-between gap-3 text-left text-lg font-semibold ${
-                            active ? "text-brand" : "text-ink"
+                            active ? "text-accent-ink" : "text-ink"
                           }`}
                         >
                           {item.label}
                           <ChevronDown
                             aria-hidden
-                            className={`h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 ${productsOpen ? "rotate-180" : ""}`}
+                            className={`h-5 w-5 shrink-0 text-ink-muted transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
                           />
                         </button>
-                        <ul id={groupId} hidden={!productsOpen} className="pb-3">
-                          <li>
-                            <Link
-                              href={item.href}
-                              onClick={onClose}
-                              aria-current={pathname === item.href ? "page" : undefined}
-                              className="flex min-h-[44px] items-center justify-between gap-3 rounded-lg px-3 text-base font-semibold text-brand hover:bg-slate-50"
-                            >
-                              Tüm ürünler ({totalProducts})
-                              <ChevronRight className="h-4 w-4 shrink-0" aria-hidden />
-                            </Link>
-                          </li>
-                          {categories.map((c) => {
-                            const catActive = pathname === c.href;
+                        <ul id={groupId} hidden={!isOpen} className="border-l-[3px] border-accent pb-3 pl-1">
+                          {item.children.map((c) => {
+                            const here = pathname === c.href;
                             return (
                               <li key={c.href}>
                                 <Link
                                   href={c.href}
                                   onClick={onClose}
-                                  aria-current={catActive ? "page" : undefined}
+                                  aria-current={here ? "page" : undefined}
                                   className={`flex min-h-[44px] items-center justify-between gap-3 rounded-lg px-3 text-base hover:bg-slate-50 ${
-                                    catActive ? "font-semibold text-brand" : "text-ink-soft"
+                                    here
+                                      ? "font-semibold text-accent-ink"
+                                      : c.strong
+                                        ? "font-semibold text-brand"
+                                        : "text-ink-soft"
                                   }`}
                                 >
-                                  <span>{c.name}</span>
-                                  <span className="shrink-0 text-xs text-ink-muted">{c.count} ürün</span>
+                                  <span>{c.label}</span>
+                                  {c.hint ? (
+                                    <span className="shrink-0 text-xs text-ink-muted">{c.hint}</span>
+                                  ) : (
+                                    <ChevronRight className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
+                                  )}
                                 </Link>
                               </li>
                             );
@@ -143,13 +145,13 @@ export default function MobileMenu({ categories, totalProducts, pathname, onClos
                     );
                   }
                   return (
-                    <li key={item.href}>
+                    <li key={item.label}>
                       <Link
                         href={item.href}
                         onClick={onClose}
                         aria-current={active ? "page" : undefined}
                         className={`flex min-h-[56px] items-center justify-between gap-3 text-lg font-semibold ${
-                          active ? "text-brand" : "text-ink"
+                          active ? "text-accent-ink" : "text-ink"
                         }`}
                       >
                         {item.label}
