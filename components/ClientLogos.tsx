@@ -78,7 +78,7 @@ export default function ClientLogos({
         aria-hidden
         className="relative mt-12 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
       >
-        <div className="river-track flex w-max" style={{ ["--river-duration" as string]: "45s" } as React.CSSProperties}>
+        <div className="river-track river-free flex w-max" style={{ ["--river-duration" as string]: "45s" } as React.CSSProperties}>
           {[0, 1].map((copy) => (
             <ul key={copy} className="flex items-center gap-14 pr-14 sm:gap-20 sm:pr-20">
               {stripe.map((client, i) => (

@@ -197,8 +197,9 @@
   animation: river var(--river-duration, 32s) linear infinite;
   will-change: transform;
 }
-.river-track:hover,
-.river-track:focus-within {
+/* .river-free: dekoratif şeritler (ör. referans logoları) üzerine gelince durmaz */
+.river-track:not(.river-free):hover,
+.river-track:not(.river-free):focus-within {
   animation-play-state: paused;
 }
 

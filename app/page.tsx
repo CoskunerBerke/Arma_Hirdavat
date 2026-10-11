@@ -37,11 +37,11 @@ export default function HomePage() {
   return (
     <>
       <SceneHero />
+      <ClientLogos />
       <CategoryGrid />
       <HowItWorks />
       <FeaturedProducts />
       <ShowcaseVideo />
-      <ClientLogos />
       <RetailStoreSection />
       <ReviewsRiver />
       <FaqSection />
