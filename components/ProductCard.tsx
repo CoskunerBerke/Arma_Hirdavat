@@ -43,13 +43,13 @@ export default function ProductCard({ product, priority = false, sizes = DEFAULT
           priority={priority}
         />
         {(featured || badge) && (
-          <div className="pointer-events-none absolute left-2 top-2 z-[1] flex flex-col gap-1">
+          <div className="pointer-events-none absolute left-2 right-2 top-2 z-[1] flex flex-col items-start gap-1">
             {featured ? (
-              <span className="inline-flex items-center rounded-full bg-amber-700 px-2 py-0.5 text-[11px] font-bold text-white shadow-sm">
+              <span className="inline-flex items-center rounded-full bg-amber-700 px-2 py-0.5 text-xs font-bold text-white shadow-sm">
                 Öne çıkan
               </span>
             ) : (
-              <span className="inline-flex items-center rounded-full border border-brand/20 bg-brand-50 px-2 py-0.5 text-[11px] font-semibold text-brand shadow-sm">
+              <span className="inline-flex items-center max-w-full truncate whitespace-nowrap rounded-full border border-brand/20 bg-brand-50 px-2 py-0.5 text-xs font-semibold text-brand shadow-sm">
                 {badge}
               </span>
             )}
@@ -57,7 +57,7 @@ export default function ProductCard({ product, priority = false, sizes = DEFAULT
         )}
         {product.koli && (
           <div className="pointer-events-none absolute bottom-2 right-2 z-[1]">
-            <span className="inline-flex items-center gap-1 rounded-md border border-line bg-white/95 px-1.5 py-0.5 text-[11px] font-medium text-ink-soft shadow-xs">
+            <span className="inline-flex items-center gap-1 rounded-md border border-line bg-white/95 px-1.5 py-0.5 text-xs font-medium text-ink-soft shadow-xs">
               <Package className="h-3 w-3 text-brand" aria-hidden />
               <span className="sr-only">Koli içi:</span> {product.koli}
             </span>
@@ -67,11 +67,11 @@ export default function ProductCard({ product, priority = false, sizes = DEFAULT
 
       <div className="flex min-w-0 flex-1 flex-col pt-3">
         <div className="mb-1 flex items-center justify-between gap-1">
-          <span className="truncate rounded bg-brand-50/80 px-1.5 py-0.5 font-mono text-[11px] font-bold text-brand">
+          <span className="truncate rounded bg-brand-50/80 px-1.5 py-0.5 font-mono text-xs font-bold text-brand">
             {product.code}
           </span>
           {standard && (
-            <span className="hidden min-w-0 items-center gap-0.5 truncate text-[11px] font-medium text-ink-muted sm:inline-flex">
+            <span className="hidden min-w-0 items-center gap-0.5 truncate text-xs font-medium text-ink-muted sm:inline-flex">
               <Shield className="h-3 w-3 shrink-0 text-slate-400" aria-hidden /> <span className="truncate">{standard}</span>
             </span>
           )}
@@ -88,7 +88,7 @@ export default function ProductCard({ product, priority = false, sizes = DEFAULT
 
         <p className="mt-1 hidden text-xs leading-relaxed text-ink-soft sm:line-clamp-2">{product.description}</p>
 
-        <p className="mt-2 text-[11px] text-ink-muted sm:text-xs">
+        <p className="mt-2 text-xs text-ink-muted sm:text-xs">
           {size.label}: <span className="font-medium text-ink-soft">{size.value}</span>
         </p>
 

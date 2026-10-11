@@ -34,7 +34,7 @@ export default function SceneHero() {
   return (
     <section
       aria-labelledby="hero-baslik"
-      className="relative isolate flex min-h-[calc(100svh-72px)] flex-col justify-end overflow-hidden bg-slate-950 pb-8 pt-20 sm:pb-14 lg:pb-16"
+      className="relative isolate flex min-h-[calc(100svh-72px)] flex-col justify-end overflow-hidden bg-slate-950 pb-8 pt-20 sm:pb-14 lg:pb-16 [@media(max-height:500px)]:pb-5 [@media(max-height:500px)]:pt-6"
     >
       {/* LCP: poster (yön değişince doğru kırpım) */}
       <picture>
@@ -60,7 +60,7 @@ export default function SceneHero() {
         <div className="max-w-2xl">
           <h1
             id="hero-baslik"
-            className="text-[1.9rem] font-extrabold leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl"
+            className="text-[1.9rem] font-extrabold leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl [@media(max-height:500px)]:text-[1.7rem]"
           >
             Samsun&apos;dan toptan{" "}
             <span className="bg-gradient-to-r from-sky-300 via-emerald-200 to-white bg-clip-text text-transparent">
@@ -69,11 +69,11 @@ export default function SceneHero() {
             ve teknik hırdavat
           </h1>
 
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-100 drop-shadow sm:text-lg">
+          <p className="mt-4 max-w-xl text-base [@media(max-height:500px)]:mt-2 leading-relaxed text-slate-100 drop-shadow sm:text-lg">
             Listenizi gönderin, firmanıza özel fiyat e-postanıza gelsin.
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col gap-3 sm:mt-7 sm:flex-row sm:items-center [@media(max-height:500px)]:mt-3">
             <RfqTriggerButton className="btn-action min-h-[52px] w-full px-7 text-base shadow-xl shadow-black/30 sm:w-auto">
               <ClipboardList className="h-5 w-5" aria-hidden />
               <span>{CTA.primary}</span>

@@ -137,7 +137,7 @@ export default function SizeQuotePicker({ product, openOnAdd = false, className 
                 className="sr-only"
               />
               <span className="text-sm font-semibold text-ink">{opt}</span>
-              <span className="text-[11px] leading-tight text-ink-muted">
+              <span className="text-xs leading-tight text-ink-muted">
                 {opt === "Koli" ? (product.koli ? `Koli içi ${product.koli.toLocaleLowerCase("tr-TR")}` : "Koli bazında") : "Koli adedi teklifte"}
               </span>
             </label>

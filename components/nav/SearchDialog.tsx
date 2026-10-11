@@ -347,7 +347,7 @@ function truncate(s: string, max: number) {
 
 function Kbd({ children }: { children: React.ReactNode }) {
   return (
-    <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded border border-line-strong bg-white px-1 py-0.5 font-sans text-[10px] font-bold text-ink-soft">
+    <kbd className="inline-flex min-w-[1.5rem] items-center justify-center rounded border border-line-strong bg-white px-1 py-0.5 font-sans text-xs font-bold text-ink-soft">
       {children}
     </kbd>
   );
@@ -384,7 +384,7 @@ function ResultRow({
         </span>
         <span className="min-w-0 flex-1">
           <span className="flex flex-wrap items-center gap-1.5">
-            <span className="rounded bg-brand-50 px-1.5 py-0.5 font-mono text-[11px] font-bold text-brand">{p.code}</span>
+            <span className="rounded bg-brand-50 px-1.5 py-0.5 font-mono text-xs font-bold text-brand">{p.code}</span>
             <span className="text-xs text-ink-muted">{p.category}</span>
           </span>
           <span className="mt-0.5 line-clamp-2 block text-sm font-bold leading-snug text-ink group-hover:text-brand">
@@ -449,7 +449,7 @@ function ProductLink({ p, onClose }: { p: ProductGroup; onClose: () => void }) {
         <Image src={p.image} alt="" fill sizes="44px" className="object-contain p-0.5" />
       </span>
       <span className="min-w-0">
-        <span className="block font-mono text-[11px] font-bold text-brand">{p.code}</span>
+        <span className="block font-mono text-xs font-bold text-brand">{p.code}</span>
         <span className="block truncate text-sm font-semibold text-ink group-hover:text-brand">{p.title}</span>
       </span>
     </Link>

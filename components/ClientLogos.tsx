@@ -43,13 +43,13 @@ export default function ClientLogos({
           {description && <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">{description}</p>}
         </Reveal>
 
-        <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5">
+        <ul className="mt-10 flex flex-wrap justify-center gap-3 sm:gap-4">
           {CLIENT_REFERENCES.map((client, i) => (
             <Reveal
               as="li"
               key={client.name}
               delay={i * 90}
-              className="max-sm:[&:last-child:nth-child(odd)]:col-span-2"
+              className="w-[calc(50%-0.375rem)] sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(20%-0.8rem)]"
             >
               <div
                 className="shine-card group flex h-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] px-4 py-7 text-center shadow-lg shadow-black/20 backdrop-blur-md transition duration-300 hover:-translate-y-1.5 hover:border-sky-300/40 hover:bg-white/[0.1] hover:shadow-[0_18px_50px_-12px_rgba(56,189,248,0.35)]"

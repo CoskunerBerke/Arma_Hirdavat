@@ -48,7 +48,7 @@ function ReviewCard({ r, hidden }: { r: Review; hidden: boolean }) {
             target="_blank"
             rel="noopener noreferrer"
             tabIndex={hidden ? -1 : undefined}
-            className="shrink-0 text-ink-muted underline-offset-2 hover:text-brand hover:underline"
+            className="inline-flex min-h-[32px] shrink-0 items-center text-ink-muted underline-offset-2 hover:text-brand hover:underline"
           >
             {r.source === "google" ? "Google yorumu" : "Referans"}
             <span className="sr-only"> (yeni sekmede açılır)</span>

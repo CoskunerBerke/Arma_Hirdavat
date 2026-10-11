@@ -120,7 +120,7 @@ export default function Footer() {
             </p>
             <p className="flex gap-2.5">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-sky-400" aria-hidden />
-              <a href={mailtoHref()} className="break-all hover:text-white">
+              <a href={mailtoHref()} className="inline-flex min-h-[32px] items-center break-all hover:text-white">
                 {COMPANY.email}
               </a>
             </p>

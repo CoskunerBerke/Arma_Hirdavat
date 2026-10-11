@@ -164,7 +164,7 @@ function CatalogView({ urlQuery, urlCategory }: { urlQuery: string; urlCategory:
                     >
                       <span>{c ?? "Tüm ürünler"}</span>
                       <span
-                        className={`rounded-full px-1.5 py-0.5 text-[11px] ${
+                        className={`rounded-full px-1.5 py-0.5 text-xs ${
                           active ? "bg-white/20 text-white" : "bg-slate-100 text-ink-muted"
                         }`}
                       >

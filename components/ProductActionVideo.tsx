@@ -115,11 +115,11 @@ export default function ProductActionVideo({
           <p className="text-sm font-bold leading-tight text-white sm:text-base">{title}</p>
           {subtitle && <p className="mt-1 text-xs leading-snug text-slate-300">{subtitle}</p>}
           {standard && (
-            <p className="mt-2 inline-flex items-center gap-1 text-[11px] text-slate-300">
+            <p className="mt-2 inline-flex items-center gap-1 text-xs text-slate-300">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-300" aria-hidden /> {standard}
             </p>
           )}
-          {disclosure && <p className="mt-2 border-t border-white/10 pt-2 text-[11px] text-slate-400">{disclosure}</p>}
+          {disclosure && <p className="mt-2 border-t border-white/10 pt-2 text-xs text-slate-400">{disclosure}</p>}
         </figcaption>
       </div>
     </figure>
