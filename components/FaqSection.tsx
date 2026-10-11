@@ -32,8 +32,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "Ödeme ve faturalandırma nasıl yapılıyor?",
-    a: "Tüm satışlarımız faturalıdır. Geçerli ödeme yöntemleri ve koşulları teklifinizde yazılı olarak belirtilir. Onaylanan siparişlerin ödemesi için online ödeme sayfamızı da kullanabilirsiniz.",
-    link: { href: COMPANY.paymentUrl, label: "Online ödeme sayfası", external: true },
+    a: "Tüm satışlarımız faturalıdır. Geçerli ödeme yöntemleri ve koşulları teklifinizde yazılı olarak belirtilir.",
   },
   {
     q: "Sevkiyat nasıl yapılıyor, teslim ne kadar sürer?",

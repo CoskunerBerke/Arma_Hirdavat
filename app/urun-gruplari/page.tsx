@@ -215,8 +215,7 @@ const FAQS: { q: string; a: string; link?: { href: string; label: string } }[] =
   },
   {
     q: "Ödemeyi nasıl yapabilirim?",
-    a: "Ödeme koşulları teklifte belirtilir. Onaylanan siparişlerin ödemesi için online ödeme sayfamızı da kullanabilirsiniz.",
-    link: { href: COMPANY.paymentUrl, label: "Online ödeme sayfası" },
+    a: "Ödeme koşulları teklifte belirtilir.",
   },
 ];
 

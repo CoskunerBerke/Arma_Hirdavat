@@ -238,19 +238,6 @@ export default function Footer() {
                     KVKK Aydınlatma Metni
                   </Link>
                 </li>
-                <li>
-                  <a
-                    href={COMPANY.paymentUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex min-h-[40px] items-center gap-1.5 hover:text-accent"
-                  >
-                    <CreditCard className="h-3.5 w-3.5" aria-hidden />
-                    Online Ödeme
-                    <ExternalLink className="h-3 w-3" aria-hidden />
-                    {NEW_TAB}
-                  </a>
-                </li>
               </ul>
             </nav>
           </div>

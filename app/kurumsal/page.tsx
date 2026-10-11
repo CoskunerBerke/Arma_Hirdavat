@@ -175,17 +175,7 @@ export default function CorporatePage() {
             ))}
           </ol>
           <p className="mt-6 text-sm text-ink-soft">
-            Onaylanan siparişlerin ödemesi için{" "}
-            <a
-              href={COMPANY.paymentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-brand underline-offset-2 hover:underline"
-            >
-              online ödeme sayfamızı
-              <span className="sr-only"> (yeni sekmede açılır)</span>
-            </a>{" "}
-            kullanabilirsiniz. FABA kataloğu için{" "}
+            FABA kataloğu için{" "}
             <Link href="/katalog" className="font-medium text-brand underline-offset-2 hover:underline">
               katalog sayfasına
             </Link>{" "}

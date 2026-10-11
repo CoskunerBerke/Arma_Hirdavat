@@ -44,6 +44,7 @@ export default function HomePage() {
     <>
       <SceneHero />
       <ClientLogos />
+      <RetailStoreSection />
       <IntroSection />
       <ServicesGrid />
       <DeliveryMapSection />
@@ -52,7 +53,6 @@ export default function HomePage() {
       <FeaturedProducts />
       <ShowcaseVideo />
       <HowItWorks />
-      <RetailStoreSection />
       <ReviewsRiver />
       <GuidesSection />
       <FaqSection />

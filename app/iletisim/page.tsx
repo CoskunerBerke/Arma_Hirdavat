@@ -177,25 +177,6 @@ export default function ContactPage() {
                 )}
               </ul>
             </div>
-
-            <a
-              href={COMPANY.paymentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="surface flex items-center justify-between gap-4 p-5 transition hover:border-brand/30 sm:p-6"
-            >
-              <span className="flex items-center gap-4">
-                <span className="icon-tile">
-                  <CreditCard className="h-5 w-5" aria-hidden />
-                </span>
-                <span>
-                  <span className="block text-[15px] font-semibold text-ink">Online ödeme</span>
-                  <span className="block text-sm text-ink-muted">Onaylanan siparişlerin ödemesi için</span>
-                  <span className="sr-only"> (yeni sekmede açılır)</span>
-                </span>
-              </span>
-              <ExternalLink className="h-4 w-4 shrink-0 text-ink-muted" aria-hidden />
-            </a>
           </div>
 
           {/* Form */}
