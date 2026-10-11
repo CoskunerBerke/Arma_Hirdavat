@@ -23,6 +23,16 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
   const { openSearch } = useProductSearch();
   const { openModal: openRetailModal } = useRetailModal();
 
+  // Ana sayfada en üstteyken header videonun üstünde şeffaf durur
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const overHero = pathname === "/" && !scrolled && !menuOpen;
+
   // Sayfa değişince mobil menüyü kapat
   useEffect(() => setMenuOpen(false), [pathname]);
 
@@ -58,48 +68,15 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
   return (
     <>
       {/* İnce üst şerit (kaydırınca yukarıda kalır; yapışkan olan yalnızca beyaz menü satırıdır) */}
-      <div className="bg-navy text-white">
-        <div className="container-x flex h-10 items-center justify-between gap-3 text-xs sm:text-[13px]">
-          <p className="hidden min-w-0 items-center gap-1.5 truncate text-slate-200 md:inline-flex">
-            <Truck className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-            <span className="truncate">
-              <span className="font-semibold text-white">{PROMISES.deliveryShort}</span>
-              <span className="hidden lg:inline"> · {HOURS_SHORT}</span>
-            </span>
-          </p>
-          <ul className="ml-auto flex min-w-0 items-center gap-1 sm:gap-3">
-            <li className="min-w-0">
-              <a
-                href={mailtoHref()}
-                onClick={() => track(EVENTS.emailClick, { kaynak: "ust_serit" })}
-                className="inline-flex h-10 min-w-0 items-center gap-1.5 rounded px-1 font-medium text-slate-100 transition-colors hover:text-accent"
-              >
-                <Mail className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                <span className="truncate">{COMPANY.email}</span>
-              </a>
-            </li>
-            {PRIMARY_PHONE && (
-              <li className="hidden sm:block">
-                <a
-                  href={PRIMARY_PHONE.href}
-                  onClick={() => track(EVENTS.phoneClick, { kaynak: "ust_serit" })}
-                  className="inline-flex h-10 items-center gap-1.5 rounded px-1 font-medium text-slate-100 transition-colors hover:text-accent"
-                >
-                  <Phone className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-                  {PRIMARY_PHONE.label}
-                </a>
-              </li>
-            )}
-            <li className="shrink-0">
-              <StorePopover />
-            </li>
-          </ul>
-        </div>
-      </div>
-
       <header className="sticky top-0 z-50 w-full">
-        {/* Beyaz menü satırı (tüm sayfalarda, ana sayfa dahil) */}
-        <div className="border-b border-line bg-white text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]">
+        {/* Menü satırı: ana sayfada en üstteyken videonun üstünde şeffaf; kaydırınca beyaz */}
+        <div
+          className={`border-b transition-colors duration-300 ${
+            overHero
+              ? "border-transparent bg-gradient-to-b from-slate-950/60 to-transparent text-white"
+              : "border-line bg-white text-ink shadow-[0_1px_0_#E2E7EE,0_8px_24px_-16px_rgba(15,27,45,0.25)]"
+          }`}
+        >
           <div
             ref={rowRef}
             className="container-x flex h-16 items-center justify-between gap-2 sm:gap-4 lg:h-[72px] lg:gap-3 xl:gap-4"
@@ -115,7 +92,7 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
               />
             </Link>
 
-            <DesktopNav categories={categories} totalProducts={totalProducts} pathname={pathname} />
+            <DesktopNav categories={categories} totalProducts={totalProducts} pathname={pathname} dark={overHero} />
 
             <div className="flex items-center gap-2">
               <button
@@ -126,17 +103,19 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
                 aria-haspopup="dialog"
                 aria-keyshortcuts="Control+K"
                 title="Ürün ara (Ctrl+K)"
-                className="inline-flex h-11 min-w-[44px] items-center justify-center gap-2 rounded-xl border border-line-strong bg-white px-2.5 text-sm font-semibold text-ink-soft transition-colors hover:border-accent hover:text-ink xl:px-3"
+                className={`inline-flex h-11 min-w-[44px] items-center justify-center gap-2 rounded-xl border px-2.5 text-sm font-semibold transition-colors xl:px-3 ${overHero ? "border-white/30 bg-white/10 text-white backdrop-blur-md hover:border-accent" : "border-line-strong bg-white text-ink-soft hover:border-accent hover:text-ink"}`}
               >
-                <Search className="h-[18px] w-[18px] shrink-0 text-brand" aria-hidden />
+                <Search className={`h-[18px] w-[18px] shrink-0 ${overHero ? "text-accent" : "text-brand"}`} aria-hidden />
                 <span className="sr-only xl:not-sr-only">Ürün ara</span>
                 <kbd
                   aria-hidden
-                  className="hidden rounded border border-line-strong px-1.5 py-0.5 text-[11px] font-bold text-ink-muted xl:inline-flex"
+                  className={`hidden rounded border px-1.5 py-0.5 text-[11px] font-bold xl:inline-flex ${overHero ? "border-white/30 text-white/70" : "border-line-strong text-ink-muted"}`}
                 >
                   Ctrl K
                 </kbd>
               </button>
+
+              <StorePopover dark={overHero} />
 
               <QuoteButton />
 
@@ -147,7 +126,7 @@ export default function HeaderClient({ categories, totalProducts }: HeaderNavPro
                 aria-controls={MOBILE_MENU_ID}
                 aria-haspopup="dialog"
                 aria-label="Menüyü aç"
-                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-ink transition-colors hover:bg-slate-100 lg:hidden"
+                className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg transition-colors lg:hidden ${overHero ? "text-white hover:bg-white/10" : "text-ink hover:bg-slate-100"}`}
               >
                 <Menu className="h-6 w-6" aria-hidden />
               </button>

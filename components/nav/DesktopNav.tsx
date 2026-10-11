@@ -15,7 +15,8 @@ interface DesktopNavProps extends HeaderNavProps {
 }
 
 /** Üst menü metin rengi: koyu gri, etkin/üzerine gelince vurgu rengi (beyaz zeminde 5:1). */
-function tone(active: boolean) {
+function tone(active: boolean, dark = false) {
+  if (dark) return active ? "text-accent" : "text-white/90 hover:text-accent";
   return active ? "text-accent-ink" : "text-ink-soft hover:text-accent-ink";
 }
 
@@ -35,7 +36,7 @@ function Underline({ active, className = "inset-x-3" }: { active: boolean; class
  * Masaüstü ana menü (lg ve üzeri): klasik kurumsal yatay metin menüsü.
  * "Kurumsal" ve "Ürünler" üzerine gelince (veya ok düğmesiyle) açılan menüye sahiptir.
  */
-export default function DesktopNav({ categories, totalProducts, pathname }: DesktopNavProps) {
+export default function DesktopNav({ categories, totalProducts, pathname, dark = false }: DesktopNavProps) {
   const menu = buildMainMenu(categories, totalProducts);
 
   return (
@@ -46,7 +47,7 @@ export default function DesktopNav({ categories, totalProducts, pathname }: Desk
           if (item.children?.length) {
             return (
               <li key={item.label} className={item.panel === "products" ? "" : "relative"}>
-                <MenuDropdown item={item} active={active} pathname={pathname} />
+                <MenuDropdown item={item} active={active} pathname={pathname} dark={dark} />
               </li>
             );
           }
@@ -55,7 +56,7 @@ export default function DesktopNav({ categories, totalProducts, pathname }: Desk
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`group relative inline-flex h-11 items-center px-3 text-[15px] font-medium transition-colors xl:px-4 ${tone(active)}`}
+                className={`group relative inline-flex h-11 items-center px-3 text-[15px] font-medium transition-colors xl:px-4 ${tone(active, dark)}`}
               >
                 {item.label}
                 <Underline active={active} className="inset-x-3 xl:inset-x-4" />
@@ -72,6 +73,7 @@ interface MenuDropdownProps {
   item: NavMenuItem;
   active: boolean;
   pathname: string;
+  dark?: boolean;
 }
 
 /**
@@ -81,7 +83,7 @@ interface MenuDropdownProps {
  * - Escape kapatır ve odağı düğmeye döndürür; odak menü dışına çıkınca kapanır
  * - Kapalıyken de DOM'da (hidden) kalır: bağlantılar her sayfada taranabilir
  */
-function MenuDropdown({ item, active, pathname }: MenuDropdownProps) {
+function MenuDropdown({ item, active, pathname, dark = false }: MenuDropdownProps) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -147,7 +149,8 @@ function MenuDropdown({ item, active, pathname }: MenuDropdownProps) {
         href={item.href}
         aria-current={active && pathname === item.href ? "page" : undefined}
         className={`group relative inline-flex h-11 items-center pl-3 pr-0.5 text-[15px] font-medium transition-colors xl:pl-4 ${tone(
-          active || open
+          active || open,
+          dark
         )}`}
       >
         {item.label}
@@ -165,7 +168,7 @@ function MenuDropdown({ item, active, pathname }: MenuDropdownProps) {
           if (open && Date.now() - hoverOpenedAt.current < 500) return;
           setOpen((v) => !v);
         }}
-        className={`inline-flex h-11 w-7 items-center justify-center transition-colors xl:w-8 ${tone(active || open)}`}
+        className={`inline-flex h-11 w-7 items-center justify-center transition-colors xl:w-8 ${tone(active || open, dark)}`}
       >
         <ChevronDown aria-hidden className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>

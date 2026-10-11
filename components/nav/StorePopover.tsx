@@ -8,7 +8,7 @@ import StoreInfoCard from "./StoreInfoCard";
  * Üst şerit: "Perakende Satış & Mağazamız" düğmesi + küçük açılır kart (popover).
  * Tam ekran pencere değil; dışarı tıklayınca veya Escape ile kapanır, odak düğmeye döner.
  */
-export default function StorePopover() {
+export default function StorePopover({ dark = false }: { dark?: boolean }) {
   const [open, setOpen] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
@@ -46,11 +46,16 @@ export default function StorePopover() {
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded px-1 font-semibold text-white transition-colors hover:text-accent sm:ml-1 sm:border-l sm:border-white/20 sm:pl-4"
+        aria-label="Perakende satış ve mağazamız"
+        className={`inline-flex h-11 min-w-[44px] items-center justify-center gap-2 whitespace-nowrap rounded-xl border px-2.5 text-sm font-semibold transition-colors xl:px-3 ${
+          dark
+            ? "border-white/30 bg-white/10 text-white backdrop-blur-md hover:border-accent hover:text-accent"
+            : "border-line-strong bg-white text-ink-soft hover:border-accent hover:text-ink"
+        }`}
       >
-        <Store className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden />
-        <span className="hidden min-[420px]:inline">Perakende Satış &amp; Mağazamız</span>
-        <span className="min-[420px]:hidden">Perakende</span>
+        <Store className={`h-[18px] w-[18px] shrink-0 ${dark ? "text-accent" : "text-brand"}`} aria-hidden />
+        <span className="hidden 2xl:inline">Perakende Satış &amp; Mağazamız</span>
+        <span className="hidden sm:inline lg:hidden xl:inline 2xl:hidden">Perakende</span>
       </button>
 
       {open && (

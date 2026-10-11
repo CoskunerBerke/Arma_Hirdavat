@@ -29,7 +29,7 @@ const POSTER = {
 
 /** Slaytların ortak kutusu: alttan hizalı içerik, alt kontrol sırası için boşluk */
 const SLIDE_BOX =
-  "relative isolate flex w-full min-h-[calc(100svh-104px)] flex-col justify-end overflow-hidden pb-10 pt-20 lg:min-h-[calc(100svh-112px)] lg:pb-14 [@media(max-height:500px)]:pb-14 [@media(max-height:500px)]:pt-6";
+  "relative isolate flex w-full min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-32 lg:pb-14 [@media(max-height:500px)]:pb-14 [@media(max-height:500px)]:pt-20";
 /** İçerik kabı */
 const SLIDE_INNER = "container-x relative";
 
@@ -37,7 +37,7 @@ const SLIDE_INNER = "container-x relative";
 export default function SceneHero() {
   // Yalnızca dron videolu hero (işletme tercihi: yana kaydırmalı slayt yok)
   return (
-    <section aria-labelledby="hero-baslik" className="relative isolate overflow-hidden bg-slate-950">
+    <section aria-labelledby="hero-baslik" className="relative isolate -mt-16 overflow-hidden bg-slate-950 lg:-mt-[72px]">
       <DroneSlide />
     </section>
   );
@@ -79,11 +79,10 @@ function DroneSlide() {
             id="hero-baslik"
             className="text-[1.9rem] font-extrabold leading-[1.12] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl [@media(max-height:500px)]:text-[1.7rem]"
           >
-            Samsun&apos;dan toptan{" "}
+            Türkiye&apos;nin dört bir yanına{" "}
             <span className="bg-gradient-to-r from-sky-300 via-emerald-200 to-white bg-clip-text text-transparent">
-              iş eldiveni, koruyucu tulum
-            </span>{" "}
-            ve teknik hırdavat
+              kurumsal sevk
+            </span>
           </h1>
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-slate-100 drop-shadow sm:text-lg [@media(max-height:500px)]:mt-2">
